@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2015 Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+    <head>
+        <title>GradeBook</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+        <!-- Favicons -->
+        <link rel="shortcut icon" href="https://glassfish.java.net/favicon.ico?ver=2.0">
+
+        <!-- CSS -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+        <link href="css/gradebook.css" type="text/css" rel="stylesheet" media="screen,projection">
+    </head>
+    <body>
+        <!-- Header -->
+        <header>
+            <div class="navbar-fixed">
+                <nav class="main-nav">                   
+                    <div class="container" style="max-width: 1920px">
+                        <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+                        <a class="brand-logo">GradeBook™</a>                  
+                        <span class="path-title hide-on-med-and-down">Group | Subject | Year</span>                                                                          
+                    </div>         
+                </nav>               
+            </div>
+            <div class="nav-secondary">
+                <div class="container">
+                    <div class="row">
+                    <!-- <div>
+                        <span class="option-chooser">
+                            <a href="gradebook_main.html" class="waves-effect waves-dark">Tasks</a> |  <a href="gradebook_attendance.html" class="waves-effect waves-dark">Attendance</a>
+                        </span> 
+                    </div> -->
+                    <div class="col s12 m6 l4">
+                        <ul class="tabs">
+                            <li class="tab col s6 m3 l2"><a href="#tasks">Tasks</a></li>
+                            <li class="tab col s6 m3 l2"><a href="#attendance">Attendance</a></li>
+                        </ul>
+                    </div>
+                    <div class="col m6 l8">
+                        <span class="path-title hide-on-large-only hide-on-small-only">Group | Subject | Year</span>
+                    </div>
+                        </div>               
+                </div>
+            </div>
+            <!-- Menu -->
+            <div class="container">
+                <ul id="slide-out" class="side-nav fixed">
+                    <li><img src="images/Architectural_Association_Logo.jpg" alt="" width="210"/></li>
+                    <li class="menu-item">
+                        <i class="material-icons grey-dark small">account_box</i>
+                        <span>Anastasiy Tovstik</span>
+                    </li>
+                    <li class="menu-item" style="padding-left: 14px">
+                        <a class="modal-trigger" href="#add-gradebook">
+                            <i class="material-icons pink-main" style="font-size: 42px">add_circle</i>
+                            <span>Add Gradebook</span>
+                        </a>
+                    </li>
+                    <li class="menu-title">Groups</li>
+                    <li>
+                        <ul id="main-menu" class="menu">
+                            <li><a href="#" class="waves-effect waves-dark">ARCH15-1</a>
+                                <ul>
+                                    <li><a href="#">2015 Spring</a>
+                                        <ul>
+                                            <li><div>
+                                                    <i class="material-icons">description</i>
+                                                    <a href="#">Composition</a></div>
+                                            </li>
+                                            <li class="active">
+                                                <i class="material-icons">description</i>
+                                                <a href="gradebook_main_student.html">Composition</a>
+                                            </li>
+                                            <li>
+                                                <i class="material-icons">description</i>
+                                                <a href="#">Painting</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">2015 Fall</a>
+                                        <ul>
+                                            <li>
+                                                <i class="material-icons">description</i>
+                                                <a href="#">Composition</a>
+                                            </li>
+                                            <li>
+                                                <i class="material-icons">description</i>
+                                                <a href="#">Painting</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="#" class="waves-effect waves-dark">ARCH15-2</a>
+                                <ul>
+                                    <li><a href="#">2015 Spring</a>
+                                        <ul>
+                                            <li><div>
+                                                    <i class="material-icons">description</i>
+                                                    <a href="#">Composition</a></div>
+                                            </li>
+                                            <li>
+                                                <i class="material-icons">description</i>
+                                                <a href="#">Composition</a>
+                                            </li>
+                                            <li>
+                                                <i class="material-icons">description</i>
+                                                <a href="#">Painting</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">2015 Fall</a>
+                                        <ul>
+                                            <li>
+                                                <i class="material-icons">description</i>
+                                                <a href="#">Composition</a>
+                                            </li>
+                                            <li>
+                                                <i class="material-icons">description</i>
+                                                <a href="#">Painting</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="#" class="waves-effect waves-dark">ARCH15-3</a>
+                                <ul>
+                                    <li><a href="#">2015 Spring</a>
+                                        <ul>
+                                            <li><div>
+                                                    <i class="material-icons">description</i>
+                                                    <a href="#">Composition</a></div>
+                                            </li>
+                                            <li>
+                                                <i class="material-icons">description</i>
+                                                <a href="#">Composition</a>
+                                            </li>
+                                            <li>
+                                                <i class="material-icons">description</i>
+                                                <a href="#">Drawing</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">2015 Fall</a>
+                                        <ul>
+                                            <li>
+                                                <i class="material-icons">description</i>
+                                                <a href="#">Composition</a>
+                                            </li>
+                                            <li>
+                                                <i class="material-icons">description</i>
+                                                <a href="#">Painting</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">
+                            <i class="material-icons grey-dark small">settings</i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="index.html">
+                            <i class="material-icons grey-dark small">exit_to_app</i>
+                            <span>Log out</span>
+                        </a>
+                    </li>              
+                </ul>
+
+            </div>
+        </header>
+
+        <!-- Main -->
+        <main>
+            <div class="container">               
+                <div id="tasks" class="table-tasks">
+                    <table class="table bordered">
+                        <thead>
+                            <tr class="header-primary">
+                                <th data-field="id">#</th>
+                                <th data-field="fname">Name</th>                                      
+                                <th data-field="task1">
+                                    <a class="modal-trigger" href="#task1">
+                                        Task 1 | Drawing of Human Head
+                                    </a>
+                                </th>
+                                <th data-field="task2">
+                                    <a class="modal-trigger" href="#task1">
+                                        Task 2 | Drawing of Naked Body
+                                    </a>
+                                </th>
+                                <th data-field="task3">
+                                    <a class="modal-trigger" href="#task1">
+                                        Task 3 | Sketching
+                                    </a>
+                                </th>
+                                <th data-field="task4">
+                                    <a class="modal-trigger" href="#task1">
+                                        Task 4 | Drawing of Human Head
+                                    </a>
+                                </th>
+                                <th data-field="task5">
+                                    <a class="modal-trigger" href="#task1">
+                                        Task 5 | Drawing of Naked Body
+                                    </a>
+                                </th>
+                                <th data-field="task6">
+                                    <a class="modal-trigger" href="#add-task">
+                                        <i class="material-icons" style="font-size: 42px">add_circle_outline</i>
+                                    </a>
+                                </th>                               
+                            </tr>
+                            <tr class="header-secondary">
+                                <th></th>
+                                <th></th>
+                                <th>06/07 - 10/07</th>
+                                <th>13/07 - 17/07</th>
+                                <th>20/07 - 24/07</th>
+                                <th>27/07 - 31/07</th>
+                                <th>03/08 - 07/08</th>
+                                <th></th>         
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td class="table-num-col">1</td>
+                                <td class="table-name-col">Sam Smith</td>
+                                <td>
+                                    <a class="modal-trigger" href="#mark1">0</a>                                
+                                </td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">2</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>56</td>
+                                <td>78</td>
+                                <td>90</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">3</td>
+                                <td class="table-name-col">Robert Dowson</td>
+                                <td>46</td>
+                                <td>86</td>
+                                <td>48</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">4</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>56</td>
+                                <td>78</td>
+                                <td>90</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">5</td>
+                                <td class="table-name-col">Robert Dowson</td>
+                                <td>46</td>
+                                <td>86</td>
+                                <td>48</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">6</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>56</td>
+                                <td>78</td>
+                                <td>90</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">7</td>
+                                <td class="table-name-col">Robert Dowson</td>
+                                <td>46</td>
+                                <td>86</td>
+                                <td>48</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">8</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>56</td>
+                                <td>78</td>
+                                <td>90</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">9</td>
+                                <td class="table-name-col">Sam Smith</td>
+                                <td>46</td>
+                                <td>86</td>
+                                <td>48</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">10</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>56</td>
+                                <td>78</td>
+                                <td>90</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">11</td>
+                                <td class="table-name-col">Robert Dowson</td>
+                                <td>46</td>
+                                <td>86</td>
+                                <td>48</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">12</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>56</td>
+                                <td>78</td>
+                                <td>90</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">13</td>
+                                <td class="table-name-col">Sam Smith</td>                                       
+                                <td>46</td>
+                                <td>86</td>
+                                <td>48</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="attendance" class="table-attendance">
+                    <table>
+                        <thead>
+                            <tr class="header-primary">
+                                <th data-field="id">#</th>
+                                <th data-field="fname">Name</th>                                      
+                                <th colspan="5" data-field="task1">
+                                    <a class="modal-trigger" href="#task1">Task 1 | Drawing of Human Head</a>             
+                                </th>
+                                <th colspan="2" data-field="task2">
+                                    <a class="modal-trigger" href="#task1">Task  2 | Drawing of Naked Body</a>             
+                                </th>
+                                <th data-field="task3">
+                                    <a class="modal-trigger" href="#task1">Task  3 | Sketching</a>             
+                                </th>                                                               
+                            </tr>
+                            <tr class="header-secondary">
+                                <th></th>
+                                <th></th>
+                                <th>Mon<br>06/07</th>
+                                <th>Tue<br>07/07</th>
+                                <th>Wed<br>08/07</th>
+                                <th>Thu<br>09/07</th>
+                                <th>Fri<br>10/07</th>
+                                <th>Mon<br>13/07</th>
+                                <th>Tue<br>14/07</th>
+                                <th>Wed<br>22/07</th>         
+                            </tr>
+                        </thead>
+                        <tbody>                           
+                            <tr>
+                                <td class="table-num-col">1</td>
+                                <td class="table-name-col">Sam Smith</td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons yellow-accent">indeterminate_check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons red-accent">indeterminate_check_box</i>
+                                </td>
+                                <td>
+                                    <a class="modal-trigger" href="#attendance-modal">
+                                        <i class="material-icons">check_box_outline_blank</i>
+                                    </a>                                   
+                                </td>
+                                <td>
+                                    <i class="material-icons">check_box_outline_blank</i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">2</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons yellow-accent">indeterminate_check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons red-accent">indeterminate_check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons">check_box_outline_blank</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons">check_box_outline_blank</i>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">3</td>
+                                <td class="table-name-col">Sam Smith</td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons yellow-accent">indeterminate_check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons red-accent">indeterminate_check_box</i>
+                                </td>
+                                <td>
+                                    <a class="modal-trigger" href="#attendance-modal">
+                                        <i class="material-icons">check_box_outline_blank</i>
+                                    </a>                                   
+                                </td>
+                                <td>
+                                    <i class="material-icons">check_box_outline_blank</i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">4</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons yellow-accent">indeterminate_check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons red-accent">indeterminate_check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons">check_box_outline_blank</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons">check_box_outline_blank</i>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">5</td>
+                                <td class="table-name-col">Sam Smith</td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons yellow-accent">indeterminate_check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons red-accent">indeterminate_check_box</i>
+                                </td>
+                                <td>
+                                    <a class="modal-trigger" href="#attendance-modal">
+                                        <i class="material-icons">check_box_outline_blank</i>
+                                    </a>                                   
+                                </td>
+                                <td>
+                                    <i class="material-icons">check_box_outline_blank</i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">6</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons yellow-accent">indeterminate_check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons red-accent">indeterminate_check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons green-accent">check_box</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons">check_box_outline_blank</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons">check_box_outline_blank</i>
+                                </td>                               
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- MODALS -->
+            <!-- MARK Pop-up -->
+            <div id="mark1" class="modal narrow">
+                <div class="modal-content">
+                    <h5>Sam Smith</h5>
+                    <h6>Group | Subject</h6>
+                    <div class="section">
+                        <h6>Task Title and maximum mark value [100]</h6> 
+                    </div>
+
+                    <div class="input-field">
+                        <input id="mark-value" type="number" class="validate" min="0" max="100" required="">
+                        <label for="mark-value">Mark</label>
+                    </div> 
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat ">Dismiss</a>
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Submit</a>
+                </div>
+            </div>
+            
+            <!-- ATTENDANCE Pop-up -->
+            <div id="attendance-modal" class="modal narrow">
+                <div class="modal-content">
+                    <h5>Albert Einstein</h5>
+                    <h6>Group | Subject</h6>
+                    <div class="section">
+                        <a href="#"><i class="material-icons green-accent">check_box</i></a>
+                        <a href="#"><i class="material-icons yellow-accent">indeterminate_check_box</i></a>
+                        <a href="#"><i class="material-icons red-accent">indeterminate_check_box</i></a>
+                    </div> 
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat ">Dismiss</a>
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Submit</a>
+                </div>
+            </div>
+
+            <!-- TASK Pop-up -->
+            <div id="task1" class="modal">
+                <div class="modal-content">
+                    <h5>Drawing of Human Head</h5>
+                    <h6>Group | Subject</h6>
+                    <div class="section">
+                        <p>Task description</p> 
+                    </div> 
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-orange btn-flat ">Close</a>
+                </div>
+            </div>
+
+            <!-- ADD GRADEBOOK Pop-up -->
+            <div id="add-gradebook" class="modal">
+                <div class="modal-content">
+                    <div class="section">
+                        <h5>Add existing Gradebooks</h5>
+                        <form>
+                            <label for="group-existing-gb">Group</label>
+                            <select id="group-existing-gb">
+                                <option value="" disabled selected>Choose a group</option>
+                                <option value="1">ARCH15-1</option>
+                                <option value="2">ARCH15-1</option>
+                                <option value="3">ARCH15-1</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="section">
+                        <h5>Create a new Gradebook</h5>
+                        <form>
+                            <div>
+                                <label for="semester">Semester</label>
+                                <select id="semester">
+                                    <option value="" disabled selected>Choose a semester</option>
+                                    <option value="1">Spring 2016</option>
+                                    <option value="2">Fall 2016</option>
+                                    <option value="3">Spring 2015</option>
+                                    <option value="4">Fall 2015</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="group-new-gb">Group</label>
+                                <select id="group-new-gb">
+                                    <option value="" disabled selected>Choose a group</option>
+                                    <option value="1">ARCH15-1</option>
+                                    <option value="2">ARCH15-1</option>
+                                    <option value="3">ARCH15-1</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="subject">Subject</label>
+                                <input id="subject" type="text"> 
+                            </div>
+                            <div>
+                                <label for="lecturers">Lecturers</label>
+                                <select id="lecturers">
+                                    <option value="" disabled selected>Choose a lecturer</option>
+                                    <option value="1">Anthony Hopkins</option>
+                                    <option value="2">Quentin Tarantino</option>
+                                    <option value="3">Robert De Niro</option>
+                                    <option value="4">Samuel L. Jackson</option>
+                                </select>
+
+                                <div class="lecturers">
+                                    <div>
+                                        <span>Quentin Tarantino</span>
+                                        <a href="#"><i class="material-icons">clear</i></a>
+                                    </div>
+                                    <div>
+                                        <span>Anthony Hopkins</span>
+                                        <a href="#"><i class="material-icons">clear</i></a>
+                                    </div>
+                                    <div>
+                                        <span>Robert De Niro</span>
+                                        <a href="#"><i class="material-icons">clear</i></a>
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+                            <div>
+                                <label for="description">Description</label>
+                                <textarea id="description" class="materialize-textarea"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat ">Dismiss</a>
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Submit</a>
+                </div>
+            </div>
+
+            <!-- ADD TASK Pop-up -->
+            <div id="add-task" class="modal">
+                <div class="modal-content">
+                    
+                        <h5>Create a new Task</h5>
+                        <form>
+                            <div>
+                                <label for="task-title">Task Title</label>
+                                <input id="task-title" type="text"> 
+                            </div>
+                            <div class="row">
+                                <div class="col s6">
+                                    <label for="task-startdate">Start Date</label>
+                                    <input id="task-startdate" type="date" class="datepicker">
+                                </div>
+                                <div class="col s6">
+                                    <div class="col s8">
+                                        <label for="task-length">Length</label>
+                                        <input id="task-length" type="number"> 
+                                    </div>
+                                    <div class="col s4" style="line-height: 83px">
+                                        <span>Weeks</span>
+                                    </div>   
+                                </div>
+                            </div>
+                            <div>
+                                <label>On course days</label>
+                                <div id="task-day-chooser">
+                                    <div>
+                                        <input type="checkbox" id="task-monday" />
+                                        <label for="task-monday">Monday</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="task-tuesday" />
+                                        <label for="task-tuesday">Tuesday</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="task-wednesday" />
+                                        <label for="task-wednesday">Wednesday</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="task-thursday" />
+                                        <label for="task-thursday">Thursday</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="task-friday" />
+                                        <label for="task-friday">Friday</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="task-max-grade">Maximum grade</label>
+                                <input id="task-max-grade" type="number"/>
+                            </div>
+                            <div>
+                                <label for="task-description">Description</label>
+                                <textarea id="task-description" class="materialize-textarea"></textarea>
+                            </div>
+                        </form>
+                    
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat ">Dismiss</a>
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Submit</a>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="page-footer">           
+            <div class="footer-copyright">
+                <div class="container">© 2015 reBirth Lab, All rights reserved.
+                    <a class="grey-text text-lighten-4 right" href="https://github.com/reBirthLab/gradebook/blob/master/LICENSE.md">GNU GPL v3.0 License</a></div>
+            </div>
+
+        </footer>
+
+        <!-- Scripts -->
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="js/tendina.js"></script>
+        <script src="js/materialize.js"></script>
+        <script src="js/gradebook.js"></script>
+    </body>
+</html>
