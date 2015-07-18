@@ -72,7 +72,7 @@
                             <wadlFile>${project.build.outputDirectory}/application.wadl
                             </wadlFile>
                             <formatWadlFile>true</formatWadlFile>
-                            <baseUri>http://gradebook-anastasius.rhcloud.com/api/v1</baseUri>
+                            <baseUri>http://gradebook-anastasius.rhcloud.com/api</baseUri>
                             <packagesResourceConfig>
                                 <param>com.rebirthlab.gradebook.services</param>
                             </packagesResourceConfig>
