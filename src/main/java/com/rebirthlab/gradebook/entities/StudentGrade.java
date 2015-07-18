@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2015 Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,10 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "student_grade")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "StudentGrade.findAll", query = "SELECT s FROM StudentGrade s"),
-    @NamedQuery(name = "StudentGrade.findByStudentId", query = "SELECT s FROM StudentGrade s WHERE s.studentGradePK.studentId = :studentId"),
-    @NamedQuery(name = "StudentGrade.findByTaskId", query = "SELECT s FROM StudentGrade s WHERE s.studentGradePK.taskId = :taskId"),
-    @NamedQuery(name = "StudentGrade.findByGrade", query = "SELECT s FROM StudentGrade s WHERE s.grade = :grade")})
+    @NamedQuery(name = "StudentGrade.findAll", query = "SELECT s FROM StudentGrade s")})
 public class StudentGrade implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId

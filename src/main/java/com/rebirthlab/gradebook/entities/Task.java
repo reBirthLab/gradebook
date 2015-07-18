@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2015 Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -47,18 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "task")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Task.findAll", query = "SELECT t FROM Task t"),
-    @NamedQuery(name = "Task.findByTaskId", query = "SELECT t FROM Task t WHERE t.taskId = :taskId"),
-    @NamedQuery(name = "Task.findByTitle", query = "SELECT t FROM Task t WHERE t.title = :title"),
-    @NamedQuery(name = "Task.findByStartDate", query = "SELECT t FROM Task t WHERE t.startDate = :startDate"),
-    @NamedQuery(name = "Task.findByLength", query = "SELECT t FROM Task t WHERE t.length = :length"),
-    @NamedQuery(name = "Task.findByOnCourseMon", query = "SELECT t FROM Task t WHERE t.onCourseMon = :onCourseMon"),
-    @NamedQuery(name = "Task.findByOnCourseTue", query = "SELECT t FROM Task t WHERE t.onCourseTue = :onCourseTue"),
-    @NamedQuery(name = "Task.findByOnCourseWed", query = "SELECT t FROM Task t WHERE t.onCourseWed = :onCourseWed"),
-    @NamedQuery(name = "Task.findByOnCourseThu", query = "SELECT t FROM Task t WHERE t.onCourseThu = :onCourseThu"),
-    @NamedQuery(name = "Task.findByOnCourseFri", query = "SELECT t FROM Task t WHERE t.onCourseFri = :onCourseFri"),
-    @NamedQuery(name = "Task.findByMaxGrade", query = "SELECT t FROM Task t WHERE t.maxGrade = :maxGrade"),
-    @NamedQuery(name = "Task.findByDescription", query = "SELECT t FROM Task t WHERE t.description = :description")})
+    @NamedQuery(name = "Task.findAll", query = "SELECT t FROM Task t")})
 public class Task implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

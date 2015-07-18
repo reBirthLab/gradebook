@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2015 Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ import javax.ws.rs.core.PathSegment;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("attendance")
+@Path("com.rebirthlab.gradebook.entities.studentattendance")
 public class StudentAttendanceFacadeREST extends AbstractFacade<StudentAttendance> {
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;

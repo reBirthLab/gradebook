@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2015 Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -45,10 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "semester")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Semester.findAll", query = "SELECT s FROM Semester s"),
-    @NamedQuery(name = "Semester.findBySemesterId", query = "SELECT s FROM Semester s WHERE s.semesterId = :semesterId"),
-    @NamedQuery(name = "Semester.findByName", query = "SELECT s FROM Semester s WHERE s.name = :name"),
-    @NamedQuery(name = "Semester.findByYear", query = "SELECT s FROM Semester s WHERE s.year = :year")})
+    @NamedQuery(name = "Semester.findAll", query = "SELECT s FROM Semester s")})
 public class Semester implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
