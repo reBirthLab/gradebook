@@ -42,7 +42,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "academic_group")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AcademicGroup.findAll", query = "SELECT a FROM AcademicGroup a")})
+    @NamedQuery(name = "AcademicGroup.findAll", query = "SELECT a FROM AcademicGroup a"),
+    @NamedQuery(name = "AcademicGroup.findByAcademicGroupId", query = "SELECT a FROM AcademicGroup a WHERE a.academicGroupId = :academicGroupId"),
+    @NamedQuery(name = "AcademicGroup.findByNumber", query = "SELECT a FROM AcademicGroup a WHERE a.number = :number")})
 public class AcademicGroup implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

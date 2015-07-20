@@ -37,7 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "student_grade")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "StudentGrade.findAll", query = "SELECT s FROM StudentGrade s")})
+    @NamedQuery(name = "StudentGrade.findAll", query = "SELECT s FROM StudentGrade s"),
+    @NamedQuery(name = "StudentGrade.findByStudentId", query = "SELECT s FROM StudentGrade s WHERE s.studentGradePK.studentId = :studentId"),
+    @NamedQuery(name = "StudentGrade.findByTaskId", query = "SELECT s FROM StudentGrade s WHERE s.studentGradePK.taskId = :taskId"),
+    @NamedQuery(name = "StudentGrade.findByGrade", query = "SELECT s FROM StudentGrade s WHERE s.grade = :grade")})
 public class StudentGrade implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -76,7 +79,7 @@ public class StudentGrade implements Serializable {
     public void setStudentGradePK(StudentGradePK studentGradePK) {
         this.studentGradePK = studentGradePK;
     }
-
+    
     public short getGrade() {
         return grade;
     }

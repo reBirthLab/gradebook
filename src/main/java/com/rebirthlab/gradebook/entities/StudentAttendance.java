@@ -40,7 +40,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "student_attendance")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "StudentAttendance.findAll", query = "SELECT s FROM StudentAttendance s")})
+    @NamedQuery(name = "StudentAttendance.findAll", query = "SELECT s FROM StudentAttendance s"),
+    @NamedQuery(name = "StudentAttendance.findByStudentId", query = "SELECT s FROM StudentAttendance s WHERE s.studentAttendancePK.studentId = :studentId"),
+    @NamedQuery(name = "StudentAttendance.findByTaskId", query = "SELECT s FROM StudentAttendance s WHERE s.studentAttendancePK.taskId = :taskId"),
+    @NamedQuery(name = "StudentAttendance.findByDate", query = "SELECT s FROM StudentAttendance s WHERE s.date = :date"),
+    @NamedQuery(name = "StudentAttendance.findByPresent", query = "SELECT s FROM StudentAttendance s WHERE s.present = :present"),
+    @NamedQuery(name = "StudentAttendance.findByAbsent", query = "SELECT s FROM StudentAttendance s WHERE s.absent = :absent"),
+    @NamedQuery(name = "StudentAttendance.findByAbsentWithReason", query = "SELECT s FROM StudentAttendance s WHERE s.absentWithReason = :absentWithReason")})
 public class StudentAttendance implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
