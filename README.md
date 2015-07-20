@@ -15,6 +15,7 @@ My Pet Project
 * JAX-RS
 * Java Persistence API
 * JPA Criteria API
+* JSON (Jackson)
 * MySQL
 * Wildfly 8 Application Server
 
