@@ -11,7 +11,7 @@ My Pet Project
 
 *Back End*
 * RESTful API
-* JavaEE
+* Java EE
 * JAX-RS
 * Java Persistence API
 * JPA Criteria API
