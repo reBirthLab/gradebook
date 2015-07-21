@@ -109,14 +109,14 @@ public class StudentGradeTableFacadeREST extends AbstractFacade<StudentGrade> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(StudentGrade.class);
         
-        Root grade = cq.from(StudentGrade.class);
-        Join gradebook = grade.join(StudentGrade_.task).join(Task_.gradebookId);
+        Root sg = cq.from(StudentGrade.class);
+        Join join = sg.join(StudentGrade_.task).join(Task_.gradebookId);
         
         cq.where(
                 cb.and(
-                        cb.equal(gradebook.get(Gradebook_.academicGroupId), academic_group_id),
-                        cb.equal(gradebook.get(Gradebook_.semesterId), semester_id),
-                        cb.equal(gradebook.get(Gradebook_.gradebookId), gradebook_id)
+                        cb.equal(join.get(Gradebook_.academicGroupId), academic_group_id),
+                        cb.equal(join.get(Gradebook_.semesterId), semester_id),
+                        cb.equal(join.get(Gradebook_.gradebookId), gradebook_id)
                 )
         );
         
