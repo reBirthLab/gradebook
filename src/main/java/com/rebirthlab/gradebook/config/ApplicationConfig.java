@@ -40,17 +40,19 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(com.rebirthlab.gradebook.services.AcademicGroupFacadeREST.class);
-        resources.add(com.rebirthlab.gradebook.services.DepartmentFacadeREST.class);
-        resources.add(com.rebirthlab.gradebook.services.FacultyFacadeREST.class);
-        resources.add(com.rebirthlab.gradebook.services.GradebookFacadeREST.class);
-        resources.add(com.rebirthlab.gradebook.services.LecturerFacadeREST.class);
-        resources.add(com.rebirthlab.gradebook.services.SemesterFacadeREST.class);
-        resources.add(com.rebirthlab.gradebook.services.StudentAttendanceFacadeREST.class);
-        resources.add(com.rebirthlab.gradebook.services.StudentFacadeREST.class);
-        resources.add(com.rebirthlab.gradebook.services.StudentGradeFacadeREST.class);
-        resources.add(com.rebirthlab.gradebook.services.StudentGradeTableFacadeREST.class);
-        resources.add(com.rebirthlab.gradebook.services.TaskFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.AcademicGroupFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.AttendanceTableFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.DepartmentFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.FacultyFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.GradebookFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.LecturerFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.LecturerGradebooksFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.SemesterFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.StudentAttendanceFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.StudentFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.StudentGradeFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.TaskFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.TasksTableFacadeREST.class);
     }
     
 }

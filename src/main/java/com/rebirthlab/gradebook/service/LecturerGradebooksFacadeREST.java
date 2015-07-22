@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.services;
+package com.rebirthlab.gradebook.service;
 
-import com.rebirthlab.gradebook.entities.AcademicGroup;
+import com.rebirthlab.gradebook.entity.LecturerGradebooks;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,53 +35,53 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entities.academicgroup")
-public class AcademicGroupFacadeREST extends AbstractFacade<AcademicGroup> {
+@Path("com.rebirthlab.gradebook.entity.lecturergradebooks")
+public class LecturerGradebooksFacadeREST extends AbstractFacade<LecturerGradebooks> {
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
-    public AcademicGroupFacadeREST() {
-        super(AcademicGroup.class);
+    public LecturerGradebooksFacadeREST() {
+        super(LecturerGradebooks.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(AcademicGroup entity) {
+    public void create(LecturerGradebooks entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, AcademicGroup entity) {
+    public void edit(@PathParam("id") String id, LecturerGradebooks entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
+    public void remove(@PathParam("id") String id) {
         super.remove(super.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public AcademicGroup find(@PathParam("id") Integer id) {
+    public LecturerGradebooks find(@PathParam("id") String id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<AcademicGroup> findAll() {
+    public List<LecturerGradebooks> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<AcademicGroup> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<LecturerGradebooks> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

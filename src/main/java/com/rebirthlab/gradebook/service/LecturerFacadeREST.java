@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.services;
+package com.rebirthlab.gradebook.service;
 
-import com.rebirthlab.gradebook.entities.Gradebook;
+import com.rebirthlab.gradebook.entity.Lecturer;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,26 +35,26 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entities.gradebook")
-public class GradebookFacadeREST extends AbstractFacade<Gradebook> {
+@Path("com.rebirthlab.gradebook.entity.lecturer")
+public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
-    public GradebookFacadeREST() {
-        super(Gradebook.class);
+    public LecturerFacadeREST() {
+        super(Lecturer.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Gradebook entity) {
+    public void create(Lecturer entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Gradebook entity) {
+    public void edit(@PathParam("id") Integer id, Lecturer entity) {
         super.edit(entity);
     }
 
@@ -67,21 +67,21 @@ public class GradebookFacadeREST extends AbstractFacade<Gradebook> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Gradebook find(@PathParam("id") Integer id) {
+    public Lecturer find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<Gradebook> findAll() {
+    public List<Lecturer> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<Gradebook> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Lecturer> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

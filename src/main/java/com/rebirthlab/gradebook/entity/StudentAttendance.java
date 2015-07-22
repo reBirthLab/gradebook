@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.entities;
+package com.rebirthlab.gradebook.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -43,7 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "StudentAttendance.findAll", query = "SELECT s FROM StudentAttendance s"),
     @NamedQuery(name = "StudentAttendance.findByStudentId", query = "SELECT s FROM StudentAttendance s WHERE s.studentAttendancePK.studentId = :studentId"),
     @NamedQuery(name = "StudentAttendance.findByTaskId", query = "SELECT s FROM StudentAttendance s WHERE s.studentAttendancePK.taskId = :taskId"),
-    @NamedQuery(name = "StudentAttendance.findByDate", query = "SELECT s FROM StudentAttendance s WHERE s.date = :date"),
+    @NamedQuery(name = "StudentAttendance.findByClassDate", query = "SELECT s FROM StudentAttendance s WHERE s.classDate = :classDate"),
     @NamedQuery(name = "StudentAttendance.findByPresent", query = "SELECT s FROM StudentAttendance s WHERE s.present = :present"),
     @NamedQuery(name = "StudentAttendance.findByAbsent", query = "SELECT s FROM StudentAttendance s WHERE s.absent = :absent"),
     @NamedQuery(name = "StudentAttendance.findByAbsentWithReason", query = "SELECT s FROM StudentAttendance s WHERE s.absentWithReason = :absentWithReason")})
@@ -53,9 +53,9 @@ public class StudentAttendance implements Serializable {
     protected StudentAttendancePK studentAttendancePK;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "date")
+    @Column(name = "class_date")
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date classDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "present")
@@ -82,9 +82,9 @@ public class StudentAttendance implements Serializable {
         this.studentAttendancePK = studentAttendancePK;
     }
 
-    public StudentAttendance(StudentAttendancePK studentAttendancePK, Date date, boolean present, boolean absent, boolean absentWithReason) {
+    public StudentAttendance(StudentAttendancePK studentAttendancePK, Date classDate, boolean present, boolean absent, boolean absentWithReason) {
         this.studentAttendancePK = studentAttendancePK;
-        this.date = date;
+        this.classDate = classDate;
         this.present = present;
         this.absent = absent;
         this.absentWithReason = absentWithReason;
@@ -102,12 +102,12 @@ public class StudentAttendance implements Serializable {
         this.studentAttendancePK = studentAttendancePK;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getClassDate() {
+        return classDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setClassDate(Date classDate) {
+        this.classDate = classDate;
     }
 
     public boolean getPresent() {
@@ -172,7 +172,7 @@ public class StudentAttendance implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rebirthlab.gradebook.entities.StudentAttendance[ studentAttendancePK=" + studentAttendancePK + " ]";
+        return "com.rebirthlab.gradebook.entity.StudentAttendance[ studentAttendancePK=" + studentAttendancePK + " ]";
     }
     
 }

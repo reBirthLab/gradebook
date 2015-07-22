@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.services;
+package com.rebirthlab.gradebook.service;
 
-import com.rebirthlab.gradebook.entities.Task;
+import com.rebirthlab.gradebook.entity.Student;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,26 +35,26 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entities.task")
-public class TaskFacadeREST extends AbstractFacade<Task> {
+@Path("com.rebirthlab.gradebook.entity.student")
+public class StudentFacadeREST extends AbstractFacade<Student> {
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
-    public TaskFacadeREST() {
-        super(Task.class);
+    public StudentFacadeREST() {
+        super(Student.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Task entity) {
+    public void create(Student entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Task entity) {
+    public void edit(@PathParam("id") Integer id, Student entity) {
         super.edit(entity);
     }
 
@@ -67,21 +67,21 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Task find(@PathParam("id") Integer id) {
+    public Student find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<Task> findAll() {
+    public List<Student> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<Task> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Student> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

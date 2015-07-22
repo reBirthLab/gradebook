@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.services;
+package com.rebirthlab.gradebook.service;
 
-import com.rebirthlab.gradebook.entities.Faculty;
+import com.rebirthlab.gradebook.entity.AttendanceTable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,26 +35,26 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entities.faculty")
-public class FacultyFacadeREST extends AbstractFacade<Faculty> {
+@Path("com.rebirthlab.gradebook.entity.attendancetable")
+public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
-    public FacultyFacadeREST() {
-        super(Faculty.class);
+    public AttendanceTableFacadeREST() {
+        super(AttendanceTable.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Faculty entity) {
+    public void create(AttendanceTable entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") String id, Faculty entity) {
+    public void edit(@PathParam("id") String id, AttendanceTable entity) {
         super.edit(entity);
     }
 
@@ -67,21 +67,21 @@ public class FacultyFacadeREST extends AbstractFacade<Faculty> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Faculty find(@PathParam("id") String id) {
+    public AttendanceTable find(@PathParam("id") String id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<Faculty> findAll() {
+    public List<AttendanceTable> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<Faculty> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<AttendanceTable> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

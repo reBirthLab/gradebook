@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.entities;
+package com.rebirthlab.gradebook.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -51,7 +51,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Task.findByTaskId", query = "SELECT t FROM Task t WHERE t.taskId = :taskId"),
     @NamedQuery(name = "Task.findByTitle", query = "SELECT t FROM Task t WHERE t.title = :title"),
     @NamedQuery(name = "Task.findByStartDate", query = "SELECT t FROM Task t WHERE t.startDate = :startDate"),
-    @NamedQuery(name = "Task.findByLength", query = "SELECT t FROM Task t WHERE t.length = :length"),
+    @NamedQuery(name = "Task.findByTaskLength", query = "SELECT t FROM Task t WHERE t.taskLength = :taskLength"),
     @NamedQuery(name = "Task.findByOnCourseMon", query = "SELECT t FROM Task t WHERE t.onCourseMon = :onCourseMon"),
     @NamedQuery(name = "Task.findByOnCourseTue", query = "SELECT t FROM Task t WHERE t.onCourseTue = :onCourseTue"),
     @NamedQuery(name = "Task.findByOnCourseWed", query = "SELECT t FROM Task t WHERE t.onCourseWed = :onCourseWed"),
@@ -78,8 +78,8 @@ public class Task implements Serializable {
     private Date startDate;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "length")
-    private short length;
+    @Column(name = "task_length")
+    private short taskLength;
     @Basic(optional = false)
     @NotNull
     @Column(name = "on_course_mon")
@@ -108,12 +108,12 @@ public class Task implements Serializable {
     @Column(name = "description")
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
+    private Collection<StudentAttendance> studentAttendanceCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
     private Collection<StudentGrade> studentGradeCollection;
     @JoinColumn(name = "gradebook_id", referencedColumnName = "gradebook_id")
     @ManyToOne(optional = false)
     private Gradebook gradebookId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
-    private Collection<StudentAttendance> studentAttendanceCollection;
 
     public Task() {
     }
@@ -122,11 +122,11 @@ public class Task implements Serializable {
         this.taskId = taskId;
     }
 
-    public Task(Integer taskId, String title, Date startDate, short length, boolean onCourseMon, boolean onCourseTue, boolean onCourseWed, boolean onCourseThu, boolean onCourseFri, short maxGrade) {
+    public Task(Integer taskId, String title, Date startDate, short taskLength, boolean onCourseMon, boolean onCourseTue, boolean onCourseWed, boolean onCourseThu, boolean onCourseFri, short maxGrade) {
         this.taskId = taskId;
         this.title = title;
         this.startDate = startDate;
-        this.length = length;
+        this.taskLength = taskLength;
         this.onCourseMon = onCourseMon;
         this.onCourseTue = onCourseTue;
         this.onCourseWed = onCourseWed;
@@ -159,12 +159,12 @@ public class Task implements Serializable {
         this.startDate = startDate;
     }
 
-    public short getLength() {
-        return length;
+    public short getTaskLength() {
+        return taskLength;
     }
 
-    public void setLength(short length) {
-        this.length = length;
+    public void setTaskLength(short taskLength) {
+        this.taskLength = taskLength;
     }
 
     public boolean getOnCourseMon() {
@@ -224,6 +224,15 @@ public class Task implements Serializable {
     }
 
     @XmlTransient
+    public Collection<StudentAttendance> getStudentAttendanceCollection() {
+        return studentAttendanceCollection;
+    }
+
+    public void setStudentAttendanceCollection(Collection<StudentAttendance> studentAttendanceCollection) {
+        this.studentAttendanceCollection = studentAttendanceCollection;
+    }
+
+    @XmlTransient
     public Collection<StudentGrade> getStudentGradeCollection() {
         return studentGradeCollection;
     }
@@ -238,15 +247,6 @@ public class Task implements Serializable {
 
     public void setGradebookId(Gradebook gradebookId) {
         this.gradebookId = gradebookId;
-    }
-
-    @XmlTransient
-    public Collection<StudentAttendance> getStudentAttendanceCollection() {
-        return studentAttendanceCollection;
-    }
-
-    public void setStudentAttendanceCollection(Collection<StudentAttendance> studentAttendanceCollection) {
-        this.studentAttendanceCollection = studentAttendanceCollection;
     }
 
     @Override
@@ -271,7 +271,7 @@ public class Task implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rebirthlab.gradebook.entities.Task[ taskId=" + taskId + " ]";
+        return "com.rebirthlab.gradebook.entity.Task[ taskId=" + taskId + " ]";
     }
     
 }

@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.services;
+package com.rebirthlab.gradebook.service;
 
-import com.rebirthlab.gradebook.entities.Department;
+import com.rebirthlab.gradebook.entity.Task;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,26 +35,26 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entities.department")
-public class DepartmentFacadeREST extends AbstractFacade<Department> {
+@Path("com.rebirthlab.gradebook.entity.task")
+public class TaskFacadeREST extends AbstractFacade<Task> {
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
-    public DepartmentFacadeREST() {
-        super(Department.class);
+    public TaskFacadeREST() {
+        super(Task.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Department entity) {
+    public void create(Task entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Department entity) {
+    public void edit(@PathParam("id") Integer id, Task entity) {
         super.edit(entity);
     }
 
@@ -67,21 +67,21 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Department find(@PathParam("id") Integer id) {
+    public Task find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<Department> findAll() {
+    public List<Task> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<Department> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Task> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

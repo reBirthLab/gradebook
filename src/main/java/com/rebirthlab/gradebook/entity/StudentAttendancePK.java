@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.entities;
+package com.rebirthlab.gradebook.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -87,7 +87,7 @@ public class StudentAttendancePK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rebirthlab.gradebook.entities.StudentAttendancePK[ studentId=" + studentId + ", taskId=" + taskId + " ]";
+        return "com.rebirthlab.gradebook.entity.StudentAttendancePK[ studentId=" + studentId + ", taskId=" + taskId + " ]";
     }
     
 }

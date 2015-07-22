@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.entities;
+package com.rebirthlab.gradebook.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -78,13 +78,13 @@ public class Student implements Serializable {
     @Lob
     @Column(name = "password")
     private byte[] password;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
-    private Collection<StudentGrade> studentGradeCollection;
     @JoinColumn(name = "academic_group_id", referencedColumnName = "academic_group_id")
     @ManyToOne(optional = false)
     private AcademicGroup academicGroupId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
     private Collection<StudentAttendance> studentAttendanceCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
+    private Collection<StudentGrade> studentGradeCollection;
 
     public Student() {
     }
@@ -141,15 +141,6 @@ public class Student implements Serializable {
         this.password = password;
     }
 
-    @XmlTransient
-    public Collection<StudentGrade> getStudentGradeCollection() {
-        return studentGradeCollection;
-    }
-
-    public void setStudentGradeCollection(Collection<StudentGrade> studentGradeCollection) {
-        this.studentGradeCollection = studentGradeCollection;
-    }
-
     public AcademicGroup getAcademicGroupId() {
         return academicGroupId;
     }
@@ -165,6 +156,15 @@ public class Student implements Serializable {
 
     public void setStudentAttendanceCollection(Collection<StudentAttendance> studentAttendanceCollection) {
         this.studentAttendanceCollection = studentAttendanceCollection;
+    }
+
+    @XmlTransient
+    public Collection<StudentGrade> getStudentGradeCollection() {
+        return studentGradeCollection;
+    }
+
+    public void setStudentGradeCollection(Collection<StudentGrade> studentGradeCollection) {
+        this.studentGradeCollection = studentGradeCollection;
     }
 
     @Override
@@ -189,7 +189,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rebirthlab.gradebook.entities.Student[ studentId=" + studentId + " ]";
+        return "com.rebirthlab.gradebook.entity.Student[ studentId=" + studentId + " ]";
     }
     
 }

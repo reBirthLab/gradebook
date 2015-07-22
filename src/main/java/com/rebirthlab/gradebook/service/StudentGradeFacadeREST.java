@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.services;
+package com.rebirthlab.gradebook.service;
 
-import com.rebirthlab.gradebook.entities.StudentAttendance;
-import com.rebirthlab.gradebook.entities.StudentAttendancePK;
+import com.rebirthlab.gradebook.entity.StudentGrade;
+import com.rebirthlab.gradebook.entity.StudentGradePK;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -37,12 +37,12 @@ import javax.ws.rs.core.PathSegment;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entities.studentattendance")
-public class StudentAttendanceFacadeREST extends AbstractFacade<StudentAttendance> {
+@Path("com.rebirthlab.gradebook.entity.studentgrade")
+public class StudentGradeFacadeREST extends AbstractFacade<StudentGrade> {
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
-    private StudentAttendancePK getPrimaryKey(PathSegment pathSegment) {
+    private StudentGradePK getPrimaryKey(PathSegment pathSegment) {
         /*
          * pathSemgent represents a URI path segment and any associated matrix parameters.
          * URI path part is supposed to be in form of 'somePath;studentId=studentIdValue;taskId=taskIdValue'.
@@ -50,7 +50,7 @@ public class StudentAttendanceFacadeREST extends AbstractFacade<StudentAttendanc
          * it is ignored in the following code.
          * Matrix parameters are used as field names to build a primary key instance.
          */
-        com.rebirthlab.gradebook.entities.StudentAttendancePK key = new com.rebirthlab.gradebook.entities.StudentAttendancePK();
+        com.rebirthlab.gradebook.entity.StudentGradePK key = new com.rebirthlab.gradebook.entity.StudentGradePK();
         javax.ws.rs.core.MultivaluedMap<String, String> map = pathSegment.getMatrixParameters();
         java.util.List<String> studentId = map.get("studentId");
         if (studentId != null && !studentId.isEmpty()) {
@@ -63,50 +63,50 @@ public class StudentAttendanceFacadeREST extends AbstractFacade<StudentAttendanc
         return key;
     }
 
-    public StudentAttendanceFacadeREST() {
-        super(StudentAttendance.class);
+    public StudentGradeFacadeREST() {
+        super(StudentGrade.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(StudentAttendance entity) {
+    public void create(StudentGrade entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") PathSegment id, StudentAttendance entity) {
+    public void edit(@PathParam("id") PathSegment id, StudentGrade entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") PathSegment id) {
-        com.rebirthlab.gradebook.entities.StudentAttendancePK key = getPrimaryKey(id);
+        com.rebirthlab.gradebook.entity.StudentGradePK key = getPrimaryKey(id);
         super.remove(super.find(key));
     }
 
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public StudentAttendance find(@PathParam("id") PathSegment id) {
-        com.rebirthlab.gradebook.entities.StudentAttendancePK key = getPrimaryKey(id);
+    public StudentGrade find(@PathParam("id") PathSegment id) {
+        com.rebirthlab.gradebook.entity.StudentGradePK key = getPrimaryKey(id);
         return super.find(key);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<StudentAttendance> findAll() {
+    public List<StudentGrade> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<StudentAttendance> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<StudentGrade> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.entities;
+package com.rebirthlab.gradebook.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -70,14 +70,14 @@ public class Gradebook implements Serializable {
         @JoinColumn(name = "lecturer_id", referencedColumnName = "lecturer_id")})
     @ManyToMany
     private Collection<Lecturer> lecturerCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradebookId")
-    private Collection<Task> taskCollection;
     @JoinColumn(name = "academic_group_id", referencedColumnName = "academic_group_id")
     @ManyToOne(optional = false)
     private AcademicGroup academicGroupId;
     @JoinColumn(name = "semester_id", referencedColumnName = "semester_id")
     @ManyToOne(optional = false)
     private Semester semesterId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradebookId")
+    private Collection<Task> taskCollection;
 
     public Gradebook() {
     }
@@ -124,15 +124,6 @@ public class Gradebook implements Serializable {
         this.lecturerCollection = lecturerCollection;
     }
 
-    @XmlTransient
-    public Collection<Task> getTaskCollection() {
-        return taskCollection;
-    }
-
-    public void setTaskCollection(Collection<Task> taskCollection) {
-        this.taskCollection = taskCollection;
-    }
-
     public AcademicGroup getAcademicGroupId() {
         return academicGroupId;
     }
@@ -147,6 +138,15 @@ public class Gradebook implements Serializable {
 
     public void setSemesterId(Semester semesterId) {
         this.semesterId = semesterId;
+    }
+
+    @XmlTransient
+    public Collection<Task> getTaskCollection() {
+        return taskCollection;
+    }
+
+    public void setTaskCollection(Collection<Task> taskCollection) {
+        this.taskCollection = taskCollection;
     }
 
     @Override
@@ -171,7 +171,7 @@ public class Gradebook implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rebirthlab.gradebook.entities.Gradebook[ gradebookId=" + gradebookId + " ]";
+        return "com.rebirthlab.gradebook.entity.Gradebook[ gradebookId=" + gradebookId + " ]";
     }
     
 }

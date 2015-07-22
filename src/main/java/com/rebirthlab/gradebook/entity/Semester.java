@@ -14,10 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.entities;
+package com.rebirthlab.gradebook.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,6 +30,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -39,45 +42,52 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
-@Table(name = "faculty")
+@Table(name = "semester")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Faculty.findAll", query = "SELECT f FROM Faculty f"),
-    @NamedQuery(name = "Faculty.findByFacultyId", query = "SELECT f FROM Faculty f WHERE f.facultyId = :facultyId"),
-    @NamedQuery(name = "Faculty.findByName", query = "SELECT f FROM Faculty f WHERE f.name = :name")})
-public class Faculty implements Serializable {
+    @NamedQuery(name = "Semester.findAll", query = "SELECT s FROM Semester s"),
+    @NamedQuery(name = "Semester.findBySemesterId", query = "SELECT s FROM Semester s WHERE s.semesterId = :semesterId"),
+    @NamedQuery(name = "Semester.findByName", query = "SELECT s FROM Semester s WHERE s.name = :name"),
+    @NamedQuery(name = "Semester.findByAcademicYear", query = "SELECT s FROM Semester s WHERE s.academicYear = :academicYear")})
+public class Semester implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "faculty_id")
-    private Integer facultyId;
+    @Column(name = "semester_id")
+    private Integer semesterId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
-    private Collection<Department> departmentCollection;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "academic_year")
+    @Temporal(TemporalType.DATE)
+    private Date academicYear;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "semesterId")
+    private Collection<Gradebook> gradebookCollection;
 
-    public Faculty() {
+    public Semester() {
     }
 
-    public Faculty(Integer facultyId) {
-        this.facultyId = facultyId;
+    public Semester(Integer semesterId) {
+        this.semesterId = semesterId;
     }
 
-    public Faculty(Integer facultyId, String name) {
-        this.facultyId = facultyId;
+    public Semester(Integer semesterId, String name, Date academicYear) {
+        this.semesterId = semesterId;
         this.name = name;
+        this.academicYear = academicYear;
     }
 
-    public Integer getFacultyId() {
-        return facultyId;
+    public Integer getSemesterId() {
+        return semesterId;
     }
 
-    public void setFacultyId(Integer facultyId) {
-        this.facultyId = facultyId;
+    public void setSemesterId(Integer semesterId) {
+        this.semesterId = semesterId;
     }
 
     public String getName() {
@@ -88,30 +98,38 @@ public class Faculty implements Serializable {
         this.name = name;
     }
 
-    @XmlTransient
-    public Collection<Department> getDepartmentCollection() {
-        return departmentCollection;
+    public Date getAcademicYear() {
+        return academicYear;
     }
 
-    public void setDepartmentCollection(Collection<Department> departmentCollection) {
-        this.departmentCollection = departmentCollection;
+    public void setAcademicYear(Date academicYear) {
+        this.academicYear = academicYear;
+    }
+
+    @XmlTransient
+    public Collection<Gradebook> getGradebookCollection() {
+        return gradebookCollection;
+    }
+
+    public void setGradebookCollection(Collection<Gradebook> gradebookCollection) {
+        this.gradebookCollection = gradebookCollection;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (facultyId != null ? facultyId.hashCode() : 0);
+        hash += (semesterId != null ? semesterId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Faculty)) {
+        if (!(object instanceof Semester)) {
             return false;
         }
-        Faculty other = (Faculty) object;
-        if ((this.facultyId == null && other.facultyId != null) || (this.facultyId != null && !this.facultyId.equals(other.facultyId))) {
+        Semester other = (Semester) object;
+        if ((this.semesterId == null && other.semesterId != null) || (this.semesterId != null && !this.semesterId.equals(other.semesterId))) {
             return false;
         }
         return true;
@@ -119,7 +137,7 @@ public class Faculty implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rebirthlab.gradebook.entities.Faculty[ facultyId=" + facultyId + " ]";
+        return "com.rebirthlab.gradebook.entity.Semester[ semesterId=" + semesterId + " ]";
     }
     
 }

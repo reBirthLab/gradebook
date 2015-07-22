@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.entities;
+package com.rebirthlab.gradebook.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -132,7 +132,7 @@ public class Department implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rebirthlab.gradebook.entities.Department[ departmentId=" + departmentId + " ]";
+        return "com.rebirthlab.gradebook.entity.Department[ departmentId=" + departmentId + " ]";
     }
     
 }
