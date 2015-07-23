@@ -54,20 +54,20 @@ public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") String id, AttendanceTable entity) {
+    public void edit(@PathParam("id") Integer id, AttendanceTable entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") String id) {
+    public void remove(@PathParam("id") Integer id) {
         super.remove(super.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public AttendanceTable find(@PathParam("id") String id) {
+    public AttendanceTable find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 

@@ -47,7 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
     @NamedQuery(name = "Student.findByStudentId", query = "SELECT s FROM Student s WHERE s.studentId = :studentId"),
-    @NamedQuery(name = "Student.findByFitstName", query = "SELECT s FROM Student s WHERE s.fitstName = :fitstName"),
+    @NamedQuery(name = "Student.findByFirstName", query = "SELECT s FROM Student s WHERE s.firstName = :firstName"),
     @NamedQuery(name = "Student.findByLastName", query = "SELECT s FROM Student s WHERE s.lastName = :lastName"),
     @NamedQuery(name = "Student.findByEmail", query = "SELECT s FROM Student s WHERE s.email = :email")})
 public class Student implements Serializable {
@@ -60,8 +60,8 @@ public class Student implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "fitst_name")
-    private String fitstName;
+    @Column(name = "first_name")
+    private String firstName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -93,9 +93,9 @@ public class Student implements Serializable {
         this.studentId = studentId;
     }
 
-    public Student(Integer studentId, String fitstName, String lastName, String email, byte[] password) {
+    public Student(Integer studentId, String firstName, String lastName, String email, byte[] password) {
         this.studentId = studentId;
-        this.fitstName = fitstName;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
@@ -109,12 +109,12 @@ public class Student implements Serializable {
         this.studentId = studentId;
     }
 
-    public String getFitstName() {
-        return fitstName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFitstName(String fitstName) {
-        this.fitstName = fitstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -140,7 +140,7 @@ public class Student implements Serializable {
     public void setPassword(byte[] password) {
         this.password = password;
     }
-
+    
     public AcademicGroup getAcademicGroupId() {
         return academicGroupId;
     }
@@ -191,5 +191,5 @@ public class Student implements Serializable {
     public String toString() {
         return "com.rebirthlab.gradebook.entity.Student[ studentId=" + studentId + " ]";
     }
-    
+
 }

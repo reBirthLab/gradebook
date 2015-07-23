@@ -179,5 +179,5 @@ public class Lecturer implements Serializable {
     public String toString() {
         return "com.rebirthlab.gradebook.entity.Lecturer[ lecturerId=" + lecturerId + " ]";
     }
-    
+
 }

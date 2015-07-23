@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TasksTable.findByStartDate", query = "SELECT t FROM TasksTable t WHERE t.startDate = :startDate"),
     @NamedQuery(name = "TasksTable.findByTaskLength", query = "SELECT t FROM TasksTable t WHERE t.taskLength = :taskLength"),
     @NamedQuery(name = "TasksTable.findByStudentId", query = "SELECT t FROM TasksTable t WHERE t.studentId = :studentId"),
-    @NamedQuery(name = "TasksTable.findByFitstName", query = "SELECT t FROM TasksTable t WHERE t.fitstName = :fitstName"),
+    @NamedQuery(name = "TasksTable.findByFirstName", query = "SELECT t FROM TasksTable t WHERE t.firstName = :firstName"),
     @NamedQuery(name = "TasksTable.findByLastName", query = "SELECT t FROM TasksTable t WHERE t.lastName = :lastName"),
     @NamedQuery(name = "TasksTable.findByGrade", query = "SELECT t FROM TasksTable t WHERE t.grade = :grade")})
 public class TasksTable implements Serializable {
@@ -95,8 +95,8 @@ public class TasksTable implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "fitst_name")
-    private String fitstName;
+    @Column(name = "first_name")
+    private String firstName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -174,12 +174,12 @@ public class TasksTable implements Serializable {
         this.studentId = studentId;
     }
 
-    public String getFitstName() {
-        return fitstName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFitstName(String fitstName) {
-        this.fitstName = fitstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -197,5 +197,5 @@ public class TasksTable implements Serializable {
     public void setGrade(short grade) {
         this.grade = grade;
     }
-    
+
 }

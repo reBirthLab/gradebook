@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "AttendanceTable.findByStartDate", query = "SELECT a FROM AttendanceTable a WHERE a.startDate = :startDate"),
     @NamedQuery(name = "AttendanceTable.findByTaskLength", query = "SELECT a FROM AttendanceTable a WHERE a.taskLength = :taskLength"),
     @NamedQuery(name = "AttendanceTable.findByStudentId", query = "SELECT a FROM AttendanceTable a WHERE a.studentId = :studentId"),
-    @NamedQuery(name = "AttendanceTable.findByFitstName", query = "SELECT a FROM AttendanceTable a WHERE a.fitstName = :fitstName"),
+    @NamedQuery(name = "AttendanceTable.findByFirstName", query = "SELECT a FROM AttendanceTable a WHERE a.firstName = :firstName"),
     @NamedQuery(name = "AttendanceTable.findByLastName", query = "SELECT a FROM AttendanceTable a WHERE a.lastName = :lastName"),
     @NamedQuery(name = "AttendanceTable.findByPresent", query = "SELECT a FROM AttendanceTable a WHERE a.present = :present"),
     @NamedQuery(name = "AttendanceTable.findByAbsentWithReason", query = "SELECT a FROM AttendanceTable a WHERE a.absentWithReason = :absentWithReason"),
@@ -98,8 +98,8 @@ public class AttendanceTable implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "fitst_name")
-    private String fitstName;
+    @Column(name = "first_name")
+    private String firstName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -190,12 +190,12 @@ public class AttendanceTable implements Serializable {
         this.studentId = studentId;
     }
 
-    public String getFitstName() {
-        return fitstName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFitstName(String fitstName) {
-        this.fitstName = fitstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -237,5 +237,5 @@ public class AttendanceTable implements Serializable {
     public void setClassDate(Date classDate) {
         this.classDate = classDate;
     }
-    
+ 
 }
