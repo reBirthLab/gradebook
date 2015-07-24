@@ -4,9 +4,9 @@ My Pet Project
 ##Technology Stack:
 *Front End*
 * HTML/CSS
-* Materialize Framework?
 * Angular Material?
-* jQuery
+* Materialize Framework?
+* jQuery?
 * AngularJS
 
 *Back End*
