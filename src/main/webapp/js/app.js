@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var gradebookApp = angular.module('gradebookApp', ['ui.router']);
+var gradebookApp = angular.module('gradebookApp', ['ui.router', 'gradebookControllers']);
 
 gradebookApp.config(function ($stateProvider, $urlRouterProvider) {
 
@@ -29,7 +29,8 @@ gradebookApp.config(function ($stateProvider, $urlRouterProvider) {
             })
             .state('gradebook-lecturer', {
                 url: "/gradebook",
-                templateUrl: "views/gradebook-lecturer.html"
+                templateUrl: "views/gradebook-lecturer.html",
+                controller: 'StudentsGradesCtrl'
             });
 });
 
