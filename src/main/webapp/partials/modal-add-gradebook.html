@@ -1,0 +1,79 @@
+<div id="add-gradebook" class="modal">
+    <div class="modal-content">
+        <div class="section">
+            <h5>Add existing Gradebooks</h5>
+            <form>
+                <label for="group-existing-gb">Group</label>
+                <select id="group-existing-gb">
+                    <option value="" disabled selected>Choose a group</option>
+                    <option value="1">ARCH15-1</option>
+                    <option value="2">ARCH15-1</option>
+                    <option value="3">ARCH15-1</option>
+                </select>
+            </form>
+        </div>
+        <div class="section">
+            <h5>Create a new Gradebook</h5>
+            <form>
+                <div>
+                    <label for="semester">Semester</label>
+                    <select id="semester">
+                        <option value="" disabled selected>Choose a semester</option>
+                        <option value="1">Spring 2016</option>
+                        <option value="2">Fall 2016</option>
+                        <option value="3">Spring 2015</option>
+                        <option value="4">Fall 2015</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="group-new-gb">Group</label>
+                    <select id="group-new-gb">
+                        <option value="" disabled selected>Choose a group</option>
+                        <option value="1">ARCH15-1</option>
+                        <option value="2">ARCH15-1</option>
+                        <option value="3">ARCH15-1</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="subject">Subject</label>
+                    <input id="subject" type="text"> 
+                </div>
+                <div>
+                    <label for="lecturers">Lecturers</label>
+                    <select id="lecturers">
+                        <option value="" disabled selected>Choose a lecturer</option>
+                        <option value="1">Anthony Hopkins</option>
+                        <option value="2">Quentin Tarantino</option>
+                        <option value="3">Robert De Niro</option>
+                        <option value="4">Samuel L. Jackson</option>
+                    </select>
+
+                    <div class="lecturers">
+                        <div>
+                            <span>Quentin Tarantino</span>
+                            <a href="#"><i class="material-icons">clear</i></a>
+                        </div>
+                        <div>
+                            <span>Anthony Hopkins</span>
+                            <a href="#"><i class="material-icons">clear</i></a>
+                        </div>
+                        <div>
+                            <span>Robert De Niro</span>
+                            <a href="#"><i class="material-icons">clear</i></a>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div>
+                    <label for="description">Description</label>
+                    <textarea id="description" class="materialize-textarea"></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat ">Dismiss</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Submit</a>
+    </div>
+</div>

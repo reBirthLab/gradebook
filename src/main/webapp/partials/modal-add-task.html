@@ -1,0 +1,65 @@
+<div id="add-task" class="modal">
+    <div class="modal-content">
+
+        <h5>Create a new Task</h5>
+        <form>
+            <div>
+                <label for="task-title">Task Title</label>
+                <input id="task-title" type="text"> 
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <label for="task-startdate">Start Date</label>
+                    <input id="task-startdate" type="date" class="datepicker">
+                </div>
+                <div class="col s6">
+                    <div class="col s8">
+                        <label for="task-length">Length</label>
+                        <input id="task-length" type="number"> 
+                    </div>
+                    <div class="col s4" style="line-height: 83px">
+                        <span>Weeks</span>
+                    </div>   
+                </div>
+            </div>
+            <div>
+                <label>On course days</label>
+                <div id="task-day-chooser">
+                    <div>
+                        <input type="checkbox" id="task-monday" />
+                        <label for="task-monday">Monday</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="task-tuesday" />
+                        <label for="task-tuesday">Tuesday</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="task-wednesday" />
+                        <label for="task-wednesday">Wednesday</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="task-thursday" />
+                        <label for="task-thursday">Thursday</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="task-friday" />
+                        <label for="task-friday">Friday</label>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label for="task-max-grade">Maximum grade</label>
+                <input id="task-max-grade" type="number"/>
+            </div>
+            <div>
+                <label for="task-description">Description</label>
+                <textarea id="task-description" class="materialize-textarea"></textarea>
+            </div>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat ">Dismiss</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Submit</a>
+    </div>
+</div>

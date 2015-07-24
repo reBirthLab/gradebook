@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var gradebookApp = angular.module('gradebookApp', ['angular.filter', 'ngResource']);
+var gradebookControllers = angular.module('gradebookControllers', ['angular.filter', 'ngResource']);
 
-gradebookApp.controller('StudentsGradesCtrl', function ($scope, $http) {
+gradebookControllers.controller('StudentsGradesCtrl', function ($scope, $http) {
     $http.get('http://gradebook-anastasius.rhcloud.com/api/groups/1/semesters/5/gradebooks/2/tasks').
             success(function (data) {
                 
