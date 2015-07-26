@@ -25,8 +25,8 @@ gradebookControllers.controller('sidenavCtrl', ['$scope', '$mdSidenav', function
     }]);
 
 // TEMPORARY
-gradebookControllers.controller('studentsGradesCtrl', function ($scope, $http) {
-    $http.get('http://localhost:8080/gradebook/api/groups/1/semesters/5/gradebooks/2/tasks').
+gradebookControllers.controller('studentsGradesCtrl', function ($scope, $http, $location) {
+    $http.get($location.path() + '/api/groups/1/semesters/5/gradebooks/2/tasks').
             success(function (data) {
 
                 $scope.studentGrades = angular.fromJson(data);
