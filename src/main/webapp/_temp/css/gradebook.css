@@ -1,0 +1,413 @@
+/*
+Copyright (C) 2015 Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+/* 
+    Created on : Jul 4, 2015, 10:44:19 PM
+    Author     : Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
+*/
+
+/********************************/
+/* Materialize SideNav settings */
+/********************************/
+header, main, footer {
+    padding-left: 180px;
+}
+
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+/**************************************/
+/* Materialize Stycky footer settings */
+/**************************************/
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+/*********************/
+/* Login Page Styles */
+/*********************/
+#header {
+    height: 60px;
+}
+
+.login-image-title {
+    float: right;
+    padding-right: 20px;
+}
+/******************************/
+/* Gradebook Main Page Styles */
+/******************************/
+.nav-secondary {
+    height: 36px;
+    background-color: #bdbdbd;
+}
+
+@media only screen and (min-width : 992px) {  
+    .brand-logo {
+        margin-left: -30px;
+    }
+}
+@media only screen and (max-width : 992px) {
+    span.path-title{
+        padding: 6px 0px 0px 0px;
+        color: #fff;
+        //font-weight: normal;
+        font-size: 16px;
+    } 
+}
+
+.option-chooser {
+    padding-top: 6px;
+    color: #fff;
+    float: left;
+    font-size: 16px;
+}
+
+.option-chooser a {
+    text-align: center;
+    color: #fff;
+    width: 100px;
+}
+
+.path-title{   
+    float: right;
+    padding-right: 140px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.tabs {
+    height: 36px;
+    background-color: #bdbdbd;
+}
+
+.tabs .indicator {
+    background-color: #ff4081;
+}
+
+.tabs .tab {
+    line-height: 36px;
+    height: 36px;
+}
+  
+.tabs .tab a {
+    color: #fff;
+}
+
+.tabs .tab a:hover {
+    color: #ff80ab;
+}
+
+
+/******************/
+/* Modals Styles */
+/******************/
+.modal.narrow {
+    max-width: 400px;
+}
+
+.modal form div {
+    padding-bottom: 10px;
+}
+
+.modal form a {
+    color: #757575;
+}
+
+.modal .lecturers div {
+    display: inline-block; 
+    padding: 0px 10px;
+}
+
+.modal .lecturers i {
+    vertical-align: middle;
+}
+
+#attendance-modal div {
+    text-align: center;
+}
+
+#attendance-modal i {
+    font-size: 48px;
+    padding: 10px;
+}
+
+#add-task {
+     max-height: 80%;
+}
+
+#add-task .col {
+    padding-right: 1.5em;
+    padding-left: 0;
+    margin: 0;
+}
+
+#add-task .row {
+    margin: 0;
+}
+
+#task-day-chooser div  {
+    width: 120px;
+    display: inline-block;
+    padding-right: 20px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+#add-task .picker__date-display {
+    height: 20px;
+}
+
+#add-task .picker__date-display div {
+    display: none;
+}
+
+/*******************/
+/* Tables settings */
+/*******************/
+
+/** Common styles **/
+.table {
+    width: 100%;
+}
+
+.table-tasks, .table-attendance {
+    overflow: auto;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.table-tasks th, .table-tasks td, .table-attendance th, .table-attendance td{
+    border-right: 1px solid #f5f5f5;
+    padding: 0;
+}
+
+.table-tasks .header-primary th a, .table-attendance .header-primary th a {
+   color: #212121;
+}
+
+.table-tasks .header-secondary th, .table-attendance .header-secondary th {
+    border-top: 1px solid #d0d0d0;
+    border-right: 1px solid #d0d0d0;
+    border-bottom: 2px solid #d0d0d0;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+    padding: 0px 10px;
+}
+
+.mark {
+    text-align: center;   
+}
+
+/** TASK table styles **/
+.table-tasks .header-primary th {
+    border-right: 1px solid #d0d0d0;
+    padding: 5px 10px;
+    vertical-align: top;
+}
+
+.table-tasks td {
+    padding: 5px;
+    font-size: 16px;
+    text-align: center;
+    border-bottom: 1px solid #d0d0d0;
+    vertical-align: middle;
+    min-width: 110px;
+}
+
+.table-tasks td.table-num-col {
+    padding: 0px 10px;
+    min-width: 10px;
+}
+
+.table-tasks td.table-name-col {
+    min-width: 140px; 
+    text-align: left;
+    padding: 0px 10px;
+}
+
+.table-tasks .header-primary th a i {
+    width: 100%;
+    text-align: center;
+    padding-top: 12px; 
+}
+
+/** ATTENDANCE table styles **/
+.table-attendance {
+    border-bottom: 2px solid #d0d0d0;
+}
+
+.table-attendance .header-primary th {
+    border-right: 1px solid #d0d0d0;
+    padding: 10px;
+    vertical-align: top;
+}
+
+.table-attendance td {
+    padding: 5px;
+    font-size: 16px;
+    text-align: center;
+    border-right: 1px solid #d0d0d0;
+    border-bottom: 1px solid #f5f5f5;
+    vertical-align: middle;
+    min-width: 50px;
+}
+
+.table-attendance td i {
+    vertical-align: middle;
+}
+
+.table-attendance td.table-num-col {
+    padding: 0px 10px;
+    min-width: 10px;
+}
+
+.table-attendance td.table-name-col {
+    text-align: left;
+    padding: 0px 10px;
+    min-width: 140px;
+}
+
+/******************/
+/* SideNav Styles */
+/******************/
+.side-nav li {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.side-nav i {
+    vertical-align: middle;
+    padding: 5px;
+}
+
+.side-nav li.menu-item {
+    padding-left: 20px;
+}
+
+.side-nav li.menu-title {
+    padding: 10px 0px 0px 15px;
+    font-size: 30px;
+    text-align: left;
+}
+
+.side-nav a {
+    color: #212121; 
+}
+
+.side-nav span {
+    //padding-left: 10px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.side-nav .menu li { 
+    padding: 0;
+    border-bottom: 1px solid #d0d0d0;
+    text-align: left;
+}
+
+.side-nav .menu li a {
+    display: block;
+    padding-left: 10px;
+    line-height: 40px;
+    font-weight: bold; 
+}
+
+.side-nav .menu li ul li ul li a {
+    display: inline-block;
+    width: 167px;
+    line-height:normal;
+    padding: 10px 0px;
+    vertical-align: middle;
+}
+
+.side-nav .menu li i {
+    display: inline-block;
+    width: 22px;
+    padding: 10px 0px;
+    font-size: 1.4rem;
+    vertical-align: middle;
+}
+
+.side-nav li.selected {
+    background-color: #f5f5f5;
+}
+
+.side-nav .menu li.active {
+    background-color: #ff4081;  
+}
+
+.side-nav .menu li.active i.material-icons {
+    color: #fff;  
+}
+
+.side-nav .menu li.active a {
+    color: #fff;
+}
+
+.side-nav .menu li ul li a{
+    font-weight: normal;
+
+}
+.side-nav .menu li ul li ul li {
+    border-bottom: none;
+    padding-left: 10px;
+}
+
+/***********************/
+/* Waves custom colors */
+/***********************/
+.waves-effect.waves-pink .waves-ripple {
+    background-color: rgba(255, 64, 129, 0.3);
+}
+
+.waves-effect.waves-dark .waves-ripple {
+    background-color: rgba(97, 97, 97, 0.3);
+}
+
+/***********************/
+/* Icons custom colors */
+/***********************/
+.material-icons.pink-main { 
+    color: #ff4081; 
+}
+
+.material-icons.grey-dark { 
+    color: #212121; 
+}
+
+.material-icons.white { 
+    color: #fff; 
+}
+
+.material-icons.red-accent{ 
+    color: #e53935; 
+}
+.material-icons.green-accent { 
+    color: #8bc34a; 
+}
+.material-icons.yellow-accent { 
+    color: #ffee58; 
+}

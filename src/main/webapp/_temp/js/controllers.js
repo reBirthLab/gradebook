@@ -15,29 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var gradebookControllers = angular.module('gradebookControllers', ['ngMaterial', 'ngResource']);
+var gradebookControllers = angular.module('gradebookControllers', ['angular.filter', 'ngResource']);
 
-gradebookControllers.controller('sidenavCtrl', ['$scope', '$mdSidenav', function ($scope, $mdSidenav)
-    {
-        $scope.toggleSidenav = function (menuId) {
-            $mdSidenav(menuId).toggle();
-        };
-    }]);
-
-// TEMPORARY
-gradebookControllers.controller('studentsGradesCtrl', function ($scope, $http) {
+gradebookControllers.controller('StudentsGradesCtrl', function ($scope, $http) {
     $http.get('http://localhost:8080/gradebook/api/groups/1/semesters/5/gradebooks/2/tasks').
             success(function (data) {
-
+                
                 $scope.studentGrades = angular.fromJson(data);
             });
-});
-
-gradebookControllers.controller('navCtrl', function ($scope, $location) {
-
-        if ($location.path() === '/login') {
-            return $scope.notLogin = false;
-        } else {
-            return $scope.notLogin = true;
-        };
 });
