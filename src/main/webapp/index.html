@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<html lang="en" ng-app="gradebookApp" ng-controller="navCtrl">
+<html lang="en" ng-app="GradebookApp" ng-controller="NavCtrl">
     <head>
         <title>GradeBook</title>
         <meta charset="UTF-8">
@@ -32,12 +32,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <!-- GradeBook CSS -->
         <link rel="stylesheet" href="css/gradebook.css">
     </head>
-    <body ng-controller="sidenavCtrl" layout="row">
+    <body ng-controller="SidenavCtrl" layout="row">
 
         <!-- Sidenav -->
     <md-sidenav ng-show="notLogin" class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left" 
                 md-is-locked-open="$mdMedia('gt-md')" tabindex="-1">
-        <p>ASS</p>
+        <header class="nav-header">
+            <img src="images/Architectural_Association_Logo.jpg" alt>
+        </header>
+        <md-content>
+            
+        </md-content>
     </md-sidenav>
 
 
@@ -58,50 +63,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </md-toolbar>
 
         <!-- Content -->
-        <md-content ui-view class="main-frame">
-            <!-- TEMPORARY -->
-            <div ng-controller="studentsGradesCtrl">
-                <table>
-                    <thead>
-                        <tr class="header-primary">
-                            <th>#</th>
-                            <th>Name</th>                                                                     
-                            <th ng-repeat="(key, value) in studentGrades | groupBy: 'taskId'">
-                                <a class="modal-trigger" href="#task{{value[0].taskId}}">
-                                    Task {{($index + 1)}} | {{value[0].title}}
-                                </a>
-                            </th>
-                            <th>
-                                <a class="modal-trigger" href="#add-task">
-                                    <i class="material-icons" style="font-size: 42px">add_circle_outline</i>
-                                </a>
-                            </th>                               
-                        </tr>
-                        <tr class="header-secondary">
-                            <th></th>
-                            <th></th>
-                            <th>06/07 - 10/07</th>
-                            <th>13/07 - 17/07</th>
-                            <th>20/07 - 24/07</th>
-                            <th>27/07 - 31/07</th>
-                            <th></th>         
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr ng-repeat="(key, value) in studentGrades | groupBy: 'studentId'">
-                            <td class="table-num-col">{{($index + 1)}}</td>
-                            <td class="table-name-col">{{value[0].firstName}} {{value[0].lastName}}</td>
-                            <td ng-repeat="task in value">
-                                <a class="modal-trigger" href="#mark1">{{task.grade}}</a>
-                            </td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </md-content>
-        <div flex></div>
+        <md-content ui-view class="main-frame" flex></md-content>
+        
+        
 
         <!-- Footer -->
         <div class="page-footer md-body-1" layout="row" layout-align="center center">
@@ -121,7 +85,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <script src="lib/angular-filter.min.js"></script>
 
     <!-- GradeBook Script -->
-    <script src="js/gradebookApp.js"></script>
+    <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
 </body>

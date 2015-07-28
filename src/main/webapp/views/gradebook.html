@@ -1,0 +1,38 @@
+<table>
+    <thead>
+        <tr class="header-primary">
+            <th>#</th>
+            <th>Name</th>                                                                     
+            <th ng-repeat="(key, value) in studentGrades | groupBy: 'taskId'">
+                <a class="modal-trigger" href="#task{{value[0].taskId}}">
+                    Task {{($index + 1)}} | {{value[0].title}}
+                </a>
+            </th>
+            <th>
+                <a class="modal-trigger" href="#add-task">
+                    <i class="material-icons" style="font-size: 42px">add_circle_outline</i>
+                </a>
+            </th>                               
+        </tr>
+        <tr class="header-secondary">
+            <th></th>
+            <th></th>
+            <th>06/07 - 10/07</th>
+            <th>13/07 - 17/07</th>
+            <th>20/07 - 24/07</th>
+            <th>27/07 - 31/07</th>
+            <th></th>         
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="(key, value) in studentGrades | groupBy: 'studentId'">
+            <td class="table-num-col">{{($index + 1)}}</td>
+            <td class="table-name-col">{{value[0].firstName}} {{value[0].lastName}}</td>
+            <td ng-repeat="task in value">
+                <a class="modal-trigger" href="#mark1">{{task.grade}}</a>
+            </td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>

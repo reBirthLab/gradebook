@@ -41,6 +41,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.rebirthlab.gradebook.service.AcademicGroupFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.AdminFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.AttendanceTableFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.DepartmentFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.FacultyFacadeREST.class);
@@ -51,8 +52,10 @@ public class ApplicationConfig extends Application {
         resources.add(com.rebirthlab.gradebook.service.StudentAttendanceFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.StudentFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.StudentGradeFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.StudentGradebooksFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.TaskFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.TasksTableFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.UsersFacadeREST.class);
     }
     
 }

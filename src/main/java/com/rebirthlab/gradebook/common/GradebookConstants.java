@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2015 Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,5 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.rebirthlab.gradebook.common;
 
-var gradebookApp = angular.module('gradebookApp', ['gradebookControllers', 'angular.filter']);
+/**
+ *
+ * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
+ */
+public class GradebookConstants {
+
+    final public static String ROLE_ADMIN = "admin";
+    final public static String ROLE_LECTURER = "lecturer";
+    final public static String ROLE_STUDENT = "student";
+}

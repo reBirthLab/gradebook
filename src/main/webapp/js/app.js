@@ -16,3 +16,26 @@
  */
 'use strict';
 
+angular.module('GradebookApp', [
+    'ui.router', 
+    'ngResource', 
+    'angular.filter', 
+    'GradebookControllers']);
+
+angular.module('GradebookApp')
+        .config(function ($stateProvider, $urlRouterProvider) {
+            $urlRouterProvider.otherwise("/");
+
+            $stateProvider
+                    .state('login', {
+                        url: '/login',
+                        templateUrl: 'views/login.html',
+                        
+                        
+                    })
+                    .state('gradebook', {
+                        url: '/gradebook',
+                        templateUrl: 'views/gradebook.html',
+                        controller: 'StudentsGradesCtrl'
+                    });
+        });

@@ -16,18 +16,23 @@
  */
 package com.rebirthlab.gradebook.service;
 
+import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.LecturerGradebooks;
+import com.rebirthlab.gradebook.entity.LecturerGradebooks_;
+import com.rebirthlab.gradebook.security.BasicAuthenticationDecoder;
+import com.rebirthlab.gradebook.security.UserIdFinder;
+import com.rebirthlab.gradebook.security.UserIdType;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 /**
@@ -35,8 +40,9 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entity.lecturergradebooks")
+@Path("groups")
 public class LecturerGradebooksFacadeREST extends AbstractFacade<LecturerGradebooks> {
+
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
@@ -44,57 +50,30 @@ public class LecturerGradebooksFacadeREST extends AbstractFacade<LecturerGradebo
         super(LecturerGradebooks.class);
     }
 
-    @POST
-    @Override
-    @Consumes({"application/xml", "application/json"})
-    public void create(LecturerGradebooks entity) {
-        super.create(entity);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, LecturerGradebooks entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
-    }
-
     @GET
-    @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public LecturerGradebooks find(@PathParam("id") Integer id) {
-        return super.find(id);
-    }
+    public List<LecturerGradebooks> findAllLecturerGradebooks(@HeaderParam("Authorization") String authorization) {
 
-    @GET
-    @Override
-    @Produces({"application/xml", "application/json"})
-    public List<LecturerGradebooks> findAll() {
-        return super.findAll();
-    }
+        String username = BasicAuthenticationDecoder.getUsername(authorization);
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
-    public List<LecturerGradebooks> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
+        UserIdType userIdType = new UserIdFinder(getEntityManager()).find(username);
 
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
+        if (userIdType.getUserType().equals(GradebookConstants.ROLE_LECTURER)) {
+            Integer lecturerId = userIdType.getUserId();
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery(LecturerGradebooks.class);
+            Root lecturerGradebooks = cq.from(LecturerGradebooks.class);
+            
+            cq.where(cb.equal(lecturerGradebooks.get(LecturerGradebooks_.lecturerId), lecturerId));
+            return getEntityManager().createQuery(cq).getResultList();
+        } else {
+            return null;
+        }
     }
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

@@ -14,30 +14,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+'use strict';
 
-var gradebookControllers = angular.module('gradebookControllers', ['ngMaterial', 'ngResource']);
+angular.module('GradebookControllers', ['ngMaterial', 'ngResource'])
 
-gradebookControllers.controller('sidenavCtrl', ['$scope', '$mdSidenav', function ($scope, $mdSidenav)
-    {
-        $scope.toggleSidenav = function (menuId) {
-            $mdSidenav(menuId).toggle();
-        };
-    }]);
+        .controller('SidenavCtrl', function ($scope, $mdSidenav)
+        {
+            $scope.toggleSidenav = function (menuId) {
+                $mdSidenav(menuId).toggle();
+            };
+        })
 
 // TEMPORARY
-gradebookControllers.controller('studentsGradesCtrl', function ($scope, $http, $location) {
-    $http.get($location.path() + '/api/groups/1/semesters/5/gradebooks/2/tasks').
-            success(function (data) {
+        .controller('StudentsGradesCtrl', function ($scope, $http, $location) {
+            $http.get('http://gradebook-anastasius.rhcloud.com/api/groups/1/semesters/5/gradebooks/2/tasks').
+                    success(function (data) {
 
-                $scope.studentGrades = angular.fromJson(data);
-            });
-});
+                        $scope.studentGrades = angular.fromJson(data);
+                    });
+        })
 
-gradebookControllers.controller('navCtrl', function ($scope, $location) {
+        .controller('NavCtrl', function ($scope, $location) {
 
-        if ($location.path() === '/login') {
-            return $scope.notLogin = false;
-        } else {
-            return $scope.notLogin = true;
-        };
-});
+            if ($location.path() === '/login') {
+                return $scope.notLogin = false;
+            } else {
+                return $scope.notLogin = true;
+            }
+            ;
+        })
+
+        .controller('LoginController', function () {
+            
+        });

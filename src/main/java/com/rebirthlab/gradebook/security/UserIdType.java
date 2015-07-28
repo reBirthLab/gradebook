@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2015 Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,5 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-'use strict';
+package com.rebirthlab.gradebook.security;
 
+/**
+ *
+ * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
+ */
+public class UserIdType {
+    private final Integer id;
+    private final String type;
+    
+    public UserIdType(Integer id, String type){
+        this.id = id;
+        this.type = type;
+    }
+    
+    public Integer getUserId(){
+        return id;
+    }
+    
+    public String getUserType(){
+        return type;
+    }
+}
