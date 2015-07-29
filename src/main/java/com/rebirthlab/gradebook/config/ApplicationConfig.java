@@ -23,7 +23,7 @@ import javax.ws.rs.core.Application;
  *
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
-@javax.ws.rs.ApplicationPath("api")
+@javax.ws.rs.ApplicationPath("api/v1")
 public class ApplicationConfig extends Application {
 
     @Override

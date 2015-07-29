@@ -16,34 +16,24 @@
  */
 'use strict';
 
-angular.module('GradebookControllers', ['ngMaterial', 'ngResource'])
+var controllers = angular.module('GradebookControllers', ['ngMaterial', 'ngResource']);
 
-        .controller('SidenavCtrl', function ($scope, $mdSidenav)
-        {
-            $scope.toggleSidenav = function (menuId) {
-                $mdSidenav(menuId).toggle();
-            };
-        })
+controllers.controller('MainCtrl', function ($scope, $mdSidenav, $state) {
+    $scope.toggleSidenav = function (menuId) {
+        if ($state.current.name !== 'login') {
+            $mdSidenav(menuId).toggle();
+        }
+    };
+});
+
+controllers.controller('LoginCtrl', function ($scope ) {
+});
 
 // TEMPORARY
-        .controller('StudentsGradesCtrl', function ($scope, $http, $location) {
-            $http.get('http://gradebook-anastasius.rhcloud.com/api/groups/1/semesters/5/gradebooks/2/tasks').
-                    success(function (data) {
+controllers.controller('StudentsGradesCtrl', function ($scope, $http, $location) {
+    $http.get('http://localhost:8080/api/v1/groups/1/semesters/5/gradebooks/2/tasks').
+            success(function (data) {
 
-                        $scope.studentGrades = angular.fromJson(data);
-                    });
-        })
-
-        .controller('NavCtrl', function ($scope, $location) {
-
-            if ($location.path() === '/login') {
-                return $scope.notLogin = false;
-            } else {
-                return $scope.notLogin = true;
-            }
-            ;
-        })
-
-        .controller('LoginController', function () {
-            
-        });
+                $scope.studentGrades = angular.fromJson(data);
+            });
+});

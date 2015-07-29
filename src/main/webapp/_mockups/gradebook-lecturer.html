@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<html ng-app="gradebookApp">
+<html>
     <head>
         <title>GradeBook</title>
         <meta charset="UTF-8">
@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
         <link href="css/gradebook.css" type="text/css" rel="stylesheet" media="screen,projection">
     </head>
-    <body ng-controller="StudentsGradesCtrl">
+    <body>
         <!-- Header -->
         <header>
             <div class="navbar-fixed">
@@ -44,11 +44,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div class="nav-secondary">
                 <div class="container">
                     <div class="row">
-                           <!-- <div>
-                            <span class="option-chooser">
-                                <a href="gradebook_main.html" class="waves-effect waves-dark">Tasks</a> |  <a href="gradebook_attendance.html" class="waves-effect waves-dark">Attendance</a>
-                            </span> 
-                        </div> -->
                         <div class="col s12 m6 l4">
                             <ul class="tabs">
                                 <li class="tab col s6 m3 l2"><a href="#tasks">Tasks</a></li>
@@ -64,7 +59,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <!-- Menu -->
             <div class="container">
                 <ul id="slide-out" class="side-nav fixed">
-                    <li><img src="images/Architectural_Association_Logo.jpg" alt="" width="210"/></li>
+                    <li><img src="../images/Architectural_Association_Logo.jpg" alt="" width="210"/></li>
                     <li class="menu-item">
                         <i class="material-icons grey-dark small">account_box</i>
                         <span>Anastasiy Tovstik</span>
@@ -88,7 +83,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                             </li>
                                             <li class="active">
                                                 <i class="material-icons">description</i>
-                                                <a href="gradebook_student.html">Composition</a>
+                                                <a href="gradebook-student.html">Composition</a>
                                             </li>
                                             <li>
                                                 <i class="material-icons">description</i>
@@ -183,7 +178,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="index.html">
+                        <a href="login.html">
                             <i class="material-icons grey-dark small">exit_to_app</i>
                             <span>Log out</span>
                         </a>
@@ -200,14 +195,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <table class="table bordered">
                         <thead>
                             <tr class="header-primary">
-                                <th>#</th>
-                                <th>Name</th>                                                                     
-                                <th ng-repeat="(key, value) in studentGrades | groupBy: 'taskId'">
-                                    <a class="modal-trigger" href="#task{{value[0].taskId}}">
-                                        Task {{($index + 1)}} | {{value[0].title}}
+                                <th data-field="id">#</th>
+                                <th data-field="fname">Name</th>                                      
+                                <th data-field="task1">
+                                    <a class="modal-trigger" href="#task1">
+                                        Task 1 | Drawing of Human Head
                                     </a>
                                 </th>
-                                <th>
+                                <th data-field="task2">
+                                    <a class="modal-trigger" href="#task1">
+                                        Task 2 | Drawing of Naked Body
+                                    </a>
+                                </th>
+                                <th data-field="task3">
+                                    <a class="modal-trigger" href="#task1">
+                                        Task 3 | Sketching
+                                    </a>
+                                </th>
+                                <th data-field="task4">
+                                    <a class="modal-trigger" href="#task1">
+                                        Task 4 | Drawing of Human Head
+                                    </a>
+                                </th>
+                                <th data-field="task5">
+                                    <a class="modal-trigger" href="#task1">
+                                        Task 5 | Drawing of Naked Body
+                                    </a>
+                                </th>
+                                <th data-field="task6">
                                     <a class="modal-trigger" href="#add-task">
                                         <i class="material-icons" style="font-size: 42px">add_circle_outline</i>
                                     </a>
@@ -220,12 +235,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 <th>13/07 - 17/07</th>
                                 <th>20/07 - 24/07</th>
                                 <th>27/07 - 31/07</th>
+                                <th>03/08 - 07/08</th>
                                 <th></th>         
                             </tr>
                         </thead>
 
                         <tbody>
-                            <!-- STATIC VERSION
                             <tr>
                                 <td class="table-num-col">1</td>
                                 <td class="table-name-col">Sam Smith</td>
@@ -237,18 +252,131 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 <td>67</td>
                                 <td>89</td>
                                 <td></td>
-                            </tr> -->
-                            <tr ng-repeat="(key, value) in studentGrades | groupBy: 'studentId'">
-                                <td class="table-num-col">{{($index + 1)}}</td>
-                                <td class="table-name-col">{{value[0].firstName}} {{value[0].lastName}}</td>
-                                <td ng-repeat="task in value">
-                                    <a class="modal-trigger" href="#mark1">{{task.grade}}</a>
-                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">2</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>56</td>
+                                <td>78</td>
+                                <td>90</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">3</td>
+                                <td class="table-name-col">Robert Dowson</td>
+                                <td>46</td>
+                                <td>86</td>
+                                <td>48</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">4</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>56</td>
+                                <td>78</td>
+                                <td>90</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">5</td>
+                                <td class="table-name-col">Robert Dowson</td>
+                                <td>46</td>
+                                <td>86</td>
+                                <td>48</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">6</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>56</td>
+                                <td>78</td>
+                                <td>90</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">7</td>
+                                <td class="table-name-col">Robert Dowson</td>
+                                <td>46</td>
+                                <td>86</td>
+                                <td>48</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">8</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>56</td>
+                                <td>78</td>
+                                <td>90</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">9</td>
+                                <td class="table-name-col">Sam Smith</td>
+                                <td>46</td>
+                                <td>86</td>
+                                <td>48</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">10</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>56</td>
+                                <td>78</td>
+                                <td>90</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">11</td>
+                                <td class="table-name-col">Robert Dowson</td>
+                                <td>46</td>
+                                <td>86</td>
+                                <td>48</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">12</td>
+                                <td class="table-name-col">Albert Einstein</td>
+                                <td>56</td>
+                                <td>78</td>
+                                <td>90</td>
+                                <td>67</td>
+                                <td>89</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="table-num-col">13</td>
+                                <td class="table-name-col">Sam Smith</td>                                       
+                                <td>46</td>
+                                <td>86</td>
+                                <td>48</td>
+                                <td>67</td>
+                                <td>89</td>
                                 <td></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+
 
                 <div id="attendance" class="table-attendance">
                     <table>
@@ -461,6 +589,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
             </div>
 
+
             <!-- MODALS -->
             <!-- MARK Pop-up -->
             <div id="mark1" class="modal narrow">
@@ -671,15 +800,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </footer>
 
         <!-- Scripts -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>    
-        <script src="js/tendina.min.js"></script>
-        <script src="js/angular-resource.min.js"></script>
-        <script src="js/angular-filter.min.js"></script>
-        
-        <!-- Custom Scripts & Libraries -->
-        <script src="js/materialize.js"></script>
-        <script src="js/materialize-settings.js"></script>
-        <script src="js/controllers.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>   
+        <script src="lib/tendina.min.js"></script>
+        <script src="lib/materialize.min.js"></script>
+        <script src="js/materialize-settings.js"></script>  
     </body>
 </html>

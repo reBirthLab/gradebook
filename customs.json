@@ -1,0 +1,42 @@
+{
+    "elements": {
+        "md-card": {
+            "attributes": {
+                "class": {}
+            }
+        },
+        "md-toolbar": {
+            "attributes": {
+                "ng-show": {},
+                "style": {},
+                "class": {}
+            }
+        },
+        "md-sidenav": {
+            "attributes": {
+                "ng-show": {},
+                "md-component-id": {},
+                "tabindex": {},
+                "ng-controller": {},
+                "md-is-open": {},
+                "class": {},
+                "md-is-locked-open": {}
+            }
+        },
+        "md-content": {
+            "attributes": {
+                "class": {}
+            }
+        }
+    },
+    "attributes": {
+        "layout": {},
+        "hide-sm": {
+            "context": "span"
+        },
+        "flex": {},
+        "ui-view": {
+            "context": "div"
+        }
+    }
+}

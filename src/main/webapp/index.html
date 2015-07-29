@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<html lang="en" ng-app="GradebookApp" ng-controller="NavCtrl">
+<html lang="en" ng-app="GradebookApp">
     <head>
         <title>GradeBook</title>
         <meta charset="UTF-8">
@@ -32,16 +32,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <!-- GradeBook CSS -->
         <link rel="stylesheet" href="css/gradebook.css">
     </head>
-    <body ng-controller="SidenavCtrl" layout="row">
-
-        <!-- Sidenav -->
-    <md-sidenav ng-show="notLogin" class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left" 
-                md-is-locked-open="$mdMedia('gt-md')" tabindex="-1">
+    <body ng-controller="MainCtrl" layout="row">
+        
+    <!-- Sidenav -->
+    <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2"
+                md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" tabindex="-1">
         <header class="nav-header">
             <img src="images/Architectural_Association_Logo.jpg" alt>
         </header>
         <md-content>
-            
+
         </md-content>
     </md-sidenav>
 
@@ -49,7 +49,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <!-- Main frame -->
     <div layout="column" tabindex="-1" flex>
         <!-- Toolbar -->
-        <md-toolbar ng-show="notLogin" class="md-whiteframe-z1">
+        <md-toolbar class="md-whiteframe-z1">
             <div class="md-toolbar-tools">
                 <md-button ng-click="toggleSidenav('left')" hide-gt-md class="md-icon-button">
                     <md-icon>menu</md-icon>
@@ -64,8 +64,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <!-- Content -->
         <md-content ui-view class="main-frame" flex></md-content>
-        
-        
 
         <!-- Footer -->
         <div class="page-footer md-body-1" layout="row" layout-align="center center">
