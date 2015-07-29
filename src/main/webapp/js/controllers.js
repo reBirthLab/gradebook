@@ -31,7 +31,7 @@ controllers.controller('LoginCtrl', function ($scope ) {
 
 // TEMPORARY
 controllers.controller('StudentsGradesCtrl', function ($scope, $http, $location) {
-    $http.get('http://localhost:8080/api/v1/groups/1/semesters/5/gradebooks/2/tasks').
+    $http.get('http://gradebook-anastasius.rhcloud.com/api/v1/groups/1/semesters/5/gradebooks/2/tasks').
             success(function (data) {
 
                 $scope.studentGrades = angular.fromJson(data);
