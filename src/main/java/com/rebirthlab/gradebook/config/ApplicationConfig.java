@@ -40,6 +40,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.rebirthlab.gradebook.config.CrossOriginResourceSharingFilter.class);
         resources.add(com.rebirthlab.gradebook.service.AcademicGroupFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.AdminFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.AttendanceTableFacadeREST.class);

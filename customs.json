@@ -9,7 +9,8 @@
             "attributes": {
                 "ng-show": {},
                 "style": {},
-                "class": {}
+                "class": {},
+                "ng-hide": {}
             }
         },
         "md-sidenav": {
@@ -20,7 +21,8 @@
                 "ng-controller": {},
                 "md-is-open": {},
                 "class": {},
-                "md-is-locked-open": {}
+                "md-is-locked-open": {},
+                "ng-hide": {}
             }
         },
         "md-content": {

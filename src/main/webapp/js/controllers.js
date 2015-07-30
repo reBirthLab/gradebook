@@ -18,15 +18,18 @@
 
 var controllers = angular.module('GradebookControllers', ['ngMaterial', 'ngResource']);
 
-controllers.controller('MainCtrl', function ($scope, $mdSidenav, $state) {
-    $scope.toggleSidenav = function (menuId) {
-        if ($state.current.name !== 'login') {
-            $mdSidenav(menuId).toggle();
-        }
-    };
+controllers.controller('MainCtrl', function ($rootScope) {
+    
+     $rootScope.$on('$stateChangeSuccess', function (event, toState){
+         if (toState.name === 'login') {
+             $rootScope.isLogin = true;
+         } else {
+             $rootScope.isLogin = false;
+         }
+     });
 });
 
-controllers.controller('LoginCtrl', function ($scope ) {
+controllers.controller('LoginCtrl', function ($scope) {
 });
 
 // TEMPORARY
