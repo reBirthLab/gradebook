@@ -18,22 +18,26 @@
 
 var controllers = angular.module('GradebookControllers', ['ngMaterial', 'ngResource']);
 
-controllers.controller('MainCtrl', function ($rootScope) {
-    
-     $rootScope.$on('$stateChangeSuccess', function (event, toState){
-         if (toState.name === 'login') {
-             $rootScope.isLogin = true;
-         } else {
-             $rootScope.isLogin = false;
-         }
-     });
+controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav) {
+
+    $rootScope.$on('$stateChangeSuccess', function (event, toState) {
+        if (toState.name === 'login') {
+            $rootScope.isLogin = true;
+        } else {
+            $rootScope.isLogin = false;
+        }
+    });
+
+    $scope.toggleSidenav = function (menuId) {
+        $mdSidenav(menuId).toggle();
+    };
 });
 
 controllers.controller('LoginCtrl', function ($scope) {
 });
 
 // TEMPORARY
-controllers.controller('StudentsGradesCtrl', function ($scope, $http, $location) {
+controllers.controller('StudentsGradesCtrl', function ($scope, $http) {
     $http.get('http://gradebook-anastasius.rhcloud.com/api/v1/groups/1/semesters/5/gradebooks/2/tasks').
             success(function (data) {
 

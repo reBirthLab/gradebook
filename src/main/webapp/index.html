@@ -33,16 +33,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <link rel="stylesheet" href="css/gradebook.css">
     </head>
     <body ng-controller="MainCtrl" layout="row">
-      
-    
-    <!-- Sidenav -->
+
+
+        <!-- Sidenav -->
     <md-sidenav ng-hide="isLogin" class="site-sidenav md-sidenav-left md-whiteframe-z2"
                 md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" tabindex="-1">
         <header class="nav-header">
             <img src="images/Architectural_Association_Logo.jpg" alt>
         </header>
         <md-content>
+            <div>
+                <md-icon class="icon">account_box</md-icon>
+                <span class="md-subhead">Anastasiy Tovstik</span>
+            </div>
 
+            <md-button class="menu-button">
+                <md-icon class="add-icon">add_circle</md-icon>
+                <span>Add Gradebook</span>
+            </md-button>
+            
+            <div style="padding-top: 10px;">
+                <span class="md-title">GROUPS</span>
+            </div>
+            
+            <ul>
+                <li>[ group.number ]</li>
+                <li>[ group.number ]</li>
+                <li>[ group.number ]</li>
+            </ul>
+            
+            <md-button class="menu-button">
+                <md-icon class="icon">settings</md-icon>
+                <span>Settings</span>
+            </md-button>
+            
+            <md-button class="menu-button">
+                <md-icon class="icon">exit_to_app</md-icon>
+                <span>Log out</span>
+            </md-button>
         </md-content>
     </md-sidenav>
 

@@ -1,5 +1,10 @@
 {
     "elements": {
+        "ng-include": {
+            "attributes": {
+                "src": {}
+            }
+        },
         "md-card": {
             "attributes": {
                 "class": {}
@@ -13,6 +18,11 @@
                 "ng-hide": {}
             }
         },
+        "md-icon": {
+            "attributes": {
+                "class": {}
+            }
+        },
         "md-sidenav": {
             "attributes": {
                 "ng-show": {},
@@ -23,6 +33,15 @@
                 "class": {},
                 "md-is-locked-open": {},
                 "ng-hide": {}
+            }
+        },
+        "md-button": {
+            "attributes": {
+                "hide-gt-md": {},
+                "ng-href": {},
+                "ng-click": {},
+                "href": {},
+                "class": {}
             }
         },
         "md-content": {

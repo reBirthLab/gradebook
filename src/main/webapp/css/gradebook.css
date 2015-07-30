@@ -66,11 +66,55 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     max-width: 256px;
 }
 
-.nav-header img {
+.site-sidenav .nav-header img {
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 226px;
+}
+
+.site-sidenav .menu-button {
+    padding: 0 15px;
+    margin: 0;
+    height: 50px;
+    width: 100%;
+    border-radius: 0;
+    font-size: 14px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.site-sidenav div {
+    padding:0px 15px;
+    height: 50px;
+    line-height: 50px;
+    
+}
+
+.site-sidenav ul {
+    margin: 0;
+    padding-left: 15px;  
+}
+
+.site-sidenav li {
+    margin: 5px 0px;  
+}
+
+.site-sidenav .add-icon {
+    margin: 5px;
+    height: 36px;
+    width: 36px;
+    font-size: 36px;
+    color: #ff4081;
+}
+
+.site-sidenav .icon {
+    margin: 5px 10px;
+    height: 28px;
+    width: 28px;
+    font-size: 28px;
+    color: #212121;
+    
 }
 
 
@@ -78,16 +122,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * Main Frame Styles
  */
 .main-frame {
-        padding: 0px 20px;
-    }
-    
+    padding: 0px 20px;
+}
+
 @media only screen and (min-width : 600px) {  
-.main-frame {
+    .main-frame {
         padding: 0px 40px;
     }
 }
 @media only screen and (min-width : 960px) {  
-.main-frame {
+    .main-frame {
         padding: 0px 70px;
     }
 }
@@ -112,7 +156,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /**
  * Login Page Styles
  */
-
 .login-card {
     margin: 60px auto 30px auto;
     max-width: 500px;
@@ -134,4 +177,67 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     width: 100%;
     right: 15px;
     bottom: 20px;
+}
+
+/**
+ * Gradebook Page Styles
+ */
+.table-tasks {
+    border-collapse: collapse;
+
+}
+
+.table-tasks a {
+    text-decoration: none;
+    color: #212121;
+}
+
+.table-tasks td, .table-tasks th {
+    padding: 5px;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid #f5f5f5;
+    border-bottom: 1px solid #d0d0d0;
+    vertical-align: middle;
+    min-width: 110px;
+}
+
+.table-tasks .header-primary th {
+    border-right: 1px solid #d0d0d0;
+    color: #212121;
+    padding: 5px 10px;
+    vertical-align: top;
+    text-align: left;
+}
+
+.table-tasks .header-secondary th {
+    border-top: 1px solid #d0d0d0;
+    border-right: 1px solid #d0d0d0;
+    border-bottom: 2px solid #d0d0d0;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+    padding: 2px 10px;
+}
+
+.table-tasks td.table-num-col, .table-tasks th.table-num-col {
+    padding: 5px 10px;
+    min-width: 15px; 
+}
+
+.table-tasks td.table-name-col {
+    min-width: 140px; 
+    text-align: left;
+    padding: 5px 10px;
+}
+
+.table-tasks a.md-button.md-icon-button {
+    width: 100%;
+    margin: auto;
+}
+
+.table-tasks .add-button {
+    height: 36px;
+    width: 36px;
+    font-size: 36px;
 }
