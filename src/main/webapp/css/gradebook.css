@@ -88,7 +88,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     padding:0px 15px;
     height: 50px;
     line-height: 50px;
-    
+
 }
 
 .site-sidenav ul {
@@ -113,8 +113,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     height: 28px;
     width: 28px;
     font-size: 28px;
-    color: #212121;
-    
 }
 
 
@@ -122,7 +120,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * Main Frame Styles
  */
 .main-frame {
-    padding: 0px 20px;
+    padding: 0px;
 }
 
 @media only screen and (min-width : 600px) {  
@@ -157,8 +155,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * Login Page Styles
  */
 .login-card {
+    padding: 0 15px;
     margin: 60px auto 30px auto;
     max-width: 500px;
+}
+
+@media only screen and (max-width : 600px) {  
+    .login-card {
+        margin-top: 30px;
+    }
 }
 
 .login-card md-card {
@@ -189,7 +194,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .table-tasks a {
     text-decoration: none;
-    color: #212121;
+    color: rgba(0, 0, 0, 0.87);
 }
 
 .table-tasks td, .table-tasks th {
@@ -204,7 +209,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .table-tasks .header-primary th {
     border-right: 1px solid #d0d0d0;
-    color: #212121;
     padding: 5px 10px;
     vertical-align: top;
     text-align: left;

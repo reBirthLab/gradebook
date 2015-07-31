@@ -37,10 +37,11 @@ controllers.controller('LoginCtrl', function ($scope) {
 });
 
 // TEMPORARY
-controllers.controller('StudentsGradesCtrl', function ($scope, $http) {
-    $http.get('http://gradebook-anastasius.rhcloud.com/api/v1/groups/1/semesters/5/gradebooks/2/tasks').
-            success(function (data) {
+controllers.controller('GroupGradesCtrl', function ($scope, $state, $stateParams, Gradebook) {
+    $scope.groupGrades = Gradebook.query({
+        groupId: $stateParams.groupId,
+        semesterId: $stateParams.semesterId,
+        gradebookId: $stateParams.gradebookId
+    });
 
-                $scope.studentGrades = angular.fromJson(data);
-            });
 });

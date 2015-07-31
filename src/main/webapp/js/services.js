@@ -16,3 +16,8 @@
  */
 'use strict';
 
+var services = angular.module('GradebookServices', ['ngResource']);
+
+services.factory('Gradebook', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks');
+});

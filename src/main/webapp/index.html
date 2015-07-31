@@ -34,14 +34,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </head>
     <body ng-controller="MainCtrl" layout="row">
 
-
-        <!-- Sidenav -->
+    <!-- Sidenav -->
     <md-sidenav ng-hide="isLogin" class="site-sidenav md-sidenav-left md-whiteframe-z2"
                 md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" tabindex="-1">
         <header class="nav-header">
             <img src="images/Architectural_Association_Logo.jpg" alt>
         </header>
-        <md-content>
+        <md-content flex>
             <div>
                 <md-icon class="icon">account_box</md-icon>
                 <span class="md-subhead">Anastasiy Tovstik</span>
@@ -51,22 +50,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <md-icon class="add-icon">add_circle</md-icon>
                 <span>Add Gradebook</span>
             </md-button>
-            
+
             <div style="padding-top: 10px;">
                 <span class="md-title">GROUPS</span>
             </div>
-            
+
             <ul>
-                <li>[ group.number ]</li>
-                <li>[ group.number ]</li>
-                <li>[ group.number ]</li>
+                <li><a href="#/api/groups/1/semesters/5/gradebooks/2/tasks">GR1/S5/GB2</a></li>
+                <li><a href="#/api/groups/1/semesters/5/gradebooks/3/tasks">GR1/S5/GB3</a></li>
             </ul>
-            
+
             <md-button class="menu-button">
                 <md-icon class="icon">settings</md-icon>
                 <span>Settings</span>
             </md-button>
-            
+
             <md-button class="menu-button">
                 <md-icon class="icon">exit_to_app</md-icon>
                 <span>Log out</span>
@@ -105,8 +103,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <script src="lib/angular-filter.min.js"></script>
 
     <!-- GradeBook Script -->
-    <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

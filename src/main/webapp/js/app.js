@@ -20,7 +20,8 @@ var app = angular.module('GradebookApp', [
     'ui.router',
     'ngResource',
     'angular.filter',
-    'GradebookControllers']);
+    'GradebookControllers',
+    'GradebookServices']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/login");
@@ -31,9 +32,13 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 controller: 'LoginCtrl'
             })
             .state('gradebook', {
-                url: '/groups',
+                url: '/api/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks',
                 templateUrl: 'views/gradebook.html',
-                controller: 'StudentsGradesCtrl'
+                controller: 'GroupGradesCtrl'
             });
 });
+
+app.config(['$resourceProvider', function ($resourceProvider) {
+        $resourceProvider.defaults.stripTrailingSlashes = false;
+    }]);
     

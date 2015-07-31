@@ -4,7 +4,7 @@
             <tr class="header-primary">
                 <th class="table-num-col">#</th>
                 <th class="table-name-col">Name</th>                                                                     
-                <th ng-repeat="(key, value) in studentGrades | groupBy: 'taskId'">
+                <th ng-repeat="(key, value) in groupGrades | groupBy: 'taskId'">
                     <a class="modal-trigger" href="#task{{value[0].taskId}}">
                         Task {{($index + 1)}} | {{value[0].title}}
                     </a>
@@ -27,7 +27,7 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="(key, value) in studentGrades | groupBy: 'studentId'">
+            <tr ng-repeat="(key, value) in groupGrades | groupBy: 'studentId'">
                 <td class="table-num-col">{{($index + 1)}}</td>
                 <td class="table-name-col">{{value[0].firstName}} {{value[0].lastName}}</td>
                 <td ng-repeat="task in value">
