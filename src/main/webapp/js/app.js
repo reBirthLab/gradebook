@@ -25,17 +25,22 @@ var app = angular.module('GradebookApp', [
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/login");
-    $stateProvider
-            .state('login', {
-                url: '/login',
-                templateUrl: 'views/login.html',
-                controller: 'LoginCtrl'
-            })
-            .state('gradebook', {
-                url: '/api/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks',
-                templateUrl: 'views/gradebook.html',
-                controller: 'GroupGradesCtrl'
-            });
+    $stateProvider.state('login', {
+        url: '/login',
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl'
+    });
+    
+    $stateProvider.state('main', {
+        url: '/groups',
+        templateUrl: 'views/gradebook.html'
+    });
+
+    $stateProvider.state('gradebook', {
+        url: '/api/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks',
+        templateUrl: 'views/gradebook.html',
+        controller: 'GroupGradesCtrl'
+    });
 });
 
 app.config(['$resourceProvider', function ($resourceProvider) {
