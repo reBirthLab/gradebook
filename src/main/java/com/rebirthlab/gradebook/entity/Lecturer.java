@@ -25,7 +25,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -50,6 +49,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Lecturer.findByLastName", query = "SELECT l FROM Lecturer l WHERE l.lastName = :lastName"),
     @NamedQuery(name = "Lecturer.findByEmail", query = "SELECT l FROM Lecturer l WHERE l.email = :email")})
 public class Lecturer implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 16)
+    @Column(name = "password")
+    private String password;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,11 +76,6 @@ public class Lecturer implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "email")
     private String email;
-    @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Column(name = "password")
-    private byte[] password;
     @ManyToMany(mappedBy = "lecturerCollection")
     private Collection<Gradebook> gradebookCollection;
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
@@ -90,7 +89,7 @@ public class Lecturer implements Serializable {
         this.lecturerId = lecturerId;
     }
 
-    public Lecturer(Integer lecturerId, String firstName, String lastName, String email, byte[] password) {
+    public Lecturer(Integer lecturerId, String firstName, String lastName, String email, String password) {
         this.lecturerId = lecturerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -130,11 +129,11 @@ public class Lecturer implements Serializable {
         this.email = email;
     }
 
-    public byte[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(byte[] password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 

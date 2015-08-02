@@ -23,8 +23,11 @@ var app = angular.module('GradebookApp', [
     'GradebookControllers',
     'GradebookServices']);
 
-app.config(function ($stateProvider, $urlRouterProvider) {
+app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
+    //$httpProvider.defaults.headers.get = { 'My-Header' : 'value' };
+    
     $urlRouterProvider.otherwise("/login");
+    
     $stateProvider.state('login', {
         url: '/login',
         templateUrl: 'views/login.html',

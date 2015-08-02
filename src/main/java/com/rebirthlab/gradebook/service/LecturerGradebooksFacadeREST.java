@@ -19,9 +19,9 @@ package com.rebirthlab.gradebook.service;
 import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.LecturerGradebooks;
 import com.rebirthlab.gradebook.entity.LecturerGradebooks_;
-import com.rebirthlab.gradebook.security.BasicAuthenticationDecoder;
-import com.rebirthlab.gradebook.security.UserIdFinder;
-import com.rebirthlab.gradebook.security.UserIdType;
+import com.rebirthlab.gradebook.security.AuthenticationService;
+import com.rebirthlab.gradebook.security.CurrentUser;
+import com.rebirthlab.gradebook.security.UserDataFinder;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -29,7 +29,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
@@ -40,7 +39,7 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("groups")
+@Path("gradebooks")
 public class LecturerGradebooksFacadeREST extends AbstractFacade<LecturerGradebooks> {
 
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
@@ -52,14 +51,14 @@ public class LecturerGradebooksFacadeREST extends AbstractFacade<LecturerGradebo
 
     @GET
     @Produces({"application/xml", "application/json"})
-    public List<LecturerGradebooks> findAllLecturerGradebooks(@HeaderParam("Authorization") String authorization) {
+    public List<LecturerGradebooks> findAllLecturerGradebooks(@HeaderParam("Authorization") String authorization){
 
-        String username = BasicAuthenticationDecoder.getUsername(authorization);
+        String username = new AuthenticationService().getUsername(authorization);
 
-        UserIdType userIdType = new UserIdFinder(getEntityManager()).find(username);
+        CurrentUser user = UserDataFinder.findDataBy(username);
 
-        if (userIdType.getUserType().equals(GradebookConstants.ROLE_LECTURER)) {
-            Integer lecturerId = userIdType.getUserId();
+        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
+            Integer lecturerId = user.getId();
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery cq = cb.createQuery(LecturerGradebooks.class);
             Root lecturerGradebooks = cq.from(LecturerGradebooks.class);

@@ -33,7 +33,40 @@ controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav) {
     };
 });
 
-controllers.controller('LoginCtrl', function ($scope) {
+controllers.controller('LoginCtrl', function ($scope, $http, $rootScope, $location) {
+
+//    var authenticate = function (credentials, callback) {
+//
+//        var headers = credentials ? {authorization: "Basic "
+//                    + btoa(credentials.username + ":" + credentials.password)
+//        } : {};
+//
+//        $http.get('/api/v1/gradebooks', {headers: headers}).success(function (data) {
+//            if (data.name) {
+//                $rootScope.authenticated = true;
+//            } else {
+//                $rootScope.authenticated = false;
+//            }
+//            callback && callback();
+//        }).error(function () {
+//            $rootScope.authenticated = false;
+//            callback && callback();
+//        });
+//    };
+//    authenticate();
+//
+//     $scope.credentials = {};
+//  $scope.login = function() {
+//      authenticate($scope.credentials, function() {
+//        if ($rootScope.authenticated) {
+//          $location.path("/");
+//          $scope.error = false;
+//        } else {
+//          $location.path("/login");
+//          $scope.error = true;
+//        }
+//      });
+//  };
 });
 
 // TEMPORARY

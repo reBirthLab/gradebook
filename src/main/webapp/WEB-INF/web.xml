@@ -6,6 +6,18 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          metadata-complete="false">
 
-         
+         <servlet>
+		<servlet-name>RESTful Jersey Gradebook Service</servlet-name>
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>jersey.config.server.provider.packages</param-name>
+			<param-value>com.javapapers.webservices.rest.jersey</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RESTful Jersey Gradebook Service</servlet-name>
+		<url-pattern>/api/*</url-pattern>
+	</servlet-mapping>
 </web-app>
 

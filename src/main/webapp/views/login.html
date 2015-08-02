@@ -1,3 +1,7 @@
+<div class="alert alert-danger" ng-show="error">
+	There was a problem logging in. Please try again.
+</div>
+
 <div class="main-frame" flex>
     <div class="login-card">
         <md-card class="md-whiteframe-z2">
@@ -6,18 +10,18 @@
                 <span class="login-image-title">powered by <b>GradeBook™</b></span>
             </div>
 
-            <md-card-content layout="column">
+            <md-card-content layout="column" role="form" ng-submit="login()">
                 <md-input-container>
                     <label>Username</label>
-                    <input>
+                    <input ng-model="credentials.username">
                 </md-input-container>
                 <md-input-container>
                     <label>Password</label>
-                    <input type="password">
+                    <input type="password" ng-model="credentials.password">
                 </md-input-container>
             </md-card-content>
             <div class="md-actions" layout="row" layout-align="end center">
-                <md-button ng-click="unlockSidebar()" ng-href="#/groups">Login</md-button>  
+                <md-button type="submit" ng-click="unlockSidebar()">Login</md-button>  
             </div>
         </md-card>
     </div>

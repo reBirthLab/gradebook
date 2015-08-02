@@ -47,9 +47,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Admin implements Serializable {
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 16)
     @Column(name = "password")
-    private byte[] password;
+    private String password;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,7 +80,7 @@ public class Admin implements Serializable {
         this.adminId = adminId;
     }
 
-    public Admin(Integer adminId, String firstName, String lastName, String email, byte[] password) {
+    public Admin(Integer adminId, String firstName, String lastName, String email, String password) {
         this.adminId = adminId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -146,11 +146,11 @@ public class Admin implements Serializable {
         return "com.rebirthlab.gradebook.entity.Admin[ adminId=" + adminId + " ]";
     }
 
-    public byte[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(byte[] password) {
+    public void setPassword(String password) {
         this.password = password;
     }
     

@@ -20,20 +20,45 @@ package com.rebirthlab.gradebook.security;
  *
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
-public class UserIdType {
-    private final Integer id;
-    private final String type;
-    
-    public UserIdType(Integer id, String type){
-        this.id = id;
-        this.type = type;
+public class CurrentUser {
+
+    private Integer id;
+    private String username;
+    private String password;
+    private String role;
+
+    public CurrentUser() {    
     }
     
-    public Integer getUserId(){
+    public void setId(Integer id){
+        this.id = id;
+    }
+    
+    public void setUsername(String username){
+        this.username = username;
+    }
+    
+    public void setPassword(String password){
+        this.password = password;
+    }
+    
+    public void setRole(String role){
+        this.role = role;
+    }
+
+    public Integer getId(){
         return id;
     }
     
-    public String getUserType(){
-        return type;
+    public String getUsername(){
+        return username;
+    }
+    
+    public String getPassword(){
+        return password;
+    }
+    
+    public String getRole(){
+        return role;
     }
 }

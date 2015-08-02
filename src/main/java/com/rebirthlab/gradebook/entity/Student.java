@@ -26,7 +26,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -51,6 +50,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Student.findByLastName", query = "SELECT s FROM Student s WHERE s.lastName = :lastName"),
     @NamedQuery(name = "Student.findByEmail", query = "SELECT s FROM Student s WHERE s.email = :email")})
 public class Student implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 16)
+    @Column(name = "password")
+    private String password;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,11 +77,6 @@ public class Student implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "email")
     private String email;
-    @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Column(name = "password")
-    private byte[] password;
     @JoinColumn(name = "academic_group_id", referencedColumnName = "academic_group_id")
     @ManyToOne(optional = false)
     private AcademicGroup academicGroupId;
@@ -93,7 +92,7 @@ public class Student implements Serializable {
         this.studentId = studentId;
     }
 
-    public Student(Integer studentId, String firstName, String lastName, String email, byte[] password) {
+    public Student(Integer studentId, String firstName, String lastName, String email, String password) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -132,12 +131,12 @@ public class Student implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public byte[] getPassword() {
+   
+    public String getPassword() {
         return password;
     }
-
-    public void setPassword(byte[] password) {
+    
+    public void setPassword(String password) {
         this.password = password;
     }
     

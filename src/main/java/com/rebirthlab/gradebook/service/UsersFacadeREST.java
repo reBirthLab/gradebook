@@ -37,7 +37,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("com.rebirthlab.gradebook.entity.users")
 public class UsersFacadeREST extends AbstractFacade<Users> {
-    @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
+    @PersistenceContext(name="PersistenceContext", unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
     public UsersFacadeREST() {
