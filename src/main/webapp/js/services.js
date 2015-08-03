@@ -33,7 +33,7 @@ services.factory('AuthenticationService', function (Base64, $http, $cookieStore,
 
         var authdata = Base64.encode(username + ':' + password);
 
-        $http.get('http://localhost:8080/api/v1/gradebooks', {
+        $http.get('http://gradebook-anastasius.rhcloud.com/api/v1/gradebooks', {
             headers: {'Authorization': 'Basic ' + authdata}
         }).then(function (response) {
             callback(response);
