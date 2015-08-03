@@ -33,40 +33,32 @@ controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav) {
     };
 });
 
-controllers.controller('LoginCtrl', function ($scope, $http, $rootScope, $location) {
+controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, AuthenticationService) {
+    // reset login status
+    AuthenticationService.ClearCredentials();
 
-//    var authenticate = function (credentials, callback) {
-//
-//        var headers = credentials ? {authorization: "Basic "
-//                    + btoa(credentials.username + ":" + credentials.password)
-//        } : {};
-//
-//        $http.get('/api/v1/gradebooks', {headers: headers}).success(function (data) {
-//            if (data.name) {
-//                $rootScope.authenticated = true;
-//            } else {
-//                $rootScope.authenticated = false;
-//            }
-//            callback && callback();
-//        }).error(function () {
-//            $rootScope.authenticated = false;
-//            callback && callback();
-//        });
-//    };
-//    authenticate();
-//
-//     $scope.credentials = {};
-//  $scope.login = function() {
-//      authenticate($scope.credentials, function() {
-//        if ($rootScope.authenticated) {
-//          $location.path("/");
-//          $scope.error = false;
-//        } else {
-//          $location.path("/login");
-//          $scope.error = true;
-//        }
-//      });
-//  };
+    $scope.login = function () {
+        $scope.dataLoading = true;
+        AuthenticationService.Login($scope.username, $scope.password, function (response) {
+            if (response.status === 200) {
+                AuthenticationService.SetCredentials($scope.username, $scope.password);
+                $location.path('/api/gradebooks');
+            } else {
+                showErrorToast();
+                $scope.dataLoading = false;
+            }
+        });
+    };
+    var showErrorToast = function () {
+        $mdToast.show(
+                $mdToast.simple()
+                .content('Wrong username or password. Please try again!')
+                .position("top right")
+                .hideDelay(3000)
+                );
+        $scope.username = "";
+        $scope.password = "";
+    };
 });
 
 // TEMPORARY

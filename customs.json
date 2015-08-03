@@ -10,6 +10,14 @@
                 "class": {}
             }
         },
+        "md-progress-linear": {
+            "attributes": {
+                "md-mode": {},
+                "ng-if": {},
+                "class": {},
+                "value": {}
+            }
+        },
         "md-toolbar": {
             "attributes": {
                 "ng-show": {},
@@ -41,6 +49,7 @@
                 "ng-href": {},
                 "ng-click": {},
                 "href": {},
+                "type": {},
                 "class": {}
             }
         },

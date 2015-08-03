@@ -19,6 +19,8 @@ package com.rebirthlab.gradebook.security;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,13 +39,16 @@ public class AuthenticationService {
         final String encodedUserPassword = authCredentials.replaceFirst("Basic"
                 + " ", "");
         String usernameAndPassword = null;
+        
         try {
             byte[] decodedBytes = Base64.getDecoder().decode(
                     encodedUserPassword);
             usernameAndPassword = new String(decodedBytes, "UTF-8");
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(AuthenticationService.class.getName())
+                    .log(Level.SEVERE, null, e);
         }
+        
         final StringTokenizer tokenizer = new StringTokenizer(
                 usernameAndPassword, ":");
         username = tokenizer.nextToken();
@@ -51,9 +56,15 @@ public class AuthenticationService {
 
         CurrentUser user = UserDataFinder.findDataBy(username);
 
-        boolean authenticationStatus = user.getUsername().equals(username)
-                && user.getPassword().equals(password);
-        return authenticationStatus;
+        try {
+            boolean authenticationStatus = user.getUsername().equals(username)
+                    && user.getPassword().equals(password);
+            return authenticationStatus;
+        } catch (Exception e) {
+            Logger.getLogger(AuthenticationService.class.getName())
+                    .log(Level.SEVERE, "No such user in system", e);
+            return false;
+        }
     }
 
     public String getUsername(String authCredentials) {

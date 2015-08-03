@@ -1,7 +1,3 @@
-<div class="alert alert-danger" ng-show="error">
-	There was a problem logging in. Please try again.
-</div>
-
 <div class="main-frame" flex>
     <div class="login-card">
         <md-card class="md-whiteframe-z2">
@@ -9,20 +5,28 @@
                 <img src="images/Architectural_Association_Logo.jpg" class="md-card-image" alt>
                 <span class="login-image-title">powered by <b>GradeBook™</b></span>
             </div>
-
-            <md-card-content layout="column" role="form" ng-submit="login()">
-                <md-input-container>
-                    <label>Username</label>
-                    <input ng-model="credentials.username">
-                </md-input-container>
-                <md-input-container>
-                    <label>Password</label>
-                    <input type="password" ng-model="credentials.password">
-                </md-input-container>
-            </md-card-content>
-            <div class="md-actions" layout="row" layout-align="end center">
-                <md-button type="submit" ng-click="unlockSidebar()">Login</md-button>  
-            </div>
+            <form name="loginForm" ng-submit="login()">
+                <md-card-content layout="column" >
+                    <md-input-container>
+                        <label>Username</label>
+                        <input required name="username" type="text" ng-model="username">
+                        <div ng-messages="loginForm.username.$error">
+                            <div ng-message="required">Username is required.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Password</label>
+                        <input required name="password" type="password" ng-model="password">
+                        <div ng-messages="loginForm.password.$error">
+                            <div ng-message="required">Password is required.</div>
+                        </div>
+                    </md-input-container>
+                </md-card-content>
+                <div class="md-actions" layout="row" layout-align="end center">
+                    <md-button type="submit" ng-click="unlockSidebar()">Login</md-button>  
+                </div>
+                <md-progress-linear ng-if="dataLoading" class="md-accent" md-mode="indeterminate"></md-progress-linear>
+            </form>
         </md-card>
     </div>
 </div>

@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -51,53 +52,63 @@ public class UserDataFinder {
     private static void findUserIdAndRole(String username) {
         try {
             em = (EntityManager) new InitialContext().lookup("java:comp/env/PersistenceContext");
+
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery(Users.class);
+
+            Root users = cq.from(Users.class);
+            cq.where(
+                    cb.or(
+                            cb.equal(users.get(Users_.adminEmail), username),
+                            cb.equal(users.get(Users_.lecturerEmail), username),
+                            cb.equal(users.get(Users_.studentEmail), username)
+                    ));
+
+            Users user = (Users) em.createQuery(cq).getSingleResult();
+
+            if (user.getAdminId() != null) {
+                currentUser.setId(user.getAdminId());
+                currentUser.setRole(GradebookConstants.ROLE_ADMIN);
+            } else if (user.getLecturerId() != null) {
+                currentUser.setId(user.getLecturerId());
+                currentUser.setRole(GradebookConstants.ROLE_LECTURER);
+            } else {
+                currentUser.setId(user.getStudentId());
+                currentUser.setRole(GradebookConstants.ROLE_STUDENT);
+            }
         } catch (NamingException ex) {
-            Logger.getLogger(UserDataFinder.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery cq = cb.createQuery(Users.class);
-
-        Root users = cq.from(Users.class);
-        cq.where(
-                cb.or(
-                        cb.equal(users.get(Users_.adminEmail), username),
-                        cb.equal(users.get(Users_.lecturerEmail), username),
-                        cb.equal(users.get(Users_.studentEmail), username)
-                ));
-
-        Users user = (Users) em.createQuery(cq).getSingleResult();
-
-        if (user.getAdminId() != null) {
-            currentUser.setId(user.getAdminId());
-            currentUser.setRole(GradebookConstants.ROLE_ADMIN);
-        } else if (user.getLecturerId() != null) {
-            currentUser.setId(user.getLecturerId());
-            currentUser.setRole(GradebookConstants.ROLE_LECTURER);
-        } else {
-            currentUser.setId(user.getStudentId());
-            currentUser.setRole(GradebookConstants.ROLE_STUDENT);
+            Logger.getLogger(UserDataFinder.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        } catch (NoResultException e) {
+            Logger.getLogger(UserDataFinder.class.getName())
+                    .log(Level.SEVERE, "No such user data in system", e);
         }
     }
 
     private static void findUserPassword() {
         try {
-            em = (EntityManager) new InitialContext().lookup("java:comp/env/UsersPersistenceContext");
+            em = (EntityManager) new InitialContext().lookup("java:comp/env/PersistenceContext");
+
+            switch (currentUser.getRole()) {
+                case GradebookConstants.ROLE_ADMIN:
+                    Admin admin = em.find(Admin.class, currentUser.getId());
+                    currentUser.setPassword(admin.getPassword());
+                    break;
+                case GradebookConstants.ROLE_LECTURER:
+                    Lecturer lecturer = em.find(Lecturer.class, currentUser.getId());
+                    currentUser.setPassword(lecturer.getPassword());
+                    break;
+                case GradebookConstants.ROLE_STUDENT:
+                    Student student = em.find(Student.class, currentUser.getId());
+                    currentUser.setPassword(student.getPassword());
+                    break;
+            }
         } catch (NamingException ex) {
-            Logger.getLogger(UserDataFinder.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        switch (currentUser.getRole()) {
-            case GradebookConstants.ROLE_ADMIN:
-                Admin admin = em.find(Admin.class, currentUser.getId());
-                currentUser.setPassword(admin.getPassword());
-                break;
-            case GradebookConstants.ROLE_LECTURER:
-                Lecturer lecturer = em.find(Lecturer.class, currentUser.getId());
-                currentUser.setPassword(lecturer.getPassword());
-                break;
-            case GradebookConstants.ROLE_STUDENT:
-                Student student = em.find(Student.class, currentUser.getId());
-                currentUser.setPassword(student.getPassword());
-                break;
+            Logger.getLogger(UserDataFinder.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        } catch (NullPointerException e) {
+            Logger.getLogger(UserDataFinder.class.getName())
+                    .log(Level.SEVERE, "No such user data in system", e);
         }
 
     }

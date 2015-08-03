@@ -19,23 +19,24 @@
 var app = angular.module('GradebookApp', [
     'ui.router',
     'ngResource',
+    'ngCookies',
+    'ngMessages',
     'angular.filter',
     'GradebookControllers',
     'GradebookServices']);
 
 app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
-    //$httpProvider.defaults.headers.get = { 'My-Header' : 'value' };
-    
+
     $urlRouterProvider.otherwise("/login");
-    
+
     $stateProvider.state('login', {
         url: '/login',
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'
     });
-    
+
     $stateProvider.state('main', {
-        url: '/groups',
+        url: '/api/gradebooks',
         templateUrl: 'views/gradebook.html'
     });
 
@@ -49,4 +50,20 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
 app.config(['$resourceProvider', function ($resourceProvider) {
         $resourceProvider.defaults.stripTrailingSlashes = false;
     }]);
-    
+
+app.run(function ($rootScope, $location, $cookieStore, $http) {
+        // keep user logged in after page refresh
+        $rootScope.globals = $cookieStore.get('globals') || {};
+        
+//        if ($rootScope.globals.currentUser) {
+//            $http.defaults.headers.common['Authorization'] = 'Basic ' 
+//                    + $rootScope.globals.currentUser.authdata;
+//        }
+
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            // redirect to login page if not logged in
+            if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+                $location.path('/login');
+            }
+        });
+    });
