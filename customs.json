@@ -5,30 +5,14 @@
                 "src": {}
             }
         },
-        "md-card": {
-            "attributes": {
-                "class": {}
-            }
-        },
-        "md-progress-linear": {
-            "attributes": {
-                "md-mode": {},
-                "ng-if": {},
-                "class": {},
-                "value": {}
-            }
-        },
+        "md-menu-sidenav-title": {},
+        "md-divider": {},
         "md-toolbar": {
             "attributes": {
                 "ng-show": {},
                 "style": {},
                 "class": {},
                 "ng-hide": {}
-            }
-        },
-        "md-icon": {
-            "attributes": {
-                "class": {}
             }
         },
         "md-sidenav": {
@@ -43,6 +27,33 @@
                 "ng-hide": {}
             }
         },
+        "md-menu": {},
+        "md-content": {
+            "attributes": {
+                "class": {}
+            }
+        },
+        "md-menu-sidenav-content": {},
+        "md-card": {
+            "attributes": {
+                "class": {}
+            }
+        },
+        "md-progress-linear": {
+            "attributes": {
+                "md-mode": {},
+                "ng-if": {},
+                "class": {},
+                "value": {}
+            }
+        },
+        "md-menu-content": {},
+        "md-menu-item": {},
+        "md-icon": {
+            "attributes": {
+                "class": {}
+            }
+        },
         "md-button": {
             "attributes": {
                 "hide-gt-md": {},
@@ -53,9 +64,19 @@
                 "class": {}
             }
         },
-        "md-content": {
+        "md-menu-sidenav-item": {
+            "attributes": {
+                "ng-repeat": {}
+            }
+        },
+        "md-menu-sidenav": {
             "attributes": {
                 "class": {}
+            }
+        },
+        "md-menu-sidenav-subitem": {
+            "attributes": {
+                "ng-repeat": {}
             }
         }
     },

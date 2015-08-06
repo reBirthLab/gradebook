@@ -26,6 +26,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
 
+        <!-- Angular Material Sidenav Menu CSS -->
+        <link rel="stylesheet" href="css/material-menu-sidenav.min.css">
+
         <!-- Google Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -34,16 +37,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </head>
     <body ng-controller="MainCtrl" layout="row">
 
-    <!-- Sidenav -->
+        <!-- Sidenav -->
     <md-sidenav ng-hide="isLogin" class="site-sidenav md-sidenav-left md-whiteframe-z2"
                 md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" tabindex="-1">
         <header class="nav-header">
             <img src="images/Architectural_Association_Logo.jpg" alt>
         </header>
         <md-content flex>
-            <div>
+            <div class="menu-static-row">
                 <md-icon class="icon">account_box</md-icon>
-                <span class="md-subhead">Anastasiy Tovstik</span>
+                <span class="md-subhead">{{user.firstName}} {{user.lastName}}</span>
             </div>
 
             <md-button class="menu-button">
@@ -51,14 +54,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <span>Add Gradebook</span>
             </md-button>
 
-            <div style="padding-top: 10px;">
+            <div class="menu-static-row" style="padding-top: 10px;">
                 <span class="md-title">GROUPS</span>
             </div>
 
-            <ul>
-                <li><a href="#/api/groups/1/semesters/5/gradebooks/2/tasks">GR1/S5/GB2</a></li>
-                <li><a href="#/api/groups/1/semesters/5/gradebooks/3/tasks">GR1/S5/GB3</a></li>
-            </ul>
+            <md-menu-sidenav class="menu">                
+                <md-menu-sidenav-item ng-repeat="(key, value) in userGradebooks | groupBy: 'number'">
+                    <md-menu-sidenav-title>
+                        <md-toogle-menu layout="row" flex>
+                            <h1 class="md-body-2" flex>{{key}}</h1>
+                        </md-toogle-menu>
+                        <md-icon flex="15">expand_more</md-icon>
+                    </md-menu-sidenav-title>
+
+                    <md-menu-sidenav-content>
+                        <md-menu-sidenav-item ng-repeat="(key, value) in value | groupBy: 'semesterId'">
+                            <md-menu-sidenav-title>
+                                <md-toogle-menu layout="row" flex>
+                                    <h1 class="md-body-2" flex>{{value[0].academicYear}} {{value[0].name}}</h1>
+                                </md-toogle-menu>
+                                <md-icon flex="15">expand_more</md-icon>
+                            </md-menu-sidenav-title>
+
+                            <md-menu-sidenav-content>
+                                <md-menu-sidenav-subitem ng-repeat="gradebook in value">
+                                    <a href="#/api/groups/{{gradebook.academicGroupId}}/semesters/{{gradebook.semesterId}}/gradebooks/{{gradebook.gradebookId}}/tasks">{{gradebook.subject}}</a>
+                                </md-menu-sidenav-subitem>
+
+                            </md-menu-sidenav-content>
+                        </md-menu-sidenav-item>
+                    </md-menu-sidenav-content>
+                    <md-divider></md-divider>
+                </md-menu-sidenav-item>
+            </md-menu-sidenav>
 
             <md-button class="menu-button">
                 <md-icon class="icon">settings</md-icon>
@@ -69,7 +97,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <md-icon class="icon">exit_to_app</md-icon>
                 <span>Log out</span>
             </md-button>
-        </md-content>
+        </md-content>  
     </md-sidenav>
 
     <!-- Main frame -->
@@ -90,7 +118,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <!-- Content -->
         <md-content ui-view layout="column" flex></md-content>
-
     </div>  
 
     <!-- Angular Dependencies -->
@@ -101,6 +128,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-cookies.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-messages.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
+    <script src="lib/material-menu-sidenav.min.js"></script>
     <script src="lib/angular-ui-router.min.js"></script>
     <script src="lib/angular-filter.min.js"></script>
 

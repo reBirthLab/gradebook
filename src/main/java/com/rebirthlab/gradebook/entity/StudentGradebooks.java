@@ -17,7 +17,6 @@
 package com.rebirthlab.gradebook.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,8 +24,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -83,8 +80,7 @@ public class StudentGradebooks implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "academic_year")
-    @Temporal(TemporalType.DATE)
-    private Date academicYear;
+    private short academicYear;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -151,11 +147,11 @@ public class StudentGradebooks implements Serializable {
         this.semesterId = semesterId;
     }
 
-    public Date getAcademicYear() {
+    public short getAcademicYear() {
         return academicYear;
     }
 
-    public void setAcademicYear(Date academicYear) {
+    public void setAcademicYear(short academicYear) {
         this.academicYear = academicYear;
     }
 

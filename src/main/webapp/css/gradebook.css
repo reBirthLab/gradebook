@@ -86,9 +86,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .site-sidenav div {
     padding:0px 15px;
+}
+
+.site-sidenav .menu div {
+    padding: 0;
+}
+
+.site-sidenav div.menu-static-row {
     height: 50px;
     line-height: 50px;
-
 }
 
 .site-sidenav ul {

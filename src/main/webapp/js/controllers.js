@@ -16,9 +16,9 @@
  */
 'use strict';
 
-var controllers = angular.module('GradebookControllers', ['ngMaterial', 'ngResource']);
+var controllers = angular.module('GradebookControllers', []);
 
-controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav) {
+controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav, UserGradebooks) {
 
     $rootScope.$on('$stateChangeSuccess', function (event, toState) {
         if (toState.name === 'login') {
@@ -28,9 +28,17 @@ controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav) {
         }
     });
 
+    $scope.index = 0;
     $scope.toggleSidenav = function (menuId) {
         $mdSidenav(menuId).toggle();
     };
+
+    $scope.userGradebooks = UserGradebooks.query(function (userGradebooks){
+        $scope.user ={
+            firstName: userGradebooks[0].firstName,
+            lastName: userGradebooks[0].lastName
+        };
+    });     
 });
 
 controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, AuthenticationService) {

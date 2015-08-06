@@ -17,10 +17,12 @@
 'use strict';
 
 var app = angular.module('GradebookApp', [
-    'ui.router',
+    'ngMaterial',
+    'ngMenuSidenav',
     'ngResource',
     'ngCookies',
     'ngMessages',
+    'ui.router',
     'angular.filter',
     'GradebookControllers',
     'GradebookServices']);
