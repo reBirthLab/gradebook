@@ -18,7 +18,7 @@
 
 var controllers = angular.module('GradebookControllers', []);
 
-controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav, UserGradebooks) {
+controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav, $stateParams, UserGradebooks) {
 
     $rootScope.$on('$stateChangeSuccess', function (event, toState) {
         if (toState.name === 'login') {
@@ -33,14 +33,31 @@ controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav, Use
         $mdSidenav(menuId).toggle();
     };
 
-    $scope.userGradebooks = UserGradebooks.query(function (userGradebooks) {
+    var userGradebooks = UserGradebooks.query(function (userGradebooks) {
         $scope.user = {
             firstName: userGradebooks[0].firstName,
             lastName: userGradebooks[0].lastName
         };
     });
+    
+    $scope.userGradebooks = userGradebooks;
 
-
+    function getByGradebookId(arr, id) {
+        for (var d = 0, len = arr.length; d < len; d += 1) {
+            if (arr[d].gradebookId === id) {
+                return arr[d];
+            }
+        }
+    }
+    
+    $scope.get = function (gradebookId) {
+            var currentGradebook = getByGradebookId(userGradebooks, gradebookId);
+            $scope.gradebook = {
+                group: currentGradebook.number,
+                subject: currentGradebook.name,
+                year: currentGradebook.academicYear
+            };
+        };
 });
 
 controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, AuthenticationService) {
@@ -71,19 +88,10 @@ controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, Authe
 });
 
 // TEMPORARY
-controllers.controller('GroupGradesCtrl', function ($scope, $rootScope, $state, $stateParams, Gradebook) {
+controllers.controller('GroupGradesCtrl', function ($scope, $state, $stateParams, Gradebook) {
     $scope.groupGrades = Gradebook.query({
         groupId: $stateParams.groupId,
         semesterId: $stateParams.semesterId,
         gradebookId: $stateParams.gradebookId
     });
-
-    
-    var gradebook = UserGradebooks.query({
-        gradebookId: $stateParams.gradebookId
-    }, function(gradebook){
-        $rootScope.gradebook = {
-            group: gradebook.number
-        };
-    });
-    });
+});

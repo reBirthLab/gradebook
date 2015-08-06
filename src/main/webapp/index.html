@@ -78,7 +78,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             </md-menu-sidenav-title>
                             <md-menu-sidenav-content>
                                 <md-menu-sidenav-subitem ng-repeat="gradebook in value">
-                                    <md-button class="menu-item-button"
+                                    <md-button ng-click="get(gradebook.gradebookId)" class="menu-item-button"
                                                href="#/api/groups/{{gradebook.academicGroupId}}/semesters/{{gradebook.semesterId}}/gradebooks/{{gradebook.gradebookId}}/tasks">
                                         <md-icon class="gradebook-icon">book</md-icon>
                                         <span>{{gradebook.subject}}</span>
