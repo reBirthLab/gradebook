@@ -70,14 +70,7 @@ public class LecturerGradebooksFacadeREST extends AbstractFacade<LecturerGradebo
         } else {
             return null;
         }
-    }
-    @GET
-    @Path("{id}")
-    @Produces({"application/xml", "application/json"})
-    public LecturerGradebooks find(@PathParam("id") Integer id) {
-        return super.find(id);
-    }
-    
+    }    
 
     @Override
     protected EntityManager getEntityManager() {

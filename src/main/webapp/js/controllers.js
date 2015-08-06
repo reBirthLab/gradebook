@@ -71,7 +71,7 @@ controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, Authe
 });
 
 // TEMPORARY
-controllers.controller('GroupGradesCtrl', function ($scope, $rootScope, $state, $stateParams, Gradebook, UserGradebooks) {
+controllers.controller('GroupGradesCtrl', function ($scope, $rootScope, $state, $stateParams, Gradebook) {
     $scope.groupGrades = Gradebook.query({
         groupId: $stateParams.groupId,
         semesterId: $stateParams.semesterId,

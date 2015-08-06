@@ -23,7 +23,7 @@ services.factory('Gradebook', function ($resource) {
 });
 
 services.factory('UserGradebooks', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/gradebooks/:gradebookId');
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/gradebooks/');
 });
 
 services.factory('AuthenticationService', function (Base64, $http, $cookieStore, $rootScope, $timeout) {
