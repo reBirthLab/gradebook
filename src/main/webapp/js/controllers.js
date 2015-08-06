@@ -56,7 +56,6 @@ controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, Authe
                 .position("top right")
                 .hideDelay(3000)
                 );
-        $scope.username = "";
         $scope.password = "";
     };
 });
