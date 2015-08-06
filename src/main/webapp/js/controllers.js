@@ -53,8 +53,8 @@ controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav, $st
     $scope.get = function (gradebookId) {
             var currentGradebook = getByGradebookId(userGradebooks, gradebookId);
             $scope.gradebook = {
-                group: currentGradebook.number,
-                subject: currentGradebook.name,
+                group: currentGradebook.number + " |",
+                subject: currentGradebook.name + " |",
                 year: currentGradebook.academicYear
             };
         };
