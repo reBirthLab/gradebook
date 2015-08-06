@@ -1,27 +1,8 @@
 md-menu-sidenav-title {
+    line-height: 40px;
     padding: 0 12px 0 20px;
-    cursor: pointer
-}
-
-md-menu-sidenav-item h1 {
-    font-size: 15px;
-    color: #616161
-}
-
-md-menu-sidenav-item .icon {
-    margin-right: 12px;
-    color: #616161
-}
-
-md-menu-sidenav-item a {
-    text-decoration: none
-}
-
-md-menu-sidenav-subitem {
     cursor: pointer;
-    font-size: 14px;
-    color: #414141;
-    padding: 10px 1px 10px 1px
+    font-weight: 500;
 }
 
 md-menu-sidenav-content {

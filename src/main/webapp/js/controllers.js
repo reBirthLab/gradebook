@@ -33,12 +33,14 @@ controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav, Use
         $mdSidenav(menuId).toggle();
     };
 
-    $scope.userGradebooks = UserGradebooks.query(function (userGradebooks){
-        $scope.user ={
+    $scope.userGradebooks = UserGradebooks.query(function (userGradebooks) {
+        $scope.user = {
             firstName: userGradebooks[0].firstName,
             lastName: userGradebooks[0].lastName
         };
-    });     
+    });
+
+
 });
 
 controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, AuthenticationService) {
@@ -69,11 +71,19 @@ controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, Authe
 });
 
 // TEMPORARY
-controllers.controller('GroupGradesCtrl', function ($scope, $state, $stateParams, Gradebook) {
+controllers.controller('GroupGradesCtrl', function ($scope, $rootScope, $state, $stateParams, Gradebook, UserGradebooks) {
     $scope.groupGrades = Gradebook.query({
         groupId: $stateParams.groupId,
         semesterId: $stateParams.semesterId,
         gradebookId: $stateParams.gradebookId
     });
 
-});
+    
+    var gradebook = UserGradebooks.query({
+        gradebookId: $stateParams.gradebookId
+    }, function(gradebook){
+        $rootScope.gradebook = {
+            group: gradebook.number
+        };
+    });
+    });

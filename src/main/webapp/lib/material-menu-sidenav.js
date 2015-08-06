@@ -90,7 +90,7 @@ ngMaterialMenu.directive("mdMenuSidenavSubitem", function () {
     return {
         transclude: true, link: function (b, a) {
         }, template: function (b, a) {
-            return "<div layout='row'><div flex=15></div><div flex ng-transclude></div></div>";
+            return "<div layout='row'><div flex ng-transclude></div></div>";
         }
     };
 });

@@ -39,7 +39,8 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
 
     $stateProvider.state('main', {
         url: '/api/gradebooks',
-        templateUrl: 'views/gradebook.html'
+        templateUrl: 'views/gradebook.html',
+        controller: 'MainCtrl'
     });
 
     $stateProvider.state('gradebook', {

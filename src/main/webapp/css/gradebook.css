@@ -84,6 +84,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-transform: uppercase;
 }
 
+.site-sidenav .menu-item-button {
+    padding: 0 15px;
+    margin: 0;
+    height: 40px;
+    line-height: 40px;
+    width: 100%;
+    border-radius: 0;
+    font-size: 14px;
+    text-align: left;
+    text-transform: none;
+    
+}
+
 .site-sidenav div {
     padding:0px 15px;
 }
@@ -112,6 +125,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     width: 36px;
     font-size: 36px;
     color: #ff4081;
+}
+
+.site-sidenav .gradebook-icon {
+    margin: 8px 10px;
+    height: 24px;
+    width: 24px;
+    font-size: 24px;
 }
 
 .site-sidenav .icon {

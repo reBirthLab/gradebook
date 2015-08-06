@@ -51,7 +51,6 @@ public class LecturerGradebooks implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @NotNull
-    @Id
     @Column(name = "lecturer_id")
     private int lecturerId;
     @Basic(optional = false)
@@ -66,7 +65,6 @@ public class LecturerGradebooks implements Serializable {
     private String lastName;
     @Basic(optional = false)
     @NotNull
-    @Id
     @Column(name = "academic_group_id")
     private int academicGroupId;
     @Basic(optional = false)
@@ -76,7 +74,6 @@ public class LecturerGradebooks implements Serializable {
     private String number;
     @Basic(optional = false)
     @NotNull
-    @Id
     @Column(name = "semester_id")
     private int semesterId;
     @Basic(optional = false)

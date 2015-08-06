@@ -46,7 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <md-content flex>
             <div class="menu-static-row">
                 <md-icon class="icon">account_box</md-icon>
-                <span class="md-subhead">{{user.firstName}} {{user.lastName}}</span>
+                <span class="md-subhead" style="font-weight: 500">{{user.firstName}} {{user.lastName}}</span>
             </div>
 
             <md-button class="menu-button">
@@ -57,31 +57,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div class="menu-static-row" style="padding-top: 10px;">
                 <span class="md-title">GROUPS</span>
             </div>
-
+            
             <md-menu-sidenav class="menu">                
                 <md-menu-sidenav-item ng-repeat="(key, value) in userGradebooks | groupBy: 'number'">
                     <md-menu-sidenav-title>
                         <md-toogle-menu layout="row" flex>
-                            <h1 class="md-body-2" flex>{{key}}</h1>
-                        </md-toogle-menu>
-                        <md-icon flex="15">expand_more</md-icon>
+                            <span flex>{{key}}</span>                        
+                            <md-icon flex="15">expand_more</md-icon>
+                        </md-toogle-menu>                       
                     </md-menu-sidenav-title>
 
                     <md-menu-sidenav-content>
+                        <md-divider></md-divider>
                         <md-menu-sidenav-item ng-repeat="(key, value) in value | groupBy: 'semesterId'">
                             <md-menu-sidenav-title>
-                                <md-toogle-menu layout="row" flex>
-                                    <h1 class="md-body-2" flex>{{value[0].academicYear}} {{value[0].name}}</h1>
-                                </md-toogle-menu>
-                                <md-icon flex="15">expand_more</md-icon>
+                                <md-toogle-menu layout="row" ng-click="menuExpand()" flex>
+                                    <span flex>{{value[0].academicYear}} {{value[0].name}}</span>
+                                    <md-icon flex="15">expand_more</md-icon>                                 
+                                </md-toogle-menu>                                
                             </md-menu-sidenav-title>
-
                             <md-menu-sidenav-content>
                                 <md-menu-sidenav-subitem ng-repeat="gradebook in value">
-                                    <a href="#/api/groups/{{gradebook.academicGroupId}}/semesters/{{gradebook.semesterId}}/gradebooks/{{gradebook.gradebookId}}/tasks">{{gradebook.subject}}</a>
+                                    <md-button class="menu-item-button"
+                                               href="#/api/groups/{{gradebook.academicGroupId}}/semesters/{{gradebook.semesterId}}/gradebooks/{{gradebook.gradebookId}}/tasks">
+                                        <md-icon class="gradebook-icon">book</md-icon>
+                                        <span>{{gradebook.subject}}</span>
+                                    </md-button>
                                 </md-menu-sidenav-subitem>
-
                             </md-menu-sidenav-content>
+                            <md-divider></md-divider>
                         </md-menu-sidenav-item>
                     </md-menu-sidenav-content>
                     <md-divider></md-divider>
@@ -111,7 +115,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <div flex layout="row" layout-align="center center">
                     <span class="title">GradeBook™</span>
                     <span flex hide-sm></span>
-                    <span hide-sm>Group | Subject | Year</span> 
+                    <span hide-sm>{{gradebook.group}} | {{gradebook.subject}} | {{gradebook.year}}</span> 
                 </div>
             </div>
         </md-toolbar>
@@ -128,9 +132,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-cookies.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-messages.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
-    <script src="lib/material-menu-sidenav.min.js"></script>
     <script src="lib/angular-ui-router.min.js"></script>
     <script src="lib/angular-filter.min.js"></script>
+    <script src="lib/material-menu-sidenav.js"></script>
 
     <!-- GradeBook Script -->
     <script src="js/controllers.js"></script>

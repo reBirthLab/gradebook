@@ -17,6 +17,7 @@
 package com.rebirthlab.gradebook.service;
 
 import com.rebirthlab.gradebook.common.GradebookConstants;
+import com.rebirthlab.gradebook.entity.Gradebook;
 import com.rebirthlab.gradebook.entity.LecturerGradebooks;
 import com.rebirthlab.gradebook.entity.LecturerGradebooks_;
 import com.rebirthlab.gradebook.security.AuthenticationService;
@@ -32,6 +33,7 @@ import javax.persistence.criteria.Root;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 /**
@@ -69,6 +71,13 @@ public class LecturerGradebooksFacadeREST extends AbstractFacade<LecturerGradebo
             return null;
         }
     }
+    @GET
+    @Path("{id}")
+    @Produces({"application/xml", "application/json"})
+    public LecturerGradebooks find(@PathParam("id") Integer id) {
+        return super.find(id);
+    }
+    
 
     @Override
     protected EntityManager getEntityManager() {
