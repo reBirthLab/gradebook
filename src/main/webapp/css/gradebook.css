@@ -53,6 +53,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-size: 24px; 
 }
 
+.md-toolbar-tools .gradebook-title {
+    text-align: right;
+}
+
 .md-toolbar-tools md-icon, .md-toolbar-tools span{
     color: white; 
 }
@@ -73,6 +77,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     width: 226px;
 }
 
+.site-sidenav .menu-title-button md-icon,  .site-sidenav .menu-subtitle-button md-icon {
+    line-height: 40px;
+    float: right;
+}
+
 .site-sidenav .menu-button {
     padding: 0 15px;
     margin: 0;
@@ -84,6 +93,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-transform: uppercase;
 }
 
+.site-sidenav .menu-title-button {
+    padding: 0 15px;
+    margin: 0;
+    height: 40px;
+    line-height: 40px;
+    width: 100%;
+    border-radius: 0;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;    
+}
+
+.site-sidenav .menu-subtitle-button {
+    padding: 0 15px 0 25px;
+    margin: 0;
+    height: 40px;
+    line-height: 40px;
+    width: 100%;
+    border-radius: 0;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;    
+}
+
 .site-sidenav .menu-item-button {
     padding: 0 15px;
     margin: 0;
@@ -93,8 +126,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     border-radius: 0;
     font-size: 14px;
     text-align: left;
-    text-transform: none;
-    
+    text-transform: none;  
 }
 
 .site-sidenav div {
@@ -108,15 +140,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .site-sidenav div.menu-static-row {
     height: 50px;
     line-height: 50px;
-}
-
-.site-sidenav ul {
-    margin: 0;
-    padding-left: 15px;  
-}
-
-.site-sidenav li {
-    margin: 5px 0px;  
 }
 
 .site-sidenav .add-icon {

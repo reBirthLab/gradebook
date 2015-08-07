@@ -34,7 +34,14 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
     $stateProvider.state('login', {
         url: '/login',
         templateUrl: 'views/login.html',
-        controller: 'LoginCtrl'
+        controller: 'LoginCtrl',
+        onExit: function ($window, $rootScope) {
+            $window.location.reload();
+            $rootScope.isLogin = false;
+        },
+        onEnter: function ($rootScope) {
+            $rootScope.isLogin = true;
+        }
     });
 
     $stateProvider.state('main', {

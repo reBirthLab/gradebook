@@ -18,22 +18,14 @@
 
 var controllers = angular.module('GradebookControllers', []);
 
-controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav, $stateParams, UserGradebooks) {
-
-    $rootScope.$on('$stateChangeSuccess', function (event, toState) {
-        if (toState.name === 'login') {
-            $rootScope.isLogin = true;
-        } else {
-            $rootScope.isLogin = false;
-        }
-    });
+controllers.controller('MainCtrl', function ($scope, $mdSidenav, UserGradebooks) {
 
     $scope.index = 0;
     $scope.toggleSidenav = function (menuId) {
         $mdSidenav(menuId).toggle();
     };
 
-    var userGradebooks = UserGradebooks.query(function (userGradebooks) {
+    var userGradebooks = UserGradebooks.query(function () {
         $scope.user = {
             firstName: userGradebooks[0].firstName,
             lastName: userGradebooks[0].lastName
@@ -41,7 +33,7 @@ controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav, $st
     });
     
     $scope.userGradebooks = userGradebooks;
-
+    
     function getByGradebookId(arr, id) {
         for (var d = 0, len = arr.length; d < len; d += 1) {
             if (arr[d].gradebookId === id) {
@@ -49,15 +41,16 @@ controllers.controller('MainCtrl', function ($rootScope, $scope, $mdSidenav, $st
             }
         }
     }
-    
+
     $scope.get = function (gradebookId) {
-            var currentGradebook = getByGradebookId(userGradebooks, gradebookId);
-            $scope.gradebook = {
-                group: currentGradebook.number + " |",
-                subject: currentGradebook.name + " |",
-                year: currentGradebook.academicYear
-            };
+        var currentGradebook = getByGradebookId(userGradebooks, gradebookId);
+        $scope.gradebook = {
+            group: currentGradebook.number + " |",
+            subject: currentGradebook.subject + " |",
+            year: currentGradebook.academicYear,
+            semester: currentGradebook.name
         };
+    };
 });
 
 controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, AuthenticationService) {

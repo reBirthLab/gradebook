@@ -88,6 +88,9 @@
         "flex": {},
         "ui-view": {
             "context": "div"
+        },
+        "show-gt-md": {
+            "context": "span"
         }
     }
 }

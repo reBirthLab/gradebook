@@ -35,7 +35,7 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entity.users")
+@Path("users")
 public class UsersFacadeREST extends AbstractFacade<Users> {
     @PersistenceContext(name="PersistenceContext", unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
@@ -44,6 +44,13 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
         super(Users.class);
     }
 
+    @GET
+    @Path("check")
+    @Produces({"application/xml", "application/json"})
+    public boolean check() {
+        return true;
+    }
+    
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
