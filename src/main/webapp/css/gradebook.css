@@ -19,6 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Author     : Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
 */
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+
 /**
  * Material Icons Styles
  */

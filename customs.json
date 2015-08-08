@@ -12,7 +12,8 @@
                 "ng-show": {},
                 "style": {},
                 "class": {},
-                "ng-hide": {}
+                "ng-hide": {},
+                "ng-cloak": {}
             }
         },
         "md-sidenav": {
@@ -24,7 +25,8 @@
                 "md-is-open": {},
                 "class": {},
                 "md-is-locked-open": {},
-                "ng-hide": {}
+                "ng-hide": {},
+                "ng-cloak": {}
             }
         },
         "md-menu": {},

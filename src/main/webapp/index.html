@@ -39,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <!-- Sidenav -->
     <md-sidenav ng-hide="isLogin" class="site-sidenav md-sidenav-left md-whiteframe-z2"
-                md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" tabindex="-1">
+                md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" tabindex="-1" ng-cloak>
         <header class="nav-header">
             <img src="images/Architectural_Association_Logo.jpg" alt>
         </header>
@@ -116,7 +116,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <!-- Main frame -->
     <div layout="column" tabindex="-1" flex>
         <!-- Toolbar -->
-        <md-toolbar ng-hide="isLogin" class="md-whiteframe-z1">
+        <md-toolbar ng-hide="isLogin" class="md-whiteframe-z1" ng-cloak>
             <div class="md-toolbar-tools">
                 <md-button ng-click="toggleSidenav('left')" hide-gt-md class="md-icon-button">
                     <md-icon>menu</md-icon>

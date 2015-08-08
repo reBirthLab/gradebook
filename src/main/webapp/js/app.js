@@ -53,7 +53,7 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
     $stateProvider.state('gradebook', {
         url: '/api/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks',
         templateUrl: 'views/gradebook.html',
-        controller: 'GroupGradesCtrl'
+        controller: 'GradebookCtrl'
     });
 });
 

@@ -19,7 +19,7 @@
 var controllers = angular.module('GradebookControllers', []);
 
 controllers.controller('MainCtrl', function ($scope, $mdSidenav, UserGradebooks) {
-
+    
     $scope.index = 0;
     $scope.toggleSidenav = function (menuId) {
         $mdSidenav(menuId).toggle();
@@ -81,7 +81,7 @@ controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, Authe
 });
 
 // TEMPORARY
-controllers.controller('GroupGradesCtrl', function ($scope, $state, $stateParams, Gradebook) {
+controllers.controller('GradebookCtrl', function ($scope, $state, $stateParams, Gradebook) {
     $scope.groupGrades = Gradebook.query({
         groupId: $stateParams.groupId,
         semesterId: $stateParams.semesterId,
