@@ -30,6 +30,8 @@ var app = angular.module('GradebookApp', [
 app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise("/login");
+    $urlRouterProvider.when('/api/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId',
+            '/api/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks');
 
     $stateProvider.state('login', {
         url: '/login',
@@ -45,16 +47,29 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
     });
 
     $stateProvider.state('main', {
-        url: '/api/gradebooks',
-        templateUrl: 'views/gradebook.html',
+        url: '/',
+        //templateUrl: 'views/main.html',
         controller: 'MainCtrl'
     });
-
+    
     $stateProvider.state('gradebook', {
-        url: '/api/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks',
+        url: '/api/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId',
+        abstract: true,
         templateUrl: 'views/gradebook.html',
-        controller: 'GradebookCtrl'
+        
     });
+
+    $stateProvider.state('gradebook.tasks', {
+        url: '/tasks',
+        templateUrl: 'views/gradebook.tasks.html',
+        controller: 'GradebookTasksCtrl'
+    });
+    
+    $stateProvider.state('gradebook.attendance', {
+        url: '/attendance',
+        templateUrl: 'views/gradebook.attendance.html',
+        controller: 'GradebookAttendanceCtrl',
+    }); 
 });
 
 app.config(['$resourceProvider', function ($resourceProvider) {

@@ -62,7 +62,7 @@ controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, Authe
         AuthenticationService.Login($scope.username, $scope.password, function (response) {
             if (response.status === 200) {
                 AuthenticationService.SetCredentials($scope.username, $scope.password);
-                $location.path('/api/gradebooks');
+                $location.path('/');
             } else {
                 showErrorToast();
                 $scope.dataLoading = false;
@@ -81,7 +81,15 @@ controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, Authe
 });
 
 // TEMPORARY
-controllers.controller('GradebookCtrl', function ($scope, $state, $stateParams, Gradebook) {
+controllers.controller('GradebookTasksCtrl', function ($scope, $state, $stateParams, Gradebook) {
+    $scope.groupGrades = Gradebook.query({
+        groupId: $stateParams.groupId,
+        semesterId: $stateParams.semesterId,
+        gradebookId: $stateParams.gradebookId
+    });
+});
+
+controllers.controller('GradebookAttendanceCtrl', function ($scope, $state, $stateParams, Gradebook) {
     $scope.groupGrades = Gradebook.query({
         groupId: $stateParams.groupId,
         semesterId: $stateParams.semesterId,

@@ -1,42 +1,12 @@
 <md-content class="main-frame" flex>
-    <table class="table-tasks">
-        <thead>
-            <tr class="header-primary">
-                <th class="table-num-col">#</th>
-                <th class="table-name-col">Name</th>                                                                     
-                <th ng-repeat="(key, value) in groupGrades | groupBy: 'taskId'">
-                    <a class="modal-trigger" href="#task{{value[0].taskId}}">
-                        Task {{($index + 1)}} | {{value[0].title}}
-                    </a>
-                </th>
-                <th class="add">
-                    <md-button href="#add-task" class="md-icon-button">
-                        <md-icon class="add-button">add_circle_outline</md-icon>
-                    </md-button>
-                </th>                               
-        </tr>
-        <tr class="header-secondary">
-            <th class="table-num-col"></th>
-            <th class="table-name-col"></th>
-            <th>06/07 - 10/07</th>
-            <th>13/07 - 17/07</th>
-            <th>20/07 - 24/07</th>
-            <th>27/07 - 31/07</th>
-            <th></th>         
-        </tr>
-        </thead>
-
-        <tbody>
-            <tr ng-repeat="(key, value) in groupGrades | groupBy: 'studentId'">
-                <td class="table-num-col">{{($index + 1)}}</td>
-                <td class="table-name-col">{{value[0].firstName}} {{value[0].lastName}}</td>
-                <td ng-repeat="task in value">
-                    <a class="modal-trigger" href="#mark1">{{task.grade}}</a>
-                </td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+    <md-tabs md-border-bottom md-stretch-tabs="auto">
+        <md-tab label="Tasks" md-selected="" ui-sref="gradebook.tasks">
+            <div ui-view></div>
+        </md-tab>
+        <md-tab label="Attendance" ui-sref="gradebook.attendance">
+            <div ui-view></div>
+        </md-tab>
+    </md-tabs>
 </md-content>
 
 <ng-include src="'views/partitials/footer.html'"></ng-include>

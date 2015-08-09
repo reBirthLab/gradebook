@@ -188,6 +188,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     }
 }
 
+.main-frame md-pagination-wrapper.md-center-tabs {
+    left: 0px;
+    position: absolute;
+}
+
+.main-frame md-tab-item {
+    min-width: 140px;
+}
+
 /**
  * Footer Styles
  */
