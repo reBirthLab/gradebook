@@ -61,6 +61,14 @@ public class TasksTableFacadeREST extends AbstractFacade<TasksTable> {
         getEntityManager().persist(entity);
     }
     
+    // TODO: Update task
+    @PUT
+    @Path("{id}")
+    @Consumes({"application/xml", "application/json"})
+    public void edit(@PathParam("id") String id, TasksTable entity) {
+        super.edit(entity);
+    }
+    
     /**
      * Returns list of student grades based on provided via URI parameters
      * 
@@ -88,14 +96,6 @@ public class TasksTableFacadeREST extends AbstractFacade<TasksTable> {
         );
         
         return getEntityManager().createQuery(cq).getResultList();
-    }
-
-    // TODO: Update task
-    @PUT
-    @Path("{id}")
-    @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") String id, TasksTable entity) {
-        super.edit(entity);
     }
 
     // TODO: Get the row of grades for specific student

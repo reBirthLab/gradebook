@@ -17,15 +17,15 @@
 package com.rebirthlab.gradebook.service;
 
 import com.rebirthlab.gradebook.entity.AttendanceTable;
+import com.rebirthlab.gradebook.entity.AttendanceTable_;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -35,7 +35,7 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entity.attendancetable")
+@Path("groups/{academic_group_id}/semesters/{semester_id}/gradebooks/{gradebook_id}/attendance")
 public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
@@ -44,52 +44,24 @@ public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
         super(AttendanceTable.class);
     }
 
-    @POST
-    @Override
-    @Consumes({"application/xml", "application/json"})
-    public void create(AttendanceTable entity) {
-        super.create(entity);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, AttendanceTable entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
-    }
-
     @GET
-    @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public AttendanceTable find(@PathParam("id") Integer id) {
-        return super.find(id);
-    }
-
-    @GET
-    @Override
-    @Produces({"application/xml", "application/json"})
-    public List<AttendanceTable> findAll() {
-        return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
-    public List<AttendanceTable> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
+    public List<AttendanceTable> showTable(@PathParam("academic_group_id") Integer academicGroupId,
+            @PathParam("semester_id") Integer semesterId,
+            @PathParam("gradebook_id") Integer gradebookId) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery(AttendanceTable.class);
+        
+        Root attendanceTable = cq.from(AttendanceTable.class);
+        cq.where(
+                cb.and(
+                        cb.equal(attendanceTable.get(AttendanceTable_.academicGroupId), academicGroupId),
+                        cb.equal(attendanceTable.get(AttendanceTable_.semesterId), semesterId),
+                        cb.equal(attendanceTable.get(AttendanceTable_.gradebookId), gradebookId)
+                )
+        );
+        
+        return getEntityManager().createQuery(cq).getResultList();
     }
 
     @Override
