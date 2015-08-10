@@ -18,12 +18,12 @@
 
 var app = angular.module('GradebookApp', [
     'ngMaterial',
-    'ngMenuSidenav',
     'ngResource',
     'ngCookies',
     'ngMessages',
     'ui.router',
     'angular.filter',
+    'vAccordion',
     'GradebookControllers',
     'GradebookServices']);
 

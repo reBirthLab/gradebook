@@ -26,14 +26,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
 
-        <!-- Angular Material Sidenav Menu CSS -->
-        <link rel="stylesheet" href="css/material-menu-sidenav.min.css">
-
         <!-- Google Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <!-- GradeBook CSS -->
         <link rel="stylesheet" href="css/gradebook.css">
+        <link rel="stylesheet" href="css/v-accordion.css">
     </head>
     <body ng-controller="MainCtrl" layout="row">
 
@@ -58,48 +56,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <span class="md-title">GROUPS</span>
             </div>
 
-            <md-menu-sidenav class="menu">                
-                <md-menu-sidenav-item ng-repeat="(key, value) in userGradebooks | groupBy: 'number'">
-                    <md-menu-sidenav-title>
-                        <md-toogle-menu layout="row" flex>
-                            <md-button class="menu-title-button">
-                                <span>{{key}}</span>                        
-                                <md-icon>expand_more</md-icon>
-                            </md-button>
-                        </md-toogle-menu>                       
-                    </md-menu-sidenav-title>
-
-                    <md-menu-sidenav-content>                       
-                        <md-divider></md-divider>
-                        
-                        <md-menu-sidenav-item ng-repeat="(key, value) in value | groupBy: 'semesterId'">
-                            <md-menu-sidenav-title>                                
-                                <md-toogle-menu layout="row" flex>
+            <v-accordion class="menu" onexpand="expandCallback(index)" oncollapse="collapseCallback(index)">
+                <v-pane  ng-repeat="(key, value) in userGradebooks | groupBy: 'number'" >
+                    <v-pane-header>
+                        <md-button class="menu-title-button">
+                            <span>{{key}}</span>                        
+                            <md-icon>{{expandIcon}}</md-icon>
+                        </md-button>
+                    </v-pane-header>
+                    <md-divider></md-divider>
+                    <v-pane-content>
+                        <v-accordion onexpand="expandCallback(index)" oncollapse="collapseCallback(index)">
+                            <v-pane ng-repeat="(key, value) in value | groupBy: 'semesterId'">
+                                <v-pane-header>
                                     <md-button class="menu-subtitle-button">
                                         <span>{{value[0].academicYear}} {{value[0].name}}</span>                                       
-                                        <md-icon>expand_more</md-icon>
+                                        <md-icon>{{expandIcon}}</md-icon>
                                     </md-button>
-                                </md-toogle-menu>                                
-                            </md-menu-sidenav-title> 
-
-                            <md-menu-sidenav-content>
-                                <md-menu-sidenav-subitem ng-repeat="gradebook in value">
-                                    <md-button ng-click="get(gradebook.gradebookId)" class="menu-item-button"
+                                </v-pane-header>
+                                <v-pane-content>
+                                    <md-button ng-repeat="gradebook in value" ng-click="get(gradebook.gradebookId)" class="menu-item-button"
                                                href="#/api/groups/{{gradebook.academicGroupId}}/semesters/{{gradebook.semesterId}}/gradebooks/{{gradebook.gradebookId}}">
                                         <md-icon class="gradebook-icon">book</md-icon>
                                         <span>{{gradebook.subject}}</span>
                                     </md-button>
-                                </md-menu-sidenav-subitem>
-                            </md-menu-sidenav-content>
-                            
-                            <md-divider></md-divider>   
-                        </md-menu-sidenav-item>
-                        
-                    </md-menu-sidenav-content>
-                    
-                    <md-divider></md-divider>
-                </md-menu-sidenav-item>
-            </md-menu-sidenav>
+                                </v-pane-content>
+                                <md-divider></md-divider>
+                            </v-pane>                           
+                        </v-accordion>
+                    </v-pane-content>                  
+                </v-pane>                
+            </v-accordion>
 
             <md-button class="menu-button">
                 <md-icon class="icon">settings</md-icon>
@@ -143,7 +130,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
     <script src="lib/angular-ui-router.min.js"></script>
     <script src="lib/angular-filter.min.js"></script>
-    <script src="lib/material-menu-sidenav.min.js"></script>
+    <script src="lib/v-accordion.min.js"></script>
 
     <!-- GradeBook Script -->
     <script src="js/controllers.js"></script>

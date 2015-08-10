@@ -18,8 +18,8 @@
 
 var controllers = angular.module('GradebookControllers', []);
 
-controllers.controller('MainCtrl', function ($scope, $mdSidenav, UserGradebooks) {
-    
+controllers.controller('MainCtrl', function ($scope, $mdSidenav, $parse, UserGradebooks) {
+
     $scope.index = 0;
     $scope.toggleSidenav = function (menuId) {
         $mdSidenav(menuId).toggle();
@@ -31,9 +31,9 @@ controllers.controller('MainCtrl', function ($scope, $mdSidenav, UserGradebooks)
             lastName: userGradebooks[0].lastName
         };
     });
-    
+
     $scope.userGradebooks = userGradebooks;
-    
+
     function getByGradebookId(arr, id) {
         for (var d = 0, len = arr.length; d < len; d += 1) {
             if (arr[d].gradebookId === id) {
@@ -50,6 +50,17 @@ controllers.controller('MainCtrl', function ($scope, $mdSidenav, UserGradebooks)
             year: currentGradebook.academicYear,
             semester: currentGradebook.name
         };
+    };
+
+    $scope.expandIcon = 'expand_more';
+    $scope.expandCallback = function (index) {
+        //$scope['expandIcon' + index] = 'expand_less';
+        $scope.expandIcon = 'expand_less';
+    };
+
+    $scope.collapseCallback = function (index) {
+        //$scope['expandIcon' + index] = 'expand_more';
+        $scope.expandIcon = 'expand_more';
     };
 });
 

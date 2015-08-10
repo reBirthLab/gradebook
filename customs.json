@@ -16,6 +16,19 @@
                 "ng-cloak": {}
             }
         },
+        "md-tabs": {
+            "attributes": {
+                "md-border-bottom": {},
+                "md-stretch-tabs": {}
+            }
+        },
+        "md-tab": {
+            "attributes": {
+                "label": {},
+                "md-selected": {},
+                "ui-sref": {}
+            }
+        },
         "md-sidenav": {
             "attributes": {
                 "ng-show": {},
@@ -35,6 +48,13 @@
                 "class": {}
             }
         },
+        "v-accordion": {
+            "attributes": {
+                "onexpand": {},
+                "class": {},
+                "oncollapse": {}
+            }
+        },
         "md-menu-sidenav-content": {},
         "md-card": {
             "attributes": {
@@ -49,10 +69,18 @@
                 "value": {}
             }
         },
+        "v-pane": {
+            "attributes": {
+                "ng-repeat": {}
+            }
+        },
+        "v-pane-content": {},
         "md-menu-content": {},
         "md-menu-item": {},
+        "v-pane-header": {},
         "md-icon": {
             "attributes": {
+                "id": {},
                 "class": {}
             }
         },
@@ -61,6 +89,7 @@
                 "hide-gt-md": {},
                 "ng-href": {},
                 "ng-click": {},
+                "ng-repeat": {},
                 "href": {},
                 "type": {},
                 "class": {}
