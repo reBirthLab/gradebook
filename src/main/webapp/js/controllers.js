@@ -51,17 +51,6 @@ controllers.controller('MainCtrl', function ($scope, $mdSidenav, $parse, UserGra
             semester: currentGradebook.name
         };
     };
-
-    $scope.expandIcon = 'expand_more';
-    $scope.expandCallback = function (index) {
-        //$scope['expandIcon' + index] = 'expand_less';
-        $scope.expandIcon = 'expand_less';
-    };
-
-    $scope.collapseCallback = function (index) {
-        //$scope['expandIcon' + index] = 'expand_more';
-        $scope.expandIcon = 'expand_more';
-    };
 });
 
 controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, AuthenticationService) {

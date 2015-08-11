@@ -56,22 +56,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <span class="md-title">GROUPS</span>
             </div>
 
-            <v-accordion class="menu" onexpand="expandCallback(index)" oncollapse="collapseCallback(index)">
+            <v-accordion class="menu">
                 <v-pane  ng-repeat="(key, value) in userGradebooks | groupBy: 'number'" >
                     <v-pane-header>
                         <md-button class="menu-title-button">
                             <span>{{key}}</span>                        
-                            <md-icon>{{expandIcon}}</md-icon>
+                            <md-icon></md-icon>
                         </md-button>
                     </v-pane-header>
                     <md-divider></md-divider>
                     <v-pane-content>
-                        <v-accordion onexpand="expandCallback(index)" oncollapse="collapseCallback(index)">
+                        <v-accordion>
                             <v-pane ng-repeat="(key, value) in value | groupBy: 'semesterId'">
                                 <v-pane-header>
                                     <md-button class="menu-subtitle-button">
                                         <span>{{value[0].academicYear}} {{value[0].name}}</span>                                       
-                                        <md-icon>{{expandIcon}}</md-icon>
+                                        <md-icon></md-icon>
                                     </md-button>
                                 </v-pane-header>
                                 <v-pane-content>
