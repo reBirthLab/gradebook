@@ -18,12 +18,28 @@
 
 var services = angular.module('GradebookServices', []);
 
-services.factory('Gradebook', function ($resource) {
+services.factory('UserGradebooks', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/gradebooks/:gradebookId');
+});
+
+services.factory('GradebookTasks', function ($resource) {
     return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks');
 });
 
-services.factory('UserGradebooks', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/gradebooks/');
+services.factory('GradebookAttendance', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/attendance');
+});
+
+services.factory('Task', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/tasks/:taskId');
+});
+
+services.factory('Grade', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/students/:studentId/tasks/:taskId/grade');
+});
+
+services.factory('Attendance', function ($resource) {
+    return $resource('http://localhost:8080/api/v1/students/:studentId/tasks/:taskId/attendance');
 });
 
 services.factory('AuthenticationService', function (Base64, $http, $cookieStore, $rootScope, $timeout) {

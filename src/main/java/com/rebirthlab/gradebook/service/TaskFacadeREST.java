@@ -16,13 +16,16 @@
  */
 package com.rebirthlab.gradebook.service;
 
+import com.rebirthlab.gradebook.entity.AcademicGroup;
+import com.rebirthlab.gradebook.entity.Gradebook;
+import com.rebirthlab.gradebook.entity.Student;
+import com.rebirthlab.gradebook.entity.StudentGrade;
 import com.rebirthlab.gradebook.entity.Task;
-import java.util.List;
+import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -35,7 +38,7 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entity.task")
+@Path("tasks")
 public class TaskFacadeREST extends AbstractFacade<Task> {
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
@@ -45,23 +48,22 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
     }
 
     @POST
-    @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Task entity) {
-        super.create(entity);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Task entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+    public void createTask(Task task) {
+        getEntityManager().persist(task);
+        getEntityManager().flush();
+        
+        Integer gradebookId = task.getGradebookId().getGradebookId();
+        Gradebook gradebook = getEntityManager().find(Gradebook.class, gradebookId);
+        AcademicGroup group = gradebook.getAcademicGroupId();
+        Collection<Student> students = group.getStudentCollection();
+        
+        for(Student student : students){
+            StudentGrade grade = new StudentGrade(student.getStudentId(), task.getTaskId()); 
+            short gradevalue = 0;           
+            grade.setGrade(gradevalue); 
+            getEntityManager().persist(grade);
+        }  
     }
 
     @GET
@@ -71,25 +73,11 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         return super.find(id);
     }
 
-    @GET
-    @Override
-    @Produces({"application/xml", "application/json"})
-    public List<Task> findAll() {
-        return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
-    public List<Task> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
+    @PUT
+    @Path("{id}")
+    @Consumes({"application/xml", "application/json"})
+    public void edit(@PathParam("id") Integer id, Task entity) {
+        super.edit(entity);
     }
 
     @Override

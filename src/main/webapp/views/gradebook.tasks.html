@@ -5,23 +5,20 @@
                 <th class="table-num-col">#</th>
                 <th class="table-name-col">Name</th>                                                                     
                 <th ng-repeat="(key, value) in groupGrades | groupBy: 'taskId'">
-                    <a class="modal-trigger" href="#task{{value[0].taskId}}">
+                    <a ng-click="showTaskDetails($event, this)">
                         Task {{($index + 1)}} | {{value[0].title}}
                     </a>
                 </th>
                 <th class="add">
-        <md-button href="#add-task" class="md-icon-button">
-            <md-icon class="add-button">add_circle_outline</md-icon>
+        <md-button class="md-icon-button" ng-click="showAddTaskForm($event)">
+            <md-icon class="add-button">add_circle_outline</md-icon>            
         </md-button>
         </th>                               
         </tr>
         <tr class="header-secondary">
             <th class="table-num-col"></th>
             <th class="table-name-col"></th>
-            <th>06/07 - 10/07</th>
-            <th>13/07 - 17/07</th>
-            <th>20/07 - 24/07</th>
-            <th>27/07 - 31/07</th>
+            <th ng-repeat="(key, value) in groupGrades | groupBy: 'taskId'">{{calcTaskDates(value[0].startDate, value[0].taskLength)}}</th>
             <th></th>         
         </tr>
         </thead>
@@ -31,7 +28,9 @@
                 <td class="table-num-col">{{($index + 1)}}</td>
                 <td class="table-name-col">{{value[0].firstName}} {{value[0].lastName}}</td>
                 <td ng-repeat="task in value">
-                    <a class="modal-trigger" href="#mark1">{{task.grade}}</a>
+                    <md-button class="grade" ng-click="">
+                        {{task.grade}} <span class="max-grade">[{{task.maxGrade}}]</span>
+                    </md-button>
                 </td>
                 <td></td>
             </tr>

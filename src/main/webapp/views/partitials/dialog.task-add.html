@@ -1,0 +1,58 @@
+<md-dialog class="dialog" aria-label="Add Task">
+    <form ng-submit="submit()">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Add Task</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div layout="column">
+                <md-input-container>
+                    <label>Task Title</label>
+                    <input required type="text" ng-model="task.title">
+                </md-input-container>
+                <div layout="row" layout-align="start center">
+                    <md-input-container flex>
+                        <label>Start Date</label>
+                        <input required type="date" ng-model="task.startDate">
+                    </md-input-container>
+                    <md-input-container flex="30">
+                        <label>Length</label>
+                        <input required type="number" ng-model="task.taskLength" min="0" max="52">
+                    </md-input-container>
+                    <div flex="20">Weeks</div>
+                </div>
+                <div class="form-row" layout="column">
+                    <h3 class="label md-subhead">On course days</h3>
+                    <div>
+                        <md-checkbox class="inline" ng-model="task.onCourseMon" aria-label="Monday">Monday</md-checkbox>
+                        <md-checkbox class="inline" ng-model="task.onCourseTue" aria-label="Tuesday">Tuesday</md-checkbox>
+                        <md-checkbox class="inline" ng-model="task.onCourseWed" aria-label="Wednesday">Wednesday</md-checkbox>
+                        <md-checkbox class="inline" ng-model="task.onCourseThu" aria-label="Thursday">Thursday</md-checkbox>
+                        <md-checkbox class="inline" ng-model="task.onCourseFri" aria-label="Friday">Friday</md-checkbox>
+                    </div>
+                </div>
+                <md-input-container>
+                    <label>Maximum grade</label>
+                    <input required type="number" ng-model="task.maxGrade" min="0" max="100">
+                </md-input-container>
+                <md-input-container>
+                    <label>Description</label>
+                    <textarea ng-model="task.description"></textarea>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <div class="md-actions" layout="column">
+            <md-progress-linear flex ng-if="dataLoading" class="md-accent" md-mode="indeterminate"></md-progress-linear>
+            <div layout="row" layout-align="end">
+                <md-button class="md-primary">
+                    Submit
+                </md-button>
+            </div>     
+        </div>   
+    </form>
+</md-dialog>

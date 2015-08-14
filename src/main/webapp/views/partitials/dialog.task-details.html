@@ -1,0 +1,27 @@
+<md-dialog class="dialog" aria-label="Task Details">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Task Details</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div layout="column">
+            <div>{{task.title}}</div>
+            <div>{{task.description}}</div>
+            <div>{{startDate}} - {{endDate}}</div>
+        </div>
+    </md-dialog-content>
+    <div class="md-actions" layout="row">            
+        <div flex></div>
+        <md-button ng-click="cancel()" class="md-primary">
+            Edit
+        </md-button>
+        <md-button ng-click="hide()" class="md-primary">
+            Close
+        </md-button>      
+    </div>   
+</md-dialog>

@@ -52,6 +52,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TasksTable.findByLastName", query = "SELECT t FROM TasksTable t WHERE t.lastName = :lastName"),
     @NamedQuery(name = "TasksTable.findByGrade", query = "SELECT t FROM TasksTable t WHERE t.grade = :grade")})
 public class TasksTable implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "max_grade")
+    private short maxGrade;
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @NotNull
@@ -196,6 +200,14 @@ public class TasksTable implements Serializable {
 
     public void setGrade(short grade) {
         this.grade = grade;
+    }
+
+    public short getMaxGrade() {
+        return maxGrade;
+    }
+
+    public void setMaxGrade(short maxGrade) {
+        this.maxGrade = maxGrade;
     }
 
 }

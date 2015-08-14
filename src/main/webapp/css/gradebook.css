@@ -261,7 +261,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .table-tasks td, .table-tasks th {
-    padding: 5px;
+    //padding: 5px;
     font-size: 16px;
     text-align: center;
     border: 1px solid #f5f5f5;
@@ -298,7 +298,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     padding: 5px 10px;
 }
 
-.table-tasks a.md-button.md-icon-button {
+.table-tasks button.md-button.md-icon-button {
     width: 100%;
     margin: auto;
 }
@@ -308,3 +308,57 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     width: 36px;
     font-size: 36px;
 }
+
+.table-tasks .grade {
+    font-weight: normal;
+    margin: 0;
+    min-height: 30px;
+    line-height: 30px;
+    width: 100%;
+    border-radius: 0;
+    font-size: 16px;
+    text-transform: none;
+}
+
+.table-tasks .max-grade {
+    color: rgba(0, 0, 0, 0.38);
+}
+
+/**
+ * Dialog Styles
+ */
+.dialog {
+    max-width: 600px;
+}
+
+@media only screen and (max-width : 700px) {  
+    .dialog {
+        max-width: 80%;
+    }
+}
+
+.dialog .label {
+    margin: 16px 0 0 0;
+}
+
+.dialog .inline {
+    display: inline-block;
+}
+
+.dialog .form-row {
+    padding-bottom: 26px;
+}
+
+.dialog .md-actions div {
+    width: 100%;
+}
+
+.dialog .md-toolbar-tools md-icon {
+   color: rgba(255,255,255,0.87);
+}
+
+.dialog .md-toolbar-tools md-icon:hover {
+   color: rgba(255,255,255,1.0);
+}
+
+
