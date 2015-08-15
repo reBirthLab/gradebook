@@ -52,7 +52,6 @@ public class StudentGradebooks implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "student_id")
-    @Id
     private int studentId;
     @Basic(optional = false)
     @NotNull
@@ -89,6 +88,7 @@ public class StudentGradebooks implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "gradebook_id")
+    @Id
     private int gradebookId;
     @Basic(optional = false)
     @NotNull

@@ -39,7 +39,7 @@ services.factory('Grade', function ($resource) {
 });
 
 services.factory('Attendance', function ($resource) {
-    return $resource('http://localhost:8080/api/v1/students/:studentId/tasks/:taskId/attendance');
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/students/:studentId/tasks/:taskId/attendance');
 });
 
 services.factory('AuthenticationService', function (Base64, $http, $cookieStore, $rootScope, $timeout) {

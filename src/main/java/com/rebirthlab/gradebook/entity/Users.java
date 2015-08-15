@@ -50,11 +50,13 @@ public class Users implements Serializable {
     @Column(name = "admin_email")
     private String adminEmail;
     @Column(name = "lecturer_id")
+    @Id
     private Integer lecturerId;
     @Size(max = 60)
     @Column(name = "lecturer_email")
     private String lecturerEmail;
     @Column(name = "student_id")
+    @Id
     private Integer studentId;
     @Size(max = 60)
     @Column(name = "student_email")

@@ -3,6 +3,5 @@
   <persistence-unit name="com.rebirthlab_gradebook_war_1.0PU" transaction-type="JTA">
     <jta-data-source>java:jboss/datasources/MySQLDS</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
   </persistence-unit>
 </persistence>
