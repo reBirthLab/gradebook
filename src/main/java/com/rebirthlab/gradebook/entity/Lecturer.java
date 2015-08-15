@@ -47,13 +47,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Lecturer.findByLecturerId", query = "SELECT l FROM Lecturer l WHERE l.lecturerId = :lecturerId"),
     @NamedQuery(name = "Lecturer.findByFirstName", query = "SELECT l FROM Lecturer l WHERE l.firstName = :firstName"),
     @NamedQuery(name = "Lecturer.findByLastName", query = "SELECT l FROM Lecturer l WHERE l.lastName = :lastName"),
-    @NamedQuery(name = "Lecturer.findByEmail", query = "SELECT l FROM Lecturer l WHERE l.email = :email")})
+    @NamedQuery(name = "Lecturer.findByEmail", query = "SELECT l FROM Lecturer l WHERE l.email = :email"),
+    @NamedQuery(name = "Lecturer.findByPassword", query = "SELECT l FROM Lecturer l WHERE l.password = :password")})
 public class Lecturer implements Serializable {
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 16)
-    @Column(name = "password")
-    private String password;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,9 +69,14 @@ public class Lecturer implements Serializable {
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 60)
     @Column(name = "email")
     private String email;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 16)
+    @Column(name = "password")
+    private String password;
     @ManyToMany(mappedBy = "lecturerCollection")
     private Collection<Gradebook> gradebookCollection;
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
@@ -178,5 +179,5 @@ public class Lecturer implements Serializable {
     public String toString() {
         return "com.rebirthlab.gradebook.entity.Lecturer[ lecturerId=" + lecturerId + " ]";
     }
-
+    
 }

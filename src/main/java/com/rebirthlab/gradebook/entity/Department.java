@@ -56,7 +56,7 @@ public class Department implements Serializable {
     private Integer departmentId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 150)
     @Column(name = "name")
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "departmentId")

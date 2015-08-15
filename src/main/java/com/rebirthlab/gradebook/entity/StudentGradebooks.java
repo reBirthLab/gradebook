@@ -92,7 +92,7 @@ public class StudentGradebooks implements Serializable {
     private int gradebookId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 150)
     @Column(name = "subject")
     private String subject;
 

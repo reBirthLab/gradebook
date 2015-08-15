@@ -46,17 +46,17 @@ public class Users implements Serializable {
     @Column(name = "admin_id")
     @Id
     private Integer adminId;
-    @Size(max = 45)
+    @Size(max = 60)
     @Column(name = "admin_email")
     private String adminEmail;
     @Column(name = "lecturer_id")
     private Integer lecturerId;
-    @Size(max = 45)
+    @Size(max = 60)
     @Column(name = "lecturer_email")
     private String lecturerEmail;
     @Column(name = "student_id")
     private Integer studentId;
-    @Size(max = 45)
+    @Size(max = 60)
     @Column(name = "student_email")
     private String studentEmail;
 

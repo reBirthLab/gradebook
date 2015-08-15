@@ -27,6 +27,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -48,8 +49,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Gradebook.findAll", query = "SELECT g FROM Gradebook g"),
     @NamedQuery(name = "Gradebook.findByGradebookId", query = "SELECT g FROM Gradebook g WHERE g.gradebookId = :gradebookId"),
-    @NamedQuery(name = "Gradebook.findBySubject", query = "SELECT g FROM Gradebook g WHERE g.subject = :subject"),
-    @NamedQuery(name = "Gradebook.findByDescription", query = "SELECT g FROM Gradebook g WHERE g.description = :description")})
+    @NamedQuery(name = "Gradebook.findBySubject", query = "SELECT g FROM Gradebook g WHERE g.subject = :subject")})
 public class Gradebook implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,10 +59,11 @@ public class Gradebook implements Serializable {
     private Integer gradebookId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 150)
     @Column(name = "subject")
     private String subject;
-    @Size(max = 45)
+    @Lob
+    @Size(max = 65535)
     @Column(name = "description")
     private String description;
     @JoinTable(name = "lecturer_has_gradebook", joinColumns = {

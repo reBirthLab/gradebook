@@ -47,19 +47,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TasksTable.findByTitle", query = "SELECT t FROM TasksTable t WHERE t.title = :title"),
     @NamedQuery(name = "TasksTable.findByStartDate", query = "SELECT t FROM TasksTable t WHERE t.startDate = :startDate"),
     @NamedQuery(name = "TasksTable.findByTaskLength", query = "SELECT t FROM TasksTable t WHERE t.taskLength = :taskLength"),
+    @NamedQuery(name = "TasksTable.findByMaxGrade", query = "SELECT t FROM TasksTable t WHERE t.maxGrade = :maxGrade"),
     @NamedQuery(name = "TasksTable.findByStudentId", query = "SELECT t FROM TasksTable t WHERE t.studentId = :studentId"),
     @NamedQuery(name = "TasksTable.findByFirstName", query = "SELECT t FROM TasksTable t WHERE t.firstName = :firstName"),
     @NamedQuery(name = "TasksTable.findByLastName", query = "SELECT t FROM TasksTable t WHERE t.lastName = :lastName"),
     @NamedQuery(name = "TasksTable.findByGrade", query = "SELECT t FROM TasksTable t WHERE t.grade = :grade")})
 public class TasksTable implements Serializable {
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "max_grade")
-    private short maxGrade;
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "academic_group_id")   
+    @Column(name = "academic_group_id")
     private int academicGroupId;
     @Basic(optional = false)
     @NotNull
@@ -75,7 +72,7 @@ public class TasksTable implements Serializable {
     private int taskId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 150)
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
@@ -89,8 +86,12 @@ public class TasksTable implements Serializable {
     private short taskLength;
     @Basic(optional = false)
     @NotNull
-    @Id
+    @Column(name = "max_grade")
+    private short maxGrade;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "student_id")
+    @Id
     private int studentId;
     @Basic(optional = false)
     @NotNull
@@ -166,6 +167,14 @@ public class TasksTable implements Serializable {
         this.taskLength = taskLength;
     }
 
+    public short getMaxGrade() {
+        return maxGrade;
+    }
+
+    public void setMaxGrade(short maxGrade) {
+        this.maxGrade = maxGrade;
+    }
+
     public int getStudentId() {
         return studentId;
     }
@@ -197,13 +206,5 @@ public class TasksTable implements Serializable {
     public void setGrade(short grade) {
         this.grade = grade;
     }
-
-    public short getMaxGrade() {
-        return maxGrade;
-    }
-
-    public void setMaxGrade(short maxGrade) {
-        this.maxGrade = maxGrade;
-    }
-
+    
 }

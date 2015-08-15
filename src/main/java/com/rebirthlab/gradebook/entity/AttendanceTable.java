@@ -74,7 +74,7 @@ public class AttendanceTable implements Serializable {
     private int taskId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 150)
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
@@ -88,8 +88,8 @@ public class AttendanceTable implements Serializable {
     private short taskLength;
     @Basic(optional = false)
     @NotNull
-    @Id
     @Column(name = "student_id")
+    @Id
     private int studentId;
     @Basic(optional = false)
     @NotNull
@@ -233,5 +233,5 @@ public class AttendanceTable implements Serializable {
     public void setClassDate(Date classDate) {
         this.classDate = classDate;
     }
- 
+    
 }

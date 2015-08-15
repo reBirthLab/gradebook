@@ -52,6 +52,7 @@ public class LecturerGradebooks implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "lecturer_id")
+    @Id
     private int lecturerId;
     @Basic(optional = false)
     @NotNull
@@ -87,12 +88,11 @@ public class LecturerGradebooks implements Serializable {
     private String name;
     @Basic(optional = false)
     @NotNull
-    @Id
     @Column(name = "gradebook_id")
     private int gradebookId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 150)
     @Column(name = "subject")
     private String subject;
 
@@ -178,5 +178,5 @@ public class LecturerGradebooks implements Serializable {
     public void setSubject(String subject) {
         this.subject = subject;
     }
-
+    
 }

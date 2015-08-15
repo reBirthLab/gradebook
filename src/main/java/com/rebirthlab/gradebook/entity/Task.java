@@ -27,6 +27,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -57,8 +58,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Task.findByOnCourseWed", query = "SELECT t FROM Task t WHERE t.onCourseWed = :onCourseWed"),
     @NamedQuery(name = "Task.findByOnCourseThu", query = "SELECT t FROM Task t WHERE t.onCourseThu = :onCourseThu"),
     @NamedQuery(name = "Task.findByOnCourseFri", query = "SELECT t FROM Task t WHERE t.onCourseFri = :onCourseFri"),
-    @NamedQuery(name = "Task.findByMaxGrade", query = "SELECT t FROM Task t WHERE t.maxGrade = :maxGrade"),
-    @NamedQuery(name = "Task.findByDescription", query = "SELECT t FROM Task t WHERE t.description = :description")})
+    @NamedQuery(name = "Task.findByMaxGrade", query = "SELECT t FROM Task t WHERE t.maxGrade = :maxGrade")})
 public class Task implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -68,7 +68,7 @@ public class Task implements Serializable {
     private Integer taskId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 150)
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
@@ -104,7 +104,8 @@ public class Task implements Serializable {
     @NotNull
     @Column(name = "max_grade")
     private short maxGrade;
-    @Size(max = 45)
+    @Lob
+    @Size(max = 65535)
     @Column(name = "description")
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
