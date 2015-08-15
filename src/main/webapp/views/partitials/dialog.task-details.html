@@ -10,9 +10,40 @@
     </md-toolbar>
     <md-dialog-content>
         <div layout="column">
-            <div>{{task.title}}</div>
-            <div>{{task.description}}</div>
-            <div>{{startDate}} - {{endDate}}</div>
+            <div class="details-row">
+                <p class="md-body-2">Task title</p>
+                <h1 class="md-headline">{{task.title}}</h1>
+            </div>
+            <div layout="row" class="details-row">
+                <div flex>
+                    <p class="md-body-2">Start date</p>
+                    <p class="md-body-1">{{startDate}}</p>
+                </div>
+                <div flex>
+                    <p class="md-body-2">Finish date</p>
+                    <p class="md-body-1">{{endDate}}</p>
+                </div>
+                <div flex>
+                    <p class="md-body-2">Task length</p>
+                    <p class="md-body-1">{{task.taskLength}} Weeks</p>
+                </div>
+            </div>
+            <div layout="row" class="details-row">
+                <div flex>
+                    <p class="md-body-2">On course days</p>
+                    <div layout="row">
+                        <p class="md-body-1" ng-repeat="day in onCourseDays">{{day}}</p>
+                    </div>
+                </div>
+                <div flex>
+                    <p class="md-body-2">Maximum grade</p>                   
+                    <p class="md-body-1">{{task.maxGrade}}</p>    
+                </div>
+            </div>
+            <div class="details-row">
+                <p class="md-body-2">Description</p>
+                <p class="md-body-1">{{task.description}}</p>
+            </div>
         </div>
     </md-dialog-content>
     <div class="md-actions" layout="row">            

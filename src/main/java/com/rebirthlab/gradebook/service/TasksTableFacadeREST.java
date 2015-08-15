@@ -50,26 +50,6 @@ public class TasksTableFacadeREST extends AbstractFacade<TasksTable> {
     }
 
     /**
-     * Creates a new task
-     * @param gradebookId Gradebook ID from URI
-     * @param entity Task from JSON
-     */
-    @POST
-    @Consumes({"application/xml", "application/json"})
-    public void createTask(@PathParam("gradebook_id") Integer gradebookId, Task entity) {
-        entity.setGradebookId(getEntityManager().find(Gradebook.class, gradebookId));
-        getEntityManager().persist(entity);
-    }
-    
-    // TODO: Update task
-    @PUT
-    @Path("{id}")
-    @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") String id, TasksTable entity) {
-        super.edit(entity);
-    }
-    
-    /**
      * Returns list of student grades based on provided via URI parameters
      * 
      * @param academicGroupId Academic group ID

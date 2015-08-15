@@ -252,7 +252,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 .table-tasks {
     border-collapse: collapse;
-
 }
 
 .table-tasks a {
@@ -275,6 +274,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     padding: 5px 10px;
     vertical-align: top;
     text-align: left;
+    cursor: pointer;
 }
 
 .table-tasks .header-secondary th {
@@ -285,17 +285,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-weight: normal;
     text-align: center;
     padding: 2px 10px;
+    cursor: context-menu;
 }
 
 .table-tasks td.table-num-col, .table-tasks th.table-num-col {
     padding: 5px 10px;
-    min-width: 15px; 
+    min-width: 15px;
+    cursor: context-menu;    
 }
 
-.table-tasks td.table-name-col {
+.table-tasks td.table-name-col, .table-tasks th.table-name-col{
     min-width: 140px; 
     text-align: left;
     padding: 5px 10px;
+    cursor: context-menu;
 }
 
 .table-tasks button.md-button.md-icon-button {
@@ -329,11 +332,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 .dialog {
     max-width: 600px;
+    min-width: 600px;
 }
 
 @media only screen and (max-width : 700px) {  
     .dialog {
-        max-width: 80%;
+        max-width: 90%;
+        min-width: 80%;
     }
 }
 
@@ -347,6 +352,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .dialog .form-row {
     padding-bottom: 26px;
+}
+
+.dialog .details-row {
+    margin-bottom: 26px;
+}
+
+.dialog .details-row p, .dialog .details-row h1 {
+    margin: 0;
+}
+
+.dialog .details-row div div p {
+    padding: 0 20px 0 0;
 }
 
 .dialog .md-actions div {

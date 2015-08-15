@@ -4,8 +4,8 @@
             <tr class="header-primary">
                 <th class="table-num-col">#</th>
                 <th class="table-name-col">Name</th>                                                                     
-                <th ng-repeat="(key, value) in groupGrades | groupBy: 'taskId'">
-                    <a ng-click="showTaskDetails($event, this)">
+                <th ng-repeat="(key, value) in groupGrades | groupBy: 'taskId'" ng-click="showTaskDetails($event, this)">
+                    <a>
                         Task {{($index + 1)}} | {{value[0].title}}
                     </a>
                 </th>

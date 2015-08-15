@@ -58,22 +58,18 @@ public class AttendanceTable implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @NotNull
-    @Id
     @Column(name = "academic_group_id")
     private int academicGroupId;
     @Basic(optional = false)
     @NotNull
-    @Id
     @Column(name = "semester_id")
     private int semesterId;
     @Basic(optional = false)
     @NotNull
-    @Id
     @Column(name = "gradebook_id")
     private int gradebookId;
     @Basic(optional = false)
     @NotNull
-    @Id
     @Column(name = "task_id")
     private int taskId;
     @Basic(optional = false)

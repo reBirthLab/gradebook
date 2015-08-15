@@ -114,7 +114,7 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $state, $statePar
     $scope.showAddTaskForm = function (ev) {
         $mdDialog.show({
             controller: 'AddTaskDialogController',
-            templateUrl: 'views/partitials/dialog.task-add.html',
+            templateUrl: 'views/partitials/dialog.task-form.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             locals: {
@@ -142,7 +142,7 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $state, $statePar
             parent: angular.element(document.body),
             targetEvent: ev,
             locals: {
-                task: scope.value[0]
+                taskId: scope.value[0].taskId
             }
         });
     };
@@ -178,22 +178,30 @@ controllers.controller('AddTaskDialogController', function ($scope, $mdDialog, $
     };
 });
 
-controllers.controller('TaskDetailsDialogController', function ($scope, $mdDialog, task) {
-    var currentTask = angular.fromJson(task);
+controllers.controller('TaskDetailsDialogController', function ($scope, $mdDialog, taskId, Task) {
+    $scope.task = Task.get({taskId: taskId}, function (task) {
+        
+        var startDate = new Date(task.startDate);
+        startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
+        $scope.startDate = pad(startDate.getDate(), 2) + '/' +
+                pad(startDate.getMonth(), 2) + '/' +
+                startDate.getFullYear();
 
-    var startDate = new Date(currentTask.startDate);
-    startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
-    $scope.startDate = pad(startDate.getDate(), 2) + '/' +
-            pad(startDate.getMonth(), 2) + '/' +
-            startDate.getFullYear();
-
-    var endDate = new Date(startDate);
-    endDate.setDate(endDate.getDate() + (currentTask.taskLength * 7) - 1);
-     $scope.endDate = pad(endDate.getDate(), 2) + '/' +
-            pad(endDate.getMonth(), 2) + '/' +
-            endDate.getFullYear();
-
-    $scope.task = currentTask;
+        var endDate = new Date(startDate);
+        endDate.setDate(endDate.getDate() + (task.taskLength * 7) - 1);
+        $scope.endDate = pad(endDate.getDate(), 2) + '/' +
+                pad(endDate.getMonth(), 2) + '/' +
+                endDate.getFullYear();
+        
+        var onCourseDays = [];
+        if (task.onCourseMon) onCourseDays.push("Monday");
+        if (task.onCourseTue) onCourseDays.push("Tuesday");
+        if (task.onCourseWed) onCourseDays.push("Wednesday");
+        if (task.onCourseThu) onCourseDays.push("Thursday");
+        if (task.onCourseFri) onCourseDays.push("Friday");
+        
+        $scope.onCourseDays = onCourseDays;
+    });
 
     $scope.hide = function () {
         $mdDialog.hide();

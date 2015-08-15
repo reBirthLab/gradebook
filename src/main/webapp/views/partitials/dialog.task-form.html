@@ -16,14 +16,18 @@
                     <input required type="text" ng-model="task.title">
                 </md-input-container>
                 <div layout="row" layout-align="start center">
-                    <md-input-container flex>
-                        <label>Start Date</label>
-                        <input required type="date" ng-model="task.startDate">
-                    </md-input-container>
-                    <md-input-container flex="30">
-                        <label>Length</label>
-                        <input required type="number" ng-model="task.taskLength" min="0" max="52">
-                    </md-input-container>
+                    <div flex="50">
+                        <md-input-container >
+                            <label>Start Date</label>
+                            <input required type="date" ng-model="task.startDate">
+                        </md-input-container>
+                    </div>
+                    <div flex="30">
+                        <md-input-container >
+                            <label>Length</label>
+                            <input required type="number" ng-model="task.taskLength" min="0" max="52">
+                        </md-input-container>
+                    </div>                    
                     <div flex="20">Weeks</div>
                 </div>
                 <div class="form-row" layout="column">
