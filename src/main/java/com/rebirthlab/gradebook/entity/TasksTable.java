@@ -57,18 +57,22 @@ public class TasksTable implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "academic_group_id")
+    @Id
     private int academicGroupId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "semester_id")
+    @Id
     private int semesterId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "gradebook_id")
+    @Id
     private int gradebookId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "task_id")
+    @Id
     private int taskId;
     @Basic(optional = false)
     @NotNull
