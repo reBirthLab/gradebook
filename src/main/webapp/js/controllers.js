@@ -169,7 +169,7 @@ controllers.controller('AddTaskDialogController', function ($scope, $mdDialog, M
         
         var newTask = new Task($scope.task);
         newTask.gradebookId = parseInt(gradebookId);
-        newTask.save({
+        newTask.$save({
         }, function () {
             $mdDialog.hide();
         }, function () {
