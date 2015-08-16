@@ -31,15 +31,40 @@ services.factory('GradebookAttendance', function ($resource) {
 });
 
 services.factory('Task', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/tasks/:taskId');
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/tasks/:taskId', null, {
+        update: { method: 'PUT' }
+    });
 });
 
 services.factory('Grade', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/students/:studentId/tasks/:taskId/grade');
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/students/:studentId/tasks/:taskId/grade', null, {
+        update: { method: 'PUT' }
+    });
 });
 
 services.factory('Attendance', function ($resource) {
     return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/students/:studentId/tasks/:taskId/attendance');
+});
+
+services.factory('MessageService', function ($mdToast) {
+    return {
+        showSuccessToast: function (message) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .content(message)
+                    .position("top right")
+                    .hideDelay(3000)
+                    );
+        },
+        showErrorToast: function () {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .content('Something went wrong! Please try again!')
+                    .position("top right")
+                    .hideDelay(3000)
+                    );
+        }
+    };
 });
 
 services.factory('AuthenticationService', function (Base64, $http, $cookieStore, $rootScope, $timeout) {

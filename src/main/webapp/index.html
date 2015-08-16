@@ -47,7 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <span class="md-subhead" style="font-weight: 500">{{user.firstName}} {{user.lastName}}</span>
             </div>
 
-            <md-button class="menu-button">
+            <md-button class="add-button">
                 <md-icon class="add-icon">add_circle</md-icon>
                 <span>Add Gradebook</span>
             </md-button>
@@ -75,7 +75,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                     </md-button>
                                 </v-pane-header>
                                 <v-pane-content>
-                                    <md-button ng-repeat="gradebook in value" ng-click="get(gradebook.gradebookId)" class="menu-item-button"
+                                    <md-button ng-repeat="gradebook in value" ng-click="get(gradebook.gradebookId); closeSidenav('left')" class="menu-item-button"
                                                href="#/api/groups/{{gradebook.academicGroupId}}/semesters/{{gradebook.semesterId}}/gradebooks/{{gradebook.gradebookId}}">
                                         <md-icon class="gradebook-icon">book</md-icon>
                                         <span>{{gradebook.subject}}</span>

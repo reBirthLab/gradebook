@@ -1,8 +1,8 @@
-<md-dialog class="dialog" aria-label="Add Task">
+<md-dialog class="dialog" aria-label="Task Form">
     <form ng-submit="submit()">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>Add Task</h2>
+                <h2>{{mode}} Task</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <md-icon>close</md-icon>
@@ -54,7 +54,10 @@
             <md-progress-linear flex ng-if="dataLoading" class="md-accent" md-mode="indeterminate"></md-progress-linear>
             <div layout="row" layout-align="end">
                 <md-button class="md-primary">
-                    Submit
+                    {{submitButton}}
+                </md-button>
+                <md-button ng-click="cancel()" class="md-primary">
+                    Cancel
                 </md-button>
             </div>     
         </div>   

@@ -87,8 +87,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     float: right;
 }
 
-.site-sidenav .menu-button {
-    padding: 0 15px;
+.site-sidenav .add-button {
+    padding: 2px 15px;
     margin: 0;
     height: 50px;
     width: 100%;
@@ -96,6 +96,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-size: 14px;
     text-align: left;
     text-transform: uppercase;
+}
+
+.site-sidenav .menu-button {
+    padding: 6px 15px;
+    margin: 0;
+    height: 50px;
+    width: 100%;
+    border-radius: 0;
+    font-size: 14px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.site-sidenav .menu-button span {
+    display: inline-block;
+    line-height: 38px;
 }
 
 .site-sidenav .menu-title-button {
@@ -132,6 +148,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-size: 14px;
     text-align: left;
     text-transform: none;  
+}
+
+.site-sidenav .menu-item-button span {
+    display: inline-block;
+    line-height: 40px;
 }
 
 .site-sidenav div {
@@ -301,9 +322,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     cursor: context-menu;
 }
 
-.table-tasks button.md-button.md-icon-button {
-    width: 100%;
-    margin: auto;
+.table-tasks .add .md-button {    
+    margin-left: 31px;
+   margin-right: 31px;
 }
 
 .table-tasks .add-button {
@@ -330,15 +351,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /**
  * Dialog Styles
  */
+.dialog.narrow {
+    max-width: 400px;
+    min-width: 400px;
+}
+
+@media only screen and (max-width : 700px) {  
+.dialog.narrow {
+        width: 400px;
+        max-width: 80%;
+        min-width: 60%;
+    }
+}
 .dialog {
-    max-width: 600px;
-    min-width: 600px;
+    max-width: 620px;
+    min-width: 620px;
 }
 
 @media only screen and (max-width : 700px) {  
     .dialog {
+        width: 620px;
         max-width: 90%;
-        min-width: 80%;
+        min-width: 90%;
     }
 }
 
@@ -358,7 +392,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     margin-bottom: 26px;
 }
 
-.dialog .details-row p, .dialog .details-row h1 {
+.dialog .details-row p, .dialog .details-row h1, .dialog .details-row h3 {
     margin: 0;
 }
 

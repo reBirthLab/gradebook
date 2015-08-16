@@ -19,17 +19,21 @@
 var controllers = angular.module('GradebookControllers', []);
 
 function pad(num, size) {
-            var s = num + "";
-            while (s.length < size)
-                s = "0" + s;
-            return s;
-        };
+    var s = num + "";
+    while (s.length < size)
+        s = "0" + s;
+    return s;
+};
 
 controllers.controller('MainCtrl', function ($scope, $mdSidenav, $location, AuthenticationService, UserGradebooks) {
 
     $scope.index = 0;
     $scope.toggleSidenav = function (menuId) {
         $mdSidenav(menuId).toggle();
+    };
+    
+    $scope.closeSidenav = function (menuId) {
+        $mdSidenav(menuId).close();
     };
     
     $scope.logout = function (){
@@ -93,7 +97,7 @@ controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, Authe
 });
 
 // TEMPORARY
-controllers.controller('GradebookTasksCtrl', function ($scope, $state, $stateParams, $mdDialog, $mdToast, GradebookTasks) {
+controllers.controller('GradebookTasksCtrl', function ($scope, $state, $stateParams, $mdDialog, MessageService, GradebookTasks) {
     $scope.groupGrades = GradebookTasks.query({
         groupId: $stateParams.groupId,
         semesterId: $stateParams.semesterId,
@@ -107,9 +111,9 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $state, $statePar
         var endDate = new Date(startDate);
         endDate.setDate(endDate.getDate() + (taskLength * 7) - 1);
         
-        return pad(startDate.getDate(), 2) + '/' + pad(startDate.getMonth(), 2) + ' - ' + 
-                pad(endDate.getDate(), 2) + '/' + pad(endDate.getMonth(), 2);
-    }
+        return pad(startDate.getDate(), 2) + '/' + pad(startDate.getMonth() + 1, 2) + ' - ' + 
+                pad(endDate.getDate(), 2) + '/' + pad(endDate.getMonth() + 1, 2);
+    };
 
     $scope.showAddTaskForm = function (ev) {
         $mdDialog.show({
@@ -122,20 +126,12 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $state, $statePar
             }
         }).then(function () {
             $state.go($state.current, {}, {reload: true});
-            showSuccessToast();
+            var message = 'New task was successfully added to gradebook!';
+            MessageService.showSuccessToast(message);
         });
     };
     
-     var showSuccessToast = function () {
-        $mdToast.show(
-                $mdToast.simple()
-                .content('New task was successfully added to gradebook!')
-                .position("top right")
-                .hideDelay(3000)
-                );
-    };
-    
-     $scope.showTaskDetails = function (ev, scope) {
+    $scope.showTaskDetails = function (ev, scope) {
         $mdDialog.show({
             controller: 'TaskDetailsDialogController',
             templateUrl: 'views/partitials/dialog.task-details.html',
@@ -145,32 +141,41 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $state, $statePar
                 taskId: scope.value[0].taskId
             }
         });
-    };
+    }; 
+    
+    $scope.showEditGradeDialog = function (ev, scope) {
+        $mdDialog.show({
+            controller: 'EditGradeDialogController',
+            templateUrl: 'views/partitials/dialog.grade.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                task: scope.task
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'The Grade was successfully updated!';
+            MessageService.showSuccessToast(message);
+        });
+    }; 
 });
 
-controllers.controller('AddTaskDialogController', function ($scope, $mdDialog, $mdToast, Task, gradebookId) {
+controllers.controller('AddTaskDialogController', function ($scope, $mdDialog, MessageService, Task, gradebookId) {
+    $scope.mode = 'Add';
+    $scope.submitButton = 'Submit';
     
     $scope.submit = function () {
         $scope.dataLoading = true;
         
         var newTask = new Task($scope.task);
         newTask.gradebookId = parseInt(gradebookId);
-        newTask.$save({
+        newTask.save({
         }, function () {
             $mdDialog.hide();
         }, function () {
-            showErrorToast();
+            MessageService.showErrorToast();
             $scope.dataLoading = false;
         });
-    };
-    
-    var showErrorToast = function () {
-        $mdToast.show(
-                $mdToast.simple()
-                .content('Something went wrong! Please try again!')
-                .position("top right")
-                .hideDelay(3000)
-                );
     };
 
     $scope.cancel = function () {
@@ -178,19 +183,19 @@ controllers.controller('AddTaskDialogController', function ($scope, $mdDialog, $
     };
 });
 
-controllers.controller('TaskDetailsDialogController', function ($scope, $mdDialog, taskId, Task) {
+controllers.controller('TaskDetailsDialogController', function ($scope, $state, $mdDialog, MessageService, taskId, Task) {
     $scope.task = Task.get({taskId: taskId}, function (task) {
         
         var startDate = new Date(task.startDate);
         startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
         $scope.startDate = pad(startDate.getDate(), 2) + '/' +
-                pad(startDate.getMonth(), 2) + '/' +
+                pad(startDate.getMonth() + 1, 2) + '/' +
                 startDate.getFullYear();
 
         var endDate = new Date(startDate);
         endDate.setDate(endDate.getDate() + (task.taskLength * 7) - 1);
         $scope.endDate = pad(endDate.getDate(), 2) + '/' +
-                pad(endDate.getMonth(), 2) + '/' +
+                pad(endDate.getMonth() + 1, 2) + '/' +
                 endDate.getFullYear();
         
         var onCourseDays = [];
@@ -202,9 +207,80 @@ controllers.controller('TaskDetailsDialogController', function ($scope, $mdDialo
         
         $scope.onCourseDays = onCourseDays;
     });
+    
+    $scope.showEditTaskForm = function (ev) {
+        $mdDialog.show({
+            controller: 'EditTaskDialogController',
+            templateUrl: 'views/partitials/dialog.task-form.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                task: $scope.task
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'The task was successfully updated!';
+            MessageService.showSuccessToast(message);
+        });
+    };
 
     $scope.hide = function () {
         $mdDialog.hide();
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('EditTaskDialogController', function ($scope, $mdDialog, MessageService, task, Task) {
+    $scope.mode = 'Edit';
+    $scope.submitButton = 'Update';
+    
+    $scope.task = task;
+    $scope.task.startDate = new Date (task.startDate);
+    
+    $scope.submit = function () {
+        $scope.dataLoading = true;
+
+        Task.update({
+           taskId: task.taskId
+        }, $scope.task,
+        function () {
+            $mdDialog.hide();
+        }, function () {
+            MessageService.showErrorToast();
+            $scope.dataLoading = false;
+        });
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('EditGradeDialogController', function ($scope, $mdDialog, MessageService, task, Grade) {
+    
+    $scope.task = task;
+    
+    var studentGrade = {};
+    studentGrade.grade = task.grade;
+    
+    $scope.studentGrade = studentGrade;
+    
+    $scope.update = function () {
+        $scope.dataLoading = true;
+
+        Grade.update({
+           studentId: task.studentId,
+           taskId: task.taskId
+        }, $scope.studentGrade,
+        function () {
+            $mdDialog.hide();
+        }, function () {
+            MessageService.showErrorToast();
+            $scope.dataLoading = false;
+        });
     };
 
     $scope.cancel = function () {
