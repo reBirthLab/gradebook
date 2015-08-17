@@ -20,8 +20,10 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -41,16 +43,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "StudentAttendance.findAll", query = "SELECT s FROM StudentAttendance s"),
-    @NamedQuery(name = "StudentAttendance.findByStudentId", query = "SELECT s FROM StudentAttendance s WHERE s.studentAttendancePK.studentId = :studentId"),
-    @NamedQuery(name = "StudentAttendance.findByTaskId", query = "SELECT s FROM StudentAttendance s WHERE s.studentAttendancePK.taskId = :taskId"),
+    @NamedQuery(name = "StudentAttendance.findByAttendanceId", query = "SELECT s FROM StudentAttendance s WHERE s.attendanceId = :attendanceId"),
     @NamedQuery(name = "StudentAttendance.findByClassDate", query = "SELECT s FROM StudentAttendance s WHERE s.classDate = :classDate"),
     @NamedQuery(name = "StudentAttendance.findByPresent", query = "SELECT s FROM StudentAttendance s WHERE s.present = :present"),
     @NamedQuery(name = "StudentAttendance.findByAbsent", query = "SELECT s FROM StudentAttendance s WHERE s.absent = :absent"),
     @NamedQuery(name = "StudentAttendance.findByAbsentWithReason", query = "SELECT s FROM StudentAttendance s WHERE s.absentWithReason = :absentWithReason")})
 public class StudentAttendance implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected StudentAttendancePK studentAttendancePK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "attendance_id")
+    private Integer attendanceId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "class_date")
@@ -68,38 +72,34 @@ public class StudentAttendance implements Serializable {
     @NotNull
     @Column(name = "absent_with_reason")
     private boolean absentWithReason;
-    @JoinColumn(name = "student_id", referencedColumnName = "student_id", insertable = false, updatable = false)
+    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
     @ManyToOne(optional = false)
-    private Student student;
-    @JoinColumn(name = "task_id", referencedColumnName = "task_id", insertable = false, updatable = false)
+    private Student studentId;
+    @JoinColumn(name = "task_id", referencedColumnName = "task_id")
     @ManyToOne(optional = false)
-    private Task task;
+    private Task taskId;
 
     public StudentAttendance() {
     }
 
-    public StudentAttendance(StudentAttendancePK studentAttendancePK) {
-        this.studentAttendancePK = studentAttendancePK;
+    public StudentAttendance(Integer attendanceId) {
+        this.attendanceId = attendanceId;
     }
 
-    public StudentAttendance(StudentAttendancePK studentAttendancePK, Date classDate, boolean present, boolean absent, boolean absentWithReason) {
-        this.studentAttendancePK = studentAttendancePK;
+    public StudentAttendance(Integer attendanceId, Date classDate, boolean present, boolean absent, boolean absentWithReason) {
+        this.attendanceId = attendanceId;
         this.classDate = classDate;
         this.present = present;
         this.absent = absent;
         this.absentWithReason = absentWithReason;
     }
 
-    public StudentAttendance(int studentId, int taskId) {
-        this.studentAttendancePK = new StudentAttendancePK(studentId, taskId);
+    public Integer getAttendanceId() {
+        return attendanceId;
     }
 
-    public StudentAttendancePK getStudentAttendancePK() {
-        return studentAttendancePK;
-    }
-
-    public void setStudentAttendancePK(StudentAttendancePK studentAttendancePK) {
-        this.studentAttendancePK = studentAttendancePK;
+    public void setAttendanceId(Integer attendanceId) {
+        this.attendanceId = attendanceId;
     }
 
     public Date getClassDate() {
@@ -134,26 +134,26 @@ public class StudentAttendance implements Serializable {
         this.absentWithReason = absentWithReason;
     }
 
-    public Student getStudent() {
-        return student;
+    public Student getStudentId() {
+        return studentId;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudentId(Student studentId) {
+        this.studentId = studentId;
     }
 
-    public Task getTask() {
-        return task;
+    public Task getTaskId() {
+        return taskId;
     }
 
-    public void setTask(Task task) {
-        this.task = task;
+    public void setTaskId(Task taskId) {
+        this.taskId = taskId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (studentAttendancePK != null ? studentAttendancePK.hashCode() : 0);
+        hash += (attendanceId != null ? attendanceId.hashCode() : 0);
         return hash;
     }
 
@@ -164,7 +164,7 @@ public class StudentAttendance implements Serializable {
             return false;
         }
         StudentAttendance other = (StudentAttendance) object;
-        if ((this.studentAttendancePK == null && other.studentAttendancePK != null) || (this.studentAttendancePK != null && !this.studentAttendancePK.equals(other.studentAttendancePK))) {
+        if ((this.attendanceId == null && other.attendanceId != null) || (this.attendanceId != null && !this.attendanceId.equals(other.attendanceId))) {
             return false;
         }
         return true;
@@ -172,7 +172,7 @@ public class StudentAttendance implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rebirthlab.gradebook.entity.StudentAttendance[ studentAttendancePK=" + studentAttendancePK + " ]";
+        return "com.rebirthlab.gradebook.entity.StudentAttendance[ attendanceId=" + attendanceId + " ]";
     }
     
 }

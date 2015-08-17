@@ -50,6 +50,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "AttendanceTable.findByStudentId", query = "SELECT a FROM AttendanceTable a WHERE a.studentId = :studentId"),
     @NamedQuery(name = "AttendanceTable.findByFirstName", query = "SELECT a FROM AttendanceTable a WHERE a.firstName = :firstName"),
     @NamedQuery(name = "AttendanceTable.findByLastName", query = "SELECT a FROM AttendanceTable a WHERE a.lastName = :lastName"),
+    @NamedQuery(name = "AttendanceTable.findByAttendanceId", query = "SELECT a FROM AttendanceTable a WHERE a.attendanceId = :attendanceId"),
     @NamedQuery(name = "AttendanceTable.findByPresent", query = "SELECT a FROM AttendanceTable a WHERE a.present = :present"),
     @NamedQuery(name = "AttendanceTable.findByAbsentWithReason", query = "SELECT a FROM AttendanceTable a WHERE a.absentWithReason = :absentWithReason"),
     @NamedQuery(name = "AttendanceTable.findByAbsent", query = "SELECT a FROM AttendanceTable a WHERE a.absent = :absent"),
@@ -59,18 +60,22 @@ public class AttendanceTable implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "academic_group_id")
+    @Id
     private int academicGroupId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "semester_id")
+    @Id
     private int semesterId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "gradebook_id")
+    @Id
     private int gradebookId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "task_id")
+    @Id
     private int taskId;
     @Basic(optional = false)
     @NotNull
@@ -101,6 +106,11 @@ public class AttendanceTable implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "last_name")
     private String lastName;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "attendance_id")
+    @Id
+    private int attendanceId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "present")
@@ -200,6 +210,14 @@ public class AttendanceTable implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public int getAttendanceId() {
+        return attendanceId;
+    }
+
+    public void setAttendanceId(int attendanceId) {
+        this.attendanceId = attendanceId;
     }
 
     public boolean getPresent() {

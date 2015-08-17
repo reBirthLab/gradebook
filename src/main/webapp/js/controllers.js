@@ -289,10 +289,12 @@ controllers.controller('EditGradeDialogController', function ($scope, $mdDialog,
 });
 
 
-controllers.controller('GradebookAttendanceCtrl', function ($scope, $state, $stateParams, Gradebook) {
-    $scope.groupGrades = Gradebook.query({
+controllers.controller('GradebookAttendanceCtrl', function ($scope, $state, $stateParams, GradebookAttendance) {
+    $scope.groupAttendance = GradebookAttendance.query({
         groupId: $stateParams.groupId,
         semesterId: $stateParams.semesterId,
         gradebookId: $stateParams.gradebookId
     });
+    
+    
 });

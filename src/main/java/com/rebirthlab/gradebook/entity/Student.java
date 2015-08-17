@@ -81,10 +81,8 @@ public class Student implements Serializable {
     @JoinColumn(name = "academic_group_id", referencedColumnName = "academic_group_id")
     @ManyToOne(optional = false)
     private AcademicGroup academicGroupId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentId")
     private Collection<StudentAttendance> studentAttendanceCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
-    private Collection<StudentGrade> studentGradeCollection;
 
     public Student() {
     }
@@ -156,15 +154,6 @@ public class Student implements Serializable {
 
     public void setStudentAttendanceCollection(Collection<StudentAttendance> studentAttendanceCollection) {
         this.studentAttendanceCollection = studentAttendanceCollection;
-    }
-
-    @XmlTransient
-    public Collection<StudentGrade> getStudentGradeCollection() {
-        return studentGradeCollection;
-    }
-
-    public void setStudentGradeCollection(Collection<StudentGrade> studentGradeCollection) {
-        this.studentGradeCollection = studentGradeCollection;
     }
 
     @Override

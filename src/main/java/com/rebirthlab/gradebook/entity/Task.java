@@ -109,12 +109,12 @@ public class Task implements Serializable {
     @Column(name = "description")
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
-    private Collection<StudentAttendance> studentAttendanceCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
     private Collection<StudentGrade> studentGradeCollection;
     @JoinColumn(name = "gradebook_id", referencedColumnName = "gradebook_id")
     @ManyToOne(optional = false)
     private Gradebook gradebookId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskId")
+    private Collection<StudentAttendance> studentAttendanceCollection;
 
     public Task() {
     }
@@ -225,15 +225,6 @@ public class Task implements Serializable {
     }
 
     @XmlTransient
-    public Collection<StudentAttendance> getStudentAttendanceCollection() {
-        return studentAttendanceCollection;
-    }
-
-    public void setStudentAttendanceCollection(Collection<StudentAttendance> studentAttendanceCollection) {
-        this.studentAttendanceCollection = studentAttendanceCollection;
-    }
-
-    @XmlTransient
     public Collection<StudentGrade> getStudentGradeCollection() {
         return studentGradeCollection;
     }
@@ -248,6 +239,15 @@ public class Task implements Serializable {
 
     public void setGradebookId(Gradebook gradebookId) {
         this.gradebookId = gradebookId;
+    }
+
+    @XmlTransient
+    public Collection<StudentAttendance> getStudentAttendanceCollection() {
+        return studentAttendanceCollection;
+    }
+
+    public void setStudentAttendanceCollection(Collection<StudentAttendance> studentAttendanceCollection) {
+        this.studentAttendanceCollection = studentAttendanceCollection;
     }
 
     @Override

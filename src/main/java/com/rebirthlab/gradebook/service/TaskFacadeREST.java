@@ -19,9 +19,14 @@ package com.rebirthlab.gradebook.service;
 import com.rebirthlab.gradebook.entity.AcademicGroup;
 import com.rebirthlab.gradebook.entity.Gradebook;
 import com.rebirthlab.gradebook.entity.Student;
+import com.rebirthlab.gradebook.entity.StudentAttendance;
 import com.rebirthlab.gradebook.entity.StudentGrade;
 import com.rebirthlab.gradebook.entity.Task;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -58,12 +63,62 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         AcademicGroup group = gradebook.getAcademicGroupId();
         Collection<Student> students = group.getStudentCollection();
         
+        //Initialises student grades
         for(Student student : students){
             StudentGrade grade = new StudentGrade(student.getStudentId(), task.getTaskId()); 
             short gradevalue = 0;           
             grade.setGrade(gradevalue); 
             getEntityManager().persist(grade);
-        }  
+        } 
+        
+        //Initialises student attendance
+        Calendar calendar = Calendar.getInstance();
+        Date startDate = task.getStartDate();
+        calendar.setTime(startDate);
+        
+        int startDateDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK + 1);
+        int startDateDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.set(Calendar.DAY_OF_MONTH, startDateDayOfMonth - startDateDayOfWeek);        
+        
+        List<Integer> courseDays = new ArrayList<>();
+        if (task.getOnCourseMon()) {
+            courseDays.add(1);
+        }
+        if (task.getOnCourseTue()) {
+            courseDays.add(2);
+        }
+        if (task.getOnCourseWed()) {
+            courseDays.add(3);
+        }
+        if (task.getOnCourseThu()) {
+            courseDays.add(4);
+        }
+        if (task.getOnCourseFri()) {
+            courseDays.add(5);
+        }
+        
+        int taskLengthInDays = task.getTaskLength() * 7;
+        List<Date> classDates = new ArrayList<>();
+        
+        for (int i = 0; i < taskLengthInDays; i++) {
+            int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK + 1);
+            for (int courseDay : courseDays) {
+                if (currentDayOfWeek == courseDay) {
+                    classDates.add(calendar.getTime());
+                }
+            }
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        
+        for (Student student : students) {
+            for (Date date : classDates) {
+                StudentAttendance attendance = new StudentAttendance();
+                attendance.setStudentId(student);
+                attendance.setTaskId(task);
+                attendance.setClassDate(date);
+                getEntityManager().persist(attendance);
+            }      
+        }        
     }
 
     @GET
