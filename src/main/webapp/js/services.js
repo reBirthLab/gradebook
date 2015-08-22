@@ -31,7 +31,7 @@ services.factory('GradebookAttendance', function ($resource) {
 });
 
 services.factory('Task', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/tasks/:taskId', null, {
+    return $resource('http://localhost:8080/api/v1/tasks/:taskId', null, {
         update: { method: 'PUT' }
     });
 });

@@ -360,6 +360,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * Attendance Table Styles
  */
 
+.table.attendance{
+    min-width: 222px;
+}
+
 .table.attendance td, .table.attendance th {
    min-width: 40px;
    height: 22px;
@@ -383,12 +387,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-weight: bold;
     text-align: center;
     vertical-align: middle;
-    min-width: 110px;
+    min-width: 200px;
     text-overflow: ellipsis;
 }
 .table.attendance caption a{
   display: -webkit-box;
-  max-width: 100%;
+  min-width: 200px;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -401,6 +405,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .table.attendance .header-secondary th {
     height: 28px;
+    min-height: 28px;
+    max-height: 28px;
 }
 
 .table.attendance caption.header-primary  {

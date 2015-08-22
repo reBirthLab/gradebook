@@ -22,11 +22,14 @@ import com.rebirthlab.gradebook.entity.Student;
 import com.rebirthlab.gradebook.entity.StudentAttendance;
 import com.rebirthlab.gradebook.entity.StudentGrade;
 import com.rebirthlab.gradebook.entity.Task;
+import com.rebirthlab.gradebook.security.AuthenticationService;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -75,33 +78,33 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         Calendar calendar = Calendar.getInstance();
         Date startDate = task.getStartDate();
         calendar.setTime(startDate);
+        int firstDayOfWeek = calendar.getFirstDayOfWeek();
         
-        int startDateDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK + 1);
-        int startDateDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.set(Calendar.DAY_OF_MONTH, startDateDayOfMonth - startDateDayOfWeek);        
+        int startDateDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        calendar.add(Calendar.DAY_OF_MONTH, - startDateDayOfWeek + firstDayOfWeek);
         
         List<Integer> courseDays = new ArrayList<>();
         if (task.getOnCourseMon()) {
-            courseDays.add(1);
+            courseDays.add(firstDayOfWeek);
         }
         if (task.getOnCourseTue()) {
-            courseDays.add(2);
+            courseDays.add(firstDayOfWeek + 1);
         }
         if (task.getOnCourseWed()) {
-            courseDays.add(3);
+            courseDays.add(firstDayOfWeek + 2);
         }
         if (task.getOnCourseThu()) {
-            courseDays.add(4);
+            courseDays.add(firstDayOfWeek + 3);
         }
         if (task.getOnCourseFri()) {
-            courseDays.add(5);
+            courseDays.add(firstDayOfWeek + 4);
         }
         
         int taskLengthInDays = task.getTaskLength() * 7;
         List<Date> classDates = new ArrayList<>();
         
         for (int i = 0; i < taskLengthInDays; i++) {
-            int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK + 1);
+            int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
             for (int courseDay : courseDays) {
                 if (currentDayOfWeek == courseDay) {
                     classDates.add(calendar.getTime());
