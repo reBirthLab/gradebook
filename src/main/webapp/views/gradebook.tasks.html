@@ -1,5 +1,5 @@
 <md-content>
-    <table class="table-tasks">
+    <table class="table">
         <thead>
             <tr class="header-primary">
                 <th class="table-num-col">#</th>
@@ -24,7 +24,7 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="(key, value) in groupGrades | groupBy: 'studentId'">
+            <tr ng-repeat="(key, value) in groupGrades | groupBy: 'studentId' | toArray: true | orderBy: orderByName">
                 <td class="table-num-col">{{($index + 1)}}</td>
                 <td class="table-name-col">{{value[0].firstName}} {{value[0].lastName}}</td>
                 <td ng-repeat="task in value">

@@ -31,7 +31,7 @@ import javax.ws.rs.core.PathSegment;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entity.studentattendance")
+@Path("attendances")
 public class StudentAttendanceFacadeREST extends AbstractFacade<StudentAttendance> {
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;

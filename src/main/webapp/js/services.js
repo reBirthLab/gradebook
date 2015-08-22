@@ -31,7 +31,7 @@ services.factory('GradebookAttendance', function ($resource) {
 });
 
 services.factory('Task', function ($resource) {
-    return $resource('http://localhost:8080/api/v1/tasks/:taskId', null, {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/tasks/:taskId', null, {
         update: { method: 'PUT' }
     });
 });
@@ -43,7 +43,9 @@ services.factory('Grade', function ($resource) {
 });
 
 services.factory('Attendance', function ($resource) {
-    return $resource('http://localhost:8080/api/v1/students/:studentId/tasks/:taskId/attendance');
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/attendances/:attendanceId', null, {
+        update: { method: 'PUT' }
+    });
 });
 
 services.factory('MessageService', function ($mdToast) {

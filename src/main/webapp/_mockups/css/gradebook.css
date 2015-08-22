@@ -192,21 +192,21 @@ main {
     width: 100%;
 }
 
-.table-tasks, .table-attendance {
+.table, .table-attendance {
     overflow: auto;
     border-bottom: 1px solid #d0d0d0;
 }
 
-.table-tasks th, .table-tasks td, .table-attendance th, .table-attendance td{
+.table th, .table td, .table-attendance th, .table-attendance td{
     border-right: 1px solid #f5f5f5;
     padding: 0;
 }
 
-.table-tasks .header-primary th a, .table-attendance .header-primary th a {
+.table .header-primary th a, .table-attendance .header-primary th a {
    color: #212121;
 }
 
-.table-tasks .header-secondary th, .table-attendance .header-secondary th {
+.table .header-secondary th, .table-attendance .header-secondary th {
     border-top: 1px solid #d0d0d0;
     border-right: 1px solid #d0d0d0;
     border-bottom: 2px solid #d0d0d0;
@@ -221,13 +221,13 @@ main {
 }
 
 /** TASK table styles **/
-.table-tasks .header-primary th {
+.table .header-primary th {
     border-right: 1px solid #d0d0d0;
     padding: 5px 10px;
     vertical-align: top;
 }
 
-.table-tasks td {
+.table td {
     padding: 5px;
     font-size: 16px;
     text-align: center;
@@ -236,18 +236,18 @@ main {
     min-width: 110px;
 }
 
-.table-tasks td.table-num-col {
+.table td.table-num-col {
     padding: 0px 10px;
     min-width: 10px;
 }
 
-.table-tasks td.table-name-col {
+.table td.table-name-col {
     min-width: 140px; 
     text-align: left;
     padding: 0px 10px;
 }
 
-.table-tasks .header-primary th a i {
+.table .header-primary th a i {
     width: 100%;
     text-align: center;
     padding-top: 12px; 

@@ -27,19 +27,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /**
  * Material Icons Styles
  */
-// Rules for sizing the icon.
+
+/* Colors */                                                  
+.material-icons.green-700 { color: #689f38; }
+.material-icons.yellow-700 { color: #fbc02d; }
+.material-icons.red-700 { color: #d32f2f; }
+
+/* Rules for sizing the icon. */
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
 
-// Rules for using icons as black on a light background.
+/* Rules for using icons as black on a light background. */
 .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
 .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
 
-// Rules for using icons as white on a dark background.
+/* Rules for using icons as white on a dark background. */
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+
 
 /**
  * Toolbar Styles
@@ -271,16 +279,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /**
  * Gradebook Page Styles
  */
-.table-tasks {
+.table {
     border-collapse: collapse;
 }
 
-.table-tasks a {
+.table a {
     text-decoration: none;
     color: rgba(0, 0, 0, 0.87);
 }
 
-.table-tasks td, .table-tasks th {
+.table td, .table th {
     //padding: 5px;
     font-size: 16px;
     text-align: center;
@@ -290,7 +298,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     min-width: 110px;
 }
 
-.table-tasks .header-primary th {
+.table .header-primary th {
     border-right: 1px solid #d0d0d0;
     padding: 5px 10px;
     vertical-align: top;
@@ -298,7 +306,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     cursor: pointer;
 }
 
-.table-tasks .header-secondary th {
+.table .header-secondary th {
     border-top: 1px solid #d0d0d0;
     border-right: 1px solid #d0d0d0;
     border-bottom: 2px solid #d0d0d0;
@@ -309,31 +317,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     cursor: context-menu;
 }
 
-.table-tasks td.table-num-col, .table-tasks th.table-num-col {
+.table td.table-num-col, .table th.table-num-col {
     padding: 5px 10px;
     min-width: 15px;
     cursor: context-menu;    
 }
 
-.table-tasks td.table-name-col, .table-tasks th.table-name-col{
+.table td.table-name-col, .table th.table-name-col{
     min-width: 140px; 
     text-align: left;
     padding: 5px 10px;
     cursor: context-menu;
 }
 
-.table-tasks .add .md-button {    
+.table .add .md-button {    
     margin-left: 31px;
    margin-right: 31px;
 }
 
-.table-tasks .add-button {
+.table .add-button {
     height: 36px;
     width: 36px;
     font-size: 36px;
 }
 
-.table-tasks .grade {
+.table .grade {
     font-weight: normal;
     margin: 0;
     min-height: 30px;
@@ -344,8 +352,75 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-transform: none;
 }
 
-.table-tasks .max-grade {
+.table .max-grade {
     color: rgba(0, 0, 0, 0.38);
+}
+
+/**
+ * Attendance Table Styles
+ */
+
+.table.attendance td, .table.attendance th {
+   min-width: 40px;
+   height: 22px;
+}
+
+.table.attendance td.table-num-col, .table.attendance th.table-num-col {
+    min-width: 15px;   
+}
+
+.table.attendance td.table-name-col, .table.attendance th.table-name-col{  
+    min-width: 140px; 
+    max-width: 240px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.table.attendance caption{
+    height: 59px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    min-width: 110px;
+    text-overflow: ellipsis;
+}
+.table.attendance caption a{
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;    
+}
+
+.table.attendance .header-primary th {
+    height: 58px;
+}
+
+.table.attendance .header-secondary th {
+    height: 28px;
+}
+
+.table.attendance caption.header-primary  {
+    border-right: 1px solid #d0d0d0;
+    padding: 5px 10px;
+    vertical-align: top;
+    text-align: left;
+    cursor: pointer;
+}
+
+.table.attendance .attendance-button {
+    font-weight: normal;
+    margin: 0;
+    min-width: 30px;
+    min-height: 30px;
+    line-height: 30px;
+    width: 100%;
+    border-radius: 0;
+    font-size: 16px;
+    text-transform: none;
 }
 
 /**
@@ -410,6 +485,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .dialog .md-toolbar-tools md-icon:hover {
    color: rgba(255,255,255,1.0);
+}
+
+.dialog md-radio-button div.md-label {
+   height:50px;
 }
 
 

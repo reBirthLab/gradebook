@@ -104,6 +104,10 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $state, $statePar
         gradebookId: $stateParams.gradebookId
     });
     
+    $scope.orderByName = function(student) {
+      return student[0].firstName;
+    };
+    
     $scope.calcTaskDates = function (date, taskLength){
         var startDate = new Date(date);
         startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
@@ -289,12 +293,115 @@ controllers.controller('EditGradeDialogController', function ($scope, $mdDialog,
 });
 
 
-controllers.controller('GradebookAttendanceCtrl', function ($scope, $state, $stateParams, GradebookAttendance) {
+controllers.controller('GradebookAttendanceCtrl', function ($scope, $state, $stateParams, $mdDialog, GradebookAttendance, MessageService) {
     $scope.groupAttendance = GradebookAttendance.query({
         groupId: $stateParams.groupId,
         semesterId: $stateParams.semesterId,
         gradebookId: $stateParams.gradebookId
     });
     
+    $scope.orderByName = function(student) {
+      return student[0].firstName;
+    };
     
+    $scope.getDayOfWeek = function(d){
+        var date = new Date(d);
+        
+        var weekday = new Array(7);
+        weekday[0] = "Sun";
+        weekday[1] = "Mon";
+        weekday[2] = "Tue";
+        weekday[3] = "Wed";
+        weekday[4] = "Thu";
+        weekday[5] = "Fri";
+        weekday[6] = "Sat";
+        
+        return weekday[date.getDay()];
+    };
+    
+    $scope.formatClassDate = function (d){
+        var date = new Date(d);         
+        return pad(date.getDate(), 2) + '/' + pad(date.getMonth() + 1, 2);
+    };
+    
+    $scope.attendanceStatus = function (scope) {
+        var attendance = scope.attendance;
+        if (attendance.present) {
+            scope.present = true;
+            return 'check_box';
+        } else if (attendance.absent) {
+            scope.absent = true;
+            return 'indeterminate_check_box';
+        } else if (attendance.absentWithReason) {
+            scope.absentWithReason = true;
+            return 'indeterminate_check_box';
+        } else {
+            return 'check_box_outline_blank';
+        }
+    };
+    
+    $scope.showEditAttendanceDialog = function (ev, scope) {
+        $mdDialog.show({
+            controller: 'EditAttendanceDialogController',
+            templateUrl: 'views/partitials/dialog.attendance.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                attendance: scope.attendance
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'The Attendance was successfully updated!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+});
+
+controllers.controller('EditAttendanceDialogController', function ($scope, $mdDialog, MessageService, attendance, Attendance) {
+    
+    $scope.attendance = attendance;
+    
+    var classDate = new Date(attendance.classDate);
+    $scope.classDate = pad(classDate.getDate(), 2) + '/' +
+            pad(classDate.getMonth() + 1, 2) + '/' +
+            classDate.getFullYear();
+    
+    if (attendance.present) {
+        $scope.status = 'present';
+    } else if (attendance.absent) {
+        $scope.status = 'absent';
+    } else if (attendance.absentWithReason) {
+        $scope.status = 'absent-with-reason';
+    };
+   
+    $scope.update = function () {
+        $scope.dataLoading = true;
+
+        var attendance = {};
+        attendance.attendanceId = $scope.attendance.attendanceId;
+        attendance.studentId = $scope.attendance.studentId;
+        attendance.taskId = $scope.attendance.taskId;
+        attendance.classDate = $scope.attendance.classDate;
+        attendance.present = false;
+        attendance.absent = false;
+        attendance.absentWithReason = false;
+        
+        if($scope.status === 'present') attendance.present = true;
+        if($scope.status === 'absent') attendance.absent = true;
+        if($scope.status === 'absent-with-reason') attendance.absentWithReason = true;
+        
+        Attendance.update({
+           attendanceId: attendance.attendanceId,
+        }, attendance,
+        function () {
+            $mdDialog.hide();
+        }, function () {
+            MessageService.showErrorToast();
+            $scope.dataLoading = false;
+        });
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
 });

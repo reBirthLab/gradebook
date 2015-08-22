@@ -57,25 +57,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </div>
 
             <v-accordion class="menu">
-                <v-pane ng-repeat="(key, value) in userGradebooks | groupBy: 'number'" >
+                <v-pane ng-repeat="(groupNumber, group) in userGradebooks | groupBy: 'number'" >
                     <v-pane-header>
                         <md-button class="menu-title-button">
-                            <span>{{key}}</span>                        
+                            <span>{{groupNumber}}</span>                        
                             <md-icon></md-icon>
                         </md-button>
                     </v-pane-header>
                     <md-divider></md-divider>
                     <v-pane-content>
                         <v-accordion>
-                            <v-pane ng-repeat="(key, value) in value | groupBy: 'semesterId'">
+                            <v-pane ng-repeat="semester in group | groupBy: 'semesterId'">
                                 <v-pane-header>
                                     <md-button class="menu-subtitle-button">
-                                        <span>{{value[0].academicYear}} {{value[0].name}}</span>                                       
+                                        <span>{{semester[0].academicYear}} {{semester[0].name}}</span>                                       
                                         <md-icon></md-icon>
                                     </md-button>
                                 </v-pane-header>
                                 <v-pane-content>
-                                    <md-button ng-repeat="gradebook in value" ng-click="get(gradebook.gradebookId); closeSidenav('left')" class="menu-item-button"
+                                    <md-button ng-repeat="gradebook in semester | orderBy: 'subject'" ng-click="get(gradebook.gradebookId); closeSidenav('left')" class="menu-item-button"
                                                href="#/api/groups/{{gradebook.academicGroupId}}/semesters/{{gradebook.semesterId}}/gradebooks/{{gradebook.gradebookId}}">
                                         <md-icon class="gradebook-icon">book</md-icon>
                                         <span>{{gradebook.subject}}</span>
