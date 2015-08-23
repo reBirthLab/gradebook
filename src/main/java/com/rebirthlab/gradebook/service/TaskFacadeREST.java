@@ -75,8 +75,9 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         //Initialises student attendance
         Calendar calendar = Calendar.getInstance();
         Date startDate = task.getStartDate();
-        System.out.println("INFORMATION " + startDate);
+        System.out.println("INFORMATION Raw Date" + startDate);
         calendar.setTime(startDate);
+        System.out.println("INFORMATION Date after setting calendar" + calendar.getTime());
         
         int firstDayOfWeek = calendar.getFirstDayOfWeek();      
         int startDateDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
@@ -107,6 +108,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
             for (int courseDay : courseDays) {
                 if (currentDayOfWeek == courseDay) {
                     classDates.add(calendar.getTime());
+                    System.out.println("INFORMATION date while getting dates in loop" + calendar.getTime());
                 }
             }
             calendar.add(Calendar.DAY_OF_MONTH, 1);
@@ -114,7 +116,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         
         for (Student student : students) {
             for (Date date : classDates) {
-                System.out.println("INFORMATION " + date);
+                System.out.println("INFORMATION date while setting dates to objects" + date);
                 StudentAttendance attendance = new StudentAttendance();
                 attendance.setStudentId(student);
                 attendance.setTaskId(task);
