@@ -73,11 +73,10 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         } 
         
         //Initialises student attendance
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         Calendar calendar = Calendar.getInstance();
         Date startDate = task.getStartDate();
+        System.out.println("INFORMATION " + startDate);
         calendar.setTime(startDate);
-        calendar.setTimeZone(TimeZone.getTimeZone("EDT"));
         
         int firstDayOfWeek = calendar.getFirstDayOfWeek();      
         int startDateDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
@@ -115,6 +114,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         
         for (Student student : students) {
             for (Date date : classDates) {
+                System.out.println("INFORMATION " + date);
                 StudentAttendance attendance = new StudentAttendance();
                 attendance.setStudentId(student);
                 attendance.setTaskId(task);
