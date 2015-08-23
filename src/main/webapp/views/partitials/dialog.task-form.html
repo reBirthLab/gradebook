@@ -19,7 +19,7 @@
                     <div flex="50">
                         <md-input-container >
                             <label>Start Date</label>
-                            <input required type="date" ng-model="task.startDate" ng-model-options="{ timezone: 'UTC' }">
+                            <input required type="date" ng-model="task.startDate" ng-model-options="{ timezone: '-0400' }"> <!-- Server Timezone patch -->
                         </md-input-container>
                     </div>
                     <div flex="30">

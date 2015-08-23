@@ -72,7 +72,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
             getEntityManager().persist(grade);
         } 
         
-        //Initialises student attendance
+        //Initialises student attendance      
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         Date startDate = task.getStartDate();
         calendar.setTime(startDate);

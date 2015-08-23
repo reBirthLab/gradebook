@@ -242,8 +242,9 @@ controllers.controller('EditTaskDialogController', function ($scope, $mdDialog, 
     $scope.submitButton = 'Update';
     
     $scope.task = task;
-    $scope.task.startDate = new Date (task.startDate);
-    
+    var startDate = new Date (task.startDate);
+    startDate.setUTCHours(4); // Server Timezone patch
+    $scope.task.startDate = new Date (startDate);
     $scope.submit = function () {
         $scope.dataLoading = true;
 
@@ -362,6 +363,7 @@ controllers.controller('EditAttendanceDialogController', function ($scope, $mdDi
     $scope.attendance = attendance;
     
     var classDate = new Date(attendance.classDate);
+    classDate.setUTCHours(4); // Server Timezone patch
     $scope.classDate = pad(classDate.getDate(), 2) + '/' +
             pad(classDate.getMonth() + 1, 2) + '/' +
             classDate.getFullYear();
@@ -377,13 +379,11 @@ controllers.controller('EditAttendanceDialogController', function ($scope, $mdDi
     $scope.update = function () {
         $scope.dataLoading = true;
         
-        var utcClassDate = new Date(classDate.getTime() + classDate.getTimezoneOffset() * 60000);
-        
         var attendance = {};
         attendance.attendanceId = $scope.attendance.attendanceId;
         attendance.studentId = $scope.attendance.studentId;
         attendance.taskId = $scope.attendance.taskId;
-        attendance.classDate = utcClassDate;
+        attendance.classDate = classDate;
         attendance.present = false;
         attendance.absent = false;
         attendance.absentWithReason = false;
@@ -393,7 +393,7 @@ controllers.controller('EditAttendanceDialogController', function ($scope, $mdDi
         if($scope.status === 'absent-with-reason') attendance.absentWithReason = true;
         
         Attendance.update({
-           attendanceId: attendance.attendanceId,
+           attendanceId: attendance.attendanceId
         }, attendance,
         function () {
             $mdDialog.hide();
