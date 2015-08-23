@@ -316,12 +316,12 @@ controllers.controller('GradebookAttendanceCtrl', function ($scope, $state, $sta
         weekday[5] = "Fri";
         weekday[6] = "Sat";
         
-        return weekday[date.getUTCDay()];
+        return weekday[date.getDay()];
     };
     
     $scope.formatClassDate = function (d){
         var date = new Date(d);         
-        return pad(date.getUTCDate(), 2) + '/' + pad(date.getUTCMonth() + 1, 2);
+        return pad(date.getDate(), 2) + '/' + pad(date.getMonth() + 1, 2);
     };
     
     $scope.attendanceStatus = function (scope) {
@@ -376,12 +376,14 @@ controllers.controller('EditAttendanceDialogController', function ($scope, $mdDi
    
     $scope.update = function () {
         $scope.dataLoading = true;
-
+        
+        var utcClassDate = new Date(classDate.getTime() + classDate.getTimezoneOffset() * 60000);
+        
         var attendance = {};
         attendance.attendanceId = $scope.attendance.attendanceId;
         attendance.studentId = $scope.attendance.studentId;
         attendance.taskId = $scope.attendance.taskId;
-        attendance.classDate = $scope.attendance.classDate;
+        attendance.classDate = utcClassDate;
         attendance.present = false;
         attendance.absent = false;
         attendance.absentWithReason = false;

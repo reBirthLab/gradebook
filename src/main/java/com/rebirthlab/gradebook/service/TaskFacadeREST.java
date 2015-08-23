@@ -22,14 +22,12 @@ import com.rebirthlab.gradebook.entity.Student;
 import com.rebirthlab.gradebook.entity.StudentAttendance;
 import com.rebirthlab.gradebook.entity.StudentGrade;
 import com.rebirthlab.gradebook.entity.Task;
-import com.rebirthlab.gradebook.security.AuthenticationService;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.TimeZone;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -75,6 +73,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         } 
         
         //Initialises student attendance
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
         Calendar calendar = Calendar.getInstance();
         Date startDate = task.getStartDate();
         calendar.setTime(startDate);
