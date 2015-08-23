@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -72,7 +73,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         } 
         
         //Initialises student attendance      
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         Date startDate = task.getStartDate();
         calendar.setTime(startDate);
         int firstDayOfWeek = calendar.getFirstDayOfWeek();
