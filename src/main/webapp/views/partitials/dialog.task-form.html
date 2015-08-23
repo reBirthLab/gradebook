@@ -4,7 +4,7 @@
             <div class="md-toolbar-tools">
                 <h2>{{mode}} Task</h2>
                 <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancel()">
+                <md-button type="button" class="md-icon-button" ng-click="cancel()">
                     <md-icon>close</md-icon>
                 </md-button>
             </div>
@@ -19,13 +19,13 @@
                     <div flex="50">
                         <md-input-container >
                             <label>Start Date</label>
-                            <input required type="date" ng-model="task.startDate">
+                            <input required type="date" ng-model="task.startDate" ng-model-options="{ timezone: 'UTC' }">
                         </md-input-container>
                     </div>
                     <div flex="30">
                         <md-input-container >
                             <label>Length</label>
-                            <input required type="number" ng-model="task.taskLength" min="0" max="52">
+                            <input required type="number" ng-model="task.taskLength" min="1" max="52">
                         </md-input-container>
                     </div>                    
                     <div flex="20">Weeks</div>
@@ -53,10 +53,10 @@
         <div class="md-actions" layout="column">
             <md-progress-linear flex ng-if="dataLoading" class="md-accent" md-mode="indeterminate"></md-progress-linear>
             <div layout="row" layout-align="end">
-                <md-button class="md-primary">
+                <md-button type="submit" class="md-primary">
                     {{submitButton}}
                 </md-button>
-                <md-button ng-click="cancel()" class="md-primary">
+                <md-button type="button" ng-click="cancel()" class="md-primary">
                     Cancel
                 </md-button>
             </div>     

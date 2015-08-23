@@ -316,12 +316,12 @@ controllers.controller('GradebookAttendanceCtrl', function ($scope, $state, $sta
         weekday[5] = "Fri";
         weekday[6] = "Sat";
         
-        return weekday[date.getDay()];
+        return weekday[date.getUTCDay()];
     };
     
     $scope.formatClassDate = function (d){
         var date = new Date(d);         
-        return pad(date.getDate(), 2) + '/' + pad(date.getMonth() + 1, 2);
+        return pad(date.getUTCDate(), 2) + '/' + pad(date.getUTCMonth() + 1, 2);
     };
     
     $scope.attendanceStatus = function (scope) {
