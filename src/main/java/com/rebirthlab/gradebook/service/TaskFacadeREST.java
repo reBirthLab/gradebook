@@ -27,11 +27,11 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -74,12 +74,12 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         
         //Initialises student attendance
         Calendar calendar = Calendar.getInstance();
-        Date startDate = task.getStartDate();
-        System.out.println("INFORMATION Raw Date" + startDate);
-        calendar.setTime(startDate);
-        System.out.println("INFORMATION Date after setting calendar" + calendar.getTime());
+        int firstDayOfWeek = 2;
+        calendar.setFirstDayOfWeek(firstDayOfWeek);
         
-        int firstDayOfWeek = calendar.getFirstDayOfWeek();      
+        Date startDate = task.getStartDate();
+        calendar.setTime(startDate);
+
         int startDateDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         calendar.add(Calendar.DAY_OF_MONTH, - startDateDayOfWeek + firstDayOfWeek);
         
@@ -107,8 +107,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
             int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
             for (int courseDay : courseDays) {
                 if (currentDayOfWeek == courseDay) {
-                    classDates.add(calendar.getTime());
-                    System.out.println("INFORMATION date while getting dates in loop" + calendar.getTime());
+                    classDates.add(calendar.getTime());                   
                 }
             }
             calendar.add(Calendar.DAY_OF_MONTH, 1);
@@ -116,7 +115,6 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         
         for (Student student : students) {
             for (Date date : classDates) {
-                System.out.println("INFORMATION date while setting dates to objects" + date);
                 StudentAttendance attendance = new StudentAttendance();
                 attendance.setStudentId(student);
                 attendance.setTaskId(task);
@@ -140,6 +138,12 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         super.edit(entity);
     }
 
+    @DELETE
+    @Path("{id}")
+    public void remove(@PathParam("id") Integer id) {
+        super.remove(super.find(id));
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;

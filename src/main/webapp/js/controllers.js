@@ -57,6 +57,10 @@ controllers.controller('MainCtrl', function ($scope, $mdSidenav, $location, Auth
             }
         }
     }
+       
+    $scope.$on('selectTab', function (event, index){
+        $scope.selectedIndex = index;
+    });
 
     $scope.get = function (gradebookId) {
         var currentGradebook = getByGradebookId(userGradebooks, gradebookId);
@@ -96,7 +100,6 @@ controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, Authe
     };
 });
 
-// TEMPORARY
 controllers.controller('GradebookTasksCtrl', function ($scope, $state, $stateParams, $mdDialog, MessageService, GradebookTasks) {
     $scope.groupGrades = GradebookTasks.query({
         groupId: $stateParams.groupId,
@@ -158,6 +161,7 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $state, $statePar
             }
         }).then(function () {
             $state.go($state.current, {}, {reload: true});
+            $scope.$emit('selectTab', 0);
             var message = 'The Grade was successfully updated!';
             MessageService.showSuccessToast(message);
         });
@@ -240,7 +244,7 @@ controllers.controller('TaskDetailsDialogController', function ($scope, $state, 
 controllers.controller('EditTaskDialogController', function ($scope, $mdDialog, MessageService, task, Task) {
     $scope.mode = 'Edit';
     $scope.submitButton = 'Update';
-    
+      
     $scope.task = task;
     var startDate = new Date (task.startDate);
     startDate.setUTCHours(4); // Server Timezone patch
@@ -352,6 +356,7 @@ controllers.controller('GradebookAttendanceCtrl', function ($scope, $state, $sta
             }
         }).then(function () {
             $state.go($state.current, {}, {reload: true});
+            $scope.$emit('selectTab', 1);
             var message = 'The Attendance was successfully updated!';
             MessageService.showSuccessToast(message);
         });
