@@ -11,6 +11,11 @@
         </md-toolbar>
         <md-dialog-content>
             <div layout="column">
+                <div ng-show="{{mode ===  'Edit'}}" class="form-row">
+                    <p class="warn">WARNING! If you change any of Start Date, Length, 
+                        On course days or Maximum grade fields, all associated 
+                        with the task grades and attendances will be lost!</p>
+                </div>
                 <md-input-container>
                     <label>Task Title</label>
                     <input md-maxlength="150" required type="text" ng-model="task.title">
@@ -19,7 +24,8 @@
                     <div flex="50">
                         <md-input-container >
                             <label>Start Date</label>
-                            <input required type="date" ng-model="task.startDate" ng-model-options="{ timezone: '-0400' }"> <!-- Server Timezone patch -->
+                            <input required type="date" ng-model="task.startDate" 
+                                   ng-model-options="{ timezone: '-0400' }"> <!-- Server Timezone patch -->
                         </md-input-container>
                     </div>
                     <div flex="30">

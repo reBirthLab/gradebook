@@ -25,6 +25,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -61,6 +63,9 @@ public class AcademicGroup implements Serializable {
     private Collection<Student> studentCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "academicGroupId")
     private Collection<Gradebook> gradebookCollection;
+    @JoinColumn(name = "faculty_id", referencedColumnName = "faculty_id")
+    @ManyToOne(optional = false)
+    private Faculty facultyId;
 
     public AcademicGroup() {
     }
@@ -107,6 +112,14 @@ public class AcademicGroup implements Serializable {
     public void setGradebookCollection(Collection<Gradebook> gradebookCollection) {
         this.gradebookCollection = gradebookCollection;
     }
+    
+    public Faculty getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(Faculty facultyId) {
+        this.facultyId = facultyId;
+    }
 
     @Override
     public int hashCode() {
@@ -132,5 +145,5 @@ public class AcademicGroup implements Serializable {
     public String toString() {
         return "com.rebirthlab.gradebook.entity.AcademicGroup[ academicGroupId=" + academicGroupId + " ]";
     }
-    
+
 }

@@ -74,6 +74,14 @@
             }
         },
         "md-menu-sidenav-title": {},
+        "md-select": {
+            "attributes": {
+                "ng-model": {},
+                "placeholder": {},
+                "md-on-open": {},
+                "required": {}
+            }
+        },
         "md-radio-button": {
             "attributes": {
                 "value": {},
@@ -116,9 +124,11 @@
             }
         },
         "md-menu-sidenav-content": {},
+        "md-select-label": {},
         "v-pane-content": {},
         "md-icon": {
             "attributes": {
+                "md-svg-icon": {},
                 "ng-click": {},
                 "ng-class": {},
                 "md-svg-src": {},

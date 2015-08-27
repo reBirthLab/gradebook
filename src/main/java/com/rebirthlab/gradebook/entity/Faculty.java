@@ -59,6 +59,8 @@ public class Faculty implements Serializable {
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
     private Collection<Department> departmentCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
+    private Collection<AcademicGroup> academicGroupCollection;
 
     public Faculty() {
     }
@@ -96,6 +98,15 @@ public class Faculty implements Serializable {
     public void setDepartmentCollection(Collection<Department> departmentCollection) {
         this.departmentCollection = departmentCollection;
     }
+    
+    @XmlTransient
+    public Collection<AcademicGroup> getAcademicGroupCollection() {
+        return academicGroupCollection;
+    }
+
+    public void setAcademicGroupCollection(Collection<AcademicGroup> academicGroupCollection) {
+        this.academicGroupCollection = academicGroupCollection;
+    }
 
     @Override
     public int hashCode() {
@@ -121,5 +132,5 @@ public class Faculty implements Serializable {
     public String toString() {
         return "com.rebirthlab.gradebook.entity.Faculty[ facultyId=" + facultyId + " ]";
     }
-    
+
 }

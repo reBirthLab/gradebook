@@ -16,14 +16,25 @@
  */
 package com.rebirthlab.gradebook.service;
 
+import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.AcademicGroup;
+import com.rebirthlab.gradebook.entity.AcademicGroup_;
+import com.rebirthlab.gradebook.entity.Department;
+import com.rebirthlab.gradebook.entity.Lecturer;
+import com.rebirthlab.gradebook.security.AuthenticationService;
+import com.rebirthlab.gradebook.security.CurrentUser;
+import com.rebirthlab.gradebook.security.UserDataFinder;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -35,7 +46,7 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entity.academicgroup")
+@Path("groups")
 public class AcademicGroupFacadeREST extends AbstractFacade<AcademicGroup> {
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
@@ -72,24 +83,26 @@ public class AcademicGroupFacadeREST extends AbstractFacade<AcademicGroup> {
     }
 
     @GET
-    @Override
     @Produces({"application/xml", "application/json"})
-    public List<AcademicGroup> findAll() {
-        return super.findAll();
-    }
+    public List<AcademicGroup> findGroups(@HeaderParam("Authorization") String authorization){
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
-    public List<AcademicGroup> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
+        String username = new AuthenticationService().getUsername(authorization);
 
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
+            Integer lecturerId = user.getId();
+            Lecturer lecturer = getEntityManager().find(Lecturer.class, lecturerId);          
+            
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery(AcademicGroup.class);
+            Root groups = cq.from(AcademicGroup.class);
+            
+            cq.where(cb.equal(groups.get(AcademicGroup_.facultyId), lecturer.getDepartmentId().getFacultyId()));
+            return getEntityManager().createQuery(cq).getResultList();
+        } else {
+            return null;
+        }
     }
 
     @Override

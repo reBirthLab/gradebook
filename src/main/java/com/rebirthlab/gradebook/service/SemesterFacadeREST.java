@@ -16,11 +16,18 @@
  */
 package com.rebirthlab.gradebook.service;
 
+import com.rebirthlab.gradebook.entity.LecturerGradebooks;
+import com.rebirthlab.gradebook.entity.LecturerGradebooks_;
 import com.rebirthlab.gradebook.entity.Semester;
+import com.rebirthlab.gradebook.entity.Semester_;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -35,7 +42,7 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entity.semester")
+@Path("semesters")
 public class SemesterFacadeREST extends AbstractFacade<Semester> {
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
@@ -72,26 +79,26 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
     }
 
     @GET
-    @Override
     @Produces({"application/xml", "application/json"})
-    public List<Semester> findAll() {
-        return super.findAll();
-    }
+    public List<Semester> findActualSemesters() {
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
-    public List<Semester> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
+        Calendar today = Calendar.getInstance();
+        short currentYear = (short) today.get(Calendar.YEAR);
 
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery(Semester.class);
+        Root semesters = cq.from(Semester.class);
 
+        cq.where(
+                cb.or(
+                        cb.equal(semesters.get(Semester_.academicYear), currentYear),
+                        cb.equal(semesters.get(Semester_.academicYear), currentYear + 1)
+                )
+        );
+        return getEntityManager().createQuery(cq).getResultList();
+
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;

@@ -4,9 +4,9 @@
             <tr class="header-primary">
                 <th class="table-num-col">#</th>
                 <th class="table-name-col">Name</th>                                                                     
-                <th ng-repeat="(key, value) in groupGrades | groupBy: 'taskId'" ng-click="showTaskDetails($event, this)">
+                <th ng-repeat="task in groupGrades | groupBy: 'taskId'" ng-click="showTaskDetails($event, task[0].taskId)">
                     <a>
-                        Task {{($index + 1)}} | {{value[0].title}}
+                        Task {{($index + 1)}} | {{task[0].title}}
                     </a>
                 </th>
                 <th class="add">
@@ -18,17 +18,17 @@
         <tr class="header-secondary">
             <th class="table-num-col"></th>
             <th class="table-name-col"></th>
-            <th ng-repeat="(key, value) in groupGrades | groupBy: 'taskId'">{{calcTaskDates(value[0].startDate, value[0].taskLength)}}</th>
+            <th ng-repeat="task in groupGrades | groupBy: 'taskId'">{{calcTaskDates(task[0].startDate, task[0].taskLength)}}</th>
             <th></th>         
         </tr>
         </thead>
 
         <tbody>
-            <tr ng-repeat="(key, value) in groupGrades | groupBy: 'studentId' | toArray: true | orderBy: orderByName">
+            <tr ng-repeat="student in groupGrades | groupBy: 'studentId' | toArray: true | orderBy: orderByName">
                 <td class="table-num-col">{{($index + 1)}}</td>
-                <td class="table-name-col">{{value[0].firstName}} {{value[0].lastName}}</td>
-                <td ng-repeat="task in value">
-                    <md-button class="grade" ng-click="showEditGradeDialog($event, this)">
+                <td class="table-name-col">{{student[0].firstName}} {{student[0].lastName}}</td>
+                <td ng-repeat="task in student">
+                    <md-button class="grade" ng-click="showEditGradeDialog($event, task)">
                         {{task.grade}} <span class="max-grade">[{{task.maxGrade}}]</span>
                     </md-button>
                 </td>

@@ -31,7 +31,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -134,14 +133,22 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Task entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+    public void editTask(@PathParam("id") Integer id, Task task) {
+        Task oldTask = getEntityManager().find(Task.class, id);
+        if (task.getStartDate().getTime() != oldTask.getStartDate().getTime()
+                || task.getTaskLength() != oldTask.getTaskLength()
+                || task.getOnCourseMon() != oldTask.getOnCourseMon()
+                || task.getOnCourseTue() != oldTask.getOnCourseTue()
+                || task.getOnCourseWed() != oldTask.getOnCourseWed()
+                || task.getOnCourseThu() != oldTask.getOnCourseThu()
+                || task.getOnCourseFri() != oldTask.getOnCourseFri()
+                || task.getMaxGrade() != oldTask.getMaxGrade()) {
+            getEntityManager().remove(getEntityManager().merge(oldTask));
+            task.setTaskId(null);
+            createTask(task);
+        } else {
+            getEntityManager().merge(task);
+        }       
     }
     
     @Override

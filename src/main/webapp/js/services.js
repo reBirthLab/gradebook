@@ -19,7 +19,15 @@
 var services = angular.module('GradebookServices', []);
 
 services.factory('UserGradebooks', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/gradebooks');
+});
+
+services.factory('Gradebook', function ($resource) {
     return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/gradebooks/:gradebookId');
+});
+
+services.factory('Lecturers', function ($resource) {
+    return $resource('http://localhost:8080/api/v1/lecturers');
 });
 
 services.factory('GradebookTasks', function ($resource) {

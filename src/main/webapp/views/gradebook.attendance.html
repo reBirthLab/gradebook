@@ -21,7 +21,7 @@
         </table>
 
         <table class="table attendance" ng-repeat="task in groupAttendance| groupBy: 'taskId'">
-            <caption class="header-primary" ng-click="showTaskDetails($event, this)">                                                                                    
+            <caption class="header-primary" ng-click="showTaskDetails($event, task[0].taskId)">                                                                                    
                 <a>Task {{($index + 1)}} | {{task[0].title}}</a>
             </caption>
             <thead>
@@ -36,7 +36,7 @@
             <tbody>
                 <tr ng-repeat="student in task | groupBy: 'studentId' | toArray: true | orderBy: orderByName">
                     <td ng-repeat="attendance in student">
-            <md-button class="attendance-button" ng-click="showEditAttendanceDialog($event, this)">
+            <md-button class="attendance-button" ng-click="showEditAttendanceDialog($event, attendance)">
                 <md-icon ng-class="{'green-700': present, 'red-700': absent, 'yellow-700': absentWithReason}">
                     {{attendanceStatus(this)}}
                 </md-icon>               

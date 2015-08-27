@@ -25,7 +25,9 @@ function pad(num, size) {
     return s;
 };
 
-controllers.controller('MainCtrl', function ($scope, $mdSidenav, $location, AuthenticationService, UserGradebooks) {
+var serverTimeZoneOffset = 4;
+
+controllers.controller('MainCtrl', function ($scope, $state, $mdDialog, $mdSidenav, $location, AuthenticationService, MessageService, UserGradebooks) {
 
     $scope.index = 0;
     $scope.toggleSidenav = function (menuId) {
@@ -70,6 +72,108 @@ controllers.controller('MainCtrl', function ($scope, $mdSidenav, $location, Auth
             year: currentGradebook.academicYear,
             semester: currentGradebook.name
         };
+    };
+    
+    
+    $scope.showAddGradebookDialog = function (ev, userGradebook) {
+        $mdDialog.show({
+            controller: 'AddGradebookDialogController',
+            templateUrl: 'views/partitials/dialog.gradebook.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                lecturerId: userGradebook.lecturerId
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'New gradebook was successfully added!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+});
+
+controllers.controller('AddGradebookDialogController', function ($scope, $mdDialog, lecturerId, Lecturers, MessageService, Gradebook) {
+    
+    $scope.lecturer;
+    $scope.searchText = null;
+    $scope.selectedLecturers = [];
+    
+    var lecturers = Lecturers.query(function () {
+        var currentLecturer = {};
+
+        for (var i = 0; i < lecturers.length; i++) {
+            if (lecturers[i].lecturerId === lecturerId)
+                currentLecturer = lecturers[i];
+        }
+
+        $scope.selectedLecturers.push(currentLecturer);
+
+        $scope.lecturers = lecturers.map(function (l) {
+            var lect = JSON.parse(JSON.stringify(l));
+            lect._lowerFirstName = lect.firstName.toLowerCase();
+            lect._lowerLastName = lect.lastName.toLowerCase();
+            return lect;
+        });
+    });
+
+    $scope.querySearch = function (query) {
+        var results = query ? $scope.lecturers.filter(createFilterFor(query)) : [];
+        return results;
+    };
+
+    function createFilterFor(query) {
+        var lowercaseQuery = angular.lowercase(query);
+        return function filterFn(lecturer) {
+            return (lecturer._lowerFirstName.indexOf(lowercaseQuery) === 0) ||
+                    (lecturer._lowerLastName.indexOf(lowercaseQuery) === 0);
+        };
+    }
+    
+    $scope.addLecturer = function () {
+
+        if ($scope.lecturer !== undefined) {
+
+            var lecturer = $scope.lecturer;
+
+            if ($scope.selectedLecturers.length !== 0) {
+                for (var i = 0; i < $scope.selectedLecturers.length; i++) {
+                    if ($scope.selectedLecturers[i].lecturerId === lecturer.lecturerId) {
+                        lecturer = undefined;
+                    }
+                }
+                if (lecturer !== undefined) {
+                    $scope.selectedLecturers.push(lecturer);
+                    $scope.lecturer = undefined;
+                } else {
+                    $scope.lecturer = undefined;
+                }
+            } else {
+                $scope.selectedLecturers.push(lecturer);
+                $scope.lecturer = undefined;
+            }
+        }
+    };
+    
+    $scope.clearSelection = function () {
+        $scope.lecturer = undefined;
+    };
+    
+    $scope.submit = function () {
+        $scope.dataLoading = true;
+        
+        var newGradebook = new Gradebook($scope.gradebook);
+        
+        newGradebook.$save({
+        }, function () {
+            $mdDialog.hide();
+        }, function () {
+            MessageService.showErrorToast();
+            $scope.dataLoading = false;
+        });
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
     };
 });
 
@@ -138,26 +242,26 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $state, $statePar
         });
     };
     
-    $scope.showTaskDetails = function (ev, scope) {
+    $scope.showTaskDetails = function (ev, taskId) {
         $mdDialog.show({
             controller: 'TaskDetailsDialogController',
             templateUrl: 'views/partitials/dialog.task-details.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             locals: {
-                taskId: scope.value[0].taskId
+                taskId: taskId
             }
         });
     }; 
     
-    $scope.showEditGradeDialog = function (ev, scope) {
+    $scope.showEditGradeDialog = function (ev, task) {
         $mdDialog.show({
             controller: 'EditGradeDialogController',
             templateUrl: 'views/partitials/dialog.grade.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             locals: {
-                task: scope.task
+                task: task
             }
         }).then(function () {
             $state.go($state.current, {}, {reload: true});
@@ -191,7 +295,7 @@ controllers.controller('AddTaskDialogController', function ($scope, $mdDialog, M
     };
 });
 
-controllers.controller('TaskDetailsDialogController', function ($scope, $state, $mdDialog, MessageService, taskId, Task) {
+controllers.controller('TaskDetailsDialogController', function ($scope, $rootScope, $state, $mdDialog, MessageService, taskId, Task) {
     $scope.task = Task.get({taskId: taskId}, function (task) {
         
         var startDate = new Date(task.startDate);
@@ -227,6 +331,13 @@ controllers.controller('TaskDetailsDialogController', function ($scope, $state, 
             }
         }).then(function () {
             $state.go($state.current, {}, {reload: true});
+
+            if ($state.current.name === 'gradebook.tasks'){                
+                $rootScope.$broadcast('selectTab', 0);
+            } else if ($state.current.name === 'gradebook.attendance'){
+                $rootScope.$broadcast('selectTab', 1);
+            }
+            
             var message = 'The task was successfully updated!';
             MessageService.showSuccessToast(message);
         });
@@ -247,7 +358,7 @@ controllers.controller('EditTaskDialogController', function ($scope, $mdDialog, 
       
     $scope.task = task;
     var startDate = new Date (task.startDate);
-    startDate.setUTCHours(4); // Server Timezone patch
+    startDate.setUTCHours(serverTimeZoneOffset); // Server Timezone patch
     $scope.task.startDate = new Date (startDate);
     $scope.submit = function () {
         $scope.dataLoading = true;
@@ -345,20 +456,32 @@ controllers.controller('GradebookAttendanceCtrl', function ($scope, $state, $sta
         }
     };
     
-    $scope.showEditAttendanceDialog = function (ev, scope) {
+    $scope.showEditAttendanceDialog = function (ev, attendance) {
         $mdDialog.show({
             controller: 'EditAttendanceDialogController',
             templateUrl: 'views/partitials/dialog.attendance.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             locals: {
-                attendance: scope.attendance
+                attendance: attendance
             }
         }).then(function () {
             $state.go($state.current, {}, {reload: true});
             $scope.$emit('selectTab', 1);
             var message = 'The Attendance was successfully updated!';
             MessageService.showSuccessToast(message);
+        });
+    };
+    
+    $scope.showTaskDetails = function (ev, taskId) {
+        $mdDialog.show({
+            controller: 'TaskDetailsDialogController',
+            templateUrl: 'views/partitials/dialog.task-details.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                taskId: taskId
+            }
         });
     };
 });
@@ -368,7 +491,7 @@ controllers.controller('EditAttendanceDialogController', function ($scope, $mdDi
     $scope.attendance = attendance;
     
     var classDate = new Date(attendance.classDate);
-    classDate.setUTCHours(4); // Server Timezone patch
+    classDate.setUTCHours(serverTimeZoneOffset); // Server Timezone patch
     $scope.classDate = pad(classDate.getDate(), 2) + '/' +
             pad(classDate.getMonth() + 1, 2) + '/' +
             classDate.getFullYear();

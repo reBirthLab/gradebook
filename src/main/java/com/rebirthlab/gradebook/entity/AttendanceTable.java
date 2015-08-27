@@ -110,7 +110,7 @@ public class AttendanceTable implements Serializable {
     @NotNull
     @Column(name = "attendance_id")
     @Id
-    private int attendanceId;
+    private long attendanceId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "present")
@@ -212,14 +212,14 @@ public class AttendanceTable implements Serializable {
         this.lastName = lastName;
     }
 
-    public int getAttendanceId() {
+    public long getAttendanceId() {
         return attendanceId;
     }
 
-    public void setAttendanceId(int attendanceId) {
+    public void setAttendanceId(long attendanceId) {
         this.attendanceId = attendanceId;
     }
-
+    
     public boolean getPresent() {
         return present;
     }
@@ -251,5 +251,5 @@ public class AttendanceTable implements Serializable {
     public void setClassDate(Date classDate) {
         this.classDate = classDate;
     }
-    
+
 }

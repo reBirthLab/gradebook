@@ -47,7 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <span class="md-subhead" style="font-weight: 500">{{user.firstName}} {{user.lastName}}</span>
             </div>
 
-            <md-button class="add-button">
+            <md-button class="add-button" ng-click="showAddGradebookDialog($event, userGradebooks[0])">
                 <md-icon class="add-icon">add_circle</md-icon>
                 <span>Add Gradebook</span>
             </md-button>

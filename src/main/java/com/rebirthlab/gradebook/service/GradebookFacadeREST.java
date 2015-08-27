@@ -35,7 +35,7 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("gradebooks/edit")
+@Path("gradebooks")
 public class GradebookFacadeREST extends AbstractFacade<Gradebook> {
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
@@ -69,27 +69,6 @@ public class GradebookFacadeREST extends AbstractFacade<Gradebook> {
     @Produces({"application/xml", "application/json"})
     public Gradebook find(@PathParam("id") Integer id) {
         return super.find(id);
-    }
-
-    @GET
-    @Override
-    @Produces({"application/xml", "application/json"})
-    public List<Gradebook> findAll() {
-        return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
-    public List<Gradebook> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
     }
 
     @Override
