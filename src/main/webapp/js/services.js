@@ -26,8 +26,16 @@ services.factory('Gradebook', function ($resource) {
     return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/gradebooks/:gradebookId');
 });
 
+services.factory('Groups', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/groups');
+});
+
+services.factory('Semesters', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/semesters');
+});
+
 services.factory('Lecturers', function ($resource) {
-    return $resource('http://localhost:8080/api/v1/lecturers');
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/lecturers');
 });
 
 services.factory('GradebookTasks', function ($resource) {

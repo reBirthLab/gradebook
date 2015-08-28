@@ -18,13 +18,12 @@
                 <div layout="row">
                     <md-input-container flex>
                         <md-select ng-model="gradebook.academicGroupId" placeholder="Group" md-on-open="loadGroups()" required>  
-                            <md-option ng-value="group" ng-repeat="group in groups">{{group.number}}</md-option>
+                            <md-option ng-value="group.academicGroupId" ng-repeat="group in groups">{{group.number}}</md-option>
                         </md-select>
                     </md-input-container>
                     <md-input-container flex>
-                        <md-select ng-model="gradebook.semesterId" placeholder="Semester"  md-on-open="loadSemesters()" required> 
-                            
-                            <md-option ng-value="semester" ng-repeat="semester in semesters">{{semester.academicYear}} {{semester.name}}</md-option>
+                        <md-select ng-model="gradebook.semesterId" placeholder="Semester"  md-on-open="loadSemesters()" required>                   
+                            <md-option ng-value="semester.semesterId" ng-repeat="semester in semesters">{{semester.academicYear}} {{semester.name}}</md-option>
                         </md-select>
                     </md-input-container>
                 </div>
@@ -58,12 +57,13 @@
                 </div>
                 <md-input-container>
                     <label>Description</label>
-                    <textarea ng-model="task.description"></textarea>
+                    <textarea ng-model="gradebook.description"></textarea>
                 </md-input-container>
             </div>
         </md-dialog-content>
         <div class="md-actions" layout="column">
-            <md-progress-linear flex ng-if="dataLoading" class="md-accent" md-mode="indeterminate"></md-progress-linear>
+            <md-progress-linear flex ng-if="dataLoading || groupsLoading || semestersLoading || lecturersLoading" 
+                                class="md-accent" md-mode="indeterminate"></md-progress-linear>
             <div layout="row" layout-align="end">
                 <md-button type="submit" class="md-primary">
                     Submit

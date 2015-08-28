@@ -81,7 +81,7 @@ public class Gradebook implements Serializable {
     private Collection<Task> taskCollection;
 
     public Gradebook() {
-    }
+    } 
 
     public Gradebook(Integer gradebookId) {
         this.gradebookId = gradebookId;
@@ -116,7 +116,6 @@ public class Gradebook implements Serializable {
         this.description = description;
     }
 
-    @XmlTransient
     public Collection<Lecturer> getLecturerCollection() {
         return lecturerCollection;
     }
@@ -174,5 +173,5 @@ public class Gradebook implements Serializable {
     public String toString() {
         return "com.rebirthlab.gradebook.entity.Gradebook[ gradebookId=" + gradebookId + " ]";
     }
-    
+
 }

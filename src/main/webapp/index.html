@@ -57,7 +57,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </div>
 
             <v-accordion class="menu">
-                <v-pane ng-repeat="(groupNumber, group) in userGradebooks | groupBy: 'number'" >
+                <v-pane ng-repeat="(groupNumber, group) in userGradebooks | groupBy: 'number'">
                     <v-pane-header>
                         <md-button class="menu-title-button">
                             <span>{{groupNumber}}</span>                        
@@ -88,11 +88,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </v-pane>                
             </v-accordion>
 
-            <md-button class="menu-button">
+            <!-- TO CONSIDER Implementation
+            <md-button class="menu-button" ng-click="showSettingsDialog($event, userGradebooks)">
                 <md-icon class="icon">settings</md-icon>
                 <span>Settings</span>
-            </md-button>
-
+            </md-button> 
+            -->
+            
             <md-button class="menu-button" ng-click="logout()">
                 <md-icon class="icon">exit_to_app</md-icon>
                 <span>Log out</span>

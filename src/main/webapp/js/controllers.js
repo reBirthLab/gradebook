@@ -27,7 +27,7 @@ function pad(num, size) {
 
 var serverTimeZoneOffset = 4;
 
-controllers.controller('MainCtrl', function ($scope, $state, $mdDialog, $mdSidenav, $location, AuthenticationService, MessageService, UserGradebooks) {
+controllers.controller('MainCtrl', function ($scope, $window, $mdDialog, $mdSidenav, $location, AuthenticationService, MessageService, UserGradebooks) {
 
     $scope.index = 0;
     $scope.toggleSidenav = function (menuId) {
@@ -85,20 +85,80 @@ controllers.controller('MainCtrl', function ($scope, $state, $mdDialog, $mdSiden
                 lecturerId: userGradebook.lecturerId
             }
         }).then(function () {
-            $state.go($state.current, {}, {reload: true});
+            $window.location.reload();
             var message = 'New gradebook was successfully added!';
             MessageService.showSuccessToast(message);
         });
     };
+    
+//    $scope.showSettingsDialog = function (ev, userGradebooks) {
+//        $mdDialog.show({
+//            controller: 'SettingsController',
+//            templateUrl: 'views/partitials/dialog.settings.html',
+//            parent: angular.element(document.body),
+//            targetEvent: ev,
+//            locals: {
+//                userGradebooks: userGradebooks
+//            }
+//        }).then(function (selectedGradebooks) {
+//            $scope.selectedGradebooks = selectedGradebooks;
+//            var message = 'Main menu was successfully modified!';
+//            MessageService.showSuccessToast(message);
+//        });
+//    };
 });
 
-controllers.controller('AddGradebookDialogController', function ($scope, $mdDialog, lecturerId, Lecturers, MessageService, Gradebook) {
+//controllers.controller('SettingsController', function ($scope, $mdDialog, userGradebooks, MessageService) {
+//    
+//    $scope.userGradebooks = userGradebooks;
+//    $scope.selection = {};
+//    var selectedGradebooks = [];
+//    
+//    $scope.hide = function (selection) {
+//        for (var i = 0; i < userGradebooks.length; i++) {
+//           for (var property in selection) {
+//               if (selection.hasOwnProperty(property)) {
+//                   if (parseInt(property) === userGradebooks[i].gradebookId && selection[property]){                        
+//                        selectedGradebooks.push(userGradebooks[i]);
+//                    }
+//               }
+//           }
+//        }
+//        $mdDialog.hide(selectedGradebooks);
+//    };
+//    
+//    $scope.cancel = function () {
+//        $mdDialog.cancel();
+//    };
+//});
+
+controllers.controller('AddGradebookDialogController', function ($scope, $mdDialog, Groups, Semesters, lecturerId, Lecturers, MessageService, Gradebook) {
+    
+    $scope.groupsLoading = true;
+    $scope.semestersLoading = true;
+    $scope.lecturersLoading = true;
+    
+    $scope.groups = Groups.query({
+        }, function () {
+             $scope.groupsLoading = false;
+        }, function () {
+            MessageService.showErrorToast();
+            $scope.groupsLoading = false;
+        });
+
+    $scope.semesters = Semesters.query({
+        }, function () {
+             $scope.semestersLoading = false;
+        }, function () {
+            MessageService.showErrorToast();
+            $scope.semestersLoading = false;
+        });
     
     $scope.lecturer;
     $scope.searchText = null;
     $scope.selectedLecturers = [];
-    
-    var lecturers = Lecturers.query(function () {
+
+    var lecturers = Lecturers.query(function (lecturers) {
         var currentLecturer = {};
 
         for (var i = 0; i < lecturers.length; i++) {
@@ -108,12 +168,16 @@ controllers.controller('AddGradebookDialogController', function ($scope, $mdDial
 
         $scope.selectedLecturers.push(currentLecturer);
 
-        $scope.lecturers = lecturers.map(function (l) {
-            var lect = JSON.parse(JSON.stringify(l));
+        $scope.lecturers = lecturers.map(function (lect) {
             lect._lowerFirstName = lect.firstName.toLowerCase();
             lect._lowerLastName = lect.lastName.toLowerCase();
             return lect;
         });
+    }).$promise.then(function () {
+        $scope.lecturersLoading = false;
+    }, function () {
+        MessageService.showErrorToast();
+        $scope.lecturersLoading = false;
     });
 
     $scope.querySearch = function (query) {
@@ -155,13 +219,22 @@ controllers.controller('AddGradebookDialogController', function ($scope, $mdDial
     };
     
     $scope.clearSelection = function () {
-        $scope.lecturer = undefined;
+        $scope.lecturer = undefined;       
     };
     
     $scope.submit = function () {
         $scope.dataLoading = true;
         
-        var newGradebook = new Gradebook($scope.gradebook);
+        var selectedLecturerIds = [];        
+        
+        for (var i = 0; i < $scope.selectedLecturers.length; i++) {  
+            selectedLecturerIds.push({lecturerId: $scope.selectedLecturers[i].lecturerId});
+        }
+        
+        var gradebook = $scope.gradebook;
+        gradebook.lecturerCollection = selectedLecturerIds;
+        
+        var newGradebook = new Gradebook(gradebook);
         
         newGradebook.$save({
         }, function () {

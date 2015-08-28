@@ -16,5 +16,6 @@ My Pet Project
 * JSON (Jackson)
 * MySQL
 * Wildfly 8 Application Server
+* Maven
 
 
