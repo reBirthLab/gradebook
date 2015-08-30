@@ -49,14 +49,13 @@ public class ApplicationConfig extends Application {
         resources.add(com.rebirthlab.gradebook.service.FacultyFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.GradebookFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.LecturerFacadeREST.class);
-        resources.add(com.rebirthlab.gradebook.service.LecturerGradebooksFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.SemesterFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.StudentAttendanceFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.StudentFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.StudentGradeFacadeREST.class);
-        resources.add(com.rebirthlab.gradebook.service.StudentGradebooksFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.TaskFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.TasksTableFacadeREST.class);
+        resources.add(com.rebirthlab.gradebook.service.UserGradebooksFacadeREST.class);
         resources.add(com.rebirthlab.gradebook.service.UsersFacadeREST.class);
     }
     

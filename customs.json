@@ -60,7 +60,9 @@
                 "href": {},
                 "type": {},
                 "class": {},
-                "target": {}
+                "ng-hide": {},
+                "target": {},
+                "ng-disabled": {}
             }
         },
         "md-menu-sidenav": {

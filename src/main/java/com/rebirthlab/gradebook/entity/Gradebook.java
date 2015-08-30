@@ -22,6 +22,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -69,7 +70,7 @@ public class Gradebook implements Serializable {
     @JoinTable(name = "lecturer_has_gradebook", joinColumns = {
         @JoinColumn(name = "gradebook_id", referencedColumnName = "gradebook_id")}, inverseJoinColumns = {
         @JoinColumn(name = "lecturer_id", referencedColumnName = "lecturer_id")})
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.EAGER)
     private Collection<Lecturer> lecturerCollection;
     @JoinColumn(name = "academic_group_id", referencedColumnName = "academic_group_id")
     @ManyToOne(optional = false)

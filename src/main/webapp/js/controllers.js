@@ -27,7 +27,7 @@ function pad(num, size) {
 
 var serverTimeZoneOffset = 4;
 
-controllers.controller('MainCtrl', function ($scope, $window, $mdDialog, $mdSidenav, $location, AuthenticationService, MessageService, UserGradebooks) {
+controllers.controller('MainCtrl', function ($scope, $rootScope, $window, $mdDialog, $mdSidenav, $location, AuthenticationService, MessageService, UserGradebooks) {
 
     $scope.index = 0;
     $scope.toggleSidenav = function (menuId) {
@@ -43,14 +43,17 @@ controllers.controller('MainCtrl', function ($scope, $window, $mdDialog, $mdSide
         $location.path('/login');
     };
 
-    var userGradebooks = UserGradebooks.query(function () {
+    $scope.userGradebooks = UserGradebooks.query(function (userGradebooks) {
         $scope.user = {
             firstName: userGradebooks[0].firstName,
             lastName: userGradebooks[0].lastName
         };
     });
-
-    $scope.userGradebooks = userGradebooks;
+    
+    var userRole = $rootScope.globals.currentUser.userRole;
+    if (userRole === 'student') {
+        $scope.isHidden = true;
+    }
 
     function getByGradebookId(arr, id) {
         for (var d = 0, len = arr.length; d < len; d += 1) {
@@ -65,7 +68,7 @@ controllers.controller('MainCtrl', function ($scope, $window, $mdDialog, $mdSide
     });
 
     $scope.get = function (gradebookId) {
-        var currentGradebook = getByGradebookId(userGradebooks, gradebookId);
+        var currentGradebook = getByGradebookId($scope.userGradebooks, gradebookId);
         $scope.gradebook = {
             group: currentGradebook.number + " |",
             subject: currentGradebook.subject + " |",
@@ -91,47 +94,36 @@ controllers.controller('MainCtrl', function ($scope, $window, $mdDialog, $mdSide
         });
     };
     
-//    $scope.showSettingsDialog = function (ev, userGradebooks) {
-//        $mdDialog.show({
-//            controller: 'SettingsController',
-//            templateUrl: 'views/partitials/dialog.settings.html',
-//            parent: angular.element(document.body),
-//            targetEvent: ev,
-//            locals: {
-//                userGradebooks: userGradebooks
-//            }
-//        }).then(function (selectedGradebooks) {
-//            $scope.selectedGradebooks = selectedGradebooks;
-//            var message = 'Main menu was successfully modified!';
-//            MessageService.showSuccessToast(message);
-//        });
-//    };
+    $scope.showGradebookDetailsDialog = function (ev, gradebookId) {
+        $mdDialog.show({
+            controller: 'GradebookDetailsDialogController',
+            templateUrl: 'views/partitials/dialog.gradebook-details.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                gradebookId: gradebookId
+            }
+        });
+    };   
 });
 
-//controllers.controller('SettingsController', function ($scope, $mdDialog, userGradebooks, MessageService) {
-//    
-//    $scope.userGradebooks = userGradebooks;
-//    $scope.selection = {};
-//    var selectedGradebooks = [];
-//    
-//    $scope.hide = function (selection) {
-//        for (var i = 0; i < userGradebooks.length; i++) {
-//           for (var property in selection) {
-//               if (selection.hasOwnProperty(property)) {
-//                   if (parseInt(property) === userGradebooks[i].gradebookId && selection[property]){                        
-//                        selectedGradebooks.push(userGradebooks[i]);
-//                    }
-//               }
-//           }
-//        }
-//        $mdDialog.hide(selectedGradebooks);
-//    };
-//    
-//    $scope.cancel = function () {
-//        $mdDialog.cancel();
-//    };
-//});
+controllers.controller('GradebookDetailsDialogController', function ($scope, $mdDialog, gradebookId, Gradebook) {
+    $scope.gradebook = Gradebook.get({
+        gradebookId: gradebookId
+    }, function(gradebook){
+        $scope.group = gradebook.academicGroupId;
+        $scope.semester = gradebook.semesterId;
+        $scope.lecturers = gradebook.lecturerCollection;
+    });
 
+    $scope.hide = function () {
+        $mdDialog.hide();
+   };
+   
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+   };
+});
 controllers.controller('AddGradebookDialogController', function ($scope, $mdDialog, Groups, Semesters, lecturerId, Lecturers, MessageService, Gradebook) {
     
     $scope.groupsLoading = true;
@@ -250,7 +242,7 @@ controllers.controller('AddGradebookDialogController', function ($scope, $mdDial
     };
 });
 
-controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, AuthenticationService) {
+controllers.controller('LoginCtrl', function ($scope, $rootScope, $mdToast, $location, AuthenticationService) {
     // reset login status
     AuthenticationService.ClearCredentials();
 
@@ -258,7 +250,7 @@ controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, Authe
         $scope.dataLoading = true;
         AuthenticationService.Login($scope.username, $scope.password, function (response) {
             if (response.status === 200) {
-                AuthenticationService.SetCredentials($scope.username, $scope.password);
+                AuthenticationService.SetCredentials($scope.username, $scope.password, response.data);
                 $location.path('/');
             } else {
                 showErrorToast();
@@ -277,12 +269,18 @@ controllers.controller('LoginCtrl', function ($scope, $mdToast, $location, Authe
     };
 });
 
-controllers.controller('GradebookTasksCtrl', function ($scope, $state, $stateParams, $mdDialog, MessageService, GradebookTasks) {
+controllers.controller('GradebookTasksCtrl', function ($scope, $rootScope, $state, $stateParams, $mdDialog, MessageService, GradebookTasks) {
     $scope.groupGrades = GradebookTasks.query({
         groupId: $stateParams.groupId,
         semesterId: $stateParams.semesterId,
         gradebookId: $stateParams.gradebookId
     });
+    
+    var userRole = $rootScope.globals.currentUser.userRole;
+    if (userRole === 'student') {
+        $scope.isHidden = true;
+        $scope.isDisabled = true;
+    }
     
     $scope.orderByName = function(student) {
       return student[0].firstName;
@@ -423,6 +421,11 @@ controllers.controller('TaskDetailsDialogController', function ($scope, $rootSco
     $scope.cancel = function () {
         $mdDialog.cancel();
     };
+    
+    var userRole = $rootScope.globals.currentUser.userRole;
+    if (userRole === 'student') {
+        $scope.isHidden = true;
+    }
 });
 
 controllers.controller('EditTaskDialogController', function ($scope, $mdDialog, MessageService, task, Task) {
@@ -482,12 +485,17 @@ controllers.controller('EditGradeDialogController', function ($scope, $mdDialog,
 });
 
 
-controllers.controller('GradebookAttendanceCtrl', function ($scope, $state, $stateParams, $mdDialog, GradebookAttendance, MessageService) {
+controllers.controller('GradebookAttendanceCtrl', function ($scope, $rootScope, $state, $stateParams, $mdDialog, GradebookAttendance, MessageService) {
     $scope.groupAttendance = GradebookAttendance.query({
         groupId: $stateParams.groupId,
         semesterId: $stateParams.semesterId,
         gradebookId: $stateParams.gradebookId
     });
+    
+    var userRole = $rootScope.globals.currentUser.userRole;
+    if (userRole === 'student') {
+        $scope.isDisabled = true;
+    }
     
     $scope.orderByName = function(student) {
       return student[0].firstName;

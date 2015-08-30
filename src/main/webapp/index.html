@@ -47,11 +47,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <span class="md-subhead" style="font-weight: 500">{{user.firstName}} {{user.lastName}}</span>
             </div>
 
-            <md-button class="add-button" ng-click="showAddGradebookDialog($event, userGradebooks[0])">
+            <md-button class="add-button" ng-click="showAddGradebookDialog($event, userGradebooks[0])" ng-hide="isHidden">
                 <md-icon class="add-icon">add_circle</md-icon>
                 <span>Add Gradebook</span>
             </md-button>
-
             <div class="menu-static-row" style="padding-top: 10px;">
                 <span class="md-title">GROUPS</span>
             </div>
@@ -75,11 +74,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                     </md-button>
                                 </v-pane-header>
                                 <v-pane-content>
-                                    <md-button ng-repeat="gradebook in semester | orderBy: 'subject'" ng-click="get(gradebook.gradebookId); closeSidenav('left')" class="menu-item-button"
-                                               href="#/api/groups/{{gradebook.academicGroupId}}/semesters/{{gradebook.semesterId}}/gradebooks/{{gradebook.gradebookId}}">
-                                        <md-icon class="gradebook-icon">book</md-icon>
-                                        <span>{{gradebook.subject}}</span>
-                                    </md-button>
+                                    <div layout="row" ng-repeat="gradebook in semester | orderBy: 'subject'">
+                                        <md-button  ng-click="get(gradebook.gradebookId); closeSidenav('left')" class="menu-item-button"
+                                                    href="#/api/groups/{{gradebook.academicGroupId}}/semesters/{{gradebook.semesterId}}/gradebooks/{{gradebook.gradebookId}}">
+                                            <md-icon class="gradebook-icon">book</md-icon>
+                                            <span>{{gradebook.subject}}</span>
+                                        </md-button>
+                                        <md-button class="md-icon-button" ng-click="showGradebookDetailsDialog($event, gradebook.gradebookId)">
+                                            <md-icon class="info-icon">info_outline</md-icon>
+                                        </md-button>
+                                    </div>
                                 </v-pane-content>
                                 <md-divider></md-divider>
                             </v-pane>                           
@@ -87,13 +91,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </v-pane-content>                  
                 </v-pane>                
             </v-accordion>
-
-            <!-- TO CONSIDER Implementation
-            <md-button class="menu-button" ng-click="showSettingsDialog($event, userGradebooks)">
-                <md-icon class="icon">settings</md-icon>
-                <span>Settings</span>
-            </md-button> 
-            -->
             
             <md-button class="menu-button" ng-click="logout()">
                 <md-icon class="icon">exit_to_app</md-icon>
@@ -111,7 +108,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <md-icon>menu</md-icon>
                 </md-button>
                 <div flex layout="row" layout-align="center center">
-                    <span class="title">GradeBook™</span>
+                    <a class="title" href="#/">GradeBook™</a>
                     <span hide-sm hide-md flex></span>
                     <span class="gradebook-title" hide-sm>{{gradebook.group}} {{gradebook.subject}} {{gradebook.year}} {{gradebook.semester}}</span> 
                 </div>

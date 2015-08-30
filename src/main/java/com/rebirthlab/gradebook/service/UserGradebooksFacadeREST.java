@@ -17,8 +17,11 @@
 package com.rebirthlab.gradebook.service;
 
 import com.rebirthlab.gradebook.common.GradebookConstants;
+import com.rebirthlab.gradebook.entity.Gradebook;
 import com.rebirthlab.gradebook.entity.LecturerGradebooks;
 import com.rebirthlab.gradebook.entity.LecturerGradebooks_;
+import com.rebirthlab.gradebook.entity.StudentGradebooks;
+import com.rebirthlab.gradebook.entity.StudentGradebooks_;
 import com.rebirthlab.gradebook.security.AuthenticationService;
 import com.rebirthlab.gradebook.security.CurrentUser;
 import com.rebirthlab.gradebook.security.UserDataFinder;
@@ -40,18 +43,18 @@ import javax.ws.rs.Produces;
  */
 @Stateless
 @Path("gradebooks")
-public class LecturerGradebooksFacadeREST extends AbstractFacade<LecturerGradebooks> {
+public class UserGradebooksFacadeREST extends AbstractFacade<LecturerGradebooks> {
 
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
-    public LecturerGradebooksFacadeREST() {
+    public UserGradebooksFacadeREST() {
         super(LecturerGradebooks.class);
     }
 
     @GET
     @Produces({"application/xml", "application/json"})
-    public List<LecturerGradebooks> findAllLecturerGradebooks(@HeaderParam("Authorization") String authorization){
+    public List findAllUserGradebooks(@HeaderParam("Authorization") String authorization){
 
         String username = new AuthenticationService().getUsername(authorization);
 
@@ -59,16 +62,31 @@ public class LecturerGradebooksFacadeREST extends AbstractFacade<LecturerGradebo
 
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
             Integer lecturerId = user.getId();
+            
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery cq = cb.createQuery(LecturerGradebooks.class);
             Root lecturerGradebooks = cq.from(LecturerGradebooks.class);
-            
             cq.where(cb.equal(lecturerGradebooks.get(LecturerGradebooks_.lecturerId), lecturerId));
             return getEntityManager().createQuery(cq).getResultList();
+            
+        } else if (user.getRole().equals(GradebookConstants.ROLE_STUDENT)) {
+            Integer studentId = user.getId();
+            
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery(StudentGradebooks.class);
+            Root studentGradebooks = cq.from(StudentGradebooks.class);
+            cq.where(cb.equal(studentGradebooks.get(StudentGradebooks_.studentId), studentId));
+            return getEntityManager().createQuery(cq).getResultList();
+            
+        } else if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Gradebook.class));
+            return getEntityManager().createQuery(cq).getResultList();
+            
         } else {
             return null;
         }
-    }    
+    }   
 
     @Override
     protected EntityManager getEntityManager() {

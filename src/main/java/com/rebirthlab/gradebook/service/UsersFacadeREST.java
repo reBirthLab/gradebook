@@ -17,11 +17,15 @@
 package com.rebirthlab.gradebook.service;
 
 import com.rebirthlab.gradebook.entity.Users;
+import com.rebirthlab.gradebook.security.AuthenticationService;
+import com.rebirthlab.gradebook.security.CurrentUser;
+import com.rebirthlab.gradebook.security.UserDataFinder;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
@@ -41,9 +45,11 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
 
     @GET
     @Path("check")
-    @Produces({"application/xml", "application/json"})
-    public boolean check() {
-        return true;
+    @Produces({"text/plain"})
+    public String check(@HeaderParam("Authorization") String authorization) {       
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+        return user.getRole();
     }
 
     @GET

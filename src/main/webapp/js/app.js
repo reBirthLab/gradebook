@@ -30,8 +30,14 @@ var app = angular.module('GradebookApp', [
 app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise("/login");
-    $urlRouterProvider.when('/api/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId',
-            '/api/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks');
+    $urlRouterProvider.when('/api/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId', function ($rootScope, $location) {
+        var userRole = $rootScope.globals.currentUser.userRole;
+        if (userRole === 'lecturer') {
+            return $location.url() + '/tasks';
+        } else if (userRole === 'student') {
+            return $location.url() + '/student';
+        }
+    });
 
     $stateProvider.state('login', {
         url: '/login',
@@ -48,16 +54,35 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
 
     $stateProvider.state('main', {
         url: '/',
-        //templateUrl: 'views/main.html',
+        templateUrl: 'views/main.html',
         controller: 'MainCtrl'
     });
 
     $stateProvider.state('gradebook', {
         url: '/api/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId',
         abstract: true,
-        templateUrl: 'views/gradebook.html',
+        templateUrl: 'views/gradebook.html'
     });
-
+                
+    $stateProvider.state('gradebook-student', {
+        abstract: true,
+        templateUrl: 'views/gradebook-student.html'     
+    });
+    
+    $stateProvider.state('gradebook-student.views', {
+        url: '/api/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/student',
+        views: {
+            'tasks': {
+                templateUrl: 'views/gradebook.tasks.html',
+                controller: 'GradebookTasksCtrl'
+            },
+            'attendance': {
+                templateUrl: 'views/gradebook.attendance.html',
+                controller: 'GradebookAttendanceCtrl'
+            }
+        }
+    });
+    
     $stateProvider.state('gradebook.tasks', {
         url: '/tasks',
         templateUrl: 'views/gradebook.tasks.html',
@@ -67,7 +92,7 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
     $stateProvider.state('gradebook.attendance', {
         url: '/attendance',
         templateUrl: 'views/gradebook.attendance.html',
-        controller: 'GradebookAttendanceCtrl',
+        controller: 'GradebookAttendanceCtrl'
     });
 });
 
@@ -90,31 +115,4 @@ app.run(function ($rootScope, $location, $cookieStore, $http) {
             $location.path('/login');
         }
     });
-});
-
-app.filter('orderObjectBy', function () {
-    return function (items, field, reverse) {
-        var filtered = [];
-        angular.forEach(items, function (item) {
-            filtered.push(item);
-        });
-        function index(obj, i) {
-            return obj[i];
-        }
-        filtered.sort(function (a, b) {
-            var comparator;
-            var reducedA = field.split('.').reduce(index, a);
-            var reducedB = field.split('.').reduce(index, b);
-            if (reducedA === reducedB) {
-                comparator = 0;
-            } else {
-                comparator = (reducedA > reducedB ? 1 : -1);
-            }
-            return comparator;
-        });
-        if (reverse) {
-            filtered.reverse();
-        }
-        return filtered;
-    };
 });

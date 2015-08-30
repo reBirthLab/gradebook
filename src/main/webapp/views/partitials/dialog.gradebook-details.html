@@ -1,0 +1,45 @@
+<md-dialog class="dialog" aria-label="Gradebook Details">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Gradebook Details</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div layout="column">
+            <div class="details-row">
+                <p class="md-body-2">Subject</p>
+                <h1 class="md-headline">{{gradebook.subject}}</h1>
+            </div>
+            <div layout="row" class="details-row">
+                <div flex>
+                    <p class="md-body-2">Group</p>
+                    <p class="md-title">{{group.number}}</p>
+                </div>
+                <div flex>
+                    <p class="md-body-2">Semester</p>
+                    <p class="md-title">{{semester.academicYear}} {{semester.name}}</p>
+                </div>              
+            </div>
+            <div class="details-row">
+                <p class="md-body-2">Lecturers</p>
+                <div layout="row">
+                    <p class="md-body-1" ng-repeat="lecturer in lecturers">{{lecturer.firstName}} {{lecturer.lastName}}</p>
+                </div>
+            </div>
+            <div class="details-row">
+                <p class="md-body-2">Description</p>
+                <p class="md-body-1">{{gradebook.description}}</p>
+            </div>
+        </div>
+    </md-dialog-content>
+    <div class="md-actions" layout="row">            
+        <div flex></div>     
+        <md-button ng-click="hide()" class="md-primary">
+            Close
+        </md-button>      
+    </div>   
+</md-dialog>
