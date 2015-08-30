@@ -17,9 +17,6 @@
 package com.rebirthlab.gradebook.service;
 
 import com.rebirthlab.gradebook.common.GradebookConstants;
-import com.rebirthlab.gradebook.entity.AcademicGroup;
-import com.rebirthlab.gradebook.entity.AcademicGroup_;
-import com.rebirthlab.gradebook.entity.Department;
 import com.rebirthlab.gradebook.entity.Lecturer;
 import com.rebirthlab.gradebook.entity.Lecturer_;
 import com.rebirthlab.gradebook.security.AuthenticationService;
@@ -32,12 +29,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -56,25 +49,25 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
         super(Lecturer.class);
     }
 
-    @POST
-    @Override
-    @Consumes({"application/xml", "application/json"})
-    public void create(Lecturer entity) {
-        super.create(entity);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Lecturer entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
-    }
+//    @POST
+//    @Override
+//    @Consumes({"application/xml", "application/json"})
+//    public void create(Lecturer entity) {
+//        super.create(entity);
+//    }
+//
+//    @PUT
+//    @Path("{id}")
+//    @Consumes({"application/xml", "application/json"})
+//    public void edit(@PathParam("id") Integer id, Lecturer entity) {
+//        super.edit(entity);
+//    }
+//
+//    @DELETE
+//    @Path("{id}")
+//    public void remove(@PathParam("id") Integer id) {
+//        super.remove(super.find(id));
+//    }
 
     @GET
     @Path("{id}")

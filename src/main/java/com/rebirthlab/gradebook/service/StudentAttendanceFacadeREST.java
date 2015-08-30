@@ -16,11 +16,16 @@
  */
 package com.rebirthlab.gradebook.service;
 
+import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.StudentAttendance;
+import com.rebirthlab.gradebook.security.AuthenticationService;
+import com.rebirthlab.gradebook.security.CurrentUser;
+import com.rebirthlab.gradebook.security.UserDataFinder;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -43,8 +48,16 @@ public class StudentAttendanceFacadeREST extends AbstractFacade<StudentAttendanc
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") PathSegment id, StudentAttendance entity) {
-        super.edit(entity);
+    public void edit(@PathParam("id") PathSegment id,
+            @HeaderParam("Authorization") String authorization,
+            StudentAttendance entity) {
+        
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
+            super.edit(entity);
+        }
     }
 
     @Override

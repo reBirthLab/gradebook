@@ -16,12 +16,16 @@
  */
 package com.rebirthlab.gradebook.service;
 
+import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.AcademicGroup;
 import com.rebirthlab.gradebook.entity.Gradebook;
 import com.rebirthlab.gradebook.entity.Student;
 import com.rebirthlab.gradebook.entity.StudentAttendance;
 import com.rebirthlab.gradebook.entity.StudentGrade;
 import com.rebirthlab.gradebook.entity.Task;
+import com.rebirthlab.gradebook.security.AuthenticationService;
+import com.rebirthlab.gradebook.security.CurrentUser;
+import com.rebirthlab.gradebook.security.UserDataFinder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -32,6 +36,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -54,75 +59,82 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public void createTask(Task task) {
-        getEntityManager().persist(task);
-        getEntityManager().flush();
-        
-        Integer gradebookId = task.getGradebookId().getGradebookId();
-        Gradebook gradebook = getEntityManager().find(Gradebook.class, gradebookId);
-        AcademicGroup group = gradebook.getAcademicGroupId();
-        Collection<Student> students = group.getStudentCollection();
-        
-        //Initialises student grades
-        for(Student student : students){
-            StudentGrade grade = new StudentGrade(student.getStudentId(), task.getTaskId()); 
-            short gradevalue = 0;           
-            grade.setGrade(gradevalue); 
-            getEntityManager().persist(grade);
-        } 
-        
-        //Initialises student attendance
-        Calendar calendar = Calendar.getInstance();
-        int firstDayOfWeek = 2;
-        calendar.setFirstDayOfWeek(firstDayOfWeek);
-        
-        Date startDate = task.getStartDate();
-        calendar.setTime(startDate);
+    public void createTask(@HeaderParam("Authorization") String authorization, Task task) {
 
-        int startDateDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        calendar.add(Calendar.DAY_OF_MONTH, - startDateDayOfWeek + firstDayOfWeek);
-        
-        List<Integer> courseDays = new ArrayList<>();
-        if (task.getOnCourseMon()) {
-            courseDays.add(firstDayOfWeek);
-        }
-        if (task.getOnCourseTue()) {
-            courseDays.add(firstDayOfWeek + 1);
-        }
-        if (task.getOnCourseWed()) {
-            courseDays.add(firstDayOfWeek + 2);
-        }
-        if (task.getOnCourseThu()) {
-            courseDays.add(firstDayOfWeek + 3);
-        }
-        if (task.getOnCourseFri()) {
-            courseDays.add(firstDayOfWeek + 4);
-        }
-        
-        int taskLengthInDays = task.getTaskLength() * 7;
-        List<Date> classDates = new ArrayList<>();
-        
-        for (int i = 0; i < taskLengthInDays; i++) {
-            int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-            for (int courseDay : courseDays) {
-                if (currentDayOfWeek == courseDay) {
-                    classDates.add(calendar.getTime());                   
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
+
+            getEntityManager().persist(task);
+            getEntityManager().flush();
+
+            Integer gradebookId = task.getGradebookId().getGradebookId();
+            Gradebook gradebook = getEntityManager().find(Gradebook.class, gradebookId);
+            AcademicGroup group = gradebook.getAcademicGroupId();
+            Collection<Student> students = group.getStudentCollection();
+
+            //Initialises student grades
+            for (Student student : students) {
+                StudentGrade grade = new StudentGrade(student.getStudentId(), task.getTaskId());
+                short gradevalue = 0;
+                grade.setGrade(gradevalue);
+                getEntityManager().persist(grade);
+            }
+
+            //Initialises student attendance
+            Calendar calendar = Calendar.getInstance();
+            int firstDayOfWeek = 2;
+            calendar.setFirstDayOfWeek(firstDayOfWeek);
+
+            Date startDate = task.getStartDate();
+            calendar.setTime(startDate);
+
+            int startDateDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+            calendar.add(Calendar.DAY_OF_MONTH, -startDateDayOfWeek + firstDayOfWeek);
+
+            List<Integer> courseDays = new ArrayList<>();
+            if (task.getOnCourseMon()) {
+                courseDays.add(firstDayOfWeek);
+            }
+            if (task.getOnCourseTue()) {
+                courseDays.add(firstDayOfWeek + 1);
+            }
+            if (task.getOnCourseWed()) {
+                courseDays.add(firstDayOfWeek + 2);
+            }
+            if (task.getOnCourseThu()) {
+                courseDays.add(firstDayOfWeek + 3);
+            }
+            if (task.getOnCourseFri()) {
+                courseDays.add(firstDayOfWeek + 4);
+            }
+
+            int taskLengthInDays = task.getTaskLength() * 7;
+            List<Date> classDates = new ArrayList<>();
+
+            for (int i = 0; i < taskLengthInDays; i++) {
+                int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                for (int courseDay : courseDays) {
+                    if (currentDayOfWeek == courseDay) {
+                        classDates.add(calendar.getTime());
+                    }
+                }
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+            }
+
+            for (Student student : students) {
+                for (Date date : classDates) {
+                    StudentAttendance attendance = new StudentAttendance();
+                    attendance.setStudentId(student);
+                    attendance.setTaskId(task);
+                    attendance.setClassDate(date);
+                    getEntityManager().persist(attendance);
                 }
             }
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
-        
-        for (Student student : students) {
-            for (Date date : classDates) {
-                StudentAttendance attendance = new StudentAttendance();
-                attendance.setStudentId(student);
-                attendance.setTaskId(task);
-                attendance.setClassDate(date);
-                getEntityManager().persist(attendance);
-            }      
-        }        
     }
-
+    
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
@@ -133,24 +145,31 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void editTask(@PathParam("id") Integer id, Task task) {
-        Task oldTask = getEntityManager().find(Task.class, id);
-        if (task.getStartDate().getTime() != oldTask.getStartDate().getTime()
-                || task.getTaskLength() != oldTask.getTaskLength()
-                || task.getOnCourseMon() != oldTask.getOnCourseMon()
-                || task.getOnCourseTue() != oldTask.getOnCourseTue()
-                || task.getOnCourseWed() != oldTask.getOnCourseWed()
-                || task.getOnCourseThu() != oldTask.getOnCourseThu()
-                || task.getOnCourseFri() != oldTask.getOnCourseFri()
-                || task.getMaxGrade() != oldTask.getMaxGrade()) {
-            getEntityManager().remove(getEntityManager().merge(oldTask));
-            task.setTaskId(null);
-            createTask(task);
-        } else {
-            getEntityManager().merge(task);
-        }       
+    public void editTask(@PathParam("id") Integer id, 
+            @HeaderParam("Authorization") String authorization, 
+            Task task) {
+        
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
+            Task oldTask = getEntityManager().find(Task.class, id);
+            if (task.getStartDate().getTime() != oldTask.getStartDate().getTime()
+                    || task.getTaskLength() != oldTask.getTaskLength()
+                    || task.getOnCourseMon() != oldTask.getOnCourseMon()
+                    || task.getOnCourseTue() != oldTask.getOnCourseTue()
+                    || task.getOnCourseWed() != oldTask.getOnCourseWed()
+                    || task.getOnCourseThu() != oldTask.getOnCourseThu()
+                    || task.getOnCourseFri() != oldTask.getOnCourseFri()
+                    || task.getMaxGrade() != oldTask.getMaxGrade()) {
+                getEntityManager().remove(getEntityManager().merge(oldTask));
+                task.setTaskId(null);
+                createTask(authorization, task);
+            } else {
+                getEntityManager().merge(task);
+            }
+        }
     }
-    
     @Override
     protected EntityManager getEntityManager() {
         return em;

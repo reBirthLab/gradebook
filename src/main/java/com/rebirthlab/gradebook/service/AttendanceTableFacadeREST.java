@@ -16,8 +16,12 @@
  */
 package com.rebirthlab.gradebook.service;
 
+import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.AttendanceTable;
 import com.rebirthlab.gradebook.entity.AttendanceTable_;
+import com.rebirthlab.gradebook.security.AuthenticationService;
+import com.rebirthlab.gradebook.security.CurrentUser;
+import com.rebirthlab.gradebook.security.UserDataFinder;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -26,6 +30,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -37,6 +42,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("groups/{academic_group_id}/semesters/{semester_id}/gradebooks/{gradebook_id}/attendance")
 public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
+
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
@@ -48,25 +54,47 @@ public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
     @Produces({"application/xml", "application/json"})
     public List<AttendanceTable> showTable(@PathParam("academic_group_id") Integer academicGroupId,
             @PathParam("semester_id") Integer semesterId,
-            @PathParam("gradebook_id") Integer gradebookId) {
+            @PathParam("gradebook_id") Integer gradebookId,
+            @HeaderParam("Authorization") String authorization) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(AttendanceTable.class);
-        
+
         Root attendanceTable = cq.from(AttendanceTable.class);
-        cq.where(
-                cb.and(
-                        cb.equal(attendanceTable.get(AttendanceTable_.academicGroupId), academicGroupId),
-                        cb.equal(attendanceTable.get(AttendanceTable_.semesterId), semesterId),
-                        cb.equal(attendanceTable.get(AttendanceTable_.gradebookId), gradebookId)
-                )
-        );
-        
-        return getEntityManager().createQuery(cq).getResultList();
+
+        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
+            cq.where(
+                    cb.and(
+                            cb.equal(attendanceTable.get(AttendanceTable_.academicGroupId), academicGroupId),
+                            cb.equal(attendanceTable.get(AttendanceTable_.semesterId), semesterId),
+                            cb.equal(attendanceTable.get(AttendanceTable_.gradebookId), gradebookId)
+                    )
+            );
+            return getEntityManager().createQuery(cq).getResultList();
+
+        } else if (user.getRole().equals(GradebookConstants.ROLE_STUDENT)) {
+            Integer studentId = user.getId();
+            cq.where(
+                    cb.and(
+                            cb.equal(attendanceTable.get(AttendanceTable_.academicGroupId), academicGroupId),
+                            cb.equal(attendanceTable.get(AttendanceTable_.semesterId), semesterId),
+                            cb.equal(attendanceTable.get(AttendanceTable_.gradebookId), gradebookId),
+                            cb.equal(attendanceTable.get(AttendanceTable_.studentId), studentId)
+                    )
+            );
+            return getEntityManager().createQuery(cq).getResultList();
+
+        } else {
+            return null;
+        }
     }
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

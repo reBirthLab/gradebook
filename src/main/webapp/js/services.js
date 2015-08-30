@@ -19,11 +19,11 @@
 var services = angular.module('GradebookServices', []);
 
 services.factory('UserGradebooks', function ($resource) {
-    return $resource('http://localhost:8080/api/v1/gradebooks');
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/gradebooks');
 });
 
 services.factory('Gradebook', function ($resource) {
-    return $resource('http://localhost:8080/api/v1/gradebooks/:gradebookId');
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/gradebooks/:gradebookId');
 });
 
 services.factory('Groups', function ($resource) {
@@ -39,7 +39,7 @@ services.factory('Lecturers', function ($resource) {
 });
 
 services.factory('GradebookTasks', function ($resource) {
-    return $resource('http://localhost:8080/api/v1/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks');
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks');
 });
 
 services.factory('GradebookAttendance', function ($resource) {
@@ -92,7 +92,7 @@ services.factory('AuthenticationService', function (Base64, $http, $cookieStore,
 
         var authdata = Base64.encode(username + ':' + password);
 
-        $http.get('http://localhost:8080/api/v1/users/check', {
+        $http.get('http://gradebook-anastasius.rhcloud.com/api/v1/users/check', {
             headers: {'Authorization': 'Basic ' + authdata}
         }).then(function (response) {
             callback(response);

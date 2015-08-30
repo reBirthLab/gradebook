@@ -66,7 +66,6 @@ public class TasksTableFacadeREST extends AbstractFacade<TasksTable> {
             @HeaderParam("Authorization") String authorization) {
         
         String username = new AuthenticationService().getUsername(authorization);
-
         CurrentUser user = UserDataFinder.findDataBy(username);
         
         CriteriaBuilder cb = em.getCriteriaBuilder();

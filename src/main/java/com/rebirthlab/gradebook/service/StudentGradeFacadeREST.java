@@ -16,11 +16,16 @@
  */
 package com.rebirthlab.gradebook.service;
 
+import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.StudentGrade;
+import com.rebirthlab.gradebook.security.AuthenticationService;
+import com.rebirthlab.gradebook.security.CurrentUser;
+import com.rebirthlab.gradebook.security.UserDataFinder;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -41,10 +46,19 @@ public class StudentGradeFacadeREST extends AbstractFacade<StudentGrade> {
 
     @PUT
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("student_id") Integer studentId, @PathParam("task_id") Integer taskId, StudentGrade entity) {
-        StudentGrade grade = new StudentGrade(studentId, taskId);
-        grade.setGrade(entity.getGrade());
-        getEntityManager().merge(grade);
+    public void edit(@PathParam("student_id") Integer studentId, 
+            @PathParam("task_id") Integer taskId,
+            @HeaderParam("Authorization") String authorization,
+            StudentGrade entity) {
+        
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+        
+        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
+            StudentGrade grade = new StudentGrade(studentId, taskId);
+            grade.setGrade(entity.getGrade());
+            getEntityManager().merge(grade);
+        }
     }
 
     @Override
