@@ -259,6 +259,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     height: 100%;
 }
 
+.main-frame .links-row {
+    margin: 48px 0;
+}
+
+.main-frame .links-row a {
+    margin: 0 12px;
+}
+
 .main-frame .view {
     margin-bottom: 48px;
 }
