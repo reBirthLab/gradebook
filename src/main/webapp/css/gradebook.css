@@ -244,6 +244,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     min-width: 140px;
 }
 
+.main-frame div.video-row {
+    width: 70%;
+}
+    
+@media only screen and (max-width : 1600px) {  
+    .main-frame div.video-row {
+    width: 80%;
+}
+}
+
+@media only screen and (max-width : 1440px) {  
+    .main-frame div.video-row {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width : 1280px) {  
+    .main-frame div.video-row {
+        width: 100%;
+    }
+}
+
 .main-frame .videoWrapper {
     position: relative;
     padding-bottom: 56.25%;

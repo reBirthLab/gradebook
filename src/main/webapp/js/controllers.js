@@ -50,9 +50,13 @@ controllers.controller('MainCtrl', function ($scope, $rootScope, $window, $mdDia
         };
     });
     
-    var userRole = $rootScope.globals.currentUser.userRole;
-    if (userRole === 'student') {
-        $scope.isHidden = true;
+    try {
+        var userRole = $rootScope.globals.currentUser.userRole;
+        if (userRole === 'student') {
+            $scope.isHidden = true;
+        }
+    } catch (error) {
+        console.log(error);
     }
 
     function getByGradebookId(arr, id) {
