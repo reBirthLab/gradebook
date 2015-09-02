@@ -440,14 +440,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .table.attendance td, .table.attendance th {
    min-width: 40px;
-   height: 22px;
+   height: 30px;
 }
 
 .table.attendance td.table-num-col, .table.attendance th.table-num-col {
+    line-height: 30px;
+    padding: 1px 10px;
     min-width: 15px;   
 }
 
-.table.attendance td.table-name-col, .table.attendance th.table-name-col{  
+.table.attendance td.table-name-col, .table.attendance th.table-name-col{ 
+    line-height: 30px;
+    padding: 1px 10px;
     min-width: 140px; 
     max-width: 240px;
     white-space: nowrap;
@@ -455,10 +459,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     overflow: hidden;
 }
 
+.table.attendance .header-primary th.table-num-col,
+.table.attendance .header-primary th.table-name-col {
+    line-height: normal;
+    padding: 5px 10px;
+    height: 60px;
+}
+
 .table.attendance .header-secondary th.table-num-col,
 .table.attendance .header-secondary th.table-name-col {
     padding: 2px 0;
-    height: 34px;
+    height: 40px;
 }
 
 .table.attendance caption{
@@ -480,12 +491,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   text-overflow: ellipsis;    
 }
 
-.table.attendance .header-primary th {
-    height: 60px;
-}
-
 .table.attendance .header-secondary th {
-    height: 34px;
+    height: 40px;
 }
 
 .table.attendance caption.header-primary  {
@@ -500,12 +507,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-weight: normal;
     margin: 0;
     min-width: 30px;
+    max-height: 30px;
     min-height: 30px;
     line-height: 30px;
     width: 100%;
     border-radius: 0;
     font-size: 16px;
     text-transform: none;
+    
+}
+
+@-moz-document url-prefix() { 
+    .table.attendance .attendance-button md-icon{
+        vertical-align: text-bottom;
+    }
 }
 
 .table.attendance .md-button[disabled].attendance-button {
