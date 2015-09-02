@@ -5,7 +5,6 @@
                 <tr class="header-primary">
                     <th class="table-num-col">#</th>
                     <th class="table-name-col">Name</th>                                                                     
-
                 </tr>
                 <tr class="header-secondary">
                     <th class="table-num-col"></th>
@@ -35,14 +34,14 @@
 
             <tbody>
                 <tr ng-repeat="student in task | groupBy: 'studentId' | toArray: true | orderBy: orderByName">
-                    <td ng-repeat="attendance in student">
-            <md-button class="attendance-button" ng-click="showEditAttendanceDialog($event, attendance)" ng-disabled="isDisabled">
-                <md-icon ng-class="{'green-700': present, 'red-700': absent, 'yellow-700': absentWithReason}">
-                    {{attendanceStatus(this)}}
-                </md-icon>               
-            </md-button>
-            </td>
-            </tr>
+                    <td ng-repeat="attendance in student track by attendance.attendanceId">
+                        <md-button class="attendance-button" ng-click="showEditAttendanceDialog($event, attendance)" ng-disabled="isDisabled">
+                            <md-icon ng-class="{'green-700': present, 'red-700': absent, 'yellow-700': absentWithReason}">
+                                {{attendanceStatus(this)}}
+                            </md-icon>               
+                        </md-button>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
