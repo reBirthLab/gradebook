@@ -102,6 +102,7 @@
         "md-tabs": {
             "attributes": {
                 "md-border-bottom": {},
+                "md-selected": {},
                 "md-stretch-tabs": {}
             }
         },

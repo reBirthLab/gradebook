@@ -66,7 +66,7 @@ controllers.controller('MainCtrl', function ($scope, $rootScope, $window, $mdDia
             }
         }
     }
-       
+    
     $scope.$on('selectTab', function (event, index){
         $scope.selectedIndex = index;
     });
@@ -340,7 +340,6 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $rootScope, $stat
             }
         }).then(function () {
             $state.go($state.current, {}, {reload: true});
-            $scope.$emit('selectTab', 0);
             var message = 'The Grade was successfully updated!';
             MessageService.showSuccessToast(message);
         });
@@ -407,12 +406,6 @@ controllers.controller('TaskDetailsDialogController', function ($scope, $rootSco
         }).then(function () {
             $state.go($state.current, {}, {reload: true});
 
-            if ($state.current.name === 'gradebook.tasks'){                
-                $rootScope.$broadcast('selectTab', 0);
-            } else if ($state.current.name === 'gradebook.attendance'){
-                $rootScope.$broadcast('selectTab', 1);
-            }
-            
             var message = 'The task was successfully updated!';
             MessageService.showSuccessToast(message);
         });
@@ -552,7 +545,6 @@ controllers.controller('GradebookAttendanceCtrl', function ($scope, $rootScope, 
             }
         }).then(function () {
             $state.go($state.current, {}, {reload: true});
-            $scope.$emit('selectTab', 1);
             var message = 'The Attendance was successfully updated!';
             MessageService.showSuccessToast(message);
         });

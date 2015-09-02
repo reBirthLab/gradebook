@@ -86,13 +86,19 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
     $stateProvider.state('gradebook.tasks', {
         url: '/tasks',
         templateUrl: 'views/gradebook.tasks.html',
-        controller: 'GradebookTasksCtrl'
+        controller: 'GradebookTasksCtrl',
+        onEnter: function ($rootScope) {
+            $rootScope.$broadcast('selectTab', 0);
+        }
     });
 
     $stateProvider.state('gradebook.attendance', {
         url: '/attendance',
         templateUrl: 'views/gradebook.attendance.html',
-        controller: 'GradebookAttendanceCtrl'
+        controller: 'GradebookAttendanceCtrl',
+        onEnter: function ($rootScope) {
+            $rootScope.$broadcast('selectTab', 1);
+        }
     });
 });
 
