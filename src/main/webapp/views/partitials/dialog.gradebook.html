@@ -35,7 +35,7 @@
                         <md-button type="button" ng-click="addLecturer()">Add</md-button>
                         <md-button type="button" ng-click="clearSelection()">Clear</md-button>
                     </div>
-                    <md-chips class="custom-chips" ng-model="selectedLecturers" md-autocomplete-snap md-require-match>
+                    <md-chips class="custom-chips" ng-model="selectedLecturers" md-autocomplete-snap md-require-match="true">
                         <md-autocomplete
                             md-selected-item="lecturer"
                             md-search-text="searchText"
@@ -44,6 +44,9 @@
                             md-search-text-change="null"
                             placeholder="Search for a lecturer">                          
                             <span md-highlight-text="searchText">{{item.firstName}} {{item.lastName}}</span>
+                            <md-not-found>
+                                No matches found.
+                            </md-not-found>
                         </md-autocomplete>
                         <md-chip-template>
                             <span>
