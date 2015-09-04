@@ -4,11 +4,14 @@
             <tr class="header-primary">
                 <th class="table-num-col">#</th>
                 <th class="table-name-col">Name</th>                                                                     
-                <th ng-repeat="task in groupGrades| groupBy: 'taskId'" ng-click="showTaskDetails($event, task[0].taskId)">
+                <th ng-repeat="task in groupGrades| groupBy: 'taskId' track by $index" ng-click="showTaskDetails($event, task[0].taskId)">
                     <a>Task {{($index + 1)}} | {{task[0].title}}</a>
                 </th>
                 <th class="add" ng-hide="isHidden">
-                    <md-button class="md-icon-button" ng-click="showAddTaskForm($event)">
+                    <md-button class="md-icon-button" aria-label="Add Task" ng-click="showAddTaskForm($event)">
+                        <md-tooltip>
+                            Add task
+                        </md-tooltip>
                         <md-icon class="add-button">add_circle_outline</md-icon>            
                     </md-button>
                 </th>                               
@@ -16,13 +19,13 @@
             <tr class="header-secondary">
                 <th class="table-num-col"></th>
                 <th class="table-name-col"></th>
-                <th ng-repeat="task in groupGrades| groupBy: 'taskId'">{{calcTaskDates(task[0].startDate, task[0].taskLength)}}</th>
+                <th ng-repeat="task in groupGrades| groupBy: 'taskId' track by $index">{{calcTaskDates(task[0].startDate, task[0].taskLength)}}</th>
                 <th ng-hide="isHidden"></th>         
             </tr>
         </thead>
 
         <tbody>
-            <tr ng-repeat="student in groupGrades| groupBy: 'studentId' | toArray: true | orderBy: orderByName">
+            <tr ng-repeat="student in groupGrades| groupBy: 'studentId' | toArray: true | orderBy: orderByName track by $index">
                 <td class="table-num-col">{{($index + 1)}}</td>
                 <td class="table-name-col">{{student[0].firstName}} {{student[0].lastName}}</td>
                 <td ng-repeat="task in student track by $index">

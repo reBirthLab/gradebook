@@ -1,5 +1,5 @@
 <md-dialog class="dialog" aria-label="Task Form">
-    <form ng-submit="submit()">
+    <form name="taskForm" ng-submit="submit()" novalidate>
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>{{mode}} Task</h2>
@@ -18,20 +18,32 @@
                 </div>
                 <md-input-container>
                     <label>Task Title</label>
-                    <input md-maxlength="150" required type="text" ng-model="task.title">
+                    <input name="title" md-maxlength="150" required type="text" ng-model="task.title">
+                    <div ng-messages="taskForm.title.$error" ng-if="taskForm.$submitted">
+                        <div ng-message="required">Task title is required.</div>
+                        <div ng-message="md-maxlength">Task title has to be less than 150 characters long.</div>
+                    </div>
                 </md-input-container>
                 <div layout="row" layout-align="start center">
                     <div flex="50">
                         <md-input-container >
                             <label>Start Date</label>
-                            <input required type="date" ng-model="task.startDate" 
+                            <input name="date" required type="date" ng-model="task.startDate" 
                                    ng-model-options="{ timezone: '-0400' }"> <!-- Server Timezone patch -->
+                            <div ng-messages="taskForm.date.$error" ng-if="taskForm.$submitted">
+                                <div ng-message="required">Start date is required.</div>
+                            </div>
                         </md-input-container>
                     </div>
                     <div flex="30">
                         <md-input-container >
                             <label>Length</label>
-                            <input required type="number" ng-model="task.taskLength" min="1" max="52">
+                            <input name="length" required type="number" ng-model="task.taskLength" min="1" max="52">
+                            <div ng-messages="taskForm.length.$error" ng-if="taskForm.$submitted">
+                                <div ng-message="required">Length is required.</div>
+                                <div ng-message="max">Value must be less than or equal to 52.</div>
+                                <div ng-message="min">Value must be greater than or equal to 1.</div>
+                            </div>
                         </md-input-container>
                     </div>                    
                     <div flex="20">Weeks</div>
@@ -48,7 +60,12 @@
                 </div>
                 <md-input-container>
                     <label>Maximum grade</label>
-                    <input required type="number" ng-model="task.maxGrade" min="0" max="100">
+                    <input name="maxGrade" required type="number" ng-model="task.maxGrade" min="0" max="100">
+                    <div ng-messages="taskForm.maxGrade.$error" ng-if="taskForm.$submitted">
+                        <div ng-message="required">Maximum grade is required.</div>
+                        <div ng-message="max">Value must be less than or equal to 100.</div>
+                        <div ng-message="min">Value must be greater than or equal to 0.</div>
+                    </div>
                 </md-input-container>
                 <md-input-container>
                     <label>Description</label>

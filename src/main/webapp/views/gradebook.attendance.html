@@ -12,20 +12,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="student in groupAttendance| groupBy: 'studentId' |  toArray: true | orderBy: orderByName">
+                <tr ng-repeat="student in groupAttendance| groupBy: 'studentId' |  toArray: true | orderBy: orderByName track by $index">
                     <td class="table-num-col">{{($index + 1)}}</td>
                     <td class="table-name-col">{{student[0].firstName}} {{student[0].lastName}}</td>            
                 </tr>
             </tbody>
         </table>
 
-        <table class="table attendance" ng-repeat="task in groupAttendance| groupBy: 'taskId'">
+        <table class="table attendance" ng-repeat="task in groupAttendance| groupBy: 'taskId' track by $index">
             <caption class="header-primary" ng-click="showTaskDetails($event, task[0].taskId)">                                                                                    
                 <a>Task {{($index + 1)}} | {{task[0].title}}</a>
             </caption>
             <thead>
                 <tr class="header-secondary">
-                    <th ng-repeat="date in task| unique: 'classDate'"> 
+                    <th ng-repeat="date in task| unique: 'classDate' track by $index"> 
                         {{getDayOfWeek(date.classDate)}}<br>
                         {{formatClassDate(date.classDate)}}
                     </th>                    
@@ -33,11 +33,11 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="student in task | groupBy: 'studentId' | toArray: true | orderBy: orderByName">
+                <tr ng-repeat="student in task | groupBy: 'studentId' | toArray: true | orderBy: orderByName track by $index">
                     <td ng-repeat="attendance in student track by attendance.attendanceId">
                         <md-button class="attendance-button" ng-click="showEditAttendanceDialog($event, attendance)" ng-disabled="isDisabled">
                             <md-icon ng-class="{'green-700': present, 'red-700': absent, 'yellow-700': absentWithReason}">
-                                {{attendanceStatus(this)}}
+                                {{::attendanceStatus(this)}}
                             </md-icon>               
                         </md-button>
                     </td>

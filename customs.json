@@ -51,18 +51,19 @@
         "v-pane-header": {},
         "md-button": {
             "attributes": {
-                "show-md": {},
-                "hide-gt-md": {},
-                "hide": {},
                 "ng-href": {},
                 "ng-click": {},
                 "ng-repeat": {},
-                "href": {},
                 "type": {},
-                "class": {},
                 "ng-hide": {},
                 "target": {},
-                "ng-disabled": {}
+                "ng-disabled": {},
+                "show-md": {},
+                "hide-gt-md": {},
+                "hide": {},
+                "href": {},
+                "class": {},
+                "aria-label": {}
             }
         },
         "md-menu-sidenav": {
@@ -79,6 +80,7 @@
         "md-select": {
             "attributes": {
                 "ng-model": {},
+                "name": {},
                 "placeholder": {},
                 "md-on-open": {},
                 "required": {}
@@ -120,6 +122,7 @@
             }
         },
         "md-grid-tile": {},
+        "md-tooltip": {},
         "md-radio-group": {
             "attributes": {
                 "ng-model": {},

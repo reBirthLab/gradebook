@@ -1,5 +1,5 @@
 <md-dialog class="dialog" aria-label="Gradebook Form">
-    <form ng-submit="submit()">
+    <form name="gradebookForm" ng-submit="submit()" novalidate>
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>Add Gradebook</h2>
@@ -13,18 +13,28 @@
             <div layout="column">               
                 <md-input-container>
                     <label>Subject</label>
-                    <input md-maxlength="150" type="text" ng-model="gradebook.subject" required>
+                    <input name="subject" md-maxlength="150" type="text" ng-model="gradebook.subject" required>
+                    <div ng-messages="gradebookForm.subject.$error" ng-if="gradebookForm.$submitted">
+                        <div ng-message="required">Subject is required.</div>
+                        <div ng-message="md-maxlength">Subject has to be less than 150 characters long.</div>
+                    </div>
                 </md-input-container>
                 <div layout="row">
                     <md-input-container flex>
-                        <md-select ng-model="gradebook.academicGroupId" placeholder="Group" md-on-open="loadGroups()" required>  
+                        <md-select name="group" ng-model="gradebook.academicGroupId" placeholder="Group" md-on-open="loadGroups()" required>  
                             <md-option ng-value="group.academicGroupId" ng-repeat="group in groups">{{group.number}}</md-option>
                         </md-select>
+                        <div ng-messages="gradebookForm.group.$error" ng-if="gradebookForm.$submitted">
+                            <div ng-message="required">Group is required.</div>                        
+                        </div>
                     </md-input-container>
                     <md-input-container flex>
-                        <md-select ng-model="gradebook.semesterId" placeholder="Semester"  md-on-open="loadSemesters()" required>                   
+                        <md-select name="semester" ng-model="gradebook.semesterId" placeholder="Semester"  md-on-open="loadSemesters()" required>                   
                             <md-option ng-value="semester.semesterId" ng-repeat="semester in semesters">{{semester.academicYear}} {{semester.name}}</md-option>
                         </md-select>
+                        <div ng-messages="gradebookForm.semester.$error" ng-if="gradebookForm.$submitted">
+                            <div ng-message="required">Semester is required.</div>                        
+                        </div>
                     </md-input-container>
                 </div>
                 <div class="form-row">

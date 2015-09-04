@@ -219,26 +219,29 @@ controllers.controller('AddGradebookDialogController', function ($scope, $mdDial
     };
     
     $scope.submit = function () {
-        $scope.dataLoading = true;
-        
-        var selectedLecturerIds = [];        
-        
-        for (var i = 0; i < $scope.selectedLecturers.length; i++) {  
-            selectedLecturerIds.push({lecturerId: $scope.selectedLecturers[i].lecturerId});
+        if ($scope.gradebookForm.$valid) {
+            
+            $scope.dataLoading = true;
+
+            var selectedLecturerIds = [];
+
+            for (var i = 0; i < $scope.selectedLecturers.length; i++) {
+                selectedLecturerIds.push({lecturerId: $scope.selectedLecturers[i].lecturerId});
+            }
+
+            var gradebook = $scope.gradebook;
+            gradebook.lecturerCollection = selectedLecturerIds;
+
+            var newGradebook = new Gradebook(gradebook);
+
+            newGradebook.$save({
+            }, function () {
+                $mdDialog.hide();
+            }, function () {
+                MessageService.showErrorToast();
+                $scope.dataLoading = false;
+            });
         }
-        
-        var gradebook = $scope.gradebook;
-        gradebook.lecturerCollection = selectedLecturerIds;
-        
-        var newGradebook = new Gradebook(gradebook);
-        
-        newGradebook.$save({
-        }, function () {
-            $mdDialog.hide();
-        }, function () {
-            MessageService.showErrorToast();
-            $scope.dataLoading = false;
-        });
     };
 
     $scope.cancel = function () {
@@ -249,18 +252,20 @@ controllers.controller('AddGradebookDialogController', function ($scope, $mdDial
 controllers.controller('LoginCtrl', function ($scope, $rootScope, $mdToast, $location, AuthenticationService) {
     // reset login status
     AuthenticationService.ClearCredentials();
-
+    
     $scope.login = function () {
-        $scope.dataLoading = true;
-        AuthenticationService.Login($scope.username, $scope.password, function (response) {
-            if (response.status === 200) {
-                AuthenticationService.SetCredentials($scope.username, $scope.password, response.data);
-                $location.path('/');
-            } else {
-                showErrorToast();
-                $scope.dataLoading = false;
-            }
-        });
+        if ($scope.loginForm.$valid) {
+            $scope.dataLoading = true;
+            AuthenticationService.Login($scope.username, $scope.password, function (response) {
+                if (response.status === 200) {
+                    AuthenticationService.SetCredentials($scope.username, $scope.password, response.data);
+                    $location.path('/');
+                } else {
+                    showErrorToast();
+                    $scope.dataLoading = false;
+                }
+            });
+        }
     };
     var showErrorToast = function () {
         $mdToast.show(
@@ -351,17 +356,19 @@ controllers.controller('AddTaskDialogController', function ($scope, $mdDialog, M
     $scope.submitButton = 'Submit';
     
     $scope.submit = function () {
-        $scope.dataLoading = true;
-        
-        var newTask = new Task($scope.task);
-        newTask.gradebookId = parseInt(gradebookId);
-        newTask.$save({
-        }, function () {
-            $mdDialog.hide();
-        }, function () {
-            MessageService.showErrorToast();
-            $scope.dataLoading = false;
-        });
+        if ($scope.taskForm.$valid) {
+            $scope.dataLoading = true;
+
+            var newTask = new Task($scope.task);
+            newTask.gradebookId = parseInt(gradebookId);
+            newTask.$save({
+            }, function () {
+                $mdDialog.hide();
+            }, function () {
+                MessageService.showErrorToast();
+                $scope.dataLoading = false;
+            });
+        }
     };
 
     $scope.cancel = function () {
@@ -433,18 +440,21 @@ controllers.controller('EditTaskDialogController', function ($scope, $mdDialog, 
     var startDate = new Date (task.startDate);
     startDate.setUTCHours(serverTimeZoneOffset); // Server Timezone patch
     $scope.task.startDate = new Date (startDate);
+    
     $scope.submit = function () {
-        $scope.dataLoading = true;
+        if ($scope.taskForm.$valid) {
+            $scope.dataLoading = true;
 
-        Task.update({
-           taskId: task.taskId
-        }, $scope.task,
-        function () {
-            $mdDialog.hide();
-        }, function () {
-            MessageService.showErrorToast();
-            $scope.dataLoading = false;
-        });
+            Task.update({
+                taskId: task.taskId
+            }, $scope.task,
+                    function () {
+                        $mdDialog.hide();
+                    }, function () {
+                MessageService.showErrorToast();
+                $scope.dataLoading = false;
+            });
+        }
     };
 
     $scope.cancel = function () {
@@ -462,18 +472,20 @@ controllers.controller('EditGradeDialogController', function ($scope, $mdDialog,
     $scope.studentGrade = studentGrade;
     
     $scope.update = function () {
-        $scope.dataLoading = true;
+        if ($scope.gradeForm.$valid) {
+            $scope.dataLoading = true;
 
-        Grade.update({
-           studentId: task.studentId,
-           taskId: task.taskId
-        }, $scope.studentGrade,
-        function () {
-            $mdDialog.hide();
-        }, function () {
-            MessageService.showErrorToast();
-            $scope.dataLoading = false;
-        });
+            Grade.update({
+                studentId: task.studentId,
+                taskId: task.taskId
+            }, $scope.studentGrade,
+                    function () {
+                        $mdDialog.hide();
+                    }, function () {
+                MessageService.showErrorToast();
+                $scope.dataLoading = false;
+            });
+        }
     };
 
     $scope.cancel = function () {

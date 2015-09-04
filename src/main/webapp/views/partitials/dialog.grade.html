@@ -1,5 +1,5 @@
 <md-dialog class="dialog narrow" aria-label="Grade">
-    <form ng-submit="update()">
+    <form name="gradeForm" ng-submit="update()" novalidate>
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>Update Grade</h2>
@@ -21,7 +21,11 @@
                 </div>
                 <md-input-container>
                     <label>Grade</label>
-                    <input required type="number" ng-model="studentGrade.grade" min="0" max="{{task.maxGrade}}">
+                    <input name="grade" required type="number" ng-model="studentGrade.grade" min="0" max="{{task.maxGrade}}">
+                    <div ng-messages="gradeForm.grade.$error" ng-if="gradeForm.$submitted">
+                            <div ng-message="min">Value must be greater than or equal to 0.</div> 
+                            <div ng-message="max">Value must be less than or equal to {{task.maxGrade}}.</div> 
+                        </div>
                 </md-input-container>
             </div>
         </md-dialog-content>

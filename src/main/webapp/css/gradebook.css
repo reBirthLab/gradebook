@@ -623,8 +623,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     margin-right: 0;
 }
 
+.dialog div.form-row {
+    padding-top: 26px;
+}
 .dialog .form-row md-select {
     padding: 0;
+    height: 36px;
+}
+
+.dialog md-input-container md-select {
+    padding-bottom: 0;
     height: 36px;
 }
 
