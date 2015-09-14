@@ -19,4 +19,4 @@ GradeBook is a digital implementation of traditional paper grade book that commo
 * Maven
 
 ##Demo
-![alt tag](http://img.youtube.com/vi/Qd_O_RUQZRs/default.jpg)
+[![alt tag](http://img.youtube.com/vi/Qd_O_RUQZRs/default.jpg)](http://gradebook-anastasius.rhcloud.com)
