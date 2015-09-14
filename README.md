@@ -1,11 +1,13 @@
 #GradeBook
 GradeBook is a digital implementation of traditional paper grade book that commonly used in Ukrainian higher education system. 
 
+**Note:** *Project is still under development.*
+
 ##Try it
-[http://gradebook-anastasius.rhcloud.com](http://gradebook-anastasius.rhcloud.com)
+Project URL: [http://gradebook-anastasius.rhcloud.com](http://gradebook-anastasius.rhcloud.com)
 
 Student Access Credentials: 
-> bilbo.baggins@gmail.com / bilbobaggins
+> *bilbo.baggins@gmail.com / bilbobaggins*
 
 ##Technology Stack
 *Front End*
@@ -24,5 +26,5 @@ Student Access Credentials:
 * Wildfly 8 Application Server
 * Maven
 
-##Demo
+##Demo Video
 [![alt tag](https://raw.githubusercontent.com/reBirthLab/gradebook/master/src/main/webapp/images/video-thumnail.png)](https://youtu.be/Qd_O_RUQZRs)
