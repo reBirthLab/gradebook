@@ -1,5 +1,5 @@
 #The GradeBook
-My Pet Project
+GradeBook is a digital implementation of traditional paper grade book that commonly used in Ukrainian higher education system. 
 
 ##Technology Stack:
 *Front End*
@@ -13,9 +13,9 @@ My Pet Project
 * JAX-RS
 * Java Persistence API
 * JPA Criteria API
-* JSON (Jackson)
+* JSON
 * MySQL
 * Wildfly 8 Application Server
 * Maven
 
-
+##Demo
