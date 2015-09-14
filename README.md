@@ -1,7 +1,13 @@
 #GradeBook
 GradeBook is a digital implementation of traditional paper grade book that commonly used in Ukrainian higher education system. 
 
-##Technology Stack:
+##Try it
+[http://gradebook-anastasius.rhcloud.com](http://gradebook-anastasius.rhcloud.com)
+
+Student Access Credentials: 
+> bilbo.baggins@gmail.com / bilbobaggins
+
+##Technology Stack
 *Front End*
 * HTML/CSS
 * Angular Material
