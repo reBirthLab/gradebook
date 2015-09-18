@@ -117,6 +117,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-transform: uppercase;
 }
 
+.site-sidenav .menu-button.accent {
+    font-size: 15px;
+    font-weight: 500;
+}
+
 .site-sidenav .menu-button span {
     display: inline-block;
     line-height: 38px;
@@ -345,6 +350,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 /**
+ * Admin Table Styles
+ */
+.table.admin td{
+    text-align: left;
+    padding: 0 10px;
+}
+
+.table.admin td.controls-col {
+    padding: 1px;
+}
+
+.table .header-primary.admin th {
+    border-bottom: 2px solid #d0d0d0;
+    cursor: context-menu;
+}
+
+.table .control {
+    font-weight: normal;
+    margin: 0;
+    min-height: 30px;
+    line-height: 30px;
+    width: 100%;
+    border-radius: 0;
+    font-size: 16px;
+    text-transform: none;
+}
+
+@-moz-document url-prefix() { 
+    .table md-icon{
+        vertical-align: text-bottom;
+    }
+}
+
+/**
  * Gradebook Page Styles
  */
 .table {
@@ -386,6 +425,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .table td.table-num-col, .table th.table-num-col {
+    text-align: center;
     padding: 5px 10px;
     min-width: 15px;
     cursor: context-menu;    
@@ -400,7 +440,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .table .add .md-button {    
     margin-left: 31px;
-   margin-right: 31px;
+    margin-right: 31px;
 }
 
 .table .add-button {

@@ -52,7 +52,16 @@ controllers.controller('MainCtrl', function ($scope, $rootScope, $window, $mdDia
     
     try {
         var userRole = $rootScope.globals.currentUser.userRole;
+        if (userRole === 'admin') {
+            $scope.isHidden = true;
+            $scope.isAdmin = true;
+            $scope.menuTitle = 'ADMINISTRATIVE TOOLS';
+        }
+        if (userRole === 'lecturer') {
+            $scope.menuTitle = 'GROUPS';
+        }
         if (userRole === 'student') {
+            $scope.menuTitle = 'GROUPS';
             $scope.isHidden = true;
         }
     } catch (error) {
@@ -618,6 +627,133 @@ controllers.controller('EditAttendanceDialogController', function ($scope, $mdDi
             MessageService.showErrorToast();
             $scope.dataLoading = false;
         });
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('FacultyCtrl', function ($scope, $mdDialog, $state, MessageService, Faculty) {
+    
+    $scope.faculties = Faculty.query();
+    
+    $scope.showAddFacultyForm = function (ev) {
+        $mdDialog.show({
+            controller: 'AddFacultyDialogController',
+            templateUrl: 'views/partitials/dialog.faculty.html',
+            parent: angular.element(document.body),
+            targetEvent: ev
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'New faculty was successfully added!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+    
+    $scope.showEditFacultyForm = function (ev, faculty) {
+        $mdDialog.show({
+            controller: 'EditFacultyDialogController',
+            templateUrl: 'views/partitials/dialog.faculty.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                faculty: faculty
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'Faculty was successfully updated!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+    
+    $scope.showDeleteFacultyDialog = function (ev, faculty) {
+        $mdDialog.show({
+            controller: 'DeleteFacultyDialogController',
+            templateUrl: 'views/partitials/dialog.delete-confirmation.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                faculty: faculty
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'Faculty was successfully deleted!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+    
+});
+
+controllers.controller('AddFacultyDialogController', function ($scope, $mdDialog, MessageService, Faculty) {   
+    $scope.mode = 'Add';
+    $scope.submitButton = 'Submit';
+      
+    $scope.submit = function () {
+        if ($scope.facultyForm.$valid) {
+            $scope.dataLoading = true;
+
+            var newFaculty = new Faculty($scope.faculty);
+
+            newFaculty.$save({
+            }, function () {
+                $mdDialog.hide();
+            }, function () {
+                MessageService.showErrorToast();
+                $scope.dataLoading = false;
+            });
+        }
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('EditFacultyDialogController', function ($scope, $mdDialog, MessageService, faculty, Faculty) {
+    $scope.mode = 'Edit';
+    $scope.submitButton = 'Update';
+      
+    $scope.faculty = faculty;
+    
+    $scope.submit = function () {
+        if ($scope.facultyForm.$valid) {
+            $scope.dataLoading = true;
+
+            Faculty.update({
+                facultyId: faculty.facultyId
+            }, $scope.faculty,
+                    function () {
+                        $mdDialog.hide();
+                    }, function () {
+                MessageService.showErrorToast();
+                $scope.dataLoading = false;
+            });
+        }
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('DeleteFacultyDialogController', function ($scope, $mdDialog, MessageService, faculty) {
+    $scope.object = 'Faculty';
+    
+    $scope.submit = function () {
+
+        $scope.dataLoading = true;
+
+        faculty.$delete({
+            facultyId: faculty.facultyId
+        },
+        function () {
+            $mdDialog.hide();
+        }, function () {
+            MessageService.showErrorToast();
+            $scope.dataLoading = false;
+        });
+
     };
 
     $scope.cancel = function () {

@@ -52,10 +52,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <span>Add Gradebook</span>
             </md-button>
             <div class="menu-static-row" style="padding-top: 10px;">
-                <span class="md-title">GROUPS</span>
+                <span class="md-title">{{menuTitle}}</span>
             </div>
-
-            <v-accordion class="menu">
+            
+            <!-- Lecturer and Student menu -->
+            <v-accordion class="menu" ng-hide="isAdmin">
                 <v-pane ng-repeat="(groupNumber, group) in userGradebooks | groupBy: 'number'">
                     <v-pane-header>
                         <md-button class="menu-title-button">
@@ -91,6 +92,64 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </v-pane-content>                  
                 </v-pane>                
             </v-accordion>
+            
+            <!-- Administrator menu -->
+            <section ng-show="isAdmin">
+                <v-accordion class="menu" style="margin-top: 8px">
+                    <v-pane>
+                        <v-pane-header>
+                            <md-button class="menu-title-button">
+                                <span>Departments</span>                        
+                                <md-icon></md-icon>
+                            </md-button>
+                        </v-pane-header>
+                        <md-divider></md-divider>
+                        <v-pane-content>
+                            <md-button class="menu-subtitle-button" href="#/faculties">
+                                <span>Faculties</span>
+                            </md-button>
+                            <md-button class="menu-subtitle-button" ng-click="">
+                                <span>Departments</span>
+                            </md-button>
+                            <md-divider></md-divider>
+                        </v-pane-content>
+                    </v-pane>
+                    <v-pane>
+                        <v-pane-header>
+                            <md-button class="menu-title-button">
+                                <span>Users</span>                        
+                                <md-icon></md-icon>
+                            </md-button>
+                        </v-pane-header>
+                        <md-divider></md-divider>
+                        <v-pane-content>
+                            <md-button class="menu-subtitle-button" ng-click="">
+                                <span>Students</span>
+                            </md-button>
+                            <md-button class="menu-subtitle-button" ng-click="">
+                                <span>Lecturers</span>
+                            </md-button>
+                            <md-button class="menu-subtitle-button" ng-click="">
+                                <span>Administrators</span>
+                            </md-button>
+                            <md-divider></md-divider>
+                        </v-pane-content>
+                    </v-pane>   
+                </v-accordion>
+                
+                <md-button class="menu-button accent" ng-click="">
+                    <span>Groups</span>
+                </md-button>
+                <md-button class="menu-button accent" ng-click="">
+                    <span>Semesters</span>
+                </md-button>
+                <md-button class="menu-button accent" ng-click="">
+                    <span>Gradebooks</span>
+                </md-button>
+                <md-button class="menu-button accent" ng-click="">
+                    <span>Tasks</span>
+                </md-button>
+            </section>
             
             <md-button class="menu-button" ng-click="logout()">
                 <md-icon class="icon">exit_to_app</md-icon>

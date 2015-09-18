@@ -17,7 +17,9 @@
         "v-accordion": {
             "attributes": {
                 "onexpand": {},
+                "style": {},
                 "class": {},
+                "ng-hide": {},
                 "oncollapse": {}
             }
         },

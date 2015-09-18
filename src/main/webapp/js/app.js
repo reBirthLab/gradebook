@@ -100,6 +100,12 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
             $rootScope.$broadcast('selectTab', 1);
         }
     });
+    
+    $stateProvider.state('faculties', {
+        url: '/faculties',
+        templateUrl: 'views/faculties.html',
+        controller: 'FacultyCtrl'
+    });
 });
 
 app.config(['$resourceProvider', function ($resourceProvider) {

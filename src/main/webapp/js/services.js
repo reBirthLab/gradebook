@@ -64,6 +64,12 @@ services.factory('Attendance', function ($resource) {
     });
 });
 
+services.factory('Faculty', function ($resource) {
+    return $resource('http://localhost:8080/api/v1/faculties/:facultyId', null, {
+        update: { method: 'PUT' }
+    });
+});
+
 services.factory('MessageService', function ($mdToast) {
     return {
         showSuccessToast: function (message) {

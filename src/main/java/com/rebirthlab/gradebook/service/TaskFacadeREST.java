@@ -50,6 +50,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("tasks")
 public class TaskFacadeREST extends AbstractFacade<Task> {
+
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
@@ -66,75 +67,20 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
 
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
 
-            getEntityManager().persist(task);
-            getEntityManager().flush();
+            em.persist(task);
+            em.flush();
 
             Integer gradebookId = task.getGradebookId().getGradebookId();
-            Gradebook gradebook = getEntityManager().find(Gradebook.class, gradebookId);
+            Gradebook gradebook = em.find(Gradebook.class, gradebookId);
             AcademicGroup group = gradebook.getAcademicGroupId();
             Collection<Student> students = group.getStudentCollection();
 
-            //Initialises student grades
-            for (Student student : students) {
-                StudentGrade grade = new StudentGrade(student.getStudentId(), task.getTaskId());
-                short gradevalue = 0;
-                grade.setGrade(gradevalue);
-                getEntityManager().persist(grade);
-            }
+            initializeStudentGrades(task, students);
 
-            //Initialises student attendance
-            Calendar calendar = Calendar.getInstance();
-            int firstDayOfWeek = 2;
-            calendar.setFirstDayOfWeek(firstDayOfWeek);
-
-            Date startDate = task.getStartDate();
-            calendar.setTime(startDate);
-
-            int startDateDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-            calendar.add(Calendar.DAY_OF_MONTH, -startDateDayOfWeek + firstDayOfWeek);
-
-            List<Integer> courseDays = new ArrayList<>();
-            if (task.getOnCourseMon()) {
-                courseDays.add(firstDayOfWeek);
-            }
-            if (task.getOnCourseTue()) {
-                courseDays.add(firstDayOfWeek + 1);
-            }
-            if (task.getOnCourseWed()) {
-                courseDays.add(firstDayOfWeek + 2);
-            }
-            if (task.getOnCourseThu()) {
-                courseDays.add(firstDayOfWeek + 3);
-            }
-            if (task.getOnCourseFri()) {
-                courseDays.add(firstDayOfWeek + 4);
-            }
-
-            int taskLengthInDays = task.getTaskLength() * 7;
-            List<Date> classDates = new ArrayList<>();
-
-            for (int i = 0; i < taskLengthInDays; i++) {
-                int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-                for (int courseDay : courseDays) {
-                    if (currentDayOfWeek == courseDay) {
-                        classDates.add(calendar.getTime());
-                    }
-                }
-                calendar.add(Calendar.DAY_OF_MONTH, 1);
-            }
-
-            for (Student student : students) {
-                for (Date date : classDates) {
-                    StudentAttendance attendance = new StudentAttendance();
-                    attendance.setStudentId(student);
-                    attendance.setTaskId(task);
-                    attendance.setClassDate(date);
-                    getEntityManager().persist(attendance);
-                }
-            }
+            initializeStudentAttendance(task, students);
         }
     }
-    
+
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
@@ -145,15 +91,15 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void editTask(@PathParam("id") Integer id, 
-            @HeaderParam("Authorization") String authorization, 
+    public void editTask(@PathParam("id") Integer id,
+            @HeaderParam("Authorization") String authorization,
             Task task) {
-        
+
         String username = new AuthenticationService().getUsername(authorization);
         CurrentUser user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
-            Task oldTask = getEntityManager().find(Task.class, id);
+            Task oldTask = em.find(Task.class, id);
             if (task.getStartDate().getTime() != oldTask.getStartDate().getTime()
                     || task.getTaskLength() != oldTask.getTaskLength()
                     || task.getOnCourseMon() != oldTask.getOnCourseMon()
@@ -162,17 +108,85 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
                     || task.getOnCourseThu() != oldTask.getOnCourseThu()
                     || task.getOnCourseFri() != oldTask.getOnCourseFri()
                     || task.getMaxGrade() != oldTask.getMaxGrade()) {
-                getEntityManager().remove(getEntityManager().merge(oldTask));
+                em.remove(em.merge(oldTask));
                 task.setTaskId(null);
                 createTask(authorization, task);
             } else {
-                getEntityManager().merge(task);
+                em.merge(task);
             }
         }
     }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
+    private void initializeStudentGrades(Task task, Collection<Student> students) {
+        for (Student student : students) {
+            StudentGrade grade = new StudentGrade(student.getStudentId(), task.getTaskId());
+            short gradevalue = 0;
+            grade.setGrade(gradevalue);
+            em.persist(grade);
+        }
+    }
+
+    private List<Date> calculateClassDates(Task task) {
+        Calendar calendar = Calendar.getInstance();
+        int firstDayOfWeek = 2;
+        calendar.setFirstDayOfWeek(firstDayOfWeek);
+
+        Date startDate = task.getStartDate();
+        calendar.setTime(startDate);
+
+        int startDateDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        calendar.add(Calendar.DAY_OF_MONTH, -startDateDayOfWeek + firstDayOfWeek);
+
+        List<Integer> courseDays = new ArrayList<>();
+        if (task.getOnCourseMon()) {
+            courseDays.add(firstDayOfWeek);
+        }
+        if (task.getOnCourseTue()) {
+            courseDays.add(firstDayOfWeek + 1);
+        }
+        if (task.getOnCourseWed()) {
+            courseDays.add(firstDayOfWeek + 2);
+        }
+        if (task.getOnCourseThu()) {
+            courseDays.add(firstDayOfWeek + 3);
+        }
+        if (task.getOnCourseFri()) {
+            courseDays.add(firstDayOfWeek + 4);
+        }
+
+        int taskLengthInDays = task.getTaskLength() * 7;
+        List<Date> classDates = new ArrayList<>();
+
+        for (int i = 0; i < taskLengthInDays; i++) {
+            int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+            for (int courseDay : courseDays) {
+                if (currentDayOfWeek == courseDay) {
+                    classDates.add(calendar.getTime());
+                }
+            }
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        return classDates;
+    }
+
+    private void initializeStudentAttendance(Task task, Collection<Student> students) {
+
+        List<Date> classDates = calculateClassDates(task);
+
+        for (Student student : students) {
+            for (Date date : classDates) {
+                StudentAttendance attendance = new StudentAttendance();
+                attendance.setStudentId(student);
+                attendance.setTaskId(task);
+                attendance.setClassDate(date);
+                em.persist(attendance);
+            }
+        }
+    }
 }
