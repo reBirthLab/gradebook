@@ -1,0 +1,49 @@
+<md-dialog class="dialog narrow" aria-label="Department">
+    <form name="departmentForm" ng-submit="submit()" novalidate>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{mode}} Department</h2>
+                <span flex></span>
+                <md-button type="button" class="md-icon-button" ng-click="cancel()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div layout="column">
+                <md-input-container>
+                    <md-select name="faculty" ng-model="department.facultyId" placeholder="Faculty" required>
+                        <md-select-label>{{department.facultyId.name}}</md-select-label>
+                        <md-option ng-value="faculty" 
+                                   ng-repeat="faculty in faculties"
+                                   selected="{{ faculty.name === department.facultyId.name ? 'selected' : '' }}">
+                            {{faculty.name}}</md-option>
+                    </md-select>
+                    <div ng-messages="departmentForm.faculty.$error" ng-if="departmentForm.$submitted">
+                        <div ng-message="required">Faculty is required.</div>                        
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Department Name</label>
+                    <input name="name" md-maxlength="150" required type="text" ng-model="department.name">
+                    <div ng-messages="departmentForm.name.$error" ng-if="departmentForm.$submitted">
+                        <div ng-message="required">Department name is required.</div>
+                        <div ng-message="md-maxlength">Department name has to be less than 150 characters long.</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <div class="md-actions" layout="column">
+            <md-progress-linear flex ng-if="dataLoading || facultiesLoading" class="md-accent" 
+                                md-mode="indeterminate"></md-progress-linear>
+            <div layout="row" layout-align="end">
+                <md-button type="submit" class="md-primary">
+                    {{submitButton}}
+                </md-button>
+                <md-button type="button" ng-click="cancel()" class="md-primary">
+                    Cancel
+                </md-button>
+            </div>     
+        </div>   
+    </form>
+</md-dialog>

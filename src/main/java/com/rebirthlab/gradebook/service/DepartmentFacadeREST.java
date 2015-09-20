@@ -16,12 +16,21 @@
  */
 package com.rebirthlab.gradebook.service;
 
+import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.Department;
+import com.rebirthlab.gradebook.security.AuthenticationService;
+import com.rebirthlab.gradebook.security.CurrentUser;
+import com.rebirthlab.gradebook.security.UserDataFinder;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -31,8 +40,9 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Stateless
-@Path("com.rebirthlab.gradebook.entity.department")
+@Path("departments")
 public class DepartmentFacadeREST extends AbstractFacade<Department> {
+
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
@@ -40,25 +50,42 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
         super(Department.class);
     }
 
-//    @POST
-//    @Override
-//    @Consumes({"application/xml", "application/json"})
-//    public void create(Department entity) {
-//        super.create(entity);
-//    }
-//
-//    @PUT
-//    @Path("{id}")
-//    @Consumes({"application/xml", "application/json"})
-//    public void edit(@PathParam("id") Integer id, Department entity) {
-//        super.edit(entity);
-//    }
-//
-//    @DELETE
-//    @Path("{id}")
-//    public void remove(@PathParam("id") Integer id) {
-//        super.remove(super.find(id));
-//    }
+    @POST
+    @Consumes({"application/xml", "application/json"})
+    public void createDepartment(@HeaderParam("Authorization") String authorization, Department entity) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            em.persist(entity);
+        }
+    }
+
+    @PUT
+    @Path("{id}")
+    @Consumes({"application/xml", "application/json"})
+    public void editDepartment(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id, Department entity) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            em.merge(entity);
+        }
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void removeDepartment(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            em.remove(em.merge(em.find(Department.class, id)));
+        }
+    }
 
     @GET
     @Path("{id}")
@@ -78,5 +105,5 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

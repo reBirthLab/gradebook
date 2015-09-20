@@ -34,8 +34,16 @@ services.factory('Semesters', function ($resource) {
     return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/semesters');
 });
 
+services.factory('Administrators', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/administrators/:adminId');
+});
+
 services.factory('Lecturers', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/lecturers');
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/lecturers/:lecturerId');
+});
+
+services.factory('Students', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/students/:studentId');
 });
 
 services.factory('GradebookTasks', function ($resource) {
@@ -48,25 +56,31 @@ services.factory('GradebookAttendance', function ($resource) {
 
 services.factory('Task', function ($resource) {
     return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/tasks/:taskId', null, {
-        update: { method: 'PUT' }
+        update: {method: 'PUT'}
     });
 });
 
 services.factory('Grade', function ($resource) {
     return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/students/:studentId/tasks/:taskId/grade', null, {
-        update: { method: 'PUT' }
+        update: {method: 'PUT'}
     });
 });
 
 services.factory('Attendance', function ($resource) {
     return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/attendances/:attendanceId', null, {
-        update: { method: 'PUT' }
+        update: {method: 'PUT'}
     });
 });
 
 services.factory('Faculty', function ($resource) {
     return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/faculties/:facultyId', null, {
-        update: { method: 'PUT' }
+        update: {method: 'PUT'}
+    });
+});
+
+services.factory('Department', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/departments/:departmentId', null, {
+        update: {method: 'PUT'}
     });
 });
 
@@ -107,11 +121,12 @@ services.factory('AuthenticationService', function (Base64, $http, $cookieStore,
         });
     };
 
-    service.SetCredentials = function (username, password, role) {
+    service.SetCredentials = function (username, password, id, role) {
         var authdata = Base64.encode(username + ':' + password);
 
         $rootScope.globals = {
             currentUser: {
+                userId: id,
                 username: username,
                 authdata: authdata,
                 userRole: role

@@ -45,11 +45,12 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
 
     @GET
     @Path("check")
-    @Produces({"text/plain"})
-    public String check(@HeaderParam("Authorization") String authorization) {       
+    @Produces({"application/json"})
+    public CurrentUser check(@HeaderParam("Authorization") String authorization) {       
         String username = new AuthenticationService().getUsername(authorization);
         CurrentUser user = UserDataFinder.findDataBy(username);
-        return user.getRole();
+        user.setPassword(null);
+        return user;
     }
 
     @GET

@@ -106,6 +106,12 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
         templateUrl: 'views/faculties.html',
         controller: 'FacultyCtrl'
     });
+    
+    $stateProvider.state('departments', {
+        url: '/departments',
+        templateUrl: 'views/departments.html',
+        controller: 'DepartmentCtrl'
+    });
 });
 
 app.config(['$resourceProvider', function ($resourceProvider) {

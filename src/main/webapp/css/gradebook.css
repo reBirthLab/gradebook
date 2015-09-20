@@ -298,6 +298,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     margin-bottom: 48px;
 }
 
+.main-frame h1.admin-table-title {
+    margin-bottom: -16px;
+}
+
 
 /**
  * Footer Styles
@@ -382,6 +386,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         vertical-align: text-bottom;
     }
 }
+
+.table.admin md-switch span {
+    display: block;
+    font-size: 14px;
+}
+
 
 /**
  * Gradebook Page Styles

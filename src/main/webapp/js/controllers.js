@@ -23,46 +23,76 @@ function pad(num, size) {
     while (s.length < size)
         s = "0" + s;
     return s;
-};
+}
+;
 
 var serverTimeZoneOffset = 4;
 
-controllers.controller('MainCtrl', function ($scope, $rootScope, $window, $mdDialog, $mdSidenav, $location, AuthenticationService, MessageService, UserGradebooks) {
+controllers.controller('MainCtrl', function ($scope, $http, $rootScope, $window,
+        $mdDialog, $mdSidenav, $location, AuthenticationService, MessageService,
+        UserGradebooks, Administrators, Lecturers, Students) {
 
     $scope.index = 0;
     $scope.toggleSidenav = function (menuId) {
         $mdSidenav(menuId).toggle();
     };
-    
+
     $scope.closeSidenav = function (menuId) {
         $mdSidenav(menuId).close();
     };
-    
-    $scope.logout = function (){
+
+    $scope.logout = function () {
         AuthenticationService.ClearCredentials();
         $location.path('/login');
     };
 
-    $scope.userGradebooks = UserGradebooks.query(function (userGradebooks) {
-        $scope.user = {
-            firstName: userGradebooks[0].firstName,
-            lastName: userGradebooks[0].lastName
-        };
-    });
-    
     try {
         var userRole = $rootScope.globals.currentUser.userRole;
+
         if (userRole === 'admin') {
             $scope.isHidden = true;
             $scope.isAdmin = true;
             $scope.menuTitle = 'ADMINISTRATIVE TOOLS';
+
+            var admin = Administrators.get({
+                adminId: $rootScope.globals.currentUser.userId
+            }, function () {
+                $scope.user = {
+                    firstName: admin.firstName,
+                    lastName: admin.lastName
+                };
+            });
         }
+
         if (userRole === 'lecturer') {
             $scope.menuTitle = 'GROUPS';
+
+            var lecturer = Lecturers.get({
+                lecturerId: $rootScope.globals.currentUser.userId
+            }, function () {
+                $scope.user = {
+                    firstName: lecturer.firstName,
+                    lastName: lecturer.lastName
+                };
+            });
+
+            $scope.userGradebooks = UserGradebooks.query();
         }
+
         if (userRole === 'student') {
             $scope.menuTitle = 'GROUPS';
             $scope.isHidden = true;
+
+            var student = Students.get({
+                studentId: $rootScope.globals.currentUser.userId
+            }, function () {
+                $scope.user = {
+                    firstName: student.firstName,
+                    lastName: student.lastName
+                };
+            });
+
+            $scope.userGradebooks = UserGradebooks.query();
         }
     } catch (error) {
         console.log(error);
@@ -75,8 +105,8 @@ controllers.controller('MainCtrl', function ($scope, $rootScope, $window, $mdDia
             }
         }
     }
-    
-    $scope.$on('selectTab', function (event, index){
+
+    $scope.$on('selectTab', function (event, index) {
         $scope.selectedIndex = index;
     });
 
@@ -89,16 +119,16 @@ controllers.controller('MainCtrl', function ($scope, $rootScope, $window, $mdDia
             semester: currentGradebook.name
         };
     };
-    
-    
-    $scope.showAddGradebookDialog = function (ev, userGradebook) {
+
+
+    $scope.showAddGradebookDialog = function (ev) {
         $mdDialog.show({
             controller: 'AddGradebookDialogController',
             templateUrl: 'views/partitials/dialog.gradebook.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             locals: {
-                lecturerId: userGradebook.lecturerId
+                lecturerId: $rootScope.globals.currentUser.userId
             }
         }).then(function () {
             $window.location.reload();
@@ -106,7 +136,7 @@ controllers.controller('MainCtrl', function ($scope, $rootScope, $window, $mdDia
             MessageService.showSuccessToast(message);
         });
     };
-    
+
     $scope.showGradebookDetailsDialog = function (ev, gradebookId) {
         $mdDialog.show({
             controller: 'GradebookDetailsDialogController',
@@ -117,13 +147,13 @@ controllers.controller('MainCtrl', function ($scope, $rootScope, $window, $mdDia
                 gradebookId: gradebookId
             }
         });
-    };   
+    };
 });
 
 controllers.controller('GradebookDetailsDialogController', function ($scope, $mdDialog, gradebookId, Gradebook) {
     $scope.gradebook = Gradebook.get({
         gradebookId: gradebookId
-    }, function(gradebook){
+    }, function (gradebook) {
         $scope.group = gradebook.academicGroupId;
         $scope.semester = gradebook.semesterId;
         $scope.lecturers = gradebook.lecturerCollection;
@@ -131,34 +161,34 @@ controllers.controller('GradebookDetailsDialogController', function ($scope, $md
 
     $scope.hide = function () {
         $mdDialog.hide();
-   };
-   
+    };
+
     $scope.cancel = function () {
         $mdDialog.cancel();
-   };
+    };
 });
 controllers.controller('AddGradebookDialogController', function ($scope, $mdDialog, Groups, Semesters, lecturerId, Lecturers, MessageService, Gradebook) {
-    
+
     $scope.groupsLoading = true;
     $scope.semestersLoading = true;
     $scope.lecturersLoading = true;
-    
+
     $scope.groups = Groups.query({
-        }, function () {
-             $scope.groupsLoading = false;
-        }, function () {
-            MessageService.showErrorToast();
-            $scope.groupsLoading = false;
-        });
+    }, function () {
+        $scope.groupsLoading = false;
+    }, function () {
+        MessageService.showErrorToast();
+        $scope.groupsLoading = false;
+    });
 
     $scope.semesters = Semesters.query({
-        }, function () {
-             $scope.semestersLoading = false;
-        }, function () {
-            MessageService.showErrorToast();
-            $scope.semestersLoading = false;
-        });
-    
+    }, function () {
+        $scope.semestersLoading = false;
+    }, function () {
+        MessageService.showErrorToast();
+        $scope.semestersLoading = false;
+    });
+
     $scope.lecturer;
     $scope.searchText = null;
     $scope.selectedLecturers = [];
@@ -197,7 +227,7 @@ controllers.controller('AddGradebookDialogController', function ($scope, $mdDial
                     (lecturer._lowerLastName.indexOf(lowercaseQuery) === 0);
         };
     }
-    
+
     $scope.addLecturer = function () {
 
         if ($scope.lecturer !== undefined) {
@@ -222,14 +252,14 @@ controllers.controller('AddGradebookDialogController', function ($scope, $mdDial
             }
         }
     };
-    
+
     $scope.clearSelection = function () {
-        $scope.lecturer = undefined;       
+        $scope.lecturer = undefined;
     };
-    
+
     $scope.submit = function () {
         if ($scope.gradebookForm.$valid) {
-            
+
             $scope.dataLoading = true;
 
             var selectedLecturerIds = [];
@@ -261,13 +291,13 @@ controllers.controller('AddGradebookDialogController', function ($scope, $mdDial
 controllers.controller('LoginCtrl', function ($scope, $rootScope, $mdToast, $location, AuthenticationService) {
     // reset login status
     AuthenticationService.ClearCredentials();
-    
+
     $scope.login = function () {
         if ($scope.loginForm.$valid) {
             $scope.dataLoading = true;
             AuthenticationService.Login($scope.username, $scope.password, function (response) {
                 if (response.status === 200) {
-                    AuthenticationService.SetCredentials($scope.username, $scope.password, response.data);
+                    AuthenticationService.SetCredentials($scope.username, $scope.password, response.data.id, response.data.role);
                     $location.path('/');
                 } else {
                     showErrorToast();
@@ -293,25 +323,25 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $rootScope, $stat
         semesterId: $stateParams.semesterId,
         gradebookId: $stateParams.gradebookId
     });
-    
+
     var userRole = $rootScope.globals.currentUser.userRole;
     if (userRole === 'student') {
         $scope.isHidden = true;
         $scope.isDisabled = true;
     }
-    
-    $scope.orderByName = function(student) {
-      return student[0].firstName;
+
+    $scope.orderByName = function (student) {
+        return student[0].firstName;
     };
-    
-    $scope.calcTaskDates = function (date, taskLength){
+
+    $scope.calcTaskDates = function (date, taskLength) {
         var startDate = new Date(date);
         startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
-        
+
         var endDate = new Date(startDate);
         endDate.setDate(endDate.getDate() + (taskLength * 7) - 1);
-        
-        return pad(startDate.getDate(), 2) + '/' + pad(startDate.getMonth() + 1, 2) + ' - ' + 
+
+        return pad(startDate.getDate(), 2) + '/' + pad(startDate.getMonth() + 1, 2) + ' - ' +
                 pad(endDate.getDate(), 2) + '/' + pad(endDate.getMonth() + 1, 2);
     };
 
@@ -330,7 +360,7 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $rootScope, $stat
             MessageService.showSuccessToast(message);
         });
     };
-    
+
     $scope.showTaskDetails = function (ev, taskId) {
         $mdDialog.show({
             controller: 'TaskDetailsDialogController',
@@ -341,8 +371,8 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $rootScope, $stat
                 taskId: taskId
             }
         });
-    }; 
-    
+    };
+
     $scope.showEditGradeDialog = function (ev, task) {
         $mdDialog.show({
             controller: 'EditGradeDialogController',
@@ -357,13 +387,13 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $rootScope, $stat
             var message = 'The Grade was successfully updated!';
             MessageService.showSuccessToast(message);
         });
-    }; 
+    };
 });
 
 controllers.controller('AddTaskDialogController', function ($scope, $mdDialog, MessageService, Task, gradebookId) {
     $scope.mode = 'Add';
     $scope.submitButton = 'Submit';
-    
+
     $scope.submit = function () {
         if ($scope.taskForm.$valid) {
             $scope.dataLoading = true;
@@ -387,7 +417,7 @@ controllers.controller('AddTaskDialogController', function ($scope, $mdDialog, M
 
 controllers.controller('TaskDetailsDialogController', function ($scope, $rootScope, $state, $mdDialog, MessageService, taskId, Task) {
     $scope.task = Task.get({taskId: taskId}, function (task) {
-        
+
         var startDate = new Date(task.startDate);
         startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
         $scope.startDate = pad(startDate.getDate(), 2) + '/' +
@@ -399,17 +429,22 @@ controllers.controller('TaskDetailsDialogController', function ($scope, $rootSco
         $scope.endDate = pad(endDate.getDate(), 2) + '/' +
                 pad(endDate.getMonth() + 1, 2) + '/' +
                 endDate.getFullYear();
-        
+
         var onCourseDays = [];
-        if (task.onCourseMon) onCourseDays.push("Monday");
-        if (task.onCourseTue) onCourseDays.push("Tuesday");
-        if (task.onCourseWed) onCourseDays.push("Wednesday");
-        if (task.onCourseThu) onCourseDays.push("Thursday");
-        if (task.onCourseFri) onCourseDays.push("Friday");
-        
+        if (task.onCourseMon)
+            onCourseDays.push("Monday");
+        if (task.onCourseTue)
+            onCourseDays.push("Tuesday");
+        if (task.onCourseWed)
+            onCourseDays.push("Wednesday");
+        if (task.onCourseThu)
+            onCourseDays.push("Thursday");
+        if (task.onCourseFri)
+            onCourseDays.push("Friday");
+
         $scope.onCourseDays = onCourseDays;
     });
-    
+
     $scope.showEditTaskForm = function (ev) {
         $mdDialog.show({
             controller: 'EditTaskDialogController',
@@ -434,7 +469,7 @@ controllers.controller('TaskDetailsDialogController', function ($scope, $rootSco
     $scope.cancel = function () {
         $mdDialog.cancel();
     };
-    
+
     var userRole = $rootScope.globals.currentUser.userRole;
     if (userRole === 'student') {
         $scope.isHidden = true;
@@ -444,12 +479,12 @@ controllers.controller('TaskDetailsDialogController', function ($scope, $rootSco
 controllers.controller('EditTaskDialogController', function ($scope, $mdDialog, MessageService, task, Task) {
     $scope.mode = 'Edit';
     $scope.submitButton = 'Update';
-      
+
     $scope.task = task;
-    var startDate = new Date (task.startDate);
+    var startDate = new Date(task.startDate);
     startDate.setUTCHours(serverTimeZoneOffset); // Server Timezone patch
-    $scope.task.startDate = new Date (startDate);
-    
+    $scope.task.startDate = new Date(startDate);
+
     $scope.submit = function () {
         if ($scope.taskForm.$valid) {
             $scope.dataLoading = true;
@@ -472,14 +507,14 @@ controllers.controller('EditTaskDialogController', function ($scope, $mdDialog, 
 });
 
 controllers.controller('EditGradeDialogController', function ($scope, $mdDialog, MessageService, task, Grade) {
-    
+
     $scope.task = task;
-    
+
     var studentGrade = {};
     studentGrade.grade = task.grade;
-    
+
     $scope.studentGrade = studentGrade;
-    
+
     $scope.update = function () {
         if ($scope.gradeForm.$valid) {
             $scope.dataLoading = true;
@@ -509,19 +544,19 @@ controllers.controller('GradebookAttendanceCtrl', function ($scope, $rootScope, 
         semesterId: $stateParams.semesterId,
         gradebookId: $stateParams.gradebookId
     });
-    
+
     var userRole = $rootScope.globals.currentUser.userRole;
     if (userRole === 'student') {
         $scope.isDisabled = true;
     }
-    
-    $scope.orderByName = function(student) {
-      return student[0].firstName;
+
+    $scope.orderByName = function (student) {
+        return student[0].firstName;
     };
-    
-    $scope.getDayOfWeek = function(d){
+
+    $scope.getDayOfWeek = function (d) {
         var date = new Date(d);
-        
+
         var weekday = new Array(7);
         weekday[0] = "Sun";
         weekday[1] = "Mon";
@@ -530,15 +565,15 @@ controllers.controller('GradebookAttendanceCtrl', function ($scope, $rootScope, 
         weekday[4] = "Thu";
         weekday[5] = "Fri";
         weekday[6] = "Sat";
-        
+
         return weekday[date.getDay()];
     };
-    
-    $scope.formatClassDate = function (d){
-        var date = new Date(d);         
+
+    $scope.formatClassDate = function (d) {
+        var date = new Date(d);
         return pad(date.getDate(), 2) + '/' + pad(date.getMonth() + 1, 2);
     };
-    
+
     $scope.attendanceStatus = function (scope) {
         var attendance = scope.attendance;
         if (attendance.present) {
@@ -554,7 +589,7 @@ controllers.controller('GradebookAttendanceCtrl', function ($scope, $rootScope, 
             return 'check_box_outline_blank';
         }
     };
-    
+
     $scope.showEditAttendanceDialog = function (ev, attendance) {
         $mdDialog.show({
             controller: 'EditAttendanceDialogController',
@@ -570,7 +605,7 @@ controllers.controller('GradebookAttendanceCtrl', function ($scope, $rootScope, 
             MessageService.showSuccessToast(message);
         });
     };
-    
+
     $scope.showTaskDetails = function (ev, taskId) {
         $mdDialog.show({
             controller: 'TaskDetailsDialogController',
@@ -585,26 +620,27 @@ controllers.controller('GradebookAttendanceCtrl', function ($scope, $rootScope, 
 });
 
 controllers.controller('EditAttendanceDialogController', function ($scope, $mdDialog, MessageService, attendance, Attendance) {
-    
+
     $scope.attendance = attendance;
-    
+
     var classDate = new Date(attendance.classDate);
     classDate.setUTCHours(serverTimeZoneOffset); // Server Timezone patch
     $scope.classDate = pad(classDate.getDate(), 2) + '/' +
             pad(classDate.getMonth() + 1, 2) + '/' +
             classDate.getFullYear();
-    
+
     if (attendance.present) {
         $scope.status = 'present';
     } else if (attendance.absent) {
         $scope.status = 'absent';
     } else if (attendance.absentWithReason) {
         $scope.status = 'absent-with-reason';
-    };
-   
+    }
+    ;
+
     $scope.update = function () {
         $scope.dataLoading = true;
-        
+
         var attendance = {};
         attendance.attendanceId = $scope.attendance.attendanceId;
         attendance.studentId = $scope.attendance.studentId;
@@ -613,17 +649,20 @@ controllers.controller('EditAttendanceDialogController', function ($scope, $mdDi
         attendance.present = false;
         attendance.absent = false;
         attendance.absentWithReason = false;
-        
-        if($scope.status === 'present') attendance.present = true;
-        if($scope.status === 'absent') attendance.absent = true;
-        if($scope.status === 'absent-with-reason') attendance.absentWithReason = true;
-        
+
+        if ($scope.status === 'present')
+            attendance.present = true;
+        if ($scope.status === 'absent')
+            attendance.absent = true;
+        if ($scope.status === 'absent-with-reason')
+            attendance.absentWithReason = true;
+
         Attendance.update({
-           attendanceId: attendance.attendanceId
+            attendanceId: attendance.attendanceId
         }, attendance,
-        function () {
-            $mdDialog.hide();
-        }, function () {
+                function () {
+                    $mdDialog.hide();
+                }, function () {
             MessageService.showErrorToast();
             $scope.dataLoading = false;
         });
@@ -635,9 +674,22 @@ controllers.controller('EditAttendanceDialogController', function ($scope, $mdDi
 });
 
 controllers.controller('FacultyCtrl', function ($scope, $mdDialog, $state, MessageService, Faculty) {
-    
+
     $scope.faculties = Faculty.query();
-    
+
+    $scope.isDeletionEnabled = false;
+    $scope.status = "disabled";
+
+
+    $scope.onChange = function (isDeletionEnabled) {
+        if (isDeletionEnabled) {
+            $scope.status = "enabled";
+        } else {
+            $scope.status = "disabled";
+        }
+
+    };
+
     $scope.showAddFacultyForm = function (ev) {
         $mdDialog.show({
             controller: 'AddFacultyDialogController',
@@ -650,7 +702,7 @@ controllers.controller('FacultyCtrl', function ($scope, $mdDialog, $state, Messa
             MessageService.showSuccessToast(message);
         });
     };
-    
+
     $scope.showEditFacultyForm = function (ev, faculty) {
         $mdDialog.show({
             controller: 'EditFacultyDialogController',
@@ -666,7 +718,7 @@ controllers.controller('FacultyCtrl', function ($scope, $mdDialog, $state, Messa
             MessageService.showSuccessToast(message);
         });
     };
-    
+
     $scope.showDeleteFacultyDialog = function (ev, faculty) {
         $mdDialog.show({
             controller: 'DeleteFacultyDialogController',
@@ -682,13 +734,13 @@ controllers.controller('FacultyCtrl', function ($scope, $mdDialog, $state, Messa
             MessageService.showSuccessToast(message);
         });
     };
-    
+
 });
 
-controllers.controller('AddFacultyDialogController', function ($scope, $mdDialog, MessageService, Faculty) {   
+controllers.controller('AddFacultyDialogController', function ($scope, $mdDialog, MessageService, Faculty) {
     $scope.mode = 'Add';
     $scope.submitButton = 'Submit';
-      
+
     $scope.submit = function () {
         if ($scope.facultyForm.$valid) {
             $scope.dataLoading = true;
@@ -713,9 +765,9 @@ controllers.controller('AddFacultyDialogController', function ($scope, $mdDialog
 controllers.controller('EditFacultyDialogController', function ($scope, $mdDialog, MessageService, faculty, Faculty) {
     $scope.mode = 'Edit';
     $scope.submitButton = 'Update';
-      
+
     $scope.faculty = faculty;
-    
+
     $scope.submit = function () {
         if ($scope.facultyForm.$valid) {
             $scope.dataLoading = true;
@@ -739,13 +791,172 @@ controllers.controller('EditFacultyDialogController', function ($scope, $mdDialo
 
 controllers.controller('DeleteFacultyDialogController', function ($scope, $mdDialog, MessageService, faculty) {
     $scope.object = 'Faculty';
-    
+
     $scope.submit = function () {
 
         $scope.dataLoading = true;
 
         faculty.$delete({
             facultyId: faculty.facultyId
+        },
+        function () {
+            $mdDialog.hide();
+        }, function () {
+            MessageService.showErrorToast();
+            $scope.dataLoading = false;
+        });
+
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('DepartmentCtrl', function ($scope, $mdDialog, $state, MessageService, Department) {
+
+    $scope.departments = Department.query();
+
+    $scope.isDeletionEnabled = false;
+    $scope.status = "disabled";
+
+
+    $scope.onChange = function (isDeletionEnabled) {
+        if (isDeletionEnabled) {
+            $scope.status = "enabled";
+        } else {
+            $scope.status = "disabled";
+        }
+
+    };
+
+    $scope.showAddDepartmentForm = function (ev) {
+        $mdDialog.show({
+            controller: 'AddDepartmentDialogController',
+            templateUrl: 'views/partitials/dialog.department.html',
+            parent: angular.element(document.body),
+            targetEvent: ev
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'New department was successfully added!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+
+    $scope.showEditDepartmentForm = function (ev, department) {
+        $mdDialog.show({
+            controller: 'EditDepartmentDialogController',
+            templateUrl: 'views/partitials/dialog.department.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                department: department
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'Department was successfully updated!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+
+    $scope.showDeleteDepartmentDialog = function (ev, department) {
+        $mdDialog.show({
+            controller: 'DeleteDepartmentDialogController',
+            templateUrl: 'views/partitials/dialog.delete-confirmation.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                department: department
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'Department was successfully deleted!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+
+});
+
+controllers.controller('AddDepartmentDialogController', function ($scope, $mdDialog, MessageService, Department, Faculty) {
+    $scope.mode = 'Add';
+    $scope.submitButton = 'Submit';
+    
+    $scope.facultiesLoading = true;
+    
+    $scope.faculties = Faculty.query({
+    }, function () {
+        $scope.facultiesLoading = false;
+    }, function () {
+        MessageService.showErrorToast();
+        $scope.facultiesLoading = false;
+    });
+
+    $scope.submit = function () {
+        if ($scope.departmentForm.$valid) {
+            $scope.dataLoading = true;
+
+            var newDepartment = new Department($scope.department);
+
+            newDepartment.$save({
+            }, function () {
+                $mdDialog.hide();
+            }, function () {
+                MessageService.showErrorToast();
+                $scope.dataLoading = false;
+            });
+        }
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('EditDepartmentDialogController', function ($scope, $mdDialog, MessageService, department, Faculty, Department) {
+    $scope.mode = 'Edit';
+    $scope.submitButton = 'Update';
+
+    $scope.department = department;
+    $scope.facultiesLoading = true;
+    
+    $scope.faculties = Faculty.query({
+    }, function () {
+        $scope.facultiesLoading = false;
+    }, function () {
+        MessageService.showErrorToast();
+        $scope.facultiesLoading = false;
+    });
+
+    $scope.submit = function () {
+        if ($scope.departmentForm.$valid) {
+            $scope.dataLoading = true;
+
+            Department.update({
+                departmentId: department.departmentId
+            }, $scope.department,
+                    function () {
+                        $mdDialog.hide();
+                    }, function () {
+                MessageService.showErrorToast();
+                $scope.dataLoading = false;
+            });
+        }
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('DeleteDepartmentDialogController', function ($scope, $mdDialog, MessageService, department) {
+    $scope.object = 'Department';
+
+    $scope.submit = function () {
+
+        $scope.dataLoading = true;
+
+        department.$delete({
+            departmentId: department.departmentId
         },
         function () {
             $mdDialog.hide();
