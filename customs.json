@@ -133,7 +133,11 @@
         },
         "md-menu-sidenav-content": {},
         "md-select-label": {},
-        "v-pane-content": {},
+        "v-pane-content": {
+            "attributes": {
+                "class": {}
+            }
+        },
         "md-icon": {
             "attributes": {
                 "md-svg-icon": {},
@@ -150,7 +154,11 @@
                 "ng-repeat": {}
             }
         },
-        "md-input-container": {},
+        "md-input-container": {
+            "attributes": {
+                "class": {}
+            }
+        },
         "md-menu-sidenav-subitem": {
             "attributes": {
                 "ng-repeat": {}

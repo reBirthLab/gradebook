@@ -1,0 +1,77 @@
+<div class="main-frame" flex>
+ 
+    <h1 class="md-headline admin-table-title">Semesters</h1>    
+    <table class="table admin">
+        <caption>
+            <div class="filters-header" layout="row" layout-align="start center">
+                <div ng-click="toggleFilters()"  layout="row" layout-align="start center">
+                    <md-icon>filter_list</md-icon>
+                    <p class="md-body-2">Filters</p>
+                </div>
+                <div flex></div>
+                <p class="md-body-2">Danger Zone!</p>
+                <md-switch ng-model="isDeletionEnabled" aria-label="Deletion Switch" ng-change="onChange(isDeletionEnabled)" class="md-warn">
+                    Deletion is {{status}}
+                </md-switch>
+            </div>
+            <div class="filters" ng-show="isExpanded">
+                <div layout="row" layout-padding>
+                    <md-input-container class="number-filter" flex>
+                        <label>By Id</label>
+                        <input type="text" ng-model="search.semesterId">
+                    </md-input-container>
+                    <md-input-container class="text-filter" flex>
+                        <label>By Name</label>
+                        <input type="text" ng-model="search.name">
+                    </md-input-container>  
+                    <md-input-container class="number-filter" flex>
+                        <label>By Year</label>
+                        <input type="text" ng-model="search.academicYear">
+                    </md-input-container>                               
+                </div>
+            </div>
+        </caption>      
+        <thead>         
+            <tr class="header-primary admin">
+                <th class="table-num-col">Id</th>
+                <th>Name</th>                                                                     
+                <th>Year</th>                                                                     
+                <th colspan="2">Controls</th>                     
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="semester in semesters | filter: search">
+                <td class="table-num-col">{{semester.semesterId}}</td>
+                <td>{{semester.name}}</td>
+                <td>{{semester.academicYear}}</td>
+                <td class="controls-col">
+                    <md-button class="control" ng-click="showEditSemesterForm($event, semester)">
+                        <md-icon>edit</md-icon>
+                        <span>Edit</span>
+                    </md-button>
+                </td>
+                <td class="controls-col">
+                    <md-button class="control" ng-click="showDeleteSemesterDialog($event, semester)" 
+                               ng-disabled="!isDeletionEnabled">
+                        <md-icon>delete</md-icon>
+                        <span>Delete</span>
+                    </md-button>                  
+                </td>
+            </tr>
+            <tr>
+                <td class="table-num-col"></td>
+                <td></td>
+                <td></td>
+                <td colspan="2" class="controls-col">
+                    <md-button class="control" ng-click="showAddSemesterForm($event)">
+                        <md-icon>add_circle</md-icon>
+                        <span>Add</span>
+                    </md-button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-include src="'views/partitials/footer.html'"></ng-include>

@@ -16,8 +16,12 @@
  */
 package com.rebirthlab.gradebook.service;
 
+import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.Semester;
 import com.rebirthlab.gradebook.entity.Semester_;
+import com.rebirthlab.gradebook.security.AuthenticationService;
+import com.rebirthlab.gradebook.security.CurrentUser;
+import com.rebirthlab.gradebook.security.UserDataFinder;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -26,7 +30,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -38,6 +47,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("semesters")
 public class SemesterFacadeREST extends AbstractFacade<Semester> {
+
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
@@ -45,25 +55,42 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
         super(Semester.class);
     }
 
-//    @POST
-//    @Override
-//    @Consumes({"application/xml", "application/json"})
-//    public void create(Semester entity) {
-//        super.create(entity);
-//    }
-//
-//    @PUT
-//    @Path("{id}")
-//    @Consumes({"application/xml", "application/json"})
-//    public void edit(@PathParam("id") Integer id, Semester entity) {
-//        super.edit(entity);
-//    }
-//
-//    @DELETE
-//    @Path("{id}")
-//    public void remove(@PathParam("id") Integer id) {
-//        super.remove(super.find(id));
-//    }
+    @POST
+    @Consumes({"application/xml", "application/json"})
+    public void createSemester(@HeaderParam("Authorization") String authorization, Semester entity) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            em.persist(entity);
+        }
+    }
+
+    @PUT
+    @Path("{id}")
+    @Consumes({"application/xml", "application/json"})
+    public void editSemester(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id, Semester entity) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            em.merge(entity);
+        }
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void removeSemester(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            em.remove(em.merge(em.find(Semester.class, id)));
+        }
+    }
 
     @GET
     @Path("{id}")
@@ -74,8 +101,19 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
 
     @GET
     @Produces({"application/xml", "application/json"})
-    public List<Semester> findActualSemesters() {
+    public List<Semester> findSemesters(@HeaderParam("Authorization") String authorization) {
 
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.findAll();
+        }
+        
+        return findActualSemesters();
+    }
+
+    private List<Semester> findActualSemesters() {
         Calendar today = Calendar.getInstance();
         short currentYear = (short) today.get(Calendar.YEAR);
 
@@ -90,12 +128,11 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
                 )
         );
         return getEntityManager().createQuery(cq).getResultList();
-
     }
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

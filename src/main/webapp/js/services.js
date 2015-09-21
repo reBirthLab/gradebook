@@ -26,12 +26,16 @@ services.factory('Gradebook', function ($resource) {
     return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/gradebooks/:gradebookId');
 });
 
-services.factory('Groups', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/groups');
+services.factory('Group', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/groups/:groupId', null, {
+        update: {method: 'PUT'}
+    });
 });
 
-services.factory('Semesters', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/semesters');
+services.factory('Semester', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/semesters/:semesterId', null, {
+        update: {method: 'PUT'}
+    });
 });
 
 services.factory('Administrators', function ($resource) {
@@ -42,8 +46,10 @@ services.factory('Lecturers', function ($resource) {
     return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/lecturers/:lecturerId');
 });
 
-services.factory('Students', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/students/:studentId');
+services.factory('Student', function ($resource) {
+    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/students/:studentId', null, {
+        update: {method: 'PUT'}
+    });
 });
 
 services.factory('GradebookTasks', function ($resource) {

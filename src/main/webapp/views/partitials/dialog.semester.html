@@ -1,0 +1,45 @@
+<md-dialog class="dialog narrow" aria-label="Semester">
+    <form name="semesterForm" ng-submit="submit()" novalidate>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{mode}} Semester</h2>
+                <span flex></span>
+                <md-button type="button" class="md-icon-button" ng-click="cancel()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div layout="column">
+                <md-input-container>
+                    <label>Academic Year</label>
+                    <input name="year" required type="number" ng-model="semester.academicYear" min="1900" max="2900">
+                    <div ng-messages="semesterForm.year.$error" ng-if="semesterForm.$submitted">
+                        <div ng-message="required">Academic year is required.</div>
+                        <div ng-message="max">Value must be less than or equal to 2900.</div>
+                        <div ng-message="min">Value must be greater than or equal to 1900.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Semester Name</label>
+                    <input name="name" md-maxlength="150" required type="text" ng-model="semester.name">
+                    <div ng-messages="semesterForm.name.$error" ng-if="semesterForm.$submitted">
+                        <div ng-message="required">Semester name is required.</div>
+                        <div ng-message="md-maxlength">Semester name has to be less than 150 characters long.</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <div class="md-actions" layout="column">
+            <md-progress-linear flex ng-if="dataLoading" class="md-accent" md-mode="indeterminate"></md-progress-linear>
+            <div layout="row" layout-align="end">
+                <md-button type="submit" class="md-primary">
+                    {{submitButton}}
+                </md-button>
+                <md-button type="button" ng-click="cancel()" class="md-primary">
+                    Cancel
+                </md-button>
+            </div>     
+        </div>   
+    </form>
+</md-dialog>

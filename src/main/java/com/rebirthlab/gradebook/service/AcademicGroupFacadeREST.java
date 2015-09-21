@@ -85,6 +85,10 @@ public class AcademicGroupFacadeREST extends AbstractFacade<AcademicGroup> {
 
         CurrentUser user = UserDataFinder.findDataBy(username);
 
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.findAll();
+        }
+        
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
             Integer lecturerId = user.getId();
             Lecturer lecturer = getEntityManager().find(Lecturer.class, lecturerId);          
@@ -95,9 +99,9 @@ public class AcademicGroupFacadeREST extends AbstractFacade<AcademicGroup> {
             
             cq.where(cb.equal(groups.get(AcademicGroup_.facultyId), lecturer.getDepartmentId().getFacultyId()));
             return getEntityManager().createQuery(cq).getResultList();
-        } else {
-            return null;
         }
+        
+        return null;     
     }
 
     @Override
