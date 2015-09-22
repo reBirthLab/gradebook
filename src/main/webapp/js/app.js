@@ -119,10 +119,16 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
         controller: 'SemesterCtrl'
     });
     
+    $stateProvider.state('lecturers', {
+        url: '/lecturers',
+        templateUrl: 'views/lecturers.html',
+        controller: 'LecturerCtrl'
+    });
+    
     $stateProvider.state('students', {
         url: '/students',
         templateUrl: 'views/students.html',
-        controller: 'StudentsCtrl'
+        controller: 'StudentCtrl'
     });
 });
 

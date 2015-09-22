@@ -1,0 +1,72 @@
+<md-dialog class="dialog narrow" aria-label="Lecturer">
+    <form name="lecturerForm" ng-submit="submit()" novalidate>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{mode}} Lecturer</h2>
+                <span flex></span>
+                <md-button type="button" class="md-icon-button" ng-click="cancel()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div layout="column">
+                <md-input-container>
+                    <md-select name="department" ng-model="lecturer.departmentId" required>
+                        <md-select-label>{{lecturer.departmentId !== undefined ? lecturer.departmentId.name : 'Select Department'}}</md-select-label>
+                        <md-option ng-value="department" 
+                                   ng-repeat="department in departments"
+                                   selected="{{ department.name === lecturer.departmentId.name ? 'selected' : '' }}">
+                            {{department.name}}</md-option>
+                    </md-select>
+                    <div ng-messages="lecturerForm.department.$error" ng-if="lecturerForm.$submitted">
+                        <div ng-message="required">Department is required.</div>                        
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>First Name</label>
+                    <input name="firstName" md-maxlength="45" required type="text" ng-model="lecturer.firstName">
+                    <div ng-messages="lecturerForm.firstName.$error" ng-if="lecturerForm.$submitted">
+                        <div ng-message="required">First name is required.</div>
+                        <div ng-message="md-maxlength">First name has to be less than 45 characters long.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Last Name</label>
+                    <input name="lastName" md-maxlength="45" required type="text" ng-model="lecturer.lastName">
+                    <div ng-messages="lecturerForm.lastName.$error" ng-if="lecturerForm.$submitted">
+                        <div ng-message="required">Last name is required.</div>
+                        <div ng-message="md-maxlength">Last name has to be less than 45 characters long.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Email</label>
+                    <input name="email" md-maxlength="60" required type="email" ng-model="lecturer.email">
+                    <div ng-messages="lecturerForm.email.$error" ng-if="lecturerForm.$submitted">
+                        <div ng-message="required">Email is required.</div>
+                        <div ng-message="md-maxlength">Email has to be less than 60 characters long.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Password</label>
+                    <input name="password" md-maxlength="16" required type="text" ng-model="lecturer.password">
+                    <div ng-messages="lecturerForm.password.$error" ng-if="lecturerForm.$submitted">
+                        <div ng-message="required">Password is required.</div>
+                        <div ng-message="md-maxlength">Password has to be less than 16 characters long.</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <div class="md-actions" layout="column">
+            <md-progress-linear flex ng-if="dataLoading || departmentsLoading" class="md-accent" md-mode="indeterminate"></md-progress-linear>
+            <div layout="row" layout-align="end">
+                <md-button type="submit" class="md-primary">
+                    {{submitButton}}
+                </md-button>
+                <md-button type="button" ng-click="cancel()" class="md-primary">
+                    Cancel
+                </md-button>
+            </div>     
+        </div>   
+    </form>
+</md-dialog>

@@ -19,6 +19,7 @@ package com.rebirthlab.gradebook.service;
 import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.Lecturer;
 import com.rebirthlab.gradebook.entity.Lecturer_;
+import com.rebirthlab.gradebook.entity.Student;
 import com.rebirthlab.gradebook.security.AuthenticationService;
 import com.rebirthlab.gradebook.security.CurrentUser;
 import com.rebirthlab.gradebook.security.UserDataFinder;
@@ -29,8 +30,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -42,6 +47,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("lecturers")
 public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
+
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
@@ -49,59 +55,93 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
         super(Lecturer.class);
     }
 
-//    @POST
-//    @Override
-//    @Consumes({"application/xml", "application/json"})
-//    public void create(Lecturer entity) {
-//        super.create(entity);
-//    }
-//
-//    @PUT
-//    @Path("{id}")
-//    @Consumes({"application/xml", "application/json"})
-//    public void edit(@PathParam("id") Integer id, Lecturer entity) {
-//        super.edit(entity);
-//    }
-//
-//    @DELETE
-//    @Path("{id}")
-//    public void remove(@PathParam("id") Integer id) {
-//        super.remove(super.find(id));
-//    }
+    @POST
+    @Consumes({"application/xml", "application/json"})
+    public void createLecturer(@HeaderParam("Authorization") String authorization, Lecturer entity) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            super.create(entity);
+        }
+    }
+
+    @PUT
+    @Path("{id}")
+    @Consumes({"application/xml", "application/json"})
+    public void editLecturer(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id, Lecturer entity) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            super.edit(entity);
+        }
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void removeStudent(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            super.remove(super.find(id));
+        }
+    }
 
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Lecturer find(@PathParam("id") Integer id) {
-        return super.find(id);
+    public Lecturer findLecturer(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)
+                || user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.find(id);
+        }
+
+        return null;
     }
 
     @GET
     @Produces({"application/xml", "application/json"})
-    public List<Lecturer> findColleagues(@HeaderParam("Authorization") String authorization){
+    public List<Lecturer> findAllLecturers(@HeaderParam("Authorization") String authorization) {
 
         String username = new AuthenticationService().getUsername(authorization);
-
         CurrentUser user = UserDataFinder.findDataBy(username);
 
-        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
-            Integer lecturerId = user.getId();
-            Lecturer lecturer = getEntityManager().find(Lecturer.class, lecturerId);           
-            
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery cq = cb.createQuery(Lecturer.class);
-            Root groups = cq.from(Lecturer.class);
-            
-            cq.where(cb.equal(groups.get(Lecturer_.departmentId), lecturer.getDepartmentId().getDepartmentId()));
-            return getEntityManager().createQuery(cq).getResultList();
-        } else {
-            return null;
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.findAll();
         }
+
+        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
+            return findColleagues(user);
+        }
+
+        return null;
+    }
+
+    private List<Lecturer> findColleagues(CurrentUser user) {
+        Integer lecturerId = user.getId();
+        Lecturer lecturer = getEntityManager().find(Lecturer.class, lecturerId);
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery(Lecturer.class);
+        Root lecturers = cq.from(Lecturer.class);
+
+        cq.where(cb.equal(lecturers.get(Lecturer_.departmentId), lecturer.getDepartmentId().getDepartmentId()));
+
+        return getEntityManager().createQuery(cq).getResultList();
     }
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

@@ -105,10 +105,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </v-pane-header>
                         <md-divider></md-divider>
                         <v-pane-content>
-                            <md-button class="menu-subtitle-button" href="#/faculties">
+                            <md-button class="menu-subtitle-button" href="#/faculties" ng-click="closeSidenav('left')">
                                 <span>Faculties</span>
                             </md-button>
-                            <md-button class="menu-subtitle-button" href="#/departments">
+                            <md-button class="menu-subtitle-button" href="#/departments" ng-click="closeSidenav('left')">
                                 <span>Departments</span>
                             </md-button>
                             <md-divider></md-divider>
@@ -123,13 +123,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </v-pane-header>
                         <md-divider></md-divider>
                         <v-pane-content>
-                            <md-button class="menu-subtitle-button" href="#/students">
+                            <md-button class="menu-subtitle-button" href="#/students" ng-click="closeSidenav('left')">
                                 <span>Students</span>
                             </md-button>
-                            <md-button class="menu-subtitle-button" ng-click="">
+                            <md-button class="menu-subtitle-button" href="#/lecturers" ng-click="closeSidenav('left')">
                                 <span>Lecturers</span>
                             </md-button>
-                            <md-button class="menu-subtitle-button" ng-click="">
+                            <md-button class="menu-subtitle-button" ng-click="closeSidenav('left')">
                                 <span>Administrators</span>
                             </md-button>
                             <md-divider></md-divider>
@@ -137,16 +137,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </v-pane>   
                 </v-accordion>
                 
-                <md-button class="menu-button accent" ng-click="">
+                <md-button class="menu-button accent" ng-click="closeSidenav('left')">
                     <span>Groups</span>
                 </md-button>
-                <md-button class="menu-button accent" href="#/semesters">
+                <md-button class="menu-button accent" href="#/semesters" ng-click="closeSidenav('left')">
                     <span>Semesters</span>
                 </md-button>
-                <md-button class="menu-button accent" ng-click="">
+                <md-button class="menu-button accent" ng-click="closeSidenav('left')">
                     <span>Gradebooks</span>
                 </md-button>
-                <md-button class="menu-button accent" ng-click="">
+                <md-button class="menu-button accent" ng-click="closeSidenav('left')">
                     <span>Tasks</span>
                 </md-button>
             </section>

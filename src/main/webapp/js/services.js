@@ -38,12 +38,12 @@ services.factory('Semester', function ($resource) {
     });
 });
 
-services.factory('Administrators', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/administrators/:adminId');
+services.factory('Administrator', function ($resource) {
+    return $resource('http://localhost:8080/api/v1/administrators/:adminId');
 });
 
-services.factory('Lecturers', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/lecturers/:lecturerId');
+services.factory('Lecturer', function ($resource) {
+    return $resource('http://localhost:8080/api/v1/lecturers/:lecturerId');
 });
 
 services.factory('Student', function ($resource) {
@@ -85,7 +85,7 @@ services.factory('Faculty', function ($resource) {
 });
 
 services.factory('Department', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/departments/:departmentId', null, {
+    return $resource('http://localhost:8080/api/v1/departments/:departmentId', null, {
         update: {method: 'PUT'}
     });
 });
@@ -118,7 +118,7 @@ services.factory('AuthenticationService', function (Base64, $http, $cookieStore,
 
         var authdata = Base64.encode(username + ':' + password);
 
-        $http.get('http://gradebook-anastasius.rhcloud.com/api/v1/users/check', {
+        $http.get('http://localhost:8080/api/v1/users/check', {
             headers: {'Authorization': 'Basic ' + authdata}
         }).then(function (response) {
             callback(response);
