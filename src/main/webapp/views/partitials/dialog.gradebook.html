@@ -2,7 +2,7 @@
     <form name="gradebookForm" ng-submit="submit()" novalidate>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>Add Gradebook</h2>
+                <h2>{{mode}} Gradebook</h2>
                 <span flex></span>
                 <md-button type="button" class="md-icon-button" ng-click="cancel()">
                     <md-icon>close</md-icon>
@@ -22,7 +22,11 @@
                 <div layout="row">
                     <md-input-container flex>
                         <md-select name="group" ng-model="gradebook.academicGroupId" placeholder="Group" md-on-open="loadGroups()" required>  
-                            <md-option ng-value="group.academicGroupId" ng-repeat="group in groups">{{group.number}}</md-option>
+                            <md-option ng-value="group" 
+                                       ng-repeat="group in groups"
+                                       selected="{{ group.number === gradebook.academicGroupId.number ? 'selected' : '' }}">
+                                {{group.number}}
+                            </md-option>
                         </md-select>
                         <div ng-messages="gradebookForm.group.$error" ng-if="gradebookForm.$submitted">
                             <div ng-message="required">Group is required.</div>                        
@@ -30,7 +34,12 @@
                     </md-input-container>
                     <md-input-container flex>
                         <md-select name="semester" ng-model="gradebook.semesterId" placeholder="Semester"  md-on-open="loadSemesters()" required>                   
-                            <md-option ng-value="semester.semesterId" ng-repeat="semester in semesters">{{semester.academicYear}} {{semester.name}}</md-option>
+                            <md-option ng-value="semester" 
+                                       ng-repeat="semester in semesters"
+                                       selected="{{ semester.academicYear === gradebook.semesterId.academicYear 
+                                                   && semester.name === gradebook.semesterId.name ? 'selected' : '' }}">
+                                {{semester.academicYear}} {{semester.name}}
+                            </md-option>
                         </md-select>
                         <div ng-messages="gradebookForm.semester.$error" ng-if="gradebookForm.$submitted">
                             <div ng-message="required">Semester is required.</div>                        
@@ -79,7 +88,7 @@
                                 class="md-accent" md-mode="indeterminate"></md-progress-linear>
             <div layout="row" layout-align="end">
                 <md-button type="submit" class="md-primary">
-                    Submit
+                    {{submitButton}}
                 </md-button>
                 <md-button type="button" ng-click="cancel()" class="md-primary">
                     Cancel

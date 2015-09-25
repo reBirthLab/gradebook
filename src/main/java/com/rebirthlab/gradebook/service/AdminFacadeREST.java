@@ -16,7 +16,11 @@
  */
 package com.rebirthlab.gradebook.service;
 
+import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.Admin;
+import com.rebirthlab.gradebook.security.AuthenticationService;
+import com.rebirthlab.gradebook.security.CurrentUser;
+import com.rebirthlab.gradebook.security.UserDataFinder;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,6 +28,7 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -37,6 +42,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("administrators")
 public class AdminFacadeREST extends AbstractFacade<Admin> {
+
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
@@ -45,42 +51,74 @@ public class AdminFacadeREST extends AbstractFacade<Admin> {
     }
 
     @POST
-    @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Admin entity) {
-        super.create(entity);
+    public void createAdmin(@HeaderParam("Authorization") String authorization, Admin entity) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            super.create(entity);
+        }
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Admin entity) {
-        super.edit(entity);
+    public void editAdmin(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id, Admin entity) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            super.edit(entity);
+        }
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+    public void removeAdmin(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            super.remove(super.find(id));
+        }
     }
 
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Admin find(@PathParam("id") Integer id) {
-        return super.find(id);
+    public Admin findAdmin(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.find(id);
+        }
+
+        return null;
     }
 
     @GET
-    @Override
     @Produces({"application/xml", "application/json"})
-    public List<Admin> findAll() {
-        return super.findAll();
+    public List<Admin> findAllAdmins(@HeaderParam("Authorization") String authorization) {
+        
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.findAll();
+        }
+
+        return null;
     }
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

@@ -19,6 +19,7 @@ package com.rebirthlab.gradebook.service;
 import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.AcademicGroup;
 import com.rebirthlab.gradebook.entity.AcademicGroup_;
+import com.rebirthlab.gradebook.entity.Department;
 import com.rebirthlab.gradebook.entity.Lecturer;
 import com.rebirthlab.gradebook.security.AuthenticationService;
 import com.rebirthlab.gradebook.security.CurrentUser;
@@ -30,8 +31,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -49,26 +54,43 @@ public class AcademicGroupFacadeREST extends AbstractFacade<AcademicGroup> {
     public AcademicGroupFacadeREST() {
         super(AcademicGroup.class);
     }
+    
+    @POST
+    @Consumes({"application/xml", "application/json"})
+    public void createGroup(@HeaderParam("Authorization") String authorization, AcademicGroup entity) {
 
-//    @POST
-//    @Override
-//    @Consumes({"application/xml", "application/json"})
-//    public void create(AcademicGroup entity) {
-//        super.create(entity);
-//    }
-//
-//    @PUT
-//    @Path("{id}")
-//    @Consumes({"application/xml", "application/json"})
-//    public void edit(@PathParam("id") Integer id, AcademicGroup entity) {
-//        super.edit(entity);
-//    }
-//
-//    @DELETE
-//    @Path("{id}")
-//    public void remove(@PathParam("id") Integer id) {
-//        super.remove(super.find(id));
-//    }
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            super.create(entity);
+        }
+    }
+
+    @PUT
+    @Path("{id}")
+    @Consumes({"application/xml", "application/json"})
+    public void editGroup(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id, AcademicGroup entity) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            super.edit(entity);
+        }
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void removeGroup(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            super.remove(super.find(id));
+        }
+    }
 
     @GET
     @Path("{id}")
@@ -82,7 +104,6 @@ public class AcademicGroupFacadeREST extends AbstractFacade<AcademicGroup> {
     public List<AcademicGroup> findGroups(@HeaderParam("Authorization") String authorization){
 
         String username = new AuthenticationService().getUsername(authorization);
-
         CurrentUser user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {

@@ -30,7 +30,7 @@ var serverTimeZoneOffset = 4;
 
 controllers.controller('MainCtrl', function ($scope, $http, $rootScope, $window,
         $mdDialog, $mdSidenav, $location, AuthenticationService, MessageService,
-        UserGradebooks, Administrator, Lecturer, Student) {
+        Gradebook, Administrator, Lecturer, Student) {
 
     $scope.index = 0;
     $scope.toggleSidenav = function (menuId) {
@@ -55,7 +55,7 @@ controllers.controller('MainCtrl', function ($scope, $http, $rootScope, $window,
             $scope.menuTitle = 'ADMINISTRATIVE TOOLS';
 
             var admin = Administrator.get({
-                adminId: $rootScope.globals.currentUser.userId
+                administratorId: $rootScope.globals.currentUser.userId
             }, function () {
                 $scope.user = {
                     firstName: admin.firstName,
@@ -76,7 +76,7 @@ controllers.controller('MainCtrl', function ($scope, $http, $rootScope, $window,
                 };
             });
 
-            $scope.userGradebooks = UserGradebooks.query();
+            $scope.userGradebooks = Gradebook.query();
         }
 
         if (userRole === 'student') {
@@ -92,7 +92,7 @@ controllers.controller('MainCtrl', function ($scope, $http, $rootScope, $window,
                 };
             });
 
-            $scope.userGradebooks = UserGradebooks.query();
+            $scope.userGradebooks = Gradebook.query();
         }
     } catch (error) {
         console.log(error);
@@ -167,7 +167,12 @@ controllers.controller('GradebookDetailsDialogController', function ($scope, $md
         $mdDialog.cancel();
     };
 });
-controllers.controller('AddGradebookDialogController', function ($scope, $mdDialog, Group, Semester, lecturerId, Lecturer, MessageService, Gradebook) {
+
+controllers.controller('AddGradebookDialogController', function ($scope, $rootScope,
+        $mdDialog, Group, Semester, lecturerId, Lecturer, MessageService, Gradebook) {
+            
+    $scope.mode = 'Add';
+    $scope.submitButton = 'Submit';
 
     $scope.groupsLoading = true;
     $scope.semestersLoading = true;
@@ -194,14 +199,16 @@ controllers.controller('AddGradebookDialogController', function ($scope, $mdDial
     $scope.selectedLecturers = [];
 
     var lecturers = Lecturer.query(function (lecturers) {
-        var currentLecturer = {};
 
-        for (var i = 0; i < lecturers.length; i++) {
-            if (lecturers[i].lecturerId === lecturerId)
-                currentLecturer = lecturers[i];
+        if ($rootScope.globals.currentUser.userRole === 'lecturer') {
+            
+            var currentLecturer = {};
+            for (var i = 0; i < lecturers.length; i++) {
+                if (lecturers[i].lecturerId === lecturerId)
+                    currentLecturer = lecturers[i];
+            }
+            $scope.selectedLecturers.push(currentLecturer);
         }
-
-        $scope.selectedLecturers.push(currentLecturer);
 
         $scope.lecturers = lecturers.map(function (lect) {
             lect._lowerFirstName = lect.firstName.toLowerCase();
@@ -236,7 +243,7 @@ controllers.controller('AddGradebookDialogController', function ($scope, $mdDial
 
             if ($scope.selectedLecturers.length !== 0) {
                 for (var i = 0; i < $scope.selectedLecturers.length; i++) {
-                    if ($scope.selectedLecturers[i].lecturerId === lecturer.lecturerId) {
+                    if ($scope.selectedLecturers[i].lecturerId === $scope.lecturer.lecturerId) {
                         lecturer = undefined;
                     }
                 }
@@ -1435,6 +1442,632 @@ controllers.controller('DeleteStudentDialogController', function ($scope, $mdDia
 
         student.$delete({
             studentId: student.studentId
+        },
+        function () {
+            $mdDialog.hide();
+        }, function () {
+            MessageService.showErrorToast();
+            $scope.dataLoading = false;
+        });
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('AdministratorCtrl', function ($scope, $mdDialog, $state, MessageService, Administrator) {
+
+    $scope.administrators = Administrator.query();
+
+    $scope.isDeletionEnabled = false;
+    $scope.status = "disabled";
+
+    $scope.isExpanded = false;
+
+    $scope.toggleFilters = function () {
+        var isExpanded = $scope.isExpanded;
+        $scope.isExpanded = !isExpanded;
+    };
+
+    $scope.onChange = function (isDeletionEnabled) {
+        if (isDeletionEnabled) {
+            $scope.status = "enabled";
+        } else {
+            $scope.status = "disabled";
+        }
+    };
+
+    $scope.showAddAdministratorForm = function (ev) {
+        $mdDialog.show({
+            controller: 'AddAdministratorDialogController',
+            templateUrl: 'views/partitials/dialog.administrator.html',
+            parent: angular.element(document.body),
+            targetEvent: ev
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'New administrator was successfully added!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+
+    $scope.showEditAdministratorForm = function (ev, administrator) {
+        $mdDialog.show({
+            controller: 'EditAdministratorDialogController',
+            templateUrl: 'views/partitials/dialog.administrator.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                administrator: administrator
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'Administrator was successfully updated!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+
+    $scope.showDeleteAdministratorDialog = function (ev, administrator) {
+        $mdDialog.show({
+            controller: 'DeleteAdministratorDialogController',
+            templateUrl: 'views/partitials/dialog.delete-confirmation.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                administrator: administrator
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'Administrator was successfully deleted!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+});
+
+controllers.controller('AddAdministratorDialogController', function ($scope, $mdDialog, MessageService, Administrator) {
+    $scope.mode = 'Add';
+    $scope.submitButton = 'Submit';
+
+    $scope.submit = function () {
+        if ($scope.administratorForm.$valid) {
+            $scope.dataLoading = true;
+
+            var newAdministrator = new Administrator($scope.administrator);
+
+            newAdministrator.$save({
+            }, function () {
+                $mdDialog.hide();
+            }, function () {
+                MessageService.showErrorToast();
+                $scope.dataLoading = false;
+            });
+        }
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('EditAdministratorDialogController', function ($scope, $mdDialog, MessageService, administrator, Administrator) {
+    $scope.mode = 'Edit';
+    $scope.submitButton = 'Update';
+
+    $scope.administrator = administrator;
+
+    $scope.submit = function () {
+        if ($scope.administratorForm.$valid) {
+            $scope.dataLoading = true;
+
+            Administrator.update({
+                administratorId: administrator.adminId
+            }, $scope.administrator,
+                    function () {
+                        $mdDialog.hide();
+                    }, function () {
+                MessageService.showErrorToast();
+                $scope.dataLoading = false;
+            });
+        }
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('DeleteAdministratorDialogController', function ($scope, $mdDialog, MessageService, administrator) {
+    $scope.object = 'Administrator';
+
+    $scope.submit = function () {
+
+        $scope.dataLoading = true;
+
+        administrator.$delete({
+            administratorId: administrator.adminId
+        },
+        function () {
+            $mdDialog.hide();
+        }, function () {
+            MessageService.showErrorToast();
+            $scope.dataLoading = false;
+        });
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('GroupCtrl', function ($scope, $mdDialog, $state, MessageService, Group) {
+
+    $scope.groups = Group.query();
+
+    $scope.isDeletionEnabled = false;
+    $scope.status = "disabled";
+
+    $scope.isExpanded = false;
+
+    $scope.toggleFilters = function () {
+        var isExpanded = $scope.isExpanded;
+        $scope.isExpanded = !isExpanded;
+    };
+
+    $scope.onChange = function (isDeletionEnabled) {
+        if (isDeletionEnabled) {
+            $scope.status = "enabled";
+        } else {
+            $scope.status = "disabled";
+        }
+
+    };
+
+    $scope.showAddGroupForm = function (ev) {
+        $mdDialog.show({
+            controller: 'AddGroupDialogController',
+            templateUrl: 'views/partitials/dialog.group.html',
+            parent: angular.element(document.body),
+            targetEvent: ev
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'New group was successfully added!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+
+    $scope.showEditGroupForm = function (ev, group) {
+        $mdDialog.show({
+            controller: 'EditGroupDialogController',
+            templateUrl: 'views/partitials/dialog.group.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                group: group
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'Group was successfully updated!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+
+    $scope.showDeleteGroupDialog = function (ev, group) {
+        $mdDialog.show({
+            controller: 'DeleteGroupDialogController',
+            templateUrl: 'views/partitials/dialog.delete-confirmation.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                group: group
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'Group was successfully deleted!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+
+});
+
+controllers.controller('AddGroupDialogController', function ($scope, $mdDialog, MessageService, Group, Faculty) {
+    $scope.mode = 'Add';
+    $scope.submitButton = 'Submit';
+
+    $scope.facultiesLoading = true;
+
+    $scope.faculties = Faculty.query({
+    }, function () {
+        $scope.facultiesLoading = false;
+    }, function () {
+        MessageService.showErrorToast();
+        $scope.facultiesLoading = false;
+    });
+
+    $scope.submit = function () {
+        if ($scope.groupForm.$valid) {
+            $scope.dataLoading = true;
+
+            var newGroup = new Group($scope.group);
+
+            newGroup.$save({
+            }, function () {
+                $mdDialog.hide();
+            }, function () {
+                MessageService.showErrorToast();
+                $scope.dataLoading = false;
+            });
+        }
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('EditGroupDialogController', function ($scope, $mdDialog, MessageService, group, Faculty, Group) {
+    $scope.mode = 'Edit';
+    $scope.submitButton = 'Update';
+
+    $scope.group = group;
+    $scope.facultiesLoading = true;
+
+    $scope.faculties = Faculty.query({
+    }, function () {
+        $scope.facultiesLoading = false;
+    }, function () {
+        MessageService.showErrorToast();
+        $scope.facultiesLoading = false;
+    });
+
+    $scope.submit = function () {
+        if ($scope.groupForm.$valid) {
+            $scope.dataLoading = true;
+
+            Group.update({
+                groupId: group.academicGroupId
+            }, $scope.group,
+                    function () {
+                        $mdDialog.hide();
+                    }, function () {
+                MessageService.showErrorToast();
+                $scope.dataLoading = false;
+            });
+        }
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('DeleteGroupDialogController', function ($scope, $mdDialog, MessageService, group) {
+    $scope.object = 'Group';
+
+    $scope.submit = function () {
+
+        $scope.dataLoading = true;
+
+        group.$delete({
+            groupId: group.academicGroupId
+        },
+        function () {
+            $mdDialog.hide();
+        }, function () {
+            MessageService.showErrorToast();
+            $scope.dataLoading = false;
+        });
+
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('GradebookCtrl', function ($scope, $mdDialog, $state, MessageService, Gradebook) {
+
+    $scope.gradebooks = Gradebook.query();
+
+    $scope.isDeletionEnabled = false;
+    $scope.status = "disabled";
+
+    $scope.isExpanded = false;
+
+    $scope.toggleFilters = function () {
+        var isExpanded = $scope.isExpanded;
+        $scope.isExpanded = !isExpanded;
+    };
+
+    $scope.onChange = function (isDeletionEnabled) {
+        if (isDeletionEnabled) {
+            $scope.status = "enabled";
+        } else {
+            $scope.status = "disabled";
+        }
+    };
+
+    $scope.showAddGradebookForm = function (ev) {
+        $mdDialog.show({
+            controller: 'AddGradebookDialogController',
+            templateUrl: 'views/partitials/dialog.gradebook.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                lecturerId: null
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'New gradebook was successfully added!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+
+    $scope.showEditGradebookForm = function (ev, gradebook) {
+        $mdDialog.show({
+            controller: 'EditGradebookDialogController',
+            templateUrl: 'views/partitials/dialog.gradebook.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                gradebook: gradebook
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'Gradebook was successfully updated!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+
+    $scope.showDeleteGradebookDialog = function (ev, gradebook) {
+        $mdDialog.show({
+            controller: 'DeleteGradebookDialogController',
+            templateUrl: 'views/partitials/dialog.delete-confirmation.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                gradebook: gradebook
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'Gradebook was successfully deleted!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+});
+
+controllers.controller('EditGradebookDialogController', function ($scope, $mdDialog, MessageService, gradebook, Group, Semester, Lecturer, Gradebook) {
+    $scope.mode = 'Edit';
+    $scope.submitButton = 'Update';
+
+    $scope.gradebook = gradebook;
+
+    $scope.groupsLoading = true;
+    $scope.semestersLoading = true;
+    $scope.lecturersLoading = true;
+
+    $scope.groups = Group.query({
+    }, function () {
+        $scope.groupsLoading = false;
+    }, function () {
+        MessageService.showErrorToast();
+        $scope.groupsLoading = false;
+    });
+
+    $scope.semesters = Semester.query({
+    }, function () {
+        $scope.semestersLoading = false;
+    }, function () {
+        MessageService.showErrorToast();
+        $scope.semestersLoading = false;
+    });
+
+    $scope.lecturer;
+    $scope.searchText = null;
+    $scope.selectedLecturers = [];
+
+    var lecturers = Lecturer.query(function (lecturers) {
+
+        for (var i = 0; i < gradebook.lecturerCollection.length; i++) {
+            for (var j = 0; j < lecturers.length; j++) {
+                if (gradebook.lecturerCollection[i].lecturerId === lecturers[j].lecturerId)
+                    $scope.selectedLecturers.push(lecturers[j]);
+            }
+        }
+
+        $scope.lecturers = lecturers.map(function (lect) {
+            lect._lowerFirstName = lect.firstName.toLowerCase();
+            lect._lowerLastName = lect.lastName.toLowerCase();
+            return lect;
+        });
+    }).$promise.then(function () {
+        $scope.lecturersLoading = false;
+    }, function () {
+        MessageService.showErrorToast();
+        $scope.lecturersLoading = false;
+    });
+
+    $scope.querySearch = function (query) {
+        var results = query ? $scope.lecturers.filter(createFilterFor(query)) : [];
+        return results;
+    };
+
+    function createFilterFor(query) {
+        var lowercaseQuery = angular.lowercase(query);
+        return function filterFn(lecturer) {
+            return (lecturer._lowerFirstName.indexOf(lowercaseQuery) === 0) ||
+                    (lecturer._lowerLastName.indexOf(lowercaseQuery) === 0);
+        };
+    }
+
+    $scope.addLecturer = function () {
+
+        if ($scope.lecturer !== undefined) {
+
+            var lecturer = $scope.lecturer;
+
+            if ($scope.selectedLecturers.length !== 0) {
+                for (var i = 0; i < $scope.selectedLecturers.length; i++) {
+                    if ($scope.selectedLecturers[i].lecturerId === $scope.lecturer.lecturerId) {
+                        lecturer = undefined;
+                    }
+                }
+                if (lecturer !== undefined) {
+                    $scope.selectedLecturers.push(lecturer);
+                    $scope.lecturer = undefined;
+                } else {
+                    $scope.lecturer = undefined;
+                }
+            } else {
+                $scope.selectedLecturers.push(lecturer);
+                $scope.lecturer = undefined;
+            }
+        }
+    };
+
+    $scope.clearSelection = function () {
+        $scope.lecturer = undefined;
+    };
+
+    $scope.submit = function () {
+        if ($scope.gradebookForm.$valid) {
+            $scope.dataLoading = true;
+            
+            var selectedLecturerIds = [];
+
+            for (var i = 0; i < $scope.selectedLecturers.length; i++) {
+                selectedLecturerIds.push({lecturerId: $scope.selectedLecturers[i].lecturerId});
+            }
+
+            var gradebook = $scope.gradebook;
+            gradebook.lecturerCollection = selectedLecturerIds;
+
+            Gradebook.update({
+                gradebookId: gradebook.gradebookId
+            }, gradebook,
+                    function () {
+                        $mdDialog.hide();
+                    }, function () {
+                MessageService.showErrorToast();
+                $scope.dataLoading = false;
+            });
+        }
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('DeleteGradebookDialogController', function ($scope, $mdDialog, MessageService, gradebook) {
+    $scope.object = 'Gradebook';
+
+    $scope.submit = function () {
+
+        $scope.dataLoading = true;
+
+        gradebook.$delete({
+            gradebookId: gradebook.gradebookId
+        },
+        function () {
+            $mdDialog.hide();
+        }, function () {
+            MessageService.showErrorToast();
+            $scope.dataLoading = false;
+        });
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+});
+
+controllers.controller('TaskCtrl', function ($scope, $mdDialog, $state, MessageService, Task) {
+
+    $scope.tasks = Task.query();
+    
+    $scope.formatDate = function (date) {
+        var startDate = new Date(date);
+        return pad(startDate.getDate(), 2) + '/' +
+                pad(startDate.getMonth() + 1, 2) + '/' +
+                startDate.getFullYear();
+    };
+
+    $scope.isDeletionEnabled = false;
+    $scope.status = "disabled";
+
+    $scope.isExpanded = false;
+
+    $scope.toggleFilters = function () {
+        var isExpanded = $scope.isExpanded;
+        $scope.isExpanded = !isExpanded;
+    };
+
+    $scope.onChange = function (isDeletionEnabled) {
+        if (isDeletionEnabled) {
+            $scope.status = "enabled";
+        } else {
+            $scope.status = "disabled";
+        }
+    };
+
+    $scope.showAddTaskForm = function (ev) {
+        $mdDialog.show({
+            controller: 'AddTaskDialogController',
+            templateUrl: 'views/partitials/dialog.task-form.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                gradebookId: null
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'New task was successfully added!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+
+    $scope.showEditTaskForm = function (ev, task) {
+        $mdDialog.show({
+            controller: 'EditTaskDialogController',
+            templateUrl: 'views/partitials/dialog.task-form.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                task: task
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'Task was successfully updated!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+
+    $scope.showDeleteTaskDialog = function (ev, task) {
+        $mdDialog.show({
+            controller: 'DeleteTaskDialogController',
+            templateUrl: 'views/partitials/dialog.delete-confirmation.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            locals: {
+                task: task
+            }
+        }).then(function () {
+            $state.go($state.current, {}, {reload: true});
+            var message = 'Task was successfully deleted!';
+            MessageService.showSuccessToast(message);
+        });
+    };
+});
+
+controllers.controller('DeleteTaskDialogController', function ($scope, $mdDialog, MessageService, task) {
+    $scope.object = 'Task';
+
+    $scope.submit = function () {
+
+        $scope.dataLoading = true;
+
+        task.$delete({
+            taskId: task.taskId
         },
         function () {
             $mdDialog.hide();

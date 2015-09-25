@@ -19,7 +19,6 @@ package com.rebirthlab.gradebook.service;
 import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.Lecturer;
 import com.rebirthlab.gradebook.entity.Lecturer_;
-import com.rebirthlab.gradebook.entity.Student;
 import com.rebirthlab.gradebook.security.AuthenticationService;
 import com.rebirthlab.gradebook.security.CurrentUser;
 import com.rebirthlab.gradebook.security.UserDataFinder;

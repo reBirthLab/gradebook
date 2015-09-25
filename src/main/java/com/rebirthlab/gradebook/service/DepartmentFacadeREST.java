@@ -58,7 +58,7 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
         CurrentUser user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
-            em.persist(entity);
+            super.create(entity);
         }
     }
 
@@ -71,7 +71,7 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
         CurrentUser user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
-            em.merge(entity);
+            super.edit(entity);
         }
     }
 
@@ -83,7 +83,7 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
         CurrentUser user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
-            em.remove(em.merge(em.find(Department.class, id)));
+            super.remove(super.find(id));
         }
     }
 

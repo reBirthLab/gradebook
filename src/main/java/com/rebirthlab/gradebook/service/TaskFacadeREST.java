@@ -81,13 +81,6 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         }
     }
 
-    @GET
-    @Path("{id}")
-    @Produces({"application/xml", "application/json"})
-    public Task find(@PathParam("id") Integer id) {
-        return super.find(id);
-    }
-
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
@@ -115,6 +108,34 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
                 em.merge(task);
             }
         }
+    }
+    
+    @GET
+    @Path("{id}")
+    @Produces({"application/xml", "application/json"})
+    public Task findTask(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)
+                || user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
+            return super.find(id);
+        }
+        return null;
+    }
+
+    @GET
+    @Produces({"application/xml", "application/json"})
+    public List<Task> findAllTasks(@HeaderParam("Authorization") String authorization) {
+        
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.findAll();
+        }
+        return null;
     }
 
     @Override

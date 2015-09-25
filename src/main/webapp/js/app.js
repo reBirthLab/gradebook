@@ -119,6 +119,12 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
         controller: 'SemesterCtrl'
     });
     
+    $stateProvider.state('administrators', {
+        url: '/administrators',
+        templateUrl: 'views/administrators.html',
+        controller: 'AdministratorCtrl'
+    });
+    
     $stateProvider.state('lecturers', {
         url: '/lecturers',
         templateUrl: 'views/lecturers.html',
@@ -129,6 +135,24 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
         url: '/students',
         templateUrl: 'views/students.html',
         controller: 'StudentCtrl'
+    });
+    
+    $stateProvider.state('groups', {
+        url: '/groups',
+        templateUrl: 'views/groups.html',
+        controller: 'GroupCtrl'
+    });
+    
+    $stateProvider.state('gradebooks', {
+        url: '/gradebooks',
+        templateUrl: 'views/gradebooks.html',
+        controller: 'GradebookCtrl'
+    });
+    
+    $stateProvider.state('tasks', {
+        url: '/tasks',
+        templateUrl: 'views/tasks.html',
+        controller: 'TaskCtrl'
     });
 });
 

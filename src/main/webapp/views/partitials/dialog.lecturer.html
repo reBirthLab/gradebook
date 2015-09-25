@@ -12,8 +12,7 @@
         <md-dialog-content>
             <div layout="column">
                 <md-input-container>
-                    <md-select name="department" ng-model="lecturer.departmentId" required>
-                        <md-select-label>{{lecturer.departmentId !== undefined ? lecturer.departmentId.name : 'Select Department'}}</md-select-label>
+                    <md-select name="department" ng-model="lecturer.departmentId" placeholder="Department" required>
                         <md-option ng-value="department" 
                                    ng-repeat="department in departments"
                                    selected="{{ department.name === lecturer.departmentId.name ? 'selected' : '' }}">
