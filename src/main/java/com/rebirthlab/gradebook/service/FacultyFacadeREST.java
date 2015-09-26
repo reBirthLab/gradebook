@@ -52,7 +52,8 @@ public class FacultyFacadeREST extends AbstractFacade<Faculty> {
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public void createFaculty(@HeaderParam("Authorization") String authorization, Faculty entity) {
+    public void createFaculty(@HeaderParam("Authorization") String authorization,
+            Faculty entity) {
 
         String username = new AuthenticationService().getUsername(authorization);
         CurrentUser user = UserDataFinder.findDataBy(username);
@@ -65,8 +66,9 @@ public class FacultyFacadeREST extends AbstractFacade<Faculty> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void editFaculty(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id, Faculty entity) {
-        
+    public void editFaculty(@HeaderParam("Authorization") String authorization,
+            @PathParam("id") Integer id, Faculty entity) {
+
         String username = new AuthenticationService().getUsername(authorization);
         CurrentUser user = UserDataFinder.findDataBy(username);
 
@@ -77,8 +79,9 @@ public class FacultyFacadeREST extends AbstractFacade<Faculty> {
 
     @DELETE
     @Path("{id}")
-    public void removeFaculty(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
-        
+    public void removeFaculty(@HeaderParam("Authorization") String authorization,
+            @PathParam("id") Integer id) {
+
         String username = new AuthenticationService().getUsername(authorization);
         CurrentUser user = UserDataFinder.findDataBy(username);
 
@@ -90,15 +93,31 @@ public class FacultyFacadeREST extends AbstractFacade<Faculty> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Faculty find(@PathParam("id") Integer id) {
-        return super.find(id);
+    public Faculty findFaculty(@HeaderParam("Authorization") String authorization,
+            @PathParam("id") Integer id) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.find(id);
+        }
+
+        return null;
     }
 
     @GET
-    @Override
     @Produces({"application/xml", "application/json"})
-    public List<Faculty> findAll() {
-        return super.findAll();
+    public List<Faculty> findAllFaculties(@HeaderParam("Authorization") String authorization) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.findAll();
+        }
+
+        return null;
     }
 
     @Override

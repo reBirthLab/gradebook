@@ -74,8 +74,9 @@ public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
                     )
             );
             return getEntityManager().createQuery(cq).getResultList();
+        }
 
-        } else if (user.getRole().equals(GradebookConstants.ROLE_STUDENT)) {
+        if (user.getRole().equals(GradebookConstants.ROLE_STUDENT)) {
             Integer studentId = user.getId();
             cq.where(
                     cb.and(
@@ -86,10 +87,10 @@ public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
                     )
             );
             return getEntityManager().createQuery(cq).getResultList();
-
-        } else {
-            return null;
         }
+        
+        return null;
+
     }
 
     @Override

@@ -16,6 +16,7 @@
  */
 package com.rebirthlab.gradebook.service;
 
+import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.Users;
 import com.rebirthlab.gradebook.security.AuthenticationService;
 import com.rebirthlab.gradebook.security.CurrentUser;
@@ -54,10 +55,17 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     }
 
     @GET
-    @Override
     @Produces({"application/xml", "application/json"})
-    public List<Users> findAll() {
-        return super.findAll();
+    public List<Users> findAllUsers(@HeaderParam("Authorization") String authorization) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.findAll();
+        }
+
+        return null;
     }
 
     @Override

@@ -4,15 +4,15 @@ GradeBook is a digital implementation of traditional paper grade book that commo
 ##Main Features
 * Flexible layout
 * Works on mobiles
-* Three access levels - Lecturer, Student and Administrator *(in development)*
-* Create grade books
-* Convinient grouping of grade books
-* Add tasks
+* Three access levels - Lecturer, Student and Administrator
+* Convenient menu grouping of grade books
 * Automatic attendance book generation
-* Update student grades and attendances
-* View grade book deteils
-* View task details
 * REST API
+* Create grade books
+* View grade book details
+* Add tasks
+* View task details
+* Update student grades and attendances
 
 ##Try it
 Project URL: [http://gradebook-anastasius.rhcloud.com](http://gradebook-anastasius.rhcloud.com)

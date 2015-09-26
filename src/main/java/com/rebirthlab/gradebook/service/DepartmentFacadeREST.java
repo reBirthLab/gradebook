@@ -65,7 +65,8 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void editDepartment(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id, Department entity) {
+    public void editDepartment(@HeaderParam("Authorization") String authorization,
+            @PathParam("id") Integer id, Department entity) {
 
         String username = new AuthenticationService().getUsername(authorization);
         CurrentUser user = UserDataFinder.findDataBy(username);
@@ -77,7 +78,8 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
 
     @DELETE
     @Path("{id}")
-    public void removeDepartment(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
+    public void removeDepartment(@HeaderParam("Authorization") String authorization,
+            @PathParam("id") Integer id) {
 
         String username = new AuthenticationService().getUsername(authorization);
         CurrentUser user = UserDataFinder.findDataBy(username);
@@ -90,15 +92,31 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Department find(@PathParam("id") Integer id) {
-        return super.find(id);
+    public Department findDepartment(@HeaderParam("Authorization") String authorization,
+            @PathParam("id") Integer id) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.find(id);
+        }
+
+        return null;
     }
 
     @GET
-    @Override
     @Produces({"application/xml", "application/json"})
-    public List<Department> findAll() {
-        return super.findAll();
+    public List<Department> findAllDepartments(@HeaderParam("Authorization") String authorization) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.findAll();
+        }
+
+        return null;
     }
 
     @Override

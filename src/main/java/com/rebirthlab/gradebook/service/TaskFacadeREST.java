@@ -35,6 +35,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -65,7 +66,8 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         String username = new AuthenticationService().getUsername(authorization);
         CurrentUser user = UserDataFinder.findDataBy(username);
 
-        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
+        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)
+                || user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
 
             em.persist(task);
             em.flush();
@@ -91,7 +93,9 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
         String username = new AuthenticationService().getUsername(authorization);
         CurrentUser user = UserDataFinder.findDataBy(username);
 
-        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
+        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)
+                || user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+
             Task oldTask = em.find(Task.class, id);
             if (task.getStartDate().getTime() != oldTask.getStartDate().getTime()
                     || task.getTaskLength() != oldTask.getTaskLength()
@@ -107,6 +111,18 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
             } else {
                 em.merge(task);
             }
+        }
+    }
+    
+    @DELETE
+    @Path("{id}")
+    public void removeTask(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            super.remove(super.find(id));
         }
     }
     

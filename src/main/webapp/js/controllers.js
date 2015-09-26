@@ -397,16 +397,36 @@ controllers.controller('GradebookTasksCtrl', function ($scope, $rootScope, $stat
     };
 });
 
-controllers.controller('AddTaskDialogController', function ($scope, $mdDialog, MessageService, Task, gradebookId) {
+controllers.controller('AddTaskDialogController', function ($scope, $mdDialog,
+        $rootScope, MessageService, Gradebook, Task, gradebookId) {
+            
     $scope.mode = 'Add';
     $scope.submitButton = 'Submit';
+
+    $scope.userRole = $rootScope.globals.currentUser.userRole;
+
+    if ($scope.userRole === 'admin') {
+        $scope.gradebooksLoading = true;
+
+        $scope.gradebooks = Gradebook.query({
+        }, function () {
+            $scope.gradebooksLoading = false;
+        }, function () {
+            MessageService.showErrorToast();
+            $scope.gradebooksLoading = false;
+        });
+    }
 
     $scope.submit = function () {
         if ($scope.taskForm.$valid) {
             $scope.dataLoading = true;
 
             var newTask = new Task($scope.task);
-            newTask.gradebookId = parseInt(gradebookId);
+            
+            if ($scope.userRole === 'lecturer') {
+                newTask.gradebookId = parseInt(gradebookId);
+            }
+            
             newTask.$save({
             }, function () {
                 $mdDialog.hide();
@@ -483,7 +503,9 @@ controllers.controller('TaskDetailsDialogController', function ($scope, $rootSco
     }
 });
 
-controllers.controller('EditTaskDialogController', function ($scope, $mdDialog, MessageService, task, Task) {
+controllers.controller('EditTaskDialogController', function ($scope, $mdDialog,
+        MessageService, task, Task) {
+            
     $scope.mode = 'Edit';
     $scope.submitButton = 'Update';
 
@@ -1984,13 +2006,6 @@ controllers.controller('DeleteGradebookDialogController', function ($scope, $mdD
 controllers.controller('TaskCtrl', function ($scope, $mdDialog, $state, MessageService, Task) {
 
     $scope.tasks = Task.query();
-    
-    $scope.formatDate = function (date) {
-        var startDate = new Date(date);
-        return pad(startDate.getDate(), 2) + '/' +
-                pad(startDate.getMonth() + 1, 2) + '/' +
-                startDate.getFullYear();
-    };
 
     $scope.isDeletionEnabled = false;
     $scope.status = "disabled";

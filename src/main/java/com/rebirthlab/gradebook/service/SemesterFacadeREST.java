@@ -63,7 +63,7 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
         CurrentUser user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
-            em.persist(entity);
+            super.create(entity);
         }
     }
 
@@ -76,7 +76,7 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
         CurrentUser user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
-            em.merge(entity);
+            super.edit(entity);
         }
     }
 
@@ -88,15 +88,24 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
         CurrentUser user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
-            em.remove(em.merge(em.find(Semester.class, id)));
+            super.remove(super.find(id));
         }
     }
 
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Semester find(@PathParam("id") Integer id) {
-        return super.find(id);
+    public Semester find(@HeaderParam("Authorization") String authorization,
+            @PathParam("id") Integer id) {
+
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.find(id);
+        }
+        
+        return null;
     }
 
     @GET
@@ -107,10 +116,14 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
         CurrentUser user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return findActualSemesters();
+        }
+        
+        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
             return super.findAll();
         }
         
-        return findActualSemesters();
+        return null;
     }
 
     private List<Semester> findActualSemesters() {

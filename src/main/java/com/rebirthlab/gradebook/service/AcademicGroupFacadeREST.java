@@ -19,7 +19,6 @@ package com.rebirthlab.gradebook.service;
 import com.rebirthlab.gradebook.common.GradebookConstants;
 import com.rebirthlab.gradebook.entity.AcademicGroup;
 import com.rebirthlab.gradebook.entity.AcademicGroup_;
-import com.rebirthlab.gradebook.entity.Department;
 import com.rebirthlab.gradebook.entity.Lecturer;
 import com.rebirthlab.gradebook.security.AuthenticationService;
 import com.rebirthlab.gradebook.security.CurrentUser;
@@ -95,8 +94,16 @@ public class AcademicGroupFacadeREST extends AbstractFacade<AcademicGroup> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public AcademicGroup find(@PathParam("id") Integer id) {
-        return super.find(id);
+    public AcademicGroup findGroup(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
+        
+        String username = new AuthenticationService().getUsername(authorization);
+        CurrentUser user = UserDataFinder.findDataBy(username);
+
+        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
+            return super.find(id);
+        }
+        
+        return null;
     }
 
     @GET

@@ -156,6 +156,7 @@
         },
         "md-input-container": {
             "attributes": {
+                "ng-show": {},
                 "class": {}
             }
         },

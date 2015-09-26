@@ -64,7 +64,8 @@ public class GradebookFacadeREST extends AbstractFacade<Gradebook> {
         String username = new AuthenticationService().getUsername(authorization);
         CurrentUser user = UserDataFinder.findDataBy(username);
 
-        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
+        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)
+                || user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             super.create(entity);
         }
     }
