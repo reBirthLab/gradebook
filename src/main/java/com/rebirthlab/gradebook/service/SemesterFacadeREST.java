@@ -116,11 +116,11 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
         CurrentUser user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
-            return findActualSemesters();
+            return super.findAll();
         }
         
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
-            return super.findAll();
+            return findActualSemesters();
         }
         
         return null;
