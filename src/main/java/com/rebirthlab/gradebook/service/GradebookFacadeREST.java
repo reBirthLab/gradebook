@@ -98,16 +98,8 @@ public class GradebookFacadeREST extends AbstractFacade<Gradebook> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Gradebook findGradebook(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
-
-        String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
-
-        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)
-                || user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
-            return super.find(id);
-        }
-        return null;
+    public Gradebook findGradebook(@PathParam("id") Integer id) {
+        return super.find(id);
     }
 
     @GET

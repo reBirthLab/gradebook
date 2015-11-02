@@ -450,6 +450,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-align: left;
     cursor: pointer;
     height: 58px;
+    outline: none;
 }
 
 .table .header-secondary th {
@@ -580,6 +581,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     vertical-align: top;
     text-align: left;
     cursor: pointer;
+    outline: none;
 }
 
 .table.attendance .attendance-button {

@@ -90,17 +90,8 @@ public class StudentFacadeREST extends AbstractFacade<Student> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Student findStudent(@HeaderParam("Authorization") String authorization,
-            @PathParam("id") Integer id) {
-
-        String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
-
-        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
-            return super.find(id);
-        }
-
-        return null;
+    public Student findStudent(@PathParam("id") Integer id) {
+        return super.find(id);
     }
 
     @GET

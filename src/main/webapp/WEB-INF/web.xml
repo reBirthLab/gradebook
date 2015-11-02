@@ -18,6 +18,15 @@
 	<servlet-mapping>
 		<servlet-name>RESTful Jersey Gradebook Service</servlet-name>
 		<url-pattern>/api/*</url-pattern>
-	</servlet-mapping>
+        </servlet-mapping>     
+        <!-- <security-constraint>
+            <web-resource-collection>
+                <web-resource-name>gradebook</web-resource-name>
+                <url-pattern>/*</url-pattern>
+            </web-resource-collection>
+            <user-data-constraint>
+                <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+            </user-data-constraint>
+        </security-constraint> -->
 </web-app>
 

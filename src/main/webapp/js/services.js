@@ -18,76 +18,79 @@
 
 var services = angular.module('GradebookServices', []);
 
+var domainName = 'http://gradebook-anastasius.rhcloud.com';
+//var domainName = 'https://gradebook.ga';
+
 services.factory('Gradebook', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/gradebooks/:gradebookId', null, {
+    return $resource(domainName + '/api/v1/gradebooks/:gradebookId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Group', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/groups/:groupId', null, {
+    return $resource(domainName + '/api/v1/groups/:groupId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Semester', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/semesters/:semesterId', null, {
+    return $resource(domainName + '/api/v1/semesters/:semesterId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Administrator', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/administrators/:administratorId', null, {
+    return $resource(domainName + '/api/v1/administrators/:administratorId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Lecturer', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/lecturers/:lecturerId', null, {
+    return $resource(domainName +  '/api/v1/lecturers/:lecturerId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Student', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/students/:studentId', null, {
+    return $resource(domainName + '/api/v1/students/:studentId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('GradebookTasks', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks');
+    return $resource(domainName + '/api/v1/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks');
 });
 
 services.factory('GradebookAttendance', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/attendance');
+    return $resource(domainName + '/api/v1/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/attendance');
 });
 
 services.factory('Task', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/tasks/:taskId', null, {
+    return $resource(domainName + '/api/v1/tasks/:taskId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Grade', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/students/:studentId/tasks/:taskId/grade', null, {
+    return $resource(domainName + '/api/v1/students/:studentId/tasks/:taskId/grade', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Attendance', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/attendances/:attendanceId', null, {
+    return $resource(domainName + '/api/v1/attendances/:attendanceId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Faculty', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/faculties/:facultyId', null, {
+    return $resource(domainName + '/api/v1/faculties/:facultyId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Department', function ($resource) {
-    return $resource('http://gradebook-anastasius.rhcloud.com/api/v1/departments/:departmentId', null, {
+    return $resource(domainName + '/api/v1/departments/:departmentId', null, {
         update: {method: 'PUT'}
     });
 });
@@ -120,7 +123,7 @@ services.factory('AuthenticationService', function (Base64, $http, $cookieStore,
 
         var authdata = Base64.encode(username + ':' + password);
 
-        $http.get('http://gradebook-anastasius.rhcloud.com/api/v1/users/check', {
+        $http.get(domainName + '/api/v1/users/check', {
             headers: {'Authorization': 'Basic ' + authdata}
         }).then(function (response) {
             callback(response);

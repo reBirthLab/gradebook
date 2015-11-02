@@ -113,7 +113,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
             }
         }
     }
-    
+
     @DELETE
     @Path("{id}")
     public void removeTask(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
@@ -125,26 +125,18 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
             super.remove(super.find(id));
         }
     }
-    
+
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Task findTask(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
-
-        String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
-
-        if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)
-                || user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
-            return super.find(id);
-        }
-        return null;
+    public Task findTask(@PathParam("id") Integer id) {
+        return super.find(id);
     }
 
     @GET
     @Produces({"application/xml", "application/json"})
     public List<Task> findAllTasks(@HeaderParam("Authorization") String authorization) {
-        
+
         String username = new AuthenticationService().getUsername(authorization);
         CurrentUser user = UserDataFinder.findDataBy(username);
 
