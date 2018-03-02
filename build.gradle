@@ -1,0 +1,25 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'war'
+
+group = 'com.rebirthlab'
+version = '1.0'
+
+description = "GradeBook"
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+repositories {     
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+dependencies {
+    compile group: 'org.hibernate', name: 'hibernate-jpamodelgen', version:'4.3.1.Final'
+    compile group: 'commons-codec', name: 'commons-codec', version:'1.6'
+    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version:'2.19'
+    providedCompile group: 'org.hibernate', name: 'hibernate-entitymanager', version:'4.3.1.Final'
+    providedCompile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version:'1.0.0.Final'
+    providedCompile group: 'javax', name: 'javaee-api', version:'7.0'
+}
