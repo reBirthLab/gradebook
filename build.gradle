@@ -7,10 +7,6 @@ version = '1.0'
 
 description = "GradeBook"
 
-tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
-}
-
 repositories {     
      maven { url "http://repo.maven.apache.org/maven2" }
 }

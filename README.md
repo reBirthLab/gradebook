@@ -1,7 +1,7 @@
-#GradeBook
+# GradeBook
 GradeBook is a digital implementation of traditional paper grade book that commonly used in Ukrainian higher education system. 
 
-##Main Features
+## Main Features
 * Flexible layout
 * Works on mobiles
 * Three access levels - Lecturer, Student and Administrator
@@ -14,7 +14,7 @@ GradeBook is a digital implementation of traditional paper grade book that commo
 * View task details
 * Update student grades and attendances
 
-##Try it
+## Try it
 Project URL: [http://gradebook-anastasius.rhcloud.com](http://gradebook-anastasius.rhcloud.com)
 
 Student Access Credentials: 
@@ -24,7 +24,7 @@ Student Access Credentials:
 Admin and Lecturer Access Credentials:
 > *On demand*
 
-##Technology Stack
+## Technology Stack
 *Front End*
 * HTML/CSS
 * Angular Material
@@ -41,5 +41,5 @@ Admin and Lecturer Access Credentials:
 * Wildfly 8 Application Server
 * Maven
 
-##Demo Video
+## Demo Video
 [![alt tag](https://raw.githubusercontent.com/reBirthLab/gradebook/master/src/main/webapp/images/video-thumnail.png)](https://youtu.be/Qd_O_RUQZRs)
