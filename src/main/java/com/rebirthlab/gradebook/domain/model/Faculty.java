@@ -1,0 +1,135 @@
+/*
+ * Copyright (C) 2015 Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.rebirthlab.gradebook.domain.model;
+
+import com.rebirthlab.gradebook.domain.model.group.Group;
+import java.io.Serializable;
+import java.util.Collection;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
+ */
+@Entity
+@Table(name = "faculty")
+
+@NamedQueries({
+    @NamedQuery(name = "Faculty.findAll", query = "SELECT f FROM Faculty f"),
+    @NamedQuery(name = "Faculty.findByFacultyId", query = "SELECT f FROM Faculty f WHERE f.facultyId = :facultyId"),
+    @NamedQuery(name = "Faculty.findByName", query = "SELECT f FROM Faculty f WHERE f.name = :name")})
+public class Faculty implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Column(name = "faculty_id")
+    private Integer facultyId;
+
+    @NotNull
+    @Size(min = 1, max = 150)
+    @Column(name = "name")
+    private String name;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
+    private Collection<Department> departmentCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
+    private Collection<Group> academicGroupCollection;
+
+    public Faculty() {
+    }
+
+    public Faculty(Integer facultyId) {
+        this.facultyId = facultyId;
+    }
+
+    public Faculty(Integer facultyId, String name) {
+        this.facultyId = facultyId;
+        this.name = name;
+    }
+
+    public Integer getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(Integer facultyId) {
+        this.facultyId = facultyId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @XmlTransient
+    public Collection<Department> getDepartmentCollection() {
+        return departmentCollection;
+    }
+
+    public void setDepartmentCollection(Collection<Department> departmentCollection) {
+        this.departmentCollection = departmentCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Group> getAcademicGroupCollection() {
+        return academicGroupCollection;
+    }
+
+    public void setAcademicGroupCollection(Collection<Group> academicGroupCollection) {
+        this.academicGroupCollection = academicGroupCollection;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (facultyId != null ? facultyId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Faculty)) {
+            return false;
+        }
+        Faculty other = (Faculty) object;
+        if ((this.facultyId == null && other.facultyId != null) || (this.facultyId != null && !this.facultyId.equals(other.facultyId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.rebirthlab.gradebook.entity.Faculty[ facultyId=" + facultyId + " ]";
+    }
+
+}
