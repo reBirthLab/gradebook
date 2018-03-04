@@ -32,14 +32,16 @@ Admin and Lecturer Access Credentials:
 
 *Back End*
 * RESTful API
-* Java EE
 * JAX-RS
-* Java Persistence API
-* JPA Criteria API
+* Spring Boot
+* Spring Security
+* Spring Data JPA
 * JSON
 * MySQL
-* Wildfly 8 Application Server
-* Maven
+* OpenShift
+* Docker
+* Kubernetes
+* Gradle
 
 ## Demo Video
 [![alt tag](https://raw.githubusercontent.com/reBirthLab/gradebook/master/src/main/webapp/images/video-thumnail.png)](https://youtu.be/Qd_O_RUQZRs)
