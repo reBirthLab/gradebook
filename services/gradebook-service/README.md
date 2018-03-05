@@ -35,12 +35,15 @@ Admin and Lecturer Access Credentials:
 * JAX-RS
 * Spring Boot
 * Spring Security
+* OAuth2
+* JWT
 * Spring Data JPA
 * JSON
 * MySQL
 * OpenShift
 * Docker
 * Kubernetes
+* Java 9
 * Gradle
 
 ## Demo Video
