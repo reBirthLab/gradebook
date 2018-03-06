@@ -1,2 +1,19 @@
 server:
   port: 8080
+
+keystore:
+  store: gradebook.jks
+  storepass: storepassword
+  keyalias: gradebook
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create
+  datasource:
+    url: jdbc:mysql://localhost:3306/gradebook
+    username: user
+    password: password
