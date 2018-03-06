@@ -2,7 +2,6 @@ package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.application.service.user.AbstractUserDTO;
 import com.rebirthlab.gradebook.application.service.user.UserService;
-import com.rebirthlab.gradebook.domain.model.user.User;
 import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
 import com.rebirthlab.gradebook.application.security.AuthenticationService;
 import com.rebirthlab.gradebook.application.security.CurrentUser;
@@ -51,7 +50,7 @@ public class UserController {
     }
 
     @GET
-    public List<User> findAllUsers(@HeaderParam("Authorization") String authorization) {
+    public List<Object> findAllUsers(@HeaderParam("Authorization") String authorization) {
         String username = new AuthenticationService().getUsername(authorization);
         CurrentUser user = UserDataFinder.findDataBy(username);
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {

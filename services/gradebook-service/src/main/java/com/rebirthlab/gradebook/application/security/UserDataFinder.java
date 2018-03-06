@@ -19,7 +19,6 @@ package com.rebirthlab.gradebook.application.security;
 import com.rebirthlab.gradebook.domain.model.user.Admin;
 import com.rebirthlab.gradebook.domain.model.user.Lecturer;
 import com.rebirthlab.gradebook.domain.model.user.Student;
-import com.rebirthlab.gradebook.domain.model.user.User;
 import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +50,7 @@ public class UserDataFinder {
             em = (EntityManager) new InitialContext().lookup("java:comp/env/PersistenceContext");
 
             CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery cq = cb.createQuery(User.class);
+           // CriteriaQuery cq = cb.createQuery(User.class);
 
      /*       Root users = cq.from(AbstractUserDTO.class);
             cq.where(
