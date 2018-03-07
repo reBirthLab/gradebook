@@ -51,8 +51,8 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("gradebook-web")
-                .authorities("ROLE_CLIENT")
                 .authorizedGrantTypes("implicit")
+                .resourceIds("gradebook")
                 .autoApprove(true)
                 .accessTokenValiditySeconds(60 * 60 * 6)
                 .scopes("read", "write");
