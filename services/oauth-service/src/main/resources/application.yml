@@ -1,7 +1,5 @@
 server:
   port: 8080
-  servlet:
-   contextPath: /uaa
 
 keystore:
   store: gradebook.jks
@@ -9,6 +7,8 @@ keystore:
   keyalias: gradebook
 
 spring:
+  jersey:
+    application-path: /api/v1
   jpa:
     properties:
       hibernate:

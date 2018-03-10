@@ -1,5 +1,6 @@
 package com.rebirthlab.gradebook.auth.model;
 
+import com.rebirthlab.gradebook.auth.service.UserDTO;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +24,6 @@ public class User implements UserDetails {
     private String email;
 
     @NotNull
-    @Size(min = 6)
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -39,10 +38,14 @@ public class User implements UserDetails {
         roles = new HashSet<>();
     }
 
-    public User(String email, String password, Set<String> roles) {
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
+    public User(UserDTO userDTO) {
+        this.email = userDTO.getEmail();
+        this.password = userDTO.getPassword();
+        this.roles = new HashSet<>(userDTO.getRoles());
+        this.isAccountNonExpired = userDTO.isAccountNonExpired();
+        this.isAccountNonLocked = userDTO.isAccountNonLocked();
+        this.isCredentialsNonExpired = userDTO.isCredentialsNonExpired();
+        this.isEnabled = userDTO.isEnabled();
     }
 
     @Override
