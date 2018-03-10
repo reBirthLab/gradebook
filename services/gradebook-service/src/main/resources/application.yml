@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  jersey:
+    application-path: /api/v1
   jpa:
     properties:
       hibernate:

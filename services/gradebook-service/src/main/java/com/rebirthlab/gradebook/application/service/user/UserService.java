@@ -5,6 +5,4 @@ package com.rebirthlab.gradebook.application.service.user;
  */
 public interface UserService {
 
-    Object registerUser(AbstractUserDTO user);
-
 }

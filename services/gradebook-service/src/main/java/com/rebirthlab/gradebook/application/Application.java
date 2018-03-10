@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EntityScan(basePackages = "com.rebirthlab.gradebook.domain.model")
 @EnableJpaRepositories(basePackages = "com.rebirthlab.gradebook.domain.model")
 @EnableTransactionManagement
+//@EnableResourceServer
 public class Application {
 
     public static void main(String[] args) {

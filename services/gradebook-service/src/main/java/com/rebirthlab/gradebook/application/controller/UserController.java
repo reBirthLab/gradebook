@@ -36,7 +36,7 @@ public class UserController {
     @POST
     @Transactional
     public Response createUser(AbstractUserDTO user) {
-        Object createdUser = userService.registerUser(user);
+        Object createdUser = null;
         return Response.ok(createdUser).build();
     }
 
