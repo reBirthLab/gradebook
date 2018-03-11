@@ -52,6 +52,12 @@ public class UserController {
         throw new BadRequestException("The user has not been authenticated");
     }
 
+    @PUT
+    public Response updateUser(UserDTO userDTO) {
+        // TODO: Implement user update logic
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
     @DELETE
     public Response deleteUser(@Context HttpServletRequest request,
                                @QueryParam("email") String email) {

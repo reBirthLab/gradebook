@@ -2,7 +2,6 @@ package com.rebirthlab.gradebook.auth.service;
 
 import com.rebirthlab.gradebook.auth.model.User;
 import java.util.Optional;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * Created by Anastasiy
