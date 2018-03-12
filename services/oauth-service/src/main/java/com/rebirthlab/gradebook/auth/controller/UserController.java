@@ -45,11 +45,8 @@ public class UserController {
     @GET
     public Response getUser(@Context SecurityContext securityContext) {
         Authentication authentication = (Authentication) securityContext.getUserPrincipal();
-        Optional<UserDetails> currentUser = Optional.ofNullable((UserDetails) authentication.getPrincipal());
-        if (currentUser.isPresent()) {
-            return Response.ok(currentUser).build();
-        }
-        throw new BadRequestException("The user has not been authenticated");
+        UserDetails currentUser = (UserDetails) authentication.getPrincipal();
+        return Response.ok(currentUser).build();
     }
 
     @PUT
