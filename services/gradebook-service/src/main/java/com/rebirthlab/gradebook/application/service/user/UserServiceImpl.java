@@ -1,0 +1,54 @@
+package com.rebirthlab.gradebook.application.service.user;
+
+import com.rebirthlab.gradebook.domain.model.user.AdminRepository;
+import com.rebirthlab.gradebook.domain.model.user.LecturerRepository;
+import com.rebirthlab.gradebook.domain.model.user.StudentRepository;
+import com.rebirthlab.gradebook.domain.model.user.User;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * Created by Anastasiy
+ */
+@Service
+public class UserServiceImpl implements UserService {
+
+    private AdminRepository adminRepository;
+    private LecturerRepository lecturerRepository;
+    private StudentRepository studentRepository;
+
+    @Autowired
+    public UserServiceImpl(AdminRepository adminRepository,
+                           LecturerRepository lecturerRepository,
+                           StudentRepository studentRepository) {
+        this.adminRepository = adminRepository;
+        this.lecturerRepository = lecturerRepository;
+        this.studentRepository = studentRepository;
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        Set<User> user = new HashSet<>();
+        adminRepository.findByEmail(email).ifPresent(user::add);
+        lecturerRepository.findByEmail(email).ifPresent(user::add);
+        studentRepository.findByEmail(email).ifPresent(user::add);
+        if (user.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(user.iterator().next());
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        List<User> users = new ArrayList<>();
+        adminRepository.findAll().forEach(users::add);
+        lecturerRepository.findAll().forEach(users::add);
+        studentRepository.findAll().forEach(users::add);
+        return users;
+    }
+}

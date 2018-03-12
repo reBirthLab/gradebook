@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EntityScan(basePackages = "com.rebirthlab.gradebook.domain.model")
 @EnableJpaRepositories(basePackages = "com.rebirthlab.gradebook.domain.model")
 @EnableTransactionManagement
-//@EnableResourceServer
+@EnableResourceServer
 public class Application {
 
     public static void main(String[] args) {

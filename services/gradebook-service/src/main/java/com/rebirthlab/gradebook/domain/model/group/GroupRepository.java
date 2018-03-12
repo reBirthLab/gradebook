@@ -1,5 +1,6 @@
 package com.rebirthlab.gradebook.domain.model.group;
 
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -7,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface GroupRepository extends CrudRepository<Group, Long> {
 
-    Group findByNumber(String number);
+    Optional<Group> findByNumber(String number);
 
 }

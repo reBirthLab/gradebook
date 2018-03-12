@@ -20,38 +20,18 @@ import com.rebirthlab.gradebook.domain.model.group.Group;
 import com.rebirthlab.gradebook.domain.model.user.Lecturer;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
 @Table(name = "gradebook")
-
-@NamedQueries({
-    @NamedQuery(name = "Gradebook.findAll", query = "SELECT g FROM Gradebook g"),
-    @NamedQuery(name = "Gradebook.findByGradebookId", query = "SELECT g FROM Gradebook g WHERE g.gradebookId = :gradebookId"),
-    @NamedQuery(name = "Gradebook.findBySubject", query = "SELECT g FROM Gradebook g WHERE g.subject = :subject")})
 public class Gradebook implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,22 +47,26 @@ public class Gradebook implements Serializable {
     @Size(max = 65535)
     @Column(name = "description")
     private String description;
+
     @JoinTable(name = "lecturer_has_gradebook", joinColumns = {
-        @JoinColumn(name = "gradebook_id", referencedColumnName = "gradebook_id")}, inverseJoinColumns = {
-        @JoinColumn(name = "lecturer_id", referencedColumnName = "lecturer_id")})
-    @ManyToMany (fetch = FetchType.EAGER)
+            @JoinColumn(name = "gradebook_id", referencedColumnName = "gradebook_id")}, inverseJoinColumns = {
+            @JoinColumn(name = "lecturer_id")})
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Lecturer> lecturerCollection;
-    @JoinColumn(name = "academic_group_id", referencedColumnName = "academic_group_id")
+
+    @JoinColumn(name = "group_id")
     @ManyToOne(optional = false)
-    private Group academicGroupId;
+    private Group groupId;
+
     @JoinColumn(name = "Semesterid", referencedColumnName = "Semesterid")
     @ManyToOne(optional = false)
     private Semester semesterId;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradebookId")
     private Collection<Task> taskCollection;
 
     public Gradebook() {
-    } 
+    }
 
     public Gradebook(Integer gradebookId) {
         this.gradebookId = gradebookId;
@@ -125,12 +109,8 @@ public class Gradebook implements Serializable {
         this.lecturerCollection = lecturerCollection;
     }
 
-    public Group getAcademicGroupId() {
-        return academicGroupId;
-    }
-
-    public void setAcademicGroupId(Group academicGroupId) {
-        this.academicGroupId = academicGroupId;
+    public Group getGroupId() {
+        return groupId;
     }
 
     public Semester getSemesterId() {
@@ -164,7 +144,8 @@ public class Gradebook implements Serializable {
             return false;
         }
         Gradebook other = (Gradebook) object;
-        if ((this.gradebookId == null && other.gradebookId != null) || (this.gradebookId != null && !this.gradebookId.equals(other.gradebookId))) {
+        if ((this.gradebookId == null && other.gradebookId != null) || (this.gradebookId != null && !this.gradebookId
+                .equals(other.gradebookId))) {
             return false;
         }
         return true;

@@ -19,36 +19,16 @@ package com.rebirthlab.gradebook.domain.model;
 import com.rebirthlab.gradebook.domain.model.user.Student;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- *
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
 @Table(name = "student_attendance")
-
-@NamedQueries({
-    @NamedQuery(name = "StudentAttendance.findAll", query = "SELECT s FROM StudentAttendance s"),
-    @NamedQuery(name = "StudentAttendance.findByAttendanceId", query = "SELECT s FROM StudentAttendance s WHERE s.attendanceId = :attendanceId"),
-    @NamedQuery(name = "StudentAttendance.findByClassDate", query = "SELECT s FROM StudentAttendance s WHERE s.classDate = :classDate"),
-    @NamedQuery(name = "StudentAttendance.findByPresent", query = "SELECT s FROM StudentAttendance s WHERE s.present = :present"),
-    @NamedQuery(name = "StudentAttendance.findByAbsent", query = "SELECT s FROM StudentAttendance s WHERE s.absent = :absent"),
-    @NamedQuery(name = "StudentAttendance.findByAbsentWithReason", query = "SELECT s FROM StudentAttendance s WHERE s.absentWithReason = :absentWithReason")})
 public class StudentAttendance implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,9 +52,11 @@ public class StudentAttendance implements Serializable {
     @NotNull
     @Column(name = "absent_with_reason")
     private boolean absentWithReason;
-    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
+
+    @JoinColumn(name = "student_id")
     @ManyToOne(optional = false)
     private Student studentId;
+
     @JoinColumn(name = "task_id", referencedColumnName = "task_id")
     @ManyToOne(optional = false)
     private Task taskId;
@@ -86,7 +68,8 @@ public class StudentAttendance implements Serializable {
         this.attendanceId = attendanceId;
     }
 
-    public StudentAttendance(Integer attendanceId, Date classDate, boolean present, boolean absent, boolean absentWithReason) {
+    public StudentAttendance(Integer attendanceId, Date classDate, boolean present, boolean absent,
+                             boolean absentWithReason) {
         this.attendanceId = attendanceId;
         this.classDate = classDate;
         this.present = present;
@@ -164,7 +147,8 @@ public class StudentAttendance implements Serializable {
             return false;
         }
         StudentAttendance other = (StudentAttendance) object;
-        if ((this.attendanceId == null && other.attendanceId != null) || (this.attendanceId != null && !this.attendanceId.equals(other.attendanceId))) {
+        if ((this.attendanceId == null && other.attendanceId != null) || (this.attendanceId != null && !this.attendanceId
+                .equals(other.attendanceId))) {
             return false;
         }
         return true;
@@ -174,5 +158,5 @@ public class StudentAttendance implements Serializable {
     public String toString() {
         return "com.rebirthlab.gradebook.entity.StudentAttendance[ attendanceId=" + attendanceId + " ]";
     }
-    
+
 }

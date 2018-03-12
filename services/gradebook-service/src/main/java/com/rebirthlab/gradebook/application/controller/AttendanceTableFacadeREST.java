@@ -18,8 +18,7 @@ package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.AttendanceTable;
 import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.application.security.CurrentUser;
-import com.rebirthlab.gradebook.application.security.UserDataFinder;
+import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -54,7 +53,7 @@ public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
                                            @HeaderParam("Authorization") String authorization) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+        //User user = UserDataFinder.findDataBy(username);
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(AttendanceTable.class);

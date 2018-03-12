@@ -19,8 +19,7 @@ package com.rebirthlab.gradebook.application.controller;
 import com.rebirthlab.gradebook.domain.model.user.Lecturer;
 import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
 import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.application.security.CurrentUser;
-import com.rebirthlab.gradebook.application.security.UserDataFinder;
+import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -48,11 +47,11 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
     public void createLecturer(@HeaderParam("Authorization") String authorization, Lecturer entity) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+       /* User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             super.create(entity);
-        }
+        }*/
     }
 
     @PUT
@@ -62,11 +61,11 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
                              Lecturer entity) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+      /*  User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             super.edit(entity);
-        }
+        }*/
     }
 
     @DELETE
@@ -74,11 +73,11 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
     public void removeStudent(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+      /*  User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             super.remove(super.find(id));
-        }
+        }*/
     }
 
     @GET
@@ -87,12 +86,12 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
     public Lecturer findLecturer(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+   /*     User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)
                 || user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             return super.find(id);
-        }
+        }*/
 
         return null;
     }
@@ -102,7 +101,7 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
     public List<Lecturer> findAllLecturers(@HeaderParam("Authorization") String authorization) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+/*        User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             return super.findAll();
@@ -110,14 +109,14 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
 
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
             return findColleagues(user);
-        }
+        }*/
 
         return null;
     }
 
-    private List<Lecturer> findColleagues(CurrentUser user) {
-        Integer lecturerId = user.getId();
-        Lecturer lecturer = getEntityManager().find(Lecturer.class, lecturerId);
+    private List<Lecturer> findColleagues(User user) {
+        //Integer lecturerId = user.getId();
+        //Lecturer lecturer = getEntityManager().find(Lecturer.class, lecturerId);
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(Lecturer.class);

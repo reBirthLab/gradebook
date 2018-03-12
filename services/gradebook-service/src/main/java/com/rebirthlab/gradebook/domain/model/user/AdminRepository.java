@@ -6,8 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Created by Anastasiy
  */
-public interface StudentRepository extends CrudRepository<Student, Long> {
+public interface AdminRepository extends CrudRepository<Admin, Long> {
 
-    Optional<Student> findByEmail(String email);
-
+    Optional<Admin> findByEmail(String email);
 }

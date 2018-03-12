@@ -16,6 +16,7 @@
  */
 package com.rebirthlab.gradebook.application.security;
 
+import com.rebirthlab.gradebook.domain.model.user.User;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.StringTokenizer;
@@ -54,12 +55,13 @@ public class AuthenticationService {
         username = tokenizer.nextToken();
         password = tokenizer.nextToken();
 
-        CurrentUser user = UserDataFinder.findDataBy(username);
+        //User user = UserDataFinder.findDataBy(username);
 
         try {
-            boolean authenticationStatus = user.getUsername().equals(username)
+            /*boolean authenticationStatus = user.getUsername().equals(username)
                     && user.getPassword().equals(password);
-            return authenticationStatus;
+            return authenticationStatus;*/
+            return false;
         } catch (Exception e) {
             Logger.getLogger(AuthenticationService.class.getName())
                     .log(Level.SEVERE, "No such user in system", e);

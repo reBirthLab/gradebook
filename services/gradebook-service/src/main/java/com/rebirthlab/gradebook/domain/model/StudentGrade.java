@@ -18,30 +18,21 @@ package com.rebirthlab.gradebook.domain.model;
 
 import com.rebirthlab.gradebook.domain.model.user.Student;
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
- *
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
 @Table(name = "student_grade")
-
-@NamedQueries({
-    @NamedQuery(name = "StudentGrade.findAll", query = "SELECT s FROM StudentGrade s"),
-    @NamedQuery(name = "StudentGrade.findByStudentId", query = "SELECT s FROM StudentGrade s WHERE s.studentGradePK.studentId = :studentId"),
-    @NamedQuery(name = "StudentGrade.findByTaskId", query = "SELECT s FROM StudentGrade s WHERE s.studentGradePK.taskId = :taskId"),
-    @NamedQuery(name = "StudentGrade.findByGrade", query = "SELECT s FROM StudentGrade s WHERE s.grade = :grade")})
 public class StudentGrade implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected StudentGradePK studentGradePK;
@@ -49,7 +40,7 @@ public class StudentGrade implements Serializable {
     @NotNull
     @Column(name = "grade")
     private short grade;
-    @JoinColumn(name = "student_id", referencedColumnName = "student_id", insertable = false, updatable = false)
+    @JoinColumn(name = "student_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Student student;
     @JoinColumn(name = "task_id", referencedColumnName = "task_id", insertable = false, updatable = false)
@@ -118,7 +109,8 @@ public class StudentGrade implements Serializable {
             return false;
         }
         StudentGrade other = (StudentGrade) object;
-        if ((this.studentGradePK == null && other.studentGradePK != null) || (this.studentGradePK != null && !this.studentGradePK.equals(other.studentGradePK))) {
+        if ((this.studentGradePK == null && other.studentGradePK != null) || (this.studentGradePK != null && !this.studentGradePK
+                .equals(other.studentGradePK))) {
             return false;
         }
         return true;
@@ -128,5 +120,5 @@ public class StudentGrade implements Serializable {
     public String toString() {
         return "com.rebirthlab.gradebook.entity.StudentGrade[ studentGradePK=" + studentGradePK + " ]";
     }
-    
+
 }

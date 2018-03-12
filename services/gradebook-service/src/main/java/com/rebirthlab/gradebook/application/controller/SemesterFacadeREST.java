@@ -19,8 +19,7 @@ package com.rebirthlab.gradebook.application.controller;
 import com.rebirthlab.gradebook.domain.model.Semester;
 import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
 import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.application.security.CurrentUser;
-import com.rebirthlab.gradebook.application.security.UserDataFinder;
+import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -49,11 +48,11 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
     public void createSemester(@HeaderParam("Authorization") String authorization, Semester entity) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+  /*      User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             super.create(entity);
-        }
+        }*/
     }
 
     @PUT
@@ -63,11 +62,11 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
                              Semester entity) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+  /*      User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             super.edit(entity);
-        }
+        }*/
     }
 
     @DELETE
@@ -75,11 +74,11 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
     public void removeSemester(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+ /*       User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             super.remove(super.find(id));
-        }
+        }*/
     }
 
     @GET
@@ -89,11 +88,11 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
                          @PathParam("id") Integer id) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+/*        User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             return super.find(id);
-        }
+        }*/
 
         return null;
     }
@@ -103,15 +102,15 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
     public List<Semester> findSemesters(@HeaderParam("Authorization") String authorization) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+/*        User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             return super.findAll();
         }
 
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
-            return findActualSemesters();
-        }
+           return findActualSemesters();
+        }*/
 
         return null;
     }

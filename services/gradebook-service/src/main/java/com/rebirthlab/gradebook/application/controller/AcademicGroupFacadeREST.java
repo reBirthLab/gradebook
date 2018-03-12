@@ -20,8 +20,7 @@ import com.rebirthlab.gradebook.domain.model.group.Group;
 import com.rebirthlab.gradebook.domain.model.user.Lecturer;
 import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
 import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.application.security.CurrentUser;
-import com.rebirthlab.gradebook.application.security.UserDataFinder;
+import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -49,11 +48,11 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
     public void createGroup(@HeaderParam("Authorization") String authorization, Group entity) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+        /*User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             super.create(entity);
-        }
+        }*/
     }
 
     @PUT
@@ -63,11 +62,11 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
                           Group entity) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+        /*User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             super.edit(entity);
-        }
+        }*/
     }
 
     @DELETE
@@ -75,11 +74,11 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
     public void removeGroup(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+        /*User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             super.remove(super.find(id));
-        }
+        }*/
     }
 
     @GET
@@ -88,11 +87,11 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
     public Group findGroup(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+       /* User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             return super.find(id);
-        }
+        }*/
 
         return null;
     }
@@ -102,7 +101,7 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
     public List<Group> findGroups(@HeaderParam("Authorization") String authorization) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+        /*User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             return super.findAll();
@@ -118,7 +117,7 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
 
             //cq.where(cb.equal(groups.get(AcademicGroup_.facultyId), lecturer.getDepartmentId().getFacultyId()));
             return getEntityManager().createQuery(cq).getResultList();
-        }
+        }*/
 
         return null;
     }

@@ -19,8 +19,7 @@ package com.rebirthlab.gradebook.application.controller;
 import com.rebirthlab.gradebook.domain.model.Faculty;
 import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
 import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.application.security.CurrentUser;
-import com.rebirthlab.gradebook.application.security.UserDataFinder;
+import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -46,11 +45,11 @@ public class FacultyFacadeREST extends AbstractFacade<Faculty> {
                               Faculty entity) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+  /*      User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             em.persist(entity);
-        }
+        }*/
     }
 
     @PUT
@@ -60,11 +59,11 @@ public class FacultyFacadeREST extends AbstractFacade<Faculty> {
                             @PathParam("id") Integer id, Faculty entity) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+ /*       User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             em.merge(entity);
-        }
+        }*/
     }
 
     @DELETE
@@ -73,11 +72,11 @@ public class FacultyFacadeREST extends AbstractFacade<Faculty> {
                               @PathParam("id") Integer id) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+ /*       User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             em.remove(em.merge(em.find(Faculty.class, id)));
-        }
+        }*/
     }
 
     @GET
@@ -87,11 +86,11 @@ public class FacultyFacadeREST extends AbstractFacade<Faculty> {
                                @PathParam("id") Integer id) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+/*        User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             return super.find(id);
-        }
+        }*/
 
         return null;
     }
@@ -101,11 +100,11 @@ public class FacultyFacadeREST extends AbstractFacade<Faculty> {
     public List<Faculty> findAllFaculties(@HeaderParam("Authorization") String authorization) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+  /*      User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             return super.findAll();
-        }
+        }*/
 
         return null;
     }

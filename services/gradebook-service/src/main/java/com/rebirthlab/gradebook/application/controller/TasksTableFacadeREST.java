@@ -19,8 +19,7 @@ package com.rebirthlab.gradebook.application.controller;
 import com.rebirthlab.gradebook.domain.model.TasksTable;
 import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
 import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.application.security.CurrentUser;
-import com.rebirthlab.gradebook.application.security.UserDataFinder;
+import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -64,19 +63,19 @@ public class TasksTableFacadeREST extends AbstractFacade<TasksTable> {
             @HeaderParam("Authorization") String authorization) {
         
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+        //CurrentUser user = UserDataFinder.findDataBy(username);
         
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(TasksTable.class);
         
         Root tasksTable = cq.from(TasksTable.class);
 
-        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
+/*        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
             cq.where(
                     cb.and(
-                            /*cb.equal(tasksTable.get(TasksTable_.academicGroupId), academicGroupId),
+                            *//*cb.equal(tasksTable.get(TasksTable_.academicGroupId), academicGroupId),
                             cb.equal(tasksTable.get(TasksTable_.semesterId), semesterId),
-                            cb.equal(tasksTable.get(TasksTable_.gradebookId), gradebookId)*/
+                            cb.equal(tasksTable.get(TasksTable_.gradebookId), gradebookId)*//*
                     )
             );
             return getEntityManager().createQuery(cq).getResultList();
@@ -85,15 +84,15 @@ public class TasksTableFacadeREST extends AbstractFacade<TasksTable> {
             Integer studentId = user.getId();
             cq.where(
                     cb.and(
-                          /*  cb.equal(tasksTable.get(TasksTable_.academicGroupId), academicGroupId),
+                          *//*  cb.equal(tasksTable.get(TasksTable_.academicGroupId), academicGroupId),
                             cb.equal(tasksTable.get(TasksTable_.semesterId), semesterId),
                             cb.equal(tasksTable.get(TasksTable_.gradebookId), gradebookId),
-                            cb.equal(tasksTable.get(TasksTable_.studentId), studentId)*/
+                            cb.equal(tasksTable.get(TasksTable_.studentId), studentId)*//*
                     )
             );
             return getEntityManager().createQuery(cq).getResultList();
             
-        } else {
+        } else */{
             return null;
         }
     }

@@ -1,6 +1,15 @@
 server:
   port: 8080
 
+resource:
+  id: gradebook
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-uri: http://localhost:8080/oauth/token_key
+
 spring:
   jersey:
     application-path: /api/v1

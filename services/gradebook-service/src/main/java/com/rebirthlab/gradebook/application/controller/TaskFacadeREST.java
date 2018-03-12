@@ -24,8 +24,7 @@ import com.rebirthlab.gradebook.domain.model.StudentGrade;
 import com.rebirthlab.gradebook.domain.model.Task;
 import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
 import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.application.security.CurrentUser;
-import com.rebirthlab.gradebook.application.security.UserDataFinder;
+import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -54,7 +53,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
     public void createTask(@HeaderParam("Authorization") String authorization, Task task) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+/*        User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)
                 || user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -70,7 +69,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
             initializeStudentGrades(task, students);
 
             initializeStudentAttendance(task, students);
-        }
+        }*/
     }
 
     @PUT
@@ -81,7 +80,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
                          Task task) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+    /*    User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)
                 || user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -101,7 +100,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
             } else {
                 em.merge(task);
             }
-        }
+        }*/
     }
 
     @DELETE
@@ -109,11 +108,11 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
     public void removeTask(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+     /*   User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             super.remove(super.find(id));
-        }
+        }*/
     }
 
     @GET
@@ -128,11 +127,11 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
     public List<Task> findAllTasks(@HeaderParam("Authorization") String authorization) {
 
         String username = new AuthenticationService().getUsername(authorization);
-        CurrentUser user = UserDataFinder.findDataBy(username);
+     /*   User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
             return super.findAll();
-        }
+        }*/
         return null;
     }
 
@@ -143,10 +142,10 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
 
     private void initializeStudentGrades(Task task, Collection<Student> students) {
         for (Student student : students) {
-            StudentGrade grade = new StudentGrade(student.getStudentId(), task.getTaskId());
+          /*  StudentGrade grade = new StudentGrade(student.getStudentId(), task.getTaskId());
             short gradevalue = 0;
             grade.setGrade(gradevalue);
-            em.persist(grade);
+            em.persist(grade);*/
         }
     }
 
