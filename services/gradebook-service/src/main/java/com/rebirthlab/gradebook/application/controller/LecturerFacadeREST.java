@@ -17,8 +17,6 @@
 package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.user.Lecturer;
-import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
-import com.rebirthlab.gradebook.application.security.AuthenticationService;
 import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -46,7 +44,7 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
     @Consumes({"application/xml", "application/json"})
     public void createLecturer(@HeaderParam("Authorization") String authorization, Lecturer entity) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
        /* User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -60,7 +58,7 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
     public void editLecturer(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id,
                              Lecturer entity) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
       /*  User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -72,7 +70,7 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
     @Path("{id}")
     public void removeStudent(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
       /*  User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -85,7 +83,7 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
     @Produces({"application/xml", "application/json"})
     public Lecturer findLecturer(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
    /*     User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)
@@ -100,7 +98,7 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
     @Produces({"application/xml", "application/json"})
     public List<Lecturer> findAllLecturers(@HeaderParam("Authorization") String authorization) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
 /*        User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {

@@ -74,7 +74,7 @@ public class StudentController {
         if (SecurityCheck.isCurrentUserEmail(student.getEmail(), securityContext)) {
             return Response.ok(student).build();
         }
-        throw new NotAuthorizedException("Access Denied. You are not authorized to access this resource");
+        throw new NotAuthorizedException("Access Denied. You are not authorized to access this resource", "");
     }
 
 }

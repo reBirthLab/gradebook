@@ -17,7 +17,6 @@
 package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.attendance.AttendanceTable;
-import com.rebirthlab.gradebook.application.security.AuthenticationService;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -51,7 +50,7 @@ public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
                                            @PathParam("gradebook_id") Integer gradebookId,
                                            @HeaderParam("Authorization") String authorization) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
         //User user = UserDataFinder.findDataBy(username);
 
         CriteriaBuilder cb = em.getCriteriaBuilder();

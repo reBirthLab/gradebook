@@ -16,10 +16,8 @@
  */
 package com.rebirthlab.gradebook.application.controller;
 
-import com.rebirthlab.gradebook.domain.model.user.Student;
-import com.rebirthlab.gradebook.domain.model.attendance.StudentAttendance;
 import com.rebirthlab.gradebook.domain.model.task.Task;
-import com.rebirthlab.gradebook.application.security.AuthenticationService;
+import com.rebirthlab.gradebook.domain.model.user.Student;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -47,7 +45,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
     @Consumes({"application/xml", "application/json"})
     public void createTask(@HeaderParam("Authorization") String authorization, Task task) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
 /*        User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)
@@ -74,7 +72,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
                          @HeaderParam("Authorization") String authorization,
                          Task task) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
     /*    User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)
@@ -102,7 +100,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
     @Path("{id}")
     public void removeTask(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
      /*   User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -121,7 +119,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
     @Produces({"application/xml", "application/json"})
     public List<Task> findAllTasks(@HeaderParam("Authorization") String authorization) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
      /*   User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {

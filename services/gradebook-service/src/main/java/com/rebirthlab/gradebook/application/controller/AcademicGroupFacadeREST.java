@@ -17,16 +17,9 @@
 package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.group.Group;
-import com.rebirthlab.gradebook.domain.model.user.Lecturer;
-import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
-import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.ws.rs.*;
 
 /**
@@ -47,7 +40,7 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
     @Consumes({"application/xml", "application/json"})
     public void createGroup(@HeaderParam("Authorization") String authorization, Group entity) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
         /*User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -61,7 +54,7 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
     public void editGroup(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id,
                           Group entity) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
         /*User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -73,7 +66,7 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
     @Path("{id}")
     public void removeGroup(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
         /*User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -86,7 +79,7 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
     @Produces({"application/xml", "application/json"})
     public Group findGroup(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
        /* User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -100,7 +93,7 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
     @Produces({"application/xml", "application/json"})
     public List<Group> findGroups(@HeaderParam("Authorization") String authorization) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
         /*User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {

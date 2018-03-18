@@ -17,9 +17,6 @@
 package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.user.Admin;
-import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
-import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -43,7 +40,7 @@ public class AdminFacadeREST extends AbstractFacade<Admin> {
     @Consumes({"application/xml", "application/json"})
     public void createAdmin(@HeaderParam("Authorization") String authorization, Admin entity) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
         /*User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -57,7 +54,7 @@ public class AdminFacadeREST extends AbstractFacade<Admin> {
     public void editAdmin(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id,
                           Admin entity) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
        /* User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -69,7 +66,7 @@ public class AdminFacadeREST extends AbstractFacade<Admin> {
     @Path("{id}")
     public void removeAdmin(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
         /*User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -82,7 +79,7 @@ public class AdminFacadeREST extends AbstractFacade<Admin> {
     @Produces({"application/xml", "application/json"})
     public Admin findAdmin(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
         /*User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -96,7 +93,7 @@ public class AdminFacadeREST extends AbstractFacade<Admin> {
     @Produces({"application/xml", "application/json"})
     public List<Admin> findAllAdmins(@HeaderParam("Authorization") String authorization) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
        /* User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {

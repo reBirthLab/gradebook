@@ -17,7 +17,6 @@
 package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.semester.Semester;
-import com.rebirthlab.gradebook.application.security.AuthenticationService;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -45,7 +44,7 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
     @Consumes({"application/xml", "application/json"})
     public void createSemester(@HeaderParam("Authorization") String authorization, Semester entity) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
   /*      User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -59,7 +58,7 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
     public void editSemester(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id,
                              Semester entity) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
   /*      User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -71,7 +70,7 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
     @Path("{id}")
     public void removeSemester(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
  /*       User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -85,7 +84,7 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
     public Semester find(@HeaderParam("Authorization") String authorization,
                          @PathParam("id") Integer id) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
 /*        User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -99,7 +98,7 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
     @Produces({"application/xml", "application/json"})
     public List<Semester> findSemesters(@HeaderParam("Authorization") String authorization) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
 /*        User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {

@@ -17,7 +17,6 @@
 package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.task.TasksTable;
-import com.rebirthlab.gradebook.application.security.AuthenticationService;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,12 +30,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 /**
- *
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 
 @Path("groups/{academic_group_id}/semesters/{semester_id}/gradebooks/{gradebook_id}/tasks")
 public class TasksTableFacadeREST extends AbstractFacade<TasksTable> {
+
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
     private EntityManager em;
 
@@ -46,26 +45,26 @@ public class TasksTableFacadeREST extends AbstractFacade<TasksTable> {
 
     /**
      * Returns list of student grades based on provided via URI and Header parameters
-     * 
+     *
      * @param academicGroupId Academic group ID
-     * @param semesterId Semester ID
-     * @param gradebookId Gradebook ID
-     * @param authorization AbstractUserDTO credentials
+     * @param semesterId      Semester ID
+     * @param gradebookId     Gradebook ID
+     * @param authorization   AbstractUserDTO credentials
      * @return List of student grades
      */
     @GET
     @Produces({"application/xml", "application/json"})
     public List<TasksTable> showTable(@PathParam("academic_group_id") Integer academicGroupId,
-            @PathParam("semester_id") Integer semesterId,
-            @PathParam("gradebook_id") Integer gradebookId,
-            @HeaderParam("Authorization") String authorization) {
-        
-        String username = new AuthenticationService().getUsername(authorization);
+                                      @PathParam("semester_id") Integer semesterId,
+                                      @PathParam("gradebook_id") Integer gradebookId,
+                                      @HeaderParam("Authorization") String authorization) {
+
+        ////String username = new AuthenticationService(.getUsername(authorization);
         //CurrentUser user = UserDataFinder.findDataBy(username);
-        
+
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(TasksTable.class);
-        
+
         Root tasksTable = cq.from(TasksTable.class);
 
 /*        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
@@ -90,7 +89,8 @@ public class TasksTableFacadeREST extends AbstractFacade<TasksTable> {
             );
             return getEntityManager().createQuery(cq).getResultList();
             
-        } else */{
+        } else */
+        {
             return null;
         }
     }

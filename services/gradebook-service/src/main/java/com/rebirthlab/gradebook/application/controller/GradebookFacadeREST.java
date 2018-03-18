@@ -17,7 +17,6 @@
 package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.gradebook.Gradebook;
-import com.rebirthlab.gradebook.application.security.AuthenticationService;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -41,7 +40,7 @@ public class GradebookFacadeREST extends AbstractFacade<Gradebook> {
     @Consumes({"application/xml", "application/json"})
     public void createGradebook(@HeaderParam("Authorization") String authorization, Gradebook entity) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
      /*   User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)
@@ -56,7 +55,7 @@ public class GradebookFacadeREST extends AbstractFacade<Gradebook> {
     public void editGradebook(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id,
                               Gradebook entity) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
   /*      User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -68,7 +67,7 @@ public class GradebookFacadeREST extends AbstractFacade<Gradebook> {
     @Path("{id}")
     public void removeGradebook(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
       /*  User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -87,9 +86,9 @@ public class GradebookFacadeREST extends AbstractFacade<Gradebook> {
     @Produces({"application/xml", "application/json"})
     public List findAllGradebooks(@HeaderParam("Authorization") String authorization) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
 
-       //User user = UserDataFinder.findDataBy(username);
+        //User user = UserDataFinder.findDataBy(username);
 
       /*  if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
             Integer lecturerId = user.getId();

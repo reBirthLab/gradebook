@@ -17,7 +17,6 @@
 package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.department.Department;
-import com.rebirthlab.gradebook.application.security.AuthenticationService;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -41,7 +40,7 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
     @Consumes({"application/xml", "application/json"})
     public void createDepartment(@HeaderParam("Authorization") String authorization, Department entity) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
         /*User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -55,7 +54,8 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
     public void editDepartment(@HeaderParam("Authorization") String authorization,
                                @PathParam("id") Integer id, Department entity) {
 
-        String username = new AuthenticationService().getUsername(authorization);/*
+        //String username = new AuthenticationService(.getUsername(authorization);
+        /*
         User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -68,7 +68,7 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
     public void removeDepartment(@HeaderParam("Authorization") String authorization,
                                  @PathParam("id") Integer id) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
       /*  User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -82,7 +82,7 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
     public Department findDepartment(@HeaderParam("Authorization") String authorization,
                                      @PathParam("id") Integer id) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
 /*        User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
@@ -96,7 +96,7 @@ public class DepartmentFacadeREST extends AbstractFacade<Department> {
     @Produces({"application/xml", "application/json"})
     public List<Department> findAllDepartments(@HeaderParam("Authorization") String authorization) {
 
-        String username = new AuthenticationService().getUsername(authorization);
+        //String username = new AuthenticationService(.getUsername(authorization);
  /*       User user = UserDataFinder.findDataBy(username);
 
         if (user.getRole().equals(GradebookConstants.ROLE_ADMIN)) {
