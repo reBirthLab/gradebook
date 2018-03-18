@@ -16,10 +16,8 @@
  */
 package com.rebirthlab.gradebook.application.controller;
 
-import com.rebirthlab.gradebook.domain.model.StudentGrade;
-import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
+import com.rebirthlab.gradebook.domain.model.studentgrade.StudentGrade;
 import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.domain.model.user.User;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;

@@ -3,7 +3,9 @@ package com.rebirthlab.gradebook.auth.controller;
 import com.rebirthlab.gradebook.auth.model.User;
 import com.rebirthlab.gradebook.auth.service.UserDTO;
 import com.rebirthlab.gradebook.auth.service.UserService;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -35,6 +37,9 @@ public class UserController {
     @Path("/register")
     @Transactional
     public Response createUser(UserDTO user) {
+        Set<String> userRole = new HashSet<>();
+        userRole.add("ROLE_USER");
+        user.setRoles(userRole);
         Optional<User> registeredUser = userService.registerUser(user);
         if (registeredUser.isPresent()) {
             return Response.ok(registeredUser.get()).build();

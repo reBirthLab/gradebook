@@ -115,7 +115,7 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
             CriteriaQuery cq = cb.createQuery(Group.class);
             Root groups = cq.from(Group.class);
 
-            //cq.where(cb.equal(groups.get(AcademicGroup_.facultyId), lecturer.getDepartmentId().getFacultyId()));
+            //cq.where(cb.equal(groups.get(AcademicGroup_.facultyId), lecturer.getId().getFacultyId()));
             return getEntityManager().createQuery(cq).getResultList();
         }*/
 

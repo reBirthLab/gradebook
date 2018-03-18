@@ -16,10 +16,8 @@
  */
 package com.rebirthlab.gradebook.application.controller;
 
-import com.rebirthlab.gradebook.domain.model.Semester;
-import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
+import com.rebirthlab.gradebook.domain.model.semester.Semester;
 import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;

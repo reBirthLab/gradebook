@@ -16,9 +16,8 @@
  */
 package com.rebirthlab.gradebook.application.controller;
 
-import com.rebirthlab.gradebook.domain.model.AttendanceTable;
+import com.rebirthlab.gradebook.domain.model.attendance.AttendanceTable;
 import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -35,7 +34,7 @@ import javax.ws.rs.Produces;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 
-@Path("groups/{academic_group_id}/semesters/{Semesterid}/gradebooks/{gradebook_id}/attendance")
+@Path("groups/{academic_group_id}/semesters/{semester_id}/gradebooks/{gradebook_id}/attendance")
 public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
 
     @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
@@ -48,7 +47,7 @@ public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
     @GET
     @Produces({"application/xml", "application/json"})
     public List<AttendanceTable> showTable(@PathParam("academic_group_id") Integer academicGroupId,
-                                           @PathParam("Semesterid") Integer semesterId,
+                                           @PathParam("semester_id") Integer semesterId,
                                            @PathParam("gradebook_id") Integer gradebookId,
                                            @HeaderParam("Authorization") String authorization) {
 

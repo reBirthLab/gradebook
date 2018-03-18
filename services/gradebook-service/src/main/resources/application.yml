@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 
 resource:
   id: gradebook
@@ -17,6 +17,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        globally_quoted_identifiers: false
+        show_sql: false
+        format_sql: false
     hibernate:
       ddl-auto: none
   datasource:

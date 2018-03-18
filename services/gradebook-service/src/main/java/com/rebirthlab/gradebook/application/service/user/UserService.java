@@ -9,7 +9,7 @@ import java.util.Optional;
  */
 public interface UserService {
 
-    Optional<User> getUserByEmail(String email);
+    Optional<User> findUserByEmail(String email);
 
-    List<User> findAllUsers();
+    Optional<List<User>> findAllUsers();
 }

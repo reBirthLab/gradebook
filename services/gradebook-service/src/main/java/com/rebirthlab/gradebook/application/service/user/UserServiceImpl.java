@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) {
         Set<User> user = new HashSet<>();
         adminRepository.findByEmail(email).ifPresent(user::add);
         lecturerRepository.findByEmail(email).ifPresent(user::add);
@@ -44,11 +44,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllUsers() {
+    public Optional<List<User>> findAllUsers() {
         List<User> users = new ArrayList<>();
         adminRepository.findAll().forEach(users::add);
         lecturerRepository.findAll().forEach(users::add);
         studentRepository.findAll().forEach(users::add);
-        return users;
+        return users.isEmpty() ? Optional.empty() : Optional.of(users);
     }
 }

@@ -14,113 +14,90 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.domain.model;
+package com.rebirthlab.gradebook.domain.model.attendance;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
-@Table(name = "tasks_table")
+public class AttendanceTable implements Serializable {
 
-@NamedQueries({
-    @NamedQuery(name = "TasksTable.findAll", query = "SELECT t FROM TasksTable t"),
-    @NamedQuery(name = "TasksTable.findByAcademicGroupId", query = "SELECT t FROM TasksTable t WHERE t.academicGroupId = :academicGroupId"),
-    @NamedQuery(name = "TasksTable.findBySemesterId", query = "SELECT t FROM TasksTable t WHERE t.semesterId = :semesterId"),
-    @NamedQuery(name = "TasksTable.findByGradebookId", query = "SELECT t FROM TasksTable t WHERE t.gradebookId = :gradebookId"),
-    @NamedQuery(name = "TasksTable.findByTaskId", query = "SELECT t FROM TasksTable t WHERE t.taskId = :taskId"),
-    @NamedQuery(name = "TasksTable.findByTitle", query = "SELECT t FROM TasksTable t WHERE t.title = :title"),
-    @NamedQuery(name = "TasksTable.findByStartDate", query = "SELECT t FROM TasksTable t WHERE t.startDate = :startDate"),
-    @NamedQuery(name = "TasksTable.findByTaskLength", query = "SELECT t FROM TasksTable t WHERE t.taskLength = :taskLength"),
-    @NamedQuery(name = "TasksTable.findByMaxGrade", query = "SELECT t FROM TasksTable t WHERE t.maxGrade = :maxGrade"),
-    @NamedQuery(name = "TasksTable.findByStudentId", query = "SELECT t FROM TasksTable t WHERE t.studentId = :studentId"),
-    @NamedQuery(name = "TasksTable.findByFirstName", query = "SELECT t FROM TasksTable t WHERE t.firstName = :firstName"),
-    @NamedQuery(name = "TasksTable.findByLastName", query = "SELECT t FROM TasksTable t WHERE t.lastName = :lastName"),
-    @NamedQuery(name = "TasksTable.findByGrade", query = "SELECT t FROM TasksTable t WHERE t.grade = :grade")})
-public class TasksTable implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @NotNull
-    @Column(name = "academic_group_id")
     @Id
-    private int academicGroupId;
+    @NotNull
+    private int groupId;
 
-    @NotNull
-    @Column(name = "Semesterid")
     @Id
+    @NotNull
     private int semesterId;
 
-    @NotNull
-    @Column(name = "gradebook_id")
     @Id
+    @NotNull
     private int gradebookId;
 
-    @NotNull
-    @Column(name = "task_id")
     @Id
+    @NotNull
     private int taskId;
 
     @NotNull
     @Size(min = 1, max = 150)
-    @Column(name = "title")
     private String title;
 
     @NotNull
-    @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private Date startDate;
 
     @NotNull
-    @Column(name = "task_length")
     private short taskLength;
 
     @NotNull
-    @Column(name = "max_grade")
-    private short maxGrade;
-
-    @NotNull
-    @Column(name = "student_id")
     @Id
     private int studentId;
 
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "first_name")
     private String firstName;
 
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "last_name")
     private String lastName;
 
+    @Id
     @NotNull
-    @Column(name = "grade")
-    private short grade;
+    private long attendanceId;
 
-    public TasksTable() {
+    @NotNull
+    private boolean present;
+
+    @NotNull
+    private boolean absentWithReason;
+
+    @NotNull
+    private boolean absent;
+
+    @NotNull
+    @Temporal(TemporalType.DATE)
+    private Date classDate;
+
+    public AttendanceTable() {
     }
 
-    public int getAcademicGroupId() {
-        return academicGroupId;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setAcademicGroupId(int academicGroupId) {
-        this.academicGroupId = academicGroupId;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
     public int getSemesterId() {
@@ -171,14 +148,6 @@ public class TasksTable implements Serializable {
         this.taskLength = taskLength;
     }
 
-    public short getMaxGrade() {
-        return maxGrade;
-    }
-
-    public void setMaxGrade(short maxGrade) {
-        this.maxGrade = maxGrade;
-    }
-
     public int getStudentId() {
         return studentId;
     }
@@ -203,12 +172,44 @@ public class TasksTable implements Serializable {
         this.lastName = lastName;
     }
 
-    public short getGrade() {
-        return grade;
+    public long getAttendanceId() {
+        return attendanceId;
     }
 
-    public void setGrade(short grade) {
-        this.grade = grade;
+    public void setAttendanceId(long attendanceId) {
+        this.attendanceId = attendanceId;
     }
-    
+
+    public boolean getPresent() {
+        return present;
+    }
+
+    public void setPresent(boolean present) {
+        this.present = present;
+    }
+
+    public boolean getAbsentWithReason() {
+        return absentWithReason;
+    }
+
+    public void setAbsentWithReason(boolean absentWithReason) {
+        this.absentWithReason = absentWithReason;
+    }
+
+    public boolean getAbsent() {
+        return absent;
+    }
+
+    public void setAbsent(boolean absent) {
+        this.absent = absent;
+    }
+
+    public Date getClassDate() {
+        return classDate;
+    }
+
+    public void setClassDate(Date classDate) {
+        this.classDate = classDate;
+    }
+
 }

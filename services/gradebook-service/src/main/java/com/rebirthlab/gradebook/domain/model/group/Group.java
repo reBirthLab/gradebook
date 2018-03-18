@@ -1,9 +1,11 @@
 package com.rebirthlab.gradebook.domain.model.group;
 
-import com.rebirthlab.gradebook.domain.model.Faculty;
-import com.rebirthlab.gradebook.domain.model.Gradebook;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rebirthlab.gradebook.domain.model.faculty.Faculty;
+import com.rebirthlab.gradebook.domain.model.gradebook.Gradebook;
 import com.rebirthlab.gradebook.domain.model.user.Student;
 import java.util.Collection;
+import java.util.HashSet;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -11,29 +13,37 @@ import javax.validation.constraints.NotNull;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
+@Table(name = "\"group\"")
 public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotNull
     private String number;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupId")
-    private Collection<Student> studentCollection;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupId")
-    private Collection<Gradebook> gradebookCollection;
 
     @JoinColumn(name = "faculty_id")
     @ManyToOne(optional = false)
     private Faculty facultyId;
 
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupId")
+    private Collection<Student> studentCollection;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupId")
+    private Collection<Gradebook> gradebookCollection;
+
     public Group() {
     }
 
-    public Integer getId() {
+    public Group(String number, Faculty facultyId) {
+        this.number = number;
+        this.facultyId = facultyId;
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -41,16 +51,16 @@ public class Group {
         return number;
     }
 
+    public Faculty getFacultyId() {
+        return facultyId;
+    }
+
     public Collection<Student> getStudentCollection() {
-        return studentCollection;
+        return new HashSet<>(studentCollection);
     }
 
     public Collection<Gradebook> getGradebookCollection() {
-        return gradebookCollection;
-    }
-
-    public Faculty getFacultyId() {
-        return facultyId;
+        return new HashSet<>(gradebookCollection);
     }
 
     @Override

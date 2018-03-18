@@ -16,15 +16,10 @@
  */
 package com.rebirthlab.gradebook.application.controller;
 
-import com.rebirthlab.gradebook.domain.model.group.Group;
-import com.rebirthlab.gradebook.domain.model.Gradebook;
 import com.rebirthlab.gradebook.domain.model.user.Student;
-import com.rebirthlab.gradebook.domain.model.StudentAttendance;
-import com.rebirthlab.gradebook.domain.model.StudentGrade;
-import com.rebirthlab.gradebook.domain.model.Task;
-import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
+import com.rebirthlab.gradebook.domain.model.attendance.StudentAttendance;
+import com.rebirthlab.gradebook.domain.model.task.Task;
 import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -61,9 +56,9 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
             em.persist(task);
             em.flush();
 
-            Integer gradebookId = task.getGradebookId().getGradebookId();
+            Integer gradebookId = task.getId().getId();
             Gradebook gradebook = em.find(Gradebook.class, gradebookId);
-            Group group = gradebook.getAcademicGroupId();
+            Group group = gradebook.getGroupId();
             Collection<Student> students = group.getStudentCollection();
 
             initializeStudentGrades(task, students);
@@ -95,7 +90,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
                     || task.getOnCourseFri() != oldTask.getOnCourseFri()
                     || task.getMaxGrade() != oldTask.getMaxGrade()) {
                 em.remove(em.merge(oldTask));
-                task.setTaskId(null);
+                task.setId(null);
                 createTask(authorization, task);
             } else {
                 em.merge(task);
@@ -142,7 +137,7 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
 
     private void initializeStudentGrades(Task task, Collection<Student> students) {
         for (Student student : students) {
-          /*  StudentGrade grade = new StudentGrade(student.getStudentId(), task.getTaskId());
+          /*  StudentGrade grade = new StudentGrade(student.getStudentId(), task.getId());
             short gradevalue = 0;
             grade.setGrade(gradevalue);
             em.persist(grade);*/
@@ -199,11 +194,11 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
 
         for (Student student : students) {
             for (Date date : classDates) {
-                StudentAttendance attendance = new StudentAttendance();
+  /*              StudentAttendance attendance = new StudentAttendance();
                 attendance.setStudentId(student);
                 attendance.setTaskId(task);
                 attendance.setClassDate(date);
-                em.persist(attendance);
+                em.persist(attendance);*/
             }
         }
     }

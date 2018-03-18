@@ -14,41 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rebirthlab.gradebook.domain.model;
+package com.rebirthlab.gradebook.domain.model.gradebook;
 
-import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
-@Table(name = "lecturer_gradebooks")
-
-@NamedQueries({
-    @NamedQuery(name = "LecturerGradebooks.findAll", query = "SELECT l FROM LecturerGradebooks l"),
-    @NamedQuery(name = "LecturerGradebooks.findByLecturerId", query = "SELECT l FROM LecturerGradebooks l WHERE l.lecturerId = :lecturerId"),
-    @NamedQuery(name = "LecturerGradebooks.findByFirstName", query = "SELECT l FROM LecturerGradebooks l WHERE l.firstName = :firstName"),
-    @NamedQuery(name = "LecturerGradebooks.findByLastName", query = "SELECT l FROM LecturerGradebooks l WHERE l.lastName = :lastName"),
-    @NamedQuery(name = "LecturerGradebooks.findByAcademicGroupId", query = "SELECT l FROM LecturerGradebooks l WHERE l.academicGroupId = :academicGroupId"),
-    @NamedQuery(name = "LecturerGradebooks.findByNumber", query = "SELECT l FROM LecturerGradebooks l WHERE l.number = :number"),
-    @NamedQuery(name = "LecturerGradebooks.findBySemesterId", query = "SELECT l FROM LecturerGradebooks l WHERE l.semesterId = :semesterId"),
-    @NamedQuery(name = "LecturerGradebooks.findByAcademicYear", query = "SELECT l FROM LecturerGradebooks l WHERE l.academicYear = :academicYear"),
-    @NamedQuery(name = "LecturerGradebooks.findByName", query = "SELECT l FROM LecturerGradebooks l WHERE l.name = :name"),
-    @NamedQuery(name = "LecturerGradebooks.findByGradebookId", query = "SELECT l FROM LecturerGradebooks l WHERE l.gradebookId = :gradebookId"),
-    @NamedQuery(name = "LecturerGradebooks.findBySubject", query = "SELECT l FROM LecturerGradebooks l WHERE l.subject = :subject")})
-public class LecturerGradebooks implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class LecturerGradebooks {
 
     @NotNull
     @Column(name = "lecturer_id")
@@ -65,8 +43,7 @@ public class LecturerGradebooks implements Serializable {
     private String lastName;
 
     @NotNull
-    @Column(name = "academic_group_id")
-    private int academicGroupId;
+    private int groupId;
 
     @NotNull
     @Size(min = 1, max = 45)
@@ -74,7 +51,6 @@ public class LecturerGradebooks implements Serializable {
     private String number;
 
     @NotNull
-    @Column(name = "Semesterid")
     private int semesterId;
 
     @NotNull
@@ -123,12 +99,12 @@ public class LecturerGradebooks implements Serializable {
         this.lastName = lastName;
     }
 
-    public int getAcademicGroupId() {
-        return academicGroupId;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setAcademicGroupId(int academicGroupId) {
-        this.academicGroupId = academicGroupId;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
     public String getNumber() {
@@ -178,5 +154,5 @@ public class LecturerGradebooks implements Serializable {
     public void setSubject(String subject) {
         this.subject = subject;
     }
-    
+
 }

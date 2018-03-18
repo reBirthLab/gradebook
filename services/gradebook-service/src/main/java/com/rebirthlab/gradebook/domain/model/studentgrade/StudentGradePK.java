@@ -1,33 +1,17 @@
-/*
- * Copyright (C) 2015 Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-package com.rebirthlab.gradebook.domain.model;
+package com.rebirthlab.gradebook.domain.model.studentgrade;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
 /**
- *
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Embeddable
 public class StudentGradePK implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @NotNull
     @Column(name = "student_id")
@@ -49,16 +33,8 @@ public class StudentGradePK implements Serializable {
         return studentId;
     }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
-    }
-
     public int getTaskId() {
         return taskId;
-    }
-
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
     }
 
     @Override
@@ -71,7 +47,6 @@ public class StudentGradePK implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof StudentGradePK)) {
             return false;
         }
@@ -85,9 +60,4 @@ public class StudentGradePK implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.rebirthlab.gradebook.entity.StudentGradePK[ studentId=" + studentId + ", taskId=" + taskId + " ]";
-    }
-    
 }

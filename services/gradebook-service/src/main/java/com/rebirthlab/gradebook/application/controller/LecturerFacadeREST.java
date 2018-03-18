@@ -122,7 +122,7 @@ public class LecturerFacadeREST extends AbstractFacade<Lecturer> {
         CriteriaQuery cq = cb.createQuery(Lecturer.class);
         Root lecturers = cq.from(Lecturer.class);
 
-        //cq.where(cb.equal(lecturers.get(Lecturer_.departmentId), lecturer.getDepartmentId().getDepartmentId()));
+        //cq.where(cb.equal(lecturers.get(Lecturer_.departmentId), lecturer.getId().getId()));
 
         return getEntityManager().createQuery(cq).getResultList();
     }

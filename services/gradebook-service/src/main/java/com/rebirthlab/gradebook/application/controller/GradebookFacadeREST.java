@@ -16,14 +16,11 @@
  */
 package com.rebirthlab.gradebook.application.controller;
 
-import com.rebirthlab.gradebook.domain.model.Gradebook;
-import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
+import com.rebirthlab.gradebook.domain.model.gradebook.Gradebook;
 import com.rebirthlab.gradebook.application.security.AuthenticationService;
-import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.ws.rs.*;
 
 /**
