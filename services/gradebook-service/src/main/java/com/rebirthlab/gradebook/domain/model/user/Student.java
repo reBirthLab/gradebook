@@ -17,7 +17,16 @@ public class Student extends User {
     private Group groupId;
 
     public Student() {
-        super(GradebookConstants.ROLE_STUDENT);
+    }
+
+    public Student(Long id, String email, String firstName, String lastName, Group groupId) {
+        super(id, email, firstName, lastName, GradebookConstants.ROLE_STUDENT);
+        this.groupId = groupId;
+    }
+
+    public Student(String email, String firstName, String lastName, Group groupId) {
+        super(email, firstName, lastName, GradebookConstants.ROLE_STUDENT);
+        this.groupId = groupId;
     }
 
     public Group getGroupId() {

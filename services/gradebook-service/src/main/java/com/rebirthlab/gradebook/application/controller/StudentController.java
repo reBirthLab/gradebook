@@ -14,7 +14,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
@@ -33,17 +32,33 @@ public class StudentController {
     }
 
     @POST
-    @Transactional
     @AdminRoleRequired
     public Response createStudent(StudentDTO studentDTO) {
-        return null;
+        Optional<Student> registeredStudent = studentService.register(studentDTO);
+        if (registeredStudent.isPresent()) {
+            return Response.ok(registeredStudent.get()).build();
+        }
+        throw new BadRequestException("Cannot create student entity from provided data");
+    }
+
+    @POST
+    @Path("multiple")
+    @AdminRoleRequired
+    public Response createAllStudents(List<StudentDTO> studentDTO) {
+        List<Student> registeredStudents = studentService.registerAll(studentDTO);
+        if (registeredStudents.isEmpty()) {
+            throw new BadRequestException("Cannot create student entities from provided data");
+        }
+        return Response.ok(registeredStudents).build();
     }
 
     @PUT
     @Path("{id}")
     @AdminRoleRequired
     public Response editStudent(@PathParam("id") Long id, StudentDTO studentDTO) {
-        return null;
+        Student updatedStudent = studentService.updateById(id, studentDTO)
+                .orElseThrow(() -> new BadRequestException("Cannot update student account with provided data"));
+        return Response.ok(updatedStudent).build();
     }
 
     @DELETE
@@ -52,7 +67,15 @@ public class StudentController {
     public Response removeStudent(@PathParam("id") Long id) {
         studentService.delete(id);
         return Response.noContent().build();
+    }
 
+    @GET
+    @Path("/{id}")
+    @AdminRoleRequired
+    public Response findStudent(@PathParam("id") Long id) {
+        Student student = studentService.findById(id)
+                .orElseThrow(() -> new BadRequestException("No student account found matching id=" + id));
+        return Response.ok(student).build();
     }
 
     @GET
@@ -66,15 +89,23 @@ public class StudentController {
     }
 
     @GET
-    @Path("{id}")
-    public Response findStudent(@Context SecurityContext securityContext,
-                                @PathParam("id") Long id) {
-        Student student = studentService.findById(id)
-                .orElseThrow(() -> new BadRequestException("No student user found matching id=" + id));
-        if (SecurityCheck.isCurrentUserEmail(student.getEmail(), securityContext)) {
-            return Response.ok(student).build();
-        }
-        throw new NotAuthorizedException("Access Denied. You are not authorized to access this resource", "");
+    @Path("/me")
+    public Response findMe(@Context SecurityContext securityContext) {
+        String currentUserEmail = SecurityCheck.getCurrentUserEmail(securityContext);
+        Student student = studentService.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new BadRequestException("No student account found for current user" +
+                        " [ " + currentUserEmail + " ]"));
+        return Response.ok(student).build();
+    }
+
+    @PUT
+    @Path("/me")
+    public Response updateMe(@Context SecurityContext securityContext, StudentDTO studentDTO) {
+        String currentUserEmail = SecurityCheck.getCurrentUserEmail(securityContext);
+        Student updatedStudent = studentService.updateByEmail(currentUserEmail, studentDTO)
+                .orElseThrow(() -> new BadRequestException("Cannot update student account of current user" +
+                        " [ " + currentUserEmail + " ]"));
+        return Response.ok(updatedStudent).build();
     }
 
 }

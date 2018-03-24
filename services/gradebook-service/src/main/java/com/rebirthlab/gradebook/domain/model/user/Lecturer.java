@@ -26,7 +26,11 @@ public class Lecturer extends User {
     private Collection<Gradebook> gradebookCollection;
 
     public Lecturer() {
-        super(GradebookConstants.ROLE_LECTURER);
+    }
+
+    public Lecturer(String email, String firstName, String lastName, Department departmentId) {
+        super(email, firstName, lastName, GradebookConstants.ROLE_LECTURER);
+        this.departmentId = departmentId;
     }
 
     public Department getDepartmentId() {

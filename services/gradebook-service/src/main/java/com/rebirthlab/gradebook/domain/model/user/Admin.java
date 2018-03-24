@@ -10,6 +10,9 @@ import javax.persistence.Entity;
 public class Admin extends User {
 
     public Admin() {
-        super(GradebookConstants.ROLE_ADMIN);
+    }
+
+    public Admin(String email, String firstName, String lastName) {
+        super(email, firstName, lastName, GradebookConstants.ROLE_ADMIN);
     }
 }

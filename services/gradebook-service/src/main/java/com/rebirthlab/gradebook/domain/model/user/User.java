@@ -30,7 +30,21 @@ public abstract class User {
     @NotNull
     private String role;
 
-    public User(String role) {
+    public User() {
+    }
+
+    public User(Long id, String email, String firstName, String lastName, String role) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+    }
+
+    public User(String email, String firstName, String lastName, String role) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.role = role;
     }
 

@@ -9,13 +9,12 @@ import java.util.Optional;
  */
 public interface StudentService {
 
-    Student register(StudentDTO studentDTO);
+    Optional<Student> register(StudentDTO studentDTO);
 
     List<Student> registerAll(List<StudentDTO> studentDTOList);
 
     Optional<Student> updateById(Long id, StudentDTO studentDTO);
 
-    // For user's own account update
     Optional<Student> updateByEmail(String email, StudentDTO studentDTO);
 
     Optional<Student> findById(Long id);

@@ -11,7 +11,8 @@ public abstract class AbstractUserDTO {
     private String lastName;
     private String role;
 
-    public AbstractUserDTO() {
+    public AbstractUserDTO(String role) {
+        this.role = role;
     }
 
     public Long getId() {
@@ -50,7 +51,4 @@ public abstract class AbstractUserDTO {
         return role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
 }
