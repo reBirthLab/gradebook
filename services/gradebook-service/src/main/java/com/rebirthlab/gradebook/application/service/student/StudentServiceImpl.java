@@ -38,7 +38,7 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public Optional<Student> register(StudentDTO studentDTO) {
         if (studentRepository.existsByEmail(studentDTO.getEmail())) {
-            LOGGER.info("Cannot register user. User account {} already exists", studentDTO.getEmail());
+            LOGGER.info("Cannot register student. Student account {} already exists", studentDTO.getEmail());
             return Optional.empty();
         }
         Optional<Student> newStudent = mapToNewEntity(studentDTO);
@@ -53,7 +53,7 @@ public class StudentServiceImpl implements StudentService {
                 .filter(Objects::nonNull)
                 .filter(student -> {
                     if (studentRepository.existsByEmail(student.getEmail())) {
-                        LOGGER.info("Cannot register user. User account {} already exists", student.getEmail());
+                        LOGGER.info("Cannot register student. Student account {} already exists", student.getEmail());
                         return false;
                     }
                     return true;
@@ -69,7 +69,7 @@ public class StudentServiceImpl implements StudentService {
     public Optional<Student> updateById(Long id, StudentDTO studentDTO) {
         Optional<Student> student = studentRepository.findById(id);
         if (!student.isPresent()) {
-            LOGGER.info("Cannot update user. User id {} is not found", id);
+            LOGGER.info("Cannot update student. Student id {} is not found", id);
             return Optional.empty();
         }
         return updateStudent(studentDTO, student.get());
@@ -79,7 +79,7 @@ public class StudentServiceImpl implements StudentService {
     public Optional<Student> updateByEmail(String email, StudentDTO studentDTO) {
         Optional<Student> student = studentRepository.findByEmail(email);
         if (!student.isPresent()) {
-            LOGGER.info("Cannot update user. User email {} is not found", email);
+            LOGGER.info("Cannot update student. Student email {} is not found", email);
             return Optional.empty();
         }
         return updateStudent(studentDTO, student.get());
@@ -106,13 +106,13 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public void delete(Long id) {
         studentRepository.deleteById(id);
-        LOGGER.info("Student user with id={} was successfully deleted", id);
+        LOGGER.info("Student with id={} was successfully deleted", id);
     }
 
     private Optional<Student> mapToNewEntity(StudentDTO studentDTO) {
         Optional<Group> group = groupRepository.findById(studentDTO.getGroupId());
         if (!group.isPresent()) {
-            LOGGER.info("Cannot register user. Group id {} doesn't exist", studentDTO.getGroupId());
+            LOGGER.info("Cannot register student. Group id {} doesn't exist", studentDTO.getGroupId());
             return Optional.empty();
         }
         Student newStudent = new Student(studentDTO.getEmail(),
@@ -150,7 +150,7 @@ public class StudentServiceImpl implements StudentService {
     private Optional<Student> mapToUpdatedEntity(StudentDTO studentDTO) {
         Optional<Group> group = groupRepository.findById(studentDTO.getGroupId());
         if (!group.isPresent()) {
-            LOGGER.info("Cannot update user. Group id {} doesn't exist", studentDTO.getGroupId());
+            LOGGER.info("Cannot update student. Group id {} doesn't exist", studentDTO.getGroupId());
             return Optional.empty();
         }
         Student updatedStudent = new Student(studentDTO.getId(),
