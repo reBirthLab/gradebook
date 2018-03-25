@@ -39,10 +39,24 @@ public class AdminServiceImpl extends AbstractUserServiceImpl implements AdminSe
     }
 
     @Override
+    @Transactional
     public Optional<Admin> updateById(Long id, AdminDTO adminDTO) {
         Optional<Admin> admin = adminRepository.findById(id);
         if (!admin.isPresent()) {
             LOGGER.info("Cannot update admin. Admin id {} is not found", id);
+            return Optional.empty();
+        }
+        patchAdminDTO(adminDTO, admin.get());
+        Admin updatedAdmin = mapUpdatedAdminEntity(adminDTO);
+        return Optional.of(adminRepository.save(updatedAdmin));
+    }
+
+    @Override
+    @Transactional
+    public Optional<Admin> updateByEmail(String email, AdminDTO adminDTO) {
+        Optional<Admin> admin = adminRepository.findByEmail(email);
+        if (!admin.isPresent()) {
+            LOGGER.info("Cannot update admin. Admin email {} is not found", email);
             return Optional.empty();
         }
         patchAdminDTO(adminDTO, admin.get());
@@ -56,6 +70,11 @@ public class AdminServiceImpl extends AbstractUserServiceImpl implements AdminSe
     }
 
     @Override
+    public Optional<Admin> findByEmail(String email) {
+        return adminRepository.findByEmail(email);
+    }
+
+    @Override
     public Optional<List<Admin>> findAll() {
         List<Admin> admins = new ArrayList<>();
         adminRepository.findAll().forEach(admins::add);
@@ -63,9 +82,10 @@ public class AdminServiceImpl extends AbstractUserServiceImpl implements AdminSe
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         adminRepository.deleteById(id);
-        LOGGER.info("Admin with id={} was successfully deleted", id);
+        LOGGER.info("Admin with id {} was successfully deleted", id);
     }
 
     private void patchAdminDTO(AdminDTO adminDTO, Admin admin) {

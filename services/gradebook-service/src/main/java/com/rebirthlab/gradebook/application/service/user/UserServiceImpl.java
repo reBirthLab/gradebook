@@ -51,4 +51,10 @@ public class UserServiceImpl implements UserService {
         studentRepository.findAll().forEach(users::add);
         return users.isEmpty() ? Optional.empty() : Optional.of(users);
     }
+
+    @Override
+    public Optional<String> getUserRoleByEmail(String email) {
+        Optional<User> user = findUserByEmail(email);
+        return user.map(User::getRole);
+    }
 }

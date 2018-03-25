@@ -28,6 +28,11 @@ public class Lecturer extends User {
     public Lecturer() {
     }
 
+    public Lecturer(Long id, String email, String firstName, String lastName, Department departmentId) {
+        super(id, email, firstName, lastName, GradebookConstants.ROLE_LECTURER);
+        this.departmentId = departmentId;
+    }
+
     public Lecturer(String email, String firstName, String lastName, Department departmentId) {
         super(email, firstName, lastName, GradebookConstants.ROLE_LECTURER);
         this.departmentId = departmentId;

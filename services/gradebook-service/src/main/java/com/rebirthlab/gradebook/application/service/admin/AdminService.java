@@ -13,9 +13,14 @@ public interface AdminService {
 
     Optional<Admin> updateById(Long id, AdminDTO adminDTO);
 
+    Optional<Admin> updateByEmail(String email, AdminDTO adminDTO);
+
     Optional<Admin> findById(Long id);
+
+    Optional<Admin> findByEmail(String email);
 
     Optional<List<Admin>> findAll();
 
     void delete(Long id);
+
 }

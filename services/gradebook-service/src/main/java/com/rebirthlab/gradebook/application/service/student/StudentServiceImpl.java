@@ -42,7 +42,7 @@ public class StudentServiceImpl extends AbstractUserServiceImpl implements Stude
             LOGGER.info("Cannot register student. Student account {} already exists", studentDTO.getEmail());
             return Optional.empty();
         }
-        Optional<Student> newStudent = mapToNewEntity(studentDTO);
+        Optional<Student> newStudent = mapNewEntity(studentDTO);
         return newStudent.map(student -> studentRepository.save(student));
     }
 
@@ -50,7 +50,7 @@ public class StudentServiceImpl extends AbstractUserServiceImpl implements Stude
     @Transactional
     public List<Student> registerAll(List<StudentDTO> studentDTOList) {
         Set<Student> registeredStudents = studentDTOList.stream()
-                .map(studentDTO -> mapToNewEntity(studentDTO).orElse(null))
+                .map(studentDTO -> mapNewEntity(studentDTO).orElse(null))
                 .filter(Objects::nonNull)
                 .filter(student -> {
                     if (studentRepository.existsByEmail(student.getEmail())) {
@@ -77,6 +77,7 @@ public class StudentServiceImpl extends AbstractUserServiceImpl implements Stude
     }
 
     @Override
+    @Transactional
     public Optional<Student> updateByEmail(String email, StudentDTO studentDTO) {
         Optional<Student> student = studentRepository.findByEmail(email);
         if (!student.isPresent()) {
@@ -107,10 +108,10 @@ public class StudentServiceImpl extends AbstractUserServiceImpl implements Stude
     @Transactional
     public void delete(Long id) {
         studentRepository.deleteById(id);
-        LOGGER.info("Student with id={} was successfully deleted", id);
+        LOGGER.info("Student with id {} was successfully deleted", id);
     }
 
-    private Optional<Student> mapToNewEntity(StudentDTO studentDTO) {
+    private Optional<Student> mapNewEntity(StudentDTO studentDTO) {
         Optional<Group> group = groupRepository.findById(studentDTO.getGroupId());
         if (!group.isPresent()) {
             LOGGER.info("Cannot register student. Group id {} doesn't exist", studentDTO.getGroupId());
@@ -124,8 +125,8 @@ public class StudentServiceImpl extends AbstractUserServiceImpl implements Stude
     }
 
     private Optional<Student> updateStudent(StudentDTO studentDTO, Student student) {
-        StudentDTO patchedStudentDTO = patchStudentDTO(studentDTO, student);
-        Optional<Student> updatedStudent = mapToUpdatedEntity(patchedStudentDTO);
+        patchStudentDTO(studentDTO, student);
+        Optional<Student> updatedStudent = mapUpdatedEntity(studentDTO);
         if (!updatedStudent.isPresent()) {
             return Optional.empty();
         }
@@ -133,15 +134,14 @@ public class StudentServiceImpl extends AbstractUserServiceImpl implements Stude
         return Optional.of(savedStudent);
     }
 
-    private StudentDTO patchStudentDTO(StudentDTO studentDTO, Student student) {
+    private void patchStudentDTO(StudentDTO studentDTO, Student student) {
         patchAbstractUserDTO(studentDTO, student);
         if (studentDTO.getGroupId() == null) {
             studentDTO.setGroupId(student.getGroupId().getId());
         }
-        return studentDTO;
     }
 
-    private Optional<Student> mapToUpdatedEntity(StudentDTO studentDTO) {
+    private Optional<Student> mapUpdatedEntity(StudentDTO studentDTO) {
         Optional<Group> group = groupRepository.findById(studentDTO.getGroupId());
         if (!group.isPresent()) {
             LOGGER.info("Cannot update student. Group id {} doesn't exist", studentDTO.getGroupId());
