@@ -70,7 +70,7 @@ public class StudentController {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("{id}")
     @AdminRoleRequired
     public Response findStudent(@PathParam("id") Long id) {
         Student student = studentService.findById(id)
