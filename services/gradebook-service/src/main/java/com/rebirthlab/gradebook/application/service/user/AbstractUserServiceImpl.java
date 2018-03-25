@@ -7,7 +7,7 @@ import com.rebirthlab.gradebook.domain.model.user.User;
  */
 public abstract class AbstractUserServiceImpl {
 
-    protected AbstractUserDTO patchUserDTO(AbstractUserDTO userDTO, User user) {
+    protected void patchAbstractUserDTO(AbstractUserDTO userDTO, User user) {
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());
         if (userDTO.getFirstName() == null || userDTO.getFirstName().isEmpty()) {
@@ -16,6 +16,5 @@ public abstract class AbstractUserServiceImpl {
         if (userDTO.getLastName() == null || userDTO.getLastName().isEmpty()) {
             userDTO.setLastName(user.getLastName());
         }
-        return userDTO;
     }
 }

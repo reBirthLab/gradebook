@@ -45,8 +45,8 @@ public class AdminServiceImpl extends AbstractUserServiceImpl implements AdminSe
             LOGGER.info("Cannot update admin. Admin id {} is not found", id);
             return Optional.empty();
         }
-        AdminDTO patchedAdminDTO = patchAdminDTO(adminDTO, admin.get());
-        Admin updatedAdmin = mapUpdatedAdminEntity(patchedAdminDTO);
+        patchAdminDTO(adminDTO, admin.get());
+        Admin updatedAdmin = mapUpdatedAdminEntity(adminDTO);
         return Optional.of(adminRepository.save(updatedAdmin));
     }
 
@@ -68,8 +68,8 @@ public class AdminServiceImpl extends AbstractUserServiceImpl implements AdminSe
         LOGGER.info("Admin with id={} was successfully deleted", id);
     }
 
-    private AdminDTO patchAdminDTO(AdminDTO adminDTO, Admin admin) {
-        return (AdminDTO) patchUserDTO(adminDTO, admin);
+    private void patchAdminDTO(AdminDTO adminDTO, Admin admin) {
+        patchAbstractUserDTO(adminDTO, admin);
     }
 
     private Admin mapNewAdminEntity(AdminDTO adminDTO) {

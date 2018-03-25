@@ -1,5 +1,6 @@
 package com.rebirthlab.gradebook.application.service.student;
 
+import com.rebirthlab.gradebook.application.service.user.AbstractUserServiceImpl;
 import com.rebirthlab.gradebook.domain.model.group.Group;
 import com.rebirthlab.gradebook.domain.model.group.GroupRepository;
 import com.rebirthlab.gradebook.domain.model.user.Student;
@@ -20,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by Anastasiy
  */
 @Service
-public class StudentServiceImpl implements StudentService {
+public class StudentServiceImpl extends AbstractUserServiceImpl implements StudentService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(StudentServiceImpl.class);
 
@@ -133,14 +134,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private StudentDTO patchStudentDTO(StudentDTO studentDTO, Student student) {
-        studentDTO.setId(student.getId());
-        studentDTO.setEmail(student.getEmail());
-        if (studentDTO.getFirstName() == null || studentDTO.getFirstName().isEmpty()) {
-            studentDTO.setFirstName(student.getFirstName());
-        }
-        if (studentDTO.getLastName() == null || studentDTO.getLastName().isEmpty()) {
-            studentDTO.setLastName(student.getLastName());
-        }
+        patchAbstractUserDTO(studentDTO, student);
         if (studentDTO.getGroupId() == null) {
             studentDTO.setGroupId(student.getGroupId().getId());
         }
