@@ -38,6 +38,12 @@ public class Group {
     public Group() {
     }
 
+    public Group(Long id, String number, Faculty facultyId) {
+        this.id = id;
+        this.number = number;
+        this.facultyId = facultyId;
+    }
+
     public Group(String number, Faculty facultyId) {
         this.number = number;
         this.facultyId = facultyId;

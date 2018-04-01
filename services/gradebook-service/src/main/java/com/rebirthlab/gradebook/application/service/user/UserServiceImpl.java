@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import javax.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +57,13 @@ public class UserServiceImpl implements UserService {
     public Optional<String> getUserRoleByEmail(String email) {
         Optional<User> user = findUserByEmail(email);
         return user.map(User::getRole);
+    }
+
+    @Override
+    public boolean isUserRole(String role, String email) {
+        String userRole = getUserRoleByEmail(email)
+                .orElseThrow(() -> new BadRequestException("No user account found associated with email " +
+                        " [ " + email + " ]"));
+        return userRole.equals(role);
     }
 }

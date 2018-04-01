@@ -14,4 +14,6 @@ public interface UserService {
     Optional<List<User>> findAllUsers();
 
     Optional<String> getUserRoleByEmail(String email);
+
+    boolean isUserRole(String role, String email);
 }
