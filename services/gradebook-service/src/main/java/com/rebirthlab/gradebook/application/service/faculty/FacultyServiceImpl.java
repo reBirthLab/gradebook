@@ -49,8 +49,7 @@ public class FacultyServiceImpl implements FacultyService {
             return faculty;
         }
         Faculty updatedFaculty = new Faculty(id, facultyDTO.getName());
-        Faculty savedFaculty = facultyRepository.save(updatedFaculty);
-        return Optional.of(savedFaculty);
+        return Optional.of(facultyRepository.save(updatedFaculty));
     }
 
     @Override

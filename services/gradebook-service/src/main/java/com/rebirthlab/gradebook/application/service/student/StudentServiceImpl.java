@@ -127,11 +127,7 @@ public class StudentServiceImpl extends AbstractUserServiceImpl implements Stude
     private Optional<Student> updateStudent(StudentDTO studentDTO, Student student) {
         patchStudentDTO(studentDTO, student);
         Optional<Student> updatedStudent = mapUpdatedEntity(studentDTO);
-        if (!updatedStudent.isPresent()) {
-            return Optional.empty();
-        }
-        Student savedStudent = studentRepository.save(updatedStudent.get());
-        return Optional.of(savedStudent);
+        return updatedStudent.map(s -> studentRepository.save(s));
     }
 
     private void patchStudentDTO(StudentDTO studentDTO, Student student) {

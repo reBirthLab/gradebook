@@ -35,7 +35,7 @@ public class Department {
     private Faculty facultyId;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departmentId")
     private Collection<Lecturer> lecturerCollection;
 
     public Department() {

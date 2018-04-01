@@ -139,11 +139,7 @@ public class LecturerServiceImpl extends AbstractUserServiceImpl implements Lect
     private Optional<Lecturer> updateLecturer(LecturerDTO lecturerDTO, Lecturer lecturer) {
         patchLecturerDTO(lecturerDTO, lecturer);
         Optional<Lecturer> updatedLecturer = mapUpdatedEntity(lecturerDTO);
-        if (!updatedLecturer.isPresent()) {
-            return Optional.empty();
-        }
-        Lecturer savedLecturer = lecturerRepository.save(updatedLecturer.get());
-        return Optional.of(savedLecturer);
+        return updatedLecturer.map(l -> lecturerRepository.save(l));
     }
 
     private void patchLecturerDTO(LecturerDTO lecturerDTO, Lecturer lecturer) {

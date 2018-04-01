@@ -85,11 +85,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     private Optional<Department> updateDepartment(DepartmentDTO departmentDTO, Department department) {
         patchDepartmentDTO(departmentDTO, department);
         Optional<Department> updatedDepartment = mapUpdatedEntity(departmentDTO);
-        if (!updatedDepartment.isPresent()) {
-            return Optional.empty();
-        }
-        Department savedDepartment = departmentRepository.save(updatedDepartment.get());
-        return Optional.of(savedDepartment);
+        return updatedDepartment.map(d -> departmentRepository.save(d));
     }
 
     private void patchDepartmentDTO(DepartmentDTO departmentDTO, Department department) {

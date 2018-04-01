@@ -91,10 +91,7 @@ public class LecturerController {
             return Response.noContent().build();
         }
         String currentUserEmail = SecurityCheck.getCurrentUserEmail(securityContext);
-        String userRole = userService.getUserRoleByEmail(currentUserEmail)
-                .orElseThrow(() -> new BadRequestException("No user account found associated with email " +
-                        " [ " + currentUserEmail + " ]"));
-        if (userRole.equals(GradebookConstants.ROLE_LECTURER)) {
+        if (userService.isUserRole(GradebookConstants.ROLE_LECTURER, currentUserEmail)) {
             Lecturer lecturer = lecturerService.findByEmail(currentUserEmail)
                     .orElseThrow();
             List<Lecturer> lecturers = lecturerService.findAllByDepartmentId(lecturer.getDepartmentId().getId())
