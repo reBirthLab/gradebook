@@ -22,29 +22,34 @@ public class Faculty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long facultyId;
+    private Long id;
 
     @NotNull
     @Size(min = 1, max = 150)
     private String name;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
     private Collection<Department> departmentCollection;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
     private Collection<Group> academicGroupCollection;
 
     public Faculty() {
+    }
+
+    public Faculty(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Faculty(String name) {
         this.name = name;
     }
 
-    public Long getFacultyId() {
-        return facultyId;
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -62,7 +67,7 @@ public class Faculty {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (facultyId != null ? facultyId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -72,8 +77,8 @@ public class Faculty {
             return false;
         }
         Faculty other = (Faculty) object;
-        if ((this.facultyId == null && other.facultyId != null) || (this.facultyId != null && !this.facultyId
-                .equals(other.facultyId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id
+                .equals(other.id))) {
             return false;
         }
         return true;
