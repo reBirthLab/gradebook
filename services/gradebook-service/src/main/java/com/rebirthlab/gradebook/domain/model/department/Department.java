@@ -5,7 +5,14 @@ import com.rebirthlab.gradebook.domain.model.faculty.Faculty;
 import com.rebirthlab.gradebook.domain.model.user.Lecturer;
 import java.util.Collection;
 import java.util.HashSet;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -34,10 +41,15 @@ public class Department {
     public Department() {
     }
 
-    public Department(Faculty facultyId, String name) {
+    public Department(Long id, String name, Faculty facultyId) {
+        this.id = id;
         this.name = name;
         this.facultyId = facultyId;
+    }
 
+    public Department(String name, Faculty facultyId) {
+        this.name = name;
+        this.facultyId = facultyId;
     }
 
     public Long getId() {
