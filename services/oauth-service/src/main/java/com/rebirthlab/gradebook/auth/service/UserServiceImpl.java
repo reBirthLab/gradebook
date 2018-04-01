@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     public Optional<User> registerUser(UserDTO userDTO) {
         boolean userExists = userRepository.existsById(userDTO.getEmail());
         if (userExists) {
-            LOGGER.info("User with email {} already exists", userDTO.getEmail());
+            LOGGER.info("User with email '{}' already exists", userDTO.getEmail());
             return Optional.empty();
         }
         User user = convertToDefaultUserAccount(userDTO);
