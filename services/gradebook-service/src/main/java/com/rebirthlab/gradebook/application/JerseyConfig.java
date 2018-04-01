@@ -1,6 +1,7 @@
 package com.rebirthlab.gradebook.application;
 
 import com.rebirthlab.gradebook.application.controller.AdminController;
+import com.rebirthlab.gradebook.application.controller.DepartmentController;
 import com.rebirthlab.gradebook.application.controller.LecturerController;
 import com.rebirthlab.gradebook.application.controller.StudentController;
 import com.rebirthlab.gradebook.application.controller.UserController;
@@ -24,6 +25,7 @@ public class JerseyConfig extends ResourceConfig {
         register(AdminController.class);
         register(LecturerController.class);
         register(StudentController.class);
+        register(DepartmentController.class);
     }
 
 }
