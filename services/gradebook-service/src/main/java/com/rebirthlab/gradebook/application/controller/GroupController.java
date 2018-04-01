@@ -90,10 +90,10 @@ public class GroupController {
     public Response findGroups(@Context SecurityContext securityContext) {
         if (securityContext.isUserInRole("ROLE_ADMIN")) {
             List<Group> groups = groupService.findAll();
-            if (!groups.isEmpty()) {
-                return Response.ok(groups).build();
+            if (groups.isEmpty()) {
+                return Response.noContent().build();
             }
-            return Response.noContent().build();
+            return Response.ok(groups).build();
         }
         String currentUserEmail = SecurityCheck.getCurrentUserEmail(securityContext);
         if (userService.isUserRole(GradebookConstants.ROLE_LECTURER, currentUserEmail)) {
@@ -101,10 +101,10 @@ public class GroupController {
                     .orElseThrow();
             Faculty lecturerFaculty = lecturer.getDepartmentId().getFacultyId();
             List<Group> lecturerFacultyGroups = groupService.findAllByFaculty(lecturerFaculty);
-            if (!lecturerFacultyGroups.isEmpty()) {
-                return Response.ok(lecturerFacultyGroups).build();
+            if (lecturerFacultyGroups.isEmpty()) {
+                return Response.noContent().build();
             }
-            return Response.noContent().build();
+            return Response.ok(lecturerFacultyGroups).build();
         }
         throw new ForbiddenException("Insufficient access rights to perform the requested operation");
     }
