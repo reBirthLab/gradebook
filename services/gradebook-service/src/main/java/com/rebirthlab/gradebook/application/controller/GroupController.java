@@ -1,44 +1,27 @@
-/*
- * Copyright (C) 2015 Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.group.Group;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.ws.rs.*;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 /**
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 
 @Path("groups")
-public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
+public class GroupController {
 
-    @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
-    private EntityManager em;
-
-    public AcademicGroupFacadeREST() {
-        super(Group.class);
+    public GroupController() {
     }
 
     @POST
-    @Consumes({"application/xml", "application/json"})
-    public void createGroup(@HeaderParam("Authorization") String authorization, Group entity) {
+
+    public void createGroup(Group entity) {
 
         //String username = new AuthenticationService(.getUsername(authorization);
         /*User user = UserDataFinder.findDataBy(username);
@@ -50,8 +33,8 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
 
     @PUT
     @Path("{id}")
-    @Consumes({"application/xml", "application/json"})
-    public void editGroup(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id,
+
+    public void editGroup(@PathParam("id") Integer id,
                           Group entity) {
 
         //String username = new AuthenticationService(.getUsername(authorization);
@@ -64,7 +47,7 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
 
     @DELETE
     @Path("{id}")
-    public void removeGroup(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
+    public void removeGroup(@PathParam("id") Integer id) {
 
         //String username = new AuthenticationService(.getUsername(authorization);
         /*User user = UserDataFinder.findDataBy(username);
@@ -76,8 +59,8 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
 
     @GET
     @Path("{id}")
-    @Produces({"application/xml", "application/json"})
-    public Group findGroup(@HeaderParam("Authorization") String authorization, @PathParam("id") Integer id) {
+
+    public Group findGroup(@PathParam("id") Integer id) {
 
         //String username = new AuthenticationService(.getUsername(authorization);
        /* User user = UserDataFinder.findDataBy(username);
@@ -90,8 +73,8 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
     }
 
     @GET
-    @Produces({"application/xml", "application/json"})
-    public List<Group> findGroups(@HeaderParam("Authorization") String authorization) {
+
+    public List<Group> findGroups() {
 
         //String username = new AuthenticationService(.getUsername(authorization);
         /*User user = UserDataFinder.findDataBy(username);
@@ -114,10 +97,4 @@ public class AcademicGroupFacadeREST extends AbstractFacade<Group> {
 
         return null;
     }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
 }

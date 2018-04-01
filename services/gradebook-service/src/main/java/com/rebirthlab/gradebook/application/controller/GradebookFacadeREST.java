@@ -18,22 +18,24 @@ package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.gradebook.Gradebook;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 
 /**
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 
 @Path("gradebooks")
-public class GradebookFacadeREST extends AbstractFacade<Gradebook> {
-
-    @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
-    private EntityManager em;
+public class GradebookFacadeREST {
 
     public GradebookFacadeREST() {
-        super(Gradebook.class);
     }
 
     @POST
@@ -79,7 +81,8 @@ public class GradebookFacadeREST extends AbstractFacade<Gradebook> {
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Gradebook findGradebook(@PathParam("id") Integer id) {
-        return super.find(id);
+        //return super.find(id);
+        return null;
     }
 
     @GET
@@ -120,11 +123,6 @@ public class GradebookFacadeREST extends AbstractFacade<Gradebook> {
         }*/
 
         return null;
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
     }
 
 }

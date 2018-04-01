@@ -18,11 +18,6 @@ package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.attendance.AttendanceTable;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
@@ -34,13 +29,9 @@ import javax.ws.rs.Produces;
  */
 
 @Path("groups/{academic_group_id}/semesters/{semester_id}/gradebooks/{gradebook_id}/attendance")
-public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
-
-    @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
-    private EntityManager em;
+public class AttendanceTableFacadeREST {
 
     public AttendanceTableFacadeREST() {
-        super(AttendanceTable.class);
     }
 
     @GET
@@ -53,10 +44,10 @@ public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
         //String username = new AuthenticationService(.getUsername(authorization);
         //User user = UserDataFinder.findDataBy(username);
 
-        CriteriaBuilder cb = em.getCriteriaBuilder();
+      /*  CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(AttendanceTable.class);
 
-        Root attendanceTable = cq.from(AttendanceTable.class);
+        Root attendanceTable = cq.from(AttendanceTable.class);*/
 
         /*if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
             cq.where(
@@ -84,11 +75,6 @@ public class AttendanceTableFacadeREST extends AbstractFacade<AttendanceTable> {
 
         return null;
 
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
     }
 
 }

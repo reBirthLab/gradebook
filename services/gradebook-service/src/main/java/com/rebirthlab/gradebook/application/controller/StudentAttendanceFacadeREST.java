@@ -17,8 +17,6 @@
 package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.attendance.StudentAttendance;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.PUT;
@@ -31,13 +29,9 @@ import javax.ws.rs.core.PathSegment;
  */
 
 @Path("attendances")
-public class StudentAttendanceFacadeREST extends AbstractFacade<StudentAttendance> {
-
-    @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
-    private EntityManager em;
+public class StudentAttendanceFacadeREST {
 
     public StudentAttendanceFacadeREST() {
-        super(StudentAttendance.class);
     }
 
     @PUT
@@ -53,11 +47,6 @@ public class StudentAttendanceFacadeREST extends AbstractFacade<StudentAttendanc
         if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
             super.edit(entity);
         }*/
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
     }
 
 }

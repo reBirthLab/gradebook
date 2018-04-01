@@ -17,27 +17,25 @@
 package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.semester.Semester;
-import java.util.Calendar;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 
 /**
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 
 @Path("semesters")
-public class SemesterFacadeREST extends AbstractFacade<Semester> {
-
-    @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
-    private EntityManager em;
+public class SemesterFacadeREST {
 
     public SemesterFacadeREST() {
-        super(Semester.class);
     }
 
     @POST
@@ -113,7 +111,7 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
     }
 
     private List<Semester> findActualSemesters() {
-        Calendar today = Calendar.getInstance();
+/*        Calendar today = Calendar.getInstance();
         short currentYear = (short) today.get(Calendar.YEAR);
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -122,16 +120,13 @@ public class SemesterFacadeREST extends AbstractFacade<Semester> {
 
         cq.where(
                 cb.or(
-                   /*     cb.equal(semesters.get(Semester_.academicYear), currentYear),
-                        cb.equal(semesters.get(Semester_.academicYear), currentYear + 1)*/
+                   *//*     cb.equal(semesters.get(Semester_.academicYear), currentYear),
+                        cb.equal(semesters.get(Semester_.academicYear), currentYear + 1)*//*
                 )
         );
-        return getEntityManager().createQuery(cq).getResultList();
-    }
+        return getEntityManager().createQuery(cq).getResultList();*/
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+        return null;
     }
 
 }

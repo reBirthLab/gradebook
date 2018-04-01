@@ -23,22 +23,24 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 
 /**
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 
 @Path("tasks")
-public class TaskFacadeREST extends AbstractFacade<Task> {
-
-    @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
-    private EntityManager em;
+public class TaskFacadeREST {
 
     public TaskFacadeREST() {
-        super(Task.class);
     }
 
     @POST
@@ -112,7 +114,8 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Task findTask(@PathParam("id") Integer id) {
-        return super.find(id);
+        //return super.find(id);
+        return null;
     }
 
     @GET
@@ -126,11 +129,6 @@ public class TaskFacadeREST extends AbstractFacade<Task> {
             return super.findAll();
         }*/
         return null;
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
     }
 
     private void initializeStudentGrades(Task task, Collection<Student> students) {

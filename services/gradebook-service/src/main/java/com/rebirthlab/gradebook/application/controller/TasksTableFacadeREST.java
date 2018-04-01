@@ -18,11 +18,6 @@ package com.rebirthlab.gradebook.application.controller;
 
 import com.rebirthlab.gradebook.domain.model.task.TasksTable;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
@@ -34,13 +29,9 @@ import javax.ws.rs.Produces;
  */
 
 @Path("groups/{academic_group_id}/semesters/{semester_id}/gradebooks/{gradebook_id}/tasks")
-public class TasksTableFacadeREST extends AbstractFacade<TasksTable> {
-
-    @PersistenceContext(unitName = "com.rebirthlab_gradebook_war_1.0PU")
-    private EntityManager em;
+public class TasksTableFacadeREST {
 
     public TasksTableFacadeREST() {
-        super(TasksTable.class);
     }
 
     /**
@@ -62,10 +53,10 @@ public class TasksTableFacadeREST extends AbstractFacade<TasksTable> {
         ////String username = new AuthenticationService(.getUsername(authorization);
         //CurrentUser user = UserDataFinder.findDataBy(username);
 
-        CriteriaBuilder cb = em.getCriteriaBuilder();
+       /* CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(TasksTable.class);
 
-        Root tasksTable = cq.from(TasksTable.class);
+        Root tasksTable = cq.from(TasksTable.class);*/
 
 /*        if (user.getRole().equals(GradebookConstants.ROLE_LECTURER)) {
             cq.where(
@@ -93,11 +84,6 @@ public class TasksTableFacadeREST extends AbstractFacade<TasksTable> {
         {
             return null;
         }
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
     }
 
 }
