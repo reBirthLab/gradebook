@@ -91,7 +91,7 @@ public class LecturerController {
             return Response.noContent().build();
         }
         String currentUserEmail = SecurityCheck.getCurrentUserEmail(securityContext);
-        if (userService.isUserRole(GradebookConstants.ROLE_LECTURER, currentUserEmail)) {
+        if (userService.isUserRole(currentUserEmail, GradebookConstants.ROLE_LECTURER)) {
             Lecturer lecturer = lecturerService.findByEmail(currentUserEmail)
                     .orElseThrow();
             List<Lecturer> lecturers = lecturerService.findAllByDepartmentId(lecturer.getDepartmentId().getId())

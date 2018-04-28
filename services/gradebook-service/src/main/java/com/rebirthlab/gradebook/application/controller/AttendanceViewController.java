@@ -44,14 +44,14 @@ public class AttendanceViewController {
                              @PathParam("semester_id") Long semesterId,
                              @PathParam("gradebook_id") Long gradebookId) {
         String currentUserEmail = SecurityCheck.getCurrentUserEmail(securityContext);
-        if (userService.isUserRole(GradebookConstants.ROLE_LECTURER, currentUserEmail)) {
+        if (userService.isUserRole(currentUserEmail, GradebookConstants.ROLE_LECTURER)) {
             List<AttendanceView> attendanceTable = attendanceViewRepository.searchBy(groupId, semesterId, gradebookId);
             if (attendanceTable.isEmpty()) {
                 return Response.noContent().build();
             }
             return Response.ok(attendanceTable).build();
         }
-        if (userService.isUserRole(GradebookConstants.ROLE_STUDENT, currentUserEmail)) {
+        if (userService.isUserRole(currentUserEmail, GradebookConstants.ROLE_STUDENT)) {
             User student = userService.findUserByEmail(currentUserEmail).orElseThrow();
             List<AttendanceView> attendanceTable = attendanceViewRepository.searchBy(groupId, semesterId, gradebookId,
                     student.getId());

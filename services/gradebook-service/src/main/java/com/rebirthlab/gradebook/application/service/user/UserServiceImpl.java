@@ -5,6 +5,7 @@ import com.rebirthlab.gradebook.domain.model.user.LecturerRepository;
 import com.rebirthlab.gradebook.domain.model.user.StudentRepository;
 import com.rebirthlab.gradebook.domain.model.user.User;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -60,10 +61,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isUserRole(String role, String email) {
+    public boolean isUserRole(String email, String... roles) {
         String userRole = getUserRoleByEmail(email)
                 .orElseThrow(() -> new BadRequestException("No user account found associated with email " +
                         " [ " + email + " ]"));
-        return userRole.equals(role);
+        return Arrays.asList(roles).contains(userRole);
     }
 }
