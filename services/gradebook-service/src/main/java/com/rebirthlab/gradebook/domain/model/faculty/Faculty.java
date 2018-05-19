@@ -29,11 +29,11 @@ public class Faculty {
     private String name;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
     private Collection<Department> departmentCollection;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
     private Collection<Group> academicGroupCollection;
 
     public Faculty() {

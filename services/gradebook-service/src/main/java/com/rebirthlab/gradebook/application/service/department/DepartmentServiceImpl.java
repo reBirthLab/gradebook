@@ -35,7 +35,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Transactional
     public Optional<Department> create(DepartmentDTO departmentDTO) {
         if (departmentRepository.existsByName(departmentDTO.getName())) {
-            LOGGER.info("Cannot create department. Department '{}' already exists", departmentDTO.getName());
+            LOGGER.warn("Cannot create department. Department '{}' already exists", departmentDTO.getName());
             return Optional.empty();
         }
         Optional<Department> newDepartment = mapNewEntity(departmentDTO);
@@ -47,7 +47,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public Optional<Department> updateById(Long id, DepartmentDTO departmentDTO) {
         Optional<Department> department = departmentRepository.findById(id);
         if (!department.isPresent()) {
-            LOGGER.info("Cannot update department. Department id '{}' is not found", id);
+            LOGGER.warn("Cannot update department. Department id '{}' is not found", id);
             return Optional.empty();
         }
         return updateDepartment(departmentDTO, department.get());
@@ -75,7 +75,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     private Optional<Department> mapNewEntity(DepartmentDTO departmentDTO) {
         Optional<Faculty> faculty = facultyRepository.findById(departmentDTO.getFacultyId());
         if (!faculty.isPresent()) {
-            LOGGER.info("Cannot create department. Faculty id '{}' doesn't exist", departmentDTO.getFacultyId());
+            LOGGER.warn("Cannot create department. Faculty id '{}' doesn't exist", departmentDTO.getFacultyId());
             return Optional.empty();
         }
         Department department = new Department(departmentDTO.getName(), faculty.get());
@@ -101,7 +101,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     private Optional<Department> mapUpdatedEntity(DepartmentDTO departmentDTO) {
         Optional<Faculty> faculty = facultyRepository.findById(departmentDTO.getFacultyId());
         if (!faculty.isPresent()) {
-            LOGGER.info("Cannot update department. Faculty id '{}' doesn't exist", departmentDTO.getFacultyId());
+            LOGGER.warn("Cannot update department. Faculty id '{}' doesn't exist", departmentDTO.getFacultyId());
             return Optional.empty();
         }
         Department updatedDepartment = new Department(departmentDTO.getId(),

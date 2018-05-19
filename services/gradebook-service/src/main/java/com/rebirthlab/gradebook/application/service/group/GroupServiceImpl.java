@@ -35,7 +35,7 @@ public class GroupServiceImpl implements GroupService {
     @Transactional
     public Optional<Group> create(GroupDTO groupDTO) {
         if (groupRepository.existsByNumber(groupDTO.getNumber())) {
-            LOGGER.info("Cannot create group. Group '{}' already exists", groupDTO.getNumber());
+            LOGGER.warn("Cannot create group. Group '{}' already exists", groupDTO.getNumber());
             return Optional.empty();
         }
         Optional<Group> newGroup = mapNewEntity(groupDTO);
@@ -47,10 +47,10 @@ public class GroupServiceImpl implements GroupService {
     public Optional<Group> updateById(Long id, GroupDTO groupDTO) {
         Optional<Group> group = groupRepository.findById(id);
         if (!group.isPresent()) {
-            LOGGER.info("Cannot update group. Group id '{}' is not found", id);
+            LOGGER.warn("Cannot update group. Group id '{}' is not found", id);
             return Optional.empty();
         }
-        return updateDepartment(groupDTO, group.get());
+        return updateGroup(groupDTO, group.get());
     }
 
     @Override
@@ -80,14 +80,14 @@ public class GroupServiceImpl implements GroupService {
     private Optional<Group> mapNewEntity(GroupDTO groupDTO) {
         Optional<Faculty> faculty = facultyRepository.findById(groupDTO.getFacultyId());
         if (!faculty.isPresent()) {
-            LOGGER.info("Cannot create group. Faculty id '{}' doesn't exist", groupDTO.getFacultyId());
+            LOGGER.warn("Cannot create group. Faculty id '{}' doesn't exist", groupDTO.getFacultyId());
             return Optional.empty();
         }
         Group group = new Group(groupDTO.getNumber(), faculty.get());
         return Optional.of(group);
     }
 
-    private Optional<Group> updateDepartment(GroupDTO groupDTO, Group group) {
+    private Optional<Group> updateGroup(GroupDTO groupDTO, Group group) {
         patchGroupDTO(groupDTO, group);
         Optional<Group> updatedGroup = mapUpdatedEntity(groupDTO);
         return updatedGroup.map(g -> groupRepository.save(g));
@@ -106,7 +106,7 @@ public class GroupServiceImpl implements GroupService {
     private Optional<Group> mapUpdatedEntity(GroupDTO groupDTO) {
         Optional<Faculty> faculty = facultyRepository.findById(groupDTO.getFacultyId());
         if (!faculty.isPresent()) {
-            LOGGER.info("Cannot update group. Faculty id '{}' doesn't exist", groupDTO.getFacultyId());
+            LOGGER.warn("Cannot update group. Faculty id '{}' doesn't exist", groupDTO.getFacultyId());
             return Optional.empty();
         }
         Group updatedGroup = new Group(groupDTO.getId(),

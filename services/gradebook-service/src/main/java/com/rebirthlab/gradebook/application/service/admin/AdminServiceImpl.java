@@ -31,7 +31,7 @@ public class AdminServiceImpl extends AbstractUserServiceImpl implements AdminSe
     @Transactional
     public Optional<Admin> register(AdminDTO adminDTO) {
         if (adminRepository.existsByEmail(adminDTO.getEmail())) {
-            LOGGER.info("Cannot register admin. Admin account '{}' already exists", adminDTO.getEmail());
+            LOGGER.warn("Cannot register admin. Admin account '{}' already exists", adminDTO.getEmail());
             return Optional.empty();
         }
         Admin admin = mapNewAdminEntity(adminDTO);
@@ -43,7 +43,7 @@ public class AdminServiceImpl extends AbstractUserServiceImpl implements AdminSe
     public Optional<Admin> updateById(Long id, AdminDTO adminDTO) {
         Optional<Admin> admin = adminRepository.findById(id);
         if (!admin.isPresent()) {
-            LOGGER.info("Cannot update admin. Admin id '{}' is not found", id);
+            LOGGER.warn("Cannot update admin. Admin id '{}' is not found", id);
             return Optional.empty();
         }
         patchAdminDTO(adminDTO, admin.get());
@@ -56,7 +56,7 @@ public class AdminServiceImpl extends AbstractUserServiceImpl implements AdminSe
     public Optional<Admin> updateByEmail(String email, AdminDTO adminDTO) {
         Optional<Admin> admin = adminRepository.findByEmail(email);
         if (!admin.isPresent()) {
-            LOGGER.info("Cannot update admin. Admin email '{}' is not found", email);
+            LOGGER.warn("Cannot update admin. Admin email '{}' is not found", email);
             return Optional.empty();
         }
         patchAdminDTO(adminDTO, admin.get());

@@ -21,7 +21,7 @@ public class Semester {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long semesterId;
+    private Long id;
 
     @NotNull
     @Size(min = 1, max = 45)
@@ -37,13 +37,18 @@ public class Semester {
     public Semester() {
     }
 
+    public Semester(Long id, String name, short academicYear) {
+        this(name, academicYear);
+        this.id = id;
+    }
+
     public Semester(String name, short academicYear) {
         this.name = name;
         this.academicYear = academicYear;
     }
 
-    public Long getSemesterId() {
-        return semesterId;
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -61,7 +66,7 @@ public class Semester {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (semesterId != null ? semesterId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -71,8 +76,8 @@ public class Semester {
             return false;
         }
         Semester other = (Semester) object;
-        if ((this.semesterId == null && other.semesterId != null) || (this.semesterId != null && !this.semesterId
-                .equals(other.semesterId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id
+                .equals(other.id))) {
             return false;
         }
         return true;

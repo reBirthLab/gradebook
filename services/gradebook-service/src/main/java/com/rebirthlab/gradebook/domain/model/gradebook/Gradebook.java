@@ -37,7 +37,8 @@ public class Gradebook {
     @Size(max = 65535)
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradebookId")
     private Collection<Task> taskCollection;
 
     @JsonIgnore
@@ -48,6 +49,11 @@ public class Gradebook {
     private Collection<Lecturer> lecturerCollection;
 
     public Gradebook() {
+    }
+
+    public Gradebook(Long id, Group groupId, Semester semesterId, String subject, String description) {
+        this(groupId, semesterId, subject, description);
+        this.id = id;
     }
 
     public Gradebook(Group groupId, Semester semesterId, String subject, String description) {

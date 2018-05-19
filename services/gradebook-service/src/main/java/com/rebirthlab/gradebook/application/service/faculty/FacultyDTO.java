@@ -8,13 +8,7 @@ public class FacultyDTO {
     private Long id;
     private String name;
 
-    public FacultyDTO(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public FacultyDTO(String name) {
-        this.name = name;
+    public FacultyDTO() {
     }
 
     public Long getId() {

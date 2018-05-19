@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class StudentGrade {
 
-
     @EmbeddedId
     protected StudentGradePK studentGradePK;
 

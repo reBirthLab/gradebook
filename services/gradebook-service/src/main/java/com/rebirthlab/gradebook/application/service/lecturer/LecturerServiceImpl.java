@@ -39,7 +39,7 @@ public class LecturerServiceImpl extends AbstractUserServiceImpl implements Lect
     @Transactional
     public Optional<Lecturer> register(LecturerDTO lecturerDTO) {
         if (lecturerRepository.existsByEmail(lecturerDTO.getEmail())) {
-            LOGGER.info("Cannot register lecturer. Lecturer account '{}' already exists", lecturerDTO.getEmail());
+            LOGGER.warn("Cannot register lecturer. Lecturer account '{}' already exists", lecturerDTO.getEmail());
             return Optional.empty();
         }
         Optional<Lecturer> newLecturer = mapNewEntity(lecturerDTO);
@@ -54,7 +54,7 @@ public class LecturerServiceImpl extends AbstractUserServiceImpl implements Lect
                 .filter(Objects::nonNull)
                 .filter(lecturer -> {
                     if (lecturerRepository.existsByEmail(lecturer.getEmail())) {
-                        LOGGER.info("Cannot register lecturer. Lecturer account '{}' already exists",
+                        LOGGER.warn("Cannot register lecturer. Lecturer account '{}' already exists",
                                 lecturer.getEmail());
                         return false;
                     }
@@ -71,7 +71,7 @@ public class LecturerServiceImpl extends AbstractUserServiceImpl implements Lect
     public Optional<Lecturer> updateById(Long id, LecturerDTO lecturerDTO) {
         Optional<Lecturer> lecturer = lecturerRepository.findById(id);
         if (!lecturer.isPresent()) {
-            LOGGER.info("Cannot update lecturer. Lecturer id '{}' is not found", id);
+            LOGGER.warn("Cannot update lecturer. Lecturer id '{}' is not found", id);
             return Optional.empty();
         }
         return updateLecturer(lecturerDTO, lecturer.get());
@@ -82,7 +82,7 @@ public class LecturerServiceImpl extends AbstractUserServiceImpl implements Lect
     public Optional<Lecturer> updateByEmail(String email, LecturerDTO lecturerDTO) {
         Optional<Lecturer> lecturer = lecturerRepository.findByEmail(email);
         if (!lecturer.isPresent()) {
-            LOGGER.info("Cannot update lecturer. Lecturer email '{}' is not found", email);
+            LOGGER.warn("Cannot update lecturer. Lecturer email '{}' is not found", email);
             return Optional.empty();
         }
         return updateLecturer(lecturerDTO, lecturer.get());
@@ -109,7 +109,7 @@ public class LecturerServiceImpl extends AbstractUserServiceImpl implements Lect
     public Optional<List<Lecturer>> findAllByDepartmentId(Long departmentId) {
         Optional<Department> department = departmentRepository.findById(departmentId);
         if (!department.isPresent()) {
-            LOGGER.info("Cannot complete operation. Department id '{}' doesn't exist", departmentId);
+            LOGGER.warn("Cannot complete operation. Department id '{}' doesn't exist", departmentId);
             return Optional.empty();
         }
         List<Lecturer> lecturers = lecturerRepository.findAllByDepartmentId(department.get());
@@ -126,7 +126,7 @@ public class LecturerServiceImpl extends AbstractUserServiceImpl implements Lect
     private Optional<Lecturer> mapNewEntity(LecturerDTO lecturerDTO) {
         Optional<Department> department = departmentRepository.findById(lecturerDTO.getDepartmentId());
         if (!department.isPresent()) {
-            LOGGER.info("Cannot register lecturer. Department id '{}' doesn't exist", lecturerDTO.getDepartmentId());
+            LOGGER.warn("Cannot register lecturer. Department id '{}' doesn't exist", lecturerDTO.getDepartmentId());
             return Optional.empty();
         }
         Lecturer newLecturer = new Lecturer(lecturerDTO.getEmail(),
@@ -152,7 +152,7 @@ public class LecturerServiceImpl extends AbstractUserServiceImpl implements Lect
     private Optional<Lecturer> mapUpdatedEntity(LecturerDTO lecturerDTO) {
         Optional<Department> department = departmentRepository.findById(lecturerDTO.getDepartmentId());
         if (!department.isPresent()) {
-            LOGGER.info("Cannot update lecturer. Department id '{}' doesn't exist", lecturerDTO.getDepartmentId());
+            LOGGER.warn("Cannot update lecturer. Department id '{}' doesn't exist", lecturerDTO.getDepartmentId());
             return Optional.empty();
         }
         Lecturer updatedLecturer = new Lecturer(lecturerDTO.getId(),

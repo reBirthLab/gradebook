@@ -25,51 +25,41 @@ public class Task {
 
     @NotNull
     @Size(min = 1, max = 150)
-    @Column(name = "title")
     private String title;
 
     @NotNull
-    @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private Date startDate;
 
     @NotNull
-    @Column(name = "task_length")
     private short taskLength;
 
     @NotNull
-    @Column(name = "on_course_mon")
     private boolean onCourseMon;
 
     @NotNull
-    @Column(name = "on_course_tue")
     private boolean onCourseTue;
 
     @NotNull
-    @Column(name = "on_course_wed")
     private boolean onCourseWed;
 
     @NotNull
-    @Column(name = "on_course_thu")
     private boolean onCourseThu;
 
     @NotNull
-    @Column(name = "on_course_fri")
     private boolean onCourseFri;
 
     @NotNull
-    @Column(name = "max_grade")
     private short maxGrade;
 
     @Lob
     @Size(max = 65535)
-    @Column(name = "description")
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
     private Collection<StudentGrade> studentGradeCollection;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskId")
     private Collection<StudentAttendance> studentAttendanceCollection;
 
     public Task() {

@@ -42,9 +42,8 @@ public class Department {
     }
 
     public Department(Long id, String name, Faculty facultyId) {
+        this(name, facultyId);
         this.id = id;
-        this.name = name;
-        this.facultyId = facultyId;
     }
 
     public Department(String name, Faculty facultyId) {

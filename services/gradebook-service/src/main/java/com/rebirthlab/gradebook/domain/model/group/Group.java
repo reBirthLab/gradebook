@@ -39,9 +39,8 @@ public class Group {
     }
 
     public Group(Long id, String number, Faculty facultyId) {
+        this(number, facultyId);
         this.id = id;
-        this.number = number;
-        this.facultyId = facultyId;
     }
 
     public Group(String number, Faculty facultyId) {

@@ -30,7 +30,7 @@ public class FacultyServiceImpl implements FacultyService {
     @Transactional
     public Optional<Faculty> create(FacultyDTO facultyDTO) {
         if (facultyRepository.existsByName(facultyDTO.getName())) {
-            LOGGER.info("Cannot create faculty. Faculty '{}' already exists", facultyDTO.getName());
+            LOGGER.warn("Cannot create faculty. Faculty '{}' already exists", facultyDTO.getName());
             return Optional.empty();
         }
         Faculty newFaculty = new Faculty(facultyDTO.getName());
@@ -42,7 +42,7 @@ public class FacultyServiceImpl implements FacultyService {
     public Optional<Faculty> updateById(Long id, FacultyDTO facultyDTO) {
         Optional<Faculty> faculty = facultyRepository.findById(id);
         if (!faculty.isPresent()) {
-            LOGGER.info("Cannot update faculty. Faculty id '{}' is not found", id);
+            LOGGER.warn("Cannot update faculty. Faculty id '{}' is not found", id);
             return Optional.empty();
         }
         if (facultyDTO.getName() == null) {

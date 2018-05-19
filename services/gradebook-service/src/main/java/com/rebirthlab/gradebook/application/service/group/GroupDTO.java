@@ -12,17 +12,6 @@ public class GroupDTO {
     public GroupDTO() {
     }
 
-    public GroupDTO(Long id, String number, Long facultyId) {
-        this.id = id;
-        this.number = number;
-        this.facultyId = facultyId;
-    }
-
-    public GroupDTO(String number, Long facultyId) {
-        this.number = number;
-        this.facultyId = facultyId;
-    }
-
     public Long getId() {
         return id;
     }
