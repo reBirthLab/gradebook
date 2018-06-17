@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class FacultyServiceImpl implements FacultyService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FacultyServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FacultyServiceImpl.class);
 
     private FacultyRepository facultyRepository;
 

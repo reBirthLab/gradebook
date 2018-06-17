@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AdminServiceImpl extends AbstractUserServiceImpl implements AdminService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(AdminServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminServiceImpl.class);
 
     private AdminRepository adminRepository;
 

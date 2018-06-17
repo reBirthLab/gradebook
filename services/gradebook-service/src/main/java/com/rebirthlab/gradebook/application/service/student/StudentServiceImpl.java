@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class StudentServiceImpl extends AbstractUserServiceImpl implements StudentService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(StudentServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     private StudentRepository studentRepository;
     private GroupRepository groupRepository;

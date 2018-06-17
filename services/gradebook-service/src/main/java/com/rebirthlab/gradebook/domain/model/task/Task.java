@@ -1,11 +1,22 @@
 package com.rebirthlab.gradebook.domain.model.task;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rebirthlab.gradebook.domain.model.attendance.StudentAttendance;
 import com.rebirthlab.gradebook.domain.model.gradebook.Gradebook;
 import com.rebirthlab.gradebook.domain.model.studentgrade.StudentGrade;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -56,9 +67,11 @@ public class Task {
     @Size(max = 65535)
     private String description;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
     private Collection<StudentGrade> studentGradeCollection;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskId")
     private Collection<StudentAttendance> studentAttendanceCollection;
 
@@ -143,15 +156,12 @@ public class Task {
 
     @Override
     public boolean equals(Object object) {
+        if (object == null) return false;
         if (!(object instanceof Task)) {
             return false;
         }
         Task other = (Task) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id
-                .equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null && other.id != null) && this.id.equals(other.id);
     }
 
 }

@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GradebookServiceImpl implements GradebookService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(GradebookServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GradebookServiceImpl.class);
 
     private GradebookRepository gradebookRepository;
     private GroupRepository groupRepository;

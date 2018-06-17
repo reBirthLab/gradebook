@@ -3,7 +3,14 @@ package com.rebirthlab.gradebook.domain.model.attendance;
 import com.rebirthlab.gradebook.domain.model.task.Task;
 import com.rebirthlab.gradebook.domain.model.user.Student;
 import java.util.Date;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -38,6 +45,12 @@ public class StudentAttendance {
     private boolean absentWithReason;
 
     public StudentAttendance() {
+    }
+
+    public StudentAttendance(Long id, Task taskId, Student studentId, Date classDate,
+                             boolean present, boolean absent, boolean absentWithReason) {
+        this(taskId, studentId, classDate, present, absent, absentWithReason);
+        this.id = id;
     }
 
     public StudentAttendance(Task taskId, Student studentId, Date classDate,
@@ -87,16 +100,12 @@ public class StudentAttendance {
 
     @Override
     public boolean equals(Object object) {
-
+        if (object == null) return false;
         if (!(object instanceof StudentAttendance)) {
             return false;
         }
         StudentAttendance other = (StudentAttendance) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id
-                .equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null && other.id != null) && this.id.equals(other.id);
     }
 
 }

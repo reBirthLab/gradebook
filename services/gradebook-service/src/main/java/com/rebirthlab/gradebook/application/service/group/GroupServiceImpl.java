@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GroupServiceImpl implements GroupService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(GroupServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GroupServiceImpl.class);
 
     private GroupRepository groupRepository;
     private FacultyRepository facultyRepository;

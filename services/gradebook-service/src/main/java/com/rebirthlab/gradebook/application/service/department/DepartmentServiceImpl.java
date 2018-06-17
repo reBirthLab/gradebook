@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(DepartmentServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DepartmentServiceImpl.class);
 
     private DepartmentRepository departmentRepository;
     private FacultyRepository facultyRepository;

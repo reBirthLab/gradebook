@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SemesterServiceImpl implements SemesterService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(SemesterServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SemesterServiceImpl.class);
 
     private SemesterRepository semesterRepository;
 
