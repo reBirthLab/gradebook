@@ -8,21 +8,15 @@ import java.util.Date;
 public class AttendanceDTO {
 
     private Long id;
-
     private Long taskId;
-
     private Long studentId;
-
     private Date classDate;
-
     private Boolean present;
-
     private Boolean absent;
-
     private Boolean absentWithReason;
 
     public AttendanceDTO() {
-        // Needed for Hibernate to instantiate object
+        // Required for Hibernate to instantiate object
     }
 
     public Long getId() {

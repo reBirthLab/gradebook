@@ -1,7 +1,6 @@
-package com.rebirthlab.gradebook.domain.model.studentgrade;
+package com.rebirthlab.gradebook.domain.model.grade;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
@@ -14,50 +13,44 @@ public class StudentGradePK implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    @Column(name = "student_id")
-    private int studentId;
+    private Long studentId;
 
     @NotNull
-    @Column(name = "task_id")
-    private int taskId;
+    private Long taskId;
 
     public StudentGradePK() {
+        // Required for Hibernate to instantiate object
     }
 
-    public StudentGradePK(int studentId, int taskId) {
+    public StudentGradePK(Long studentId, Long taskId) {
         this.studentId = studentId;
         this.taskId = taskId;
     }
 
-    public int getStudentId() {
+    public Long getStudentId() {
         return studentId;
     }
 
-    public int getTaskId() {
+    public Long getTaskId() {
         return taskId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) studentId;
-        hash += (int) taskId;
+        hash += (long) studentId;
+        hash += (long) taskId;
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
+        if (object == null) return false;
         if (!(object instanceof StudentGradePK)) {
             return false;
         }
         StudentGradePK other = (StudentGradePK) object;
-        if (this.studentId != other.studentId) {
-            return false;
-        }
-        if (this.taskId != other.taskId) {
-            return false;
-        }
-        return true;
+        return this.studentId.equals(other.studentId) && this.taskId.equals(other.taskId);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.rebirthlab.gradebook.application.service.attendance;
 
-import com.rebirthlab.gradebook.application.service.semester.SemesterServiceImpl;
 import com.rebirthlab.gradebook.domain.model.attendance.StudentAttendance;
 import com.rebirthlab.gradebook.domain.model.attendance.StudentAttendanceRepository;
 import java.util.Optional;
@@ -15,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SemesterServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AttendanceServiceImpl.class);
 
     private StudentAttendanceRepository attendanceRepository;
 

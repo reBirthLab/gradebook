@@ -1,4 +1,4 @@
-package com.rebirthlab.gradebook.domain.model.studentgrade;
+package com.rebirthlab.gradebook.domain.model.grade;
 
 import com.rebirthlab.gradebook.domain.model.task.Task;
 import com.rebirthlab.gradebook.domain.model.user.Student;
@@ -7,6 +7,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -16,66 +18,47 @@ import javax.validation.constraints.NotNull;
 public class StudentGrade {
 
     @EmbeddedId
-    protected StudentGradePK studentGradePK;
+    private StudentGradePK studentGradePK;
 
     @NotNull
     @Column(name = "grade")
     private short grade;
 
+    @MapsId("studentId")
     @JoinColumn(name = "student_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private Student student;
 
+    @MapsId("taskId")
     @JoinColumn(name = "task_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Task task;
 
     public StudentGrade() {
+        // Required for Hibernate to instantiate object
     }
 
-    public StudentGrade(StudentGradePK studentGradePK) {
-        this.studentGradePK = studentGradePK;
-    }
-
-    public StudentGrade(StudentGradePK studentGradePK, short grade) {
-        this.studentGradePK = studentGradePK;
+    public StudentGrade(Student student, Task task, short grade) {
+        this.studentGradePK = new StudentGradePK(student.getId(), task.getId());
         this.grade = grade;
-    }
-
-    public StudentGrade(int studentId, int taskId) {
-        this.studentGradePK = new StudentGradePK(studentId, taskId);
+        this.student = student;
+        this.task = task;
     }
 
     public StudentGradePK getStudentGradePK() {
         return studentGradePK;
     }
 
-    public void setStudentGradePK(StudentGradePK studentGradePK) {
-        this.studentGradePK = studentGradePK;
-    }
-
     public short getGrade() {
         return grade;
-    }
-
-    public void setGrade(short grade) {
-        this.grade = grade;
     }
 
     public Student getStudent() {
         return student;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
     public Task getTask() {
         return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
     }
 
     @Override
@@ -87,21 +70,13 @@ public class StudentGrade {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (object == null) return false;
         if (!(object instanceof StudentGrade)) {
             return false;
         }
         StudentGrade other = (StudentGrade) object;
-        if ((this.studentGradePK == null && other.studentGradePK != null) || (this.studentGradePK != null && !this.studentGradePK
-                .equals(other.studentGradePK))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.rebirthlab.gradebook.entity.StudentGrade[ studentGradePK=" + studentGradePK + " ]";
+        return this.studentGradePK != null && other.studentGradePK != null
+                && this.studentGradePK.equals(other.studentGradePK);
     }
 
 }

@@ -1,10 +1,10 @@
 package com.rebirthlab.gradebook.application.controller;
 
-import com.rebirthlab.gradebook.application.service.attendance.AttendanceDTO;
-import com.rebirthlab.gradebook.application.service.attendance.AttendanceService;
+import com.rebirthlab.gradebook.application.service.grade.GradeDTO;
+import com.rebirthlab.gradebook.application.service.grade.GradeService;
 import com.rebirthlab.gradebook.application.service.user.UserService;
 import com.rebirthlab.gradebook.application.util.SecurityCheck;
-import com.rebirthlab.gradebook.domain.model.attendance.StudentAttendance;
+import com.rebirthlab.gradebook.domain.model.grade.StudentGrade;
 import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
@@ -23,30 +23,30 @@ import org.springframework.context.annotation.Scope;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 
-@Path("attendances")
+@Path("students/{student_id}/tasks/{task_id}/grade")
 @Scope("request")
 @Produces(MediaType.APPLICATION_JSON)
-public class AttendanceController {
+public class GradeController {
 
-    private AttendanceService attendanceService;
+    private GradeService gradeService;
     private UserService userService;
 
     @Autowired
-    public AttendanceController(AttendanceService attendanceService, UserService userService) {
-        this.attendanceService = attendanceService;
+    public GradeController(GradeService gradeService, UserService userService) {
+        this.gradeService = gradeService;
         this.userService = userService;
     }
 
     @PUT
-    @Path("{id}")
-    public Response editAttendance(@Context SecurityContext securityContext,
-                                   @PathParam("id") Long id,
-                                   AttendanceDTO attendanceDTO) {
+    public Response editGrade(@Context SecurityContext securityContext,
+                              @PathParam("student_id") Long studentId,
+                              @PathParam("task_id") Long taskId,
+                              GradeDTO gradeDTO) {
         String currentUserEmail = SecurityCheck.getCurrentUserEmail(securityContext);
         if (userService.isUserRole(currentUserEmail, GradebookConstants.ROLE_LECTURER)) {
-            StudentAttendance updatedAttendance = attendanceService.updateById(id, attendanceDTO)
-                    .orElseThrow(() -> new BadRequestException("Cannot update attendance with provided data"));
-            return Response.ok(updatedAttendance).build();
+            StudentGrade updatedGrade = gradeService.updateByStudentIdAndTaskId(studentId, taskId, gradeDTO)
+                    .orElseThrow(() -> new BadRequestException("Cannot update grade with provided data"));
+            return Response.ok(updatedGrade).build();
         }
         throw new ForbiddenException("Insufficient access rights to perform the requested operation");
     }

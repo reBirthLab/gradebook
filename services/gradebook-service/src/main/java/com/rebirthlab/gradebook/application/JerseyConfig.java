@@ -1,16 +1,6 @@
 package com.rebirthlab.gradebook.application;
 
-import com.rebirthlab.gradebook.application.controller.AdminController;
-import com.rebirthlab.gradebook.application.controller.AttendanceController;
-import com.rebirthlab.gradebook.application.controller.AttendanceViewController;
-import com.rebirthlab.gradebook.application.controller.DepartmentController;
-import com.rebirthlab.gradebook.application.controller.FacultyController;
-import com.rebirthlab.gradebook.application.controller.GradebookController;
-import com.rebirthlab.gradebook.application.controller.GroupController;
-import com.rebirthlab.gradebook.application.controller.LecturerController;
-import com.rebirthlab.gradebook.application.controller.SemesterController;
-import com.rebirthlab.gradebook.application.controller.StudentController;
-import com.rebirthlab.gradebook.application.controller.UserController;
+import com.rebirthlab.gradebook.application.controller.*;
 import com.rebirthlab.gradebook.application.util.WebApplicationExceptionMapper;
 import com.rebirthlab.gradebook.application.validation.AdminRoleRequiredRequestFilter;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -38,6 +28,7 @@ public class JerseyConfig extends ResourceConfig {
         register(SemesterController.class);
         register(AttendanceViewController.class);
         register(AttendanceController.class);
+        register(GradeController.class);
     }
 
 }

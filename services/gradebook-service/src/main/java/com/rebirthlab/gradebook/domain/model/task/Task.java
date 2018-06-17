@@ -3,7 +3,7 @@ package com.rebirthlab.gradebook.domain.model.task;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rebirthlab.gradebook.domain.model.attendance.StudentAttendance;
 import com.rebirthlab.gradebook.domain.model.gradebook.Gradebook;
-import com.rebirthlab.gradebook.domain.model.studentgrade.StudentGrade;
+import com.rebirthlab.gradebook.domain.model.grade.StudentGrade;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.CascadeType;
