@@ -2,8 +2,8 @@ package com.rebirthlab.gradebook.domain.model.task;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rebirthlab.gradebook.domain.model.attendance.StudentAttendance;
-import com.rebirthlab.gradebook.domain.model.gradebook.Gradebook;
 import com.rebirthlab.gradebook.domain.model.grade.StudentGrade;
+import com.rebirthlab.gradebook.domain.model.gradebook.Gradebook;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.CascadeType;
@@ -68,7 +68,7 @@ public class Task {
     private String description;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskId")
     private Collection<StudentGrade> studentGradeCollection;
 
     @JsonIgnore
@@ -78,8 +78,10 @@ public class Task {
     public Task() {
     }
 
-    public Task(String title, Date startDate, short taskLength, boolean onCourseMon,
-                boolean onCourseTue, boolean onCourseWed, boolean onCourseThu, boolean onCourseFri, short maxGrade) {
+    public Task(Gradebook gradebookId, String title, Date startDate, short taskLength, boolean onCourseMon,
+                boolean onCourseTue, boolean onCourseWed, boolean onCourseThu, boolean onCourseFri, short maxGrade,
+                String description) {
+        this.gradebookId = gradebookId;
         this.title = title;
         this.startDate = startDate;
         this.taskLength = taskLength;
@@ -89,6 +91,15 @@ public class Task {
         this.onCourseThu = onCourseThu;
         this.onCourseFri = onCourseFri;
         this.maxGrade = maxGrade;
+        this.description = description;
+    }
+
+    public Task(Long id, Gradebook gradebookId, String title, Date startDate, short taskLength, boolean onCourseMon,
+                boolean onCourseTue, boolean onCourseWed, boolean onCourseThu, boolean onCourseFri, short maxGrade,
+                String description) {
+        this(gradebookId, title, startDate, taskLength, onCourseMon, onCourseTue, onCourseWed, onCourseThu, onCourseFri,
+                maxGrade, description);
+        this.id = id;
     }
 
     public Long getId() {

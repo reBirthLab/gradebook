@@ -1,28 +1,26 @@
 package com.rebirthlab.gradebook.domain.model.grade;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
 
 /**
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Embeddable
-public class StudentGradePK implements Serializable {
+public class StudentGradeId implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
     private Long studentId;
 
-    @NotNull
     private Long taskId;
 
-    public StudentGradePK() {
+    public StudentGradeId() {
         // Required for Hibernate to instantiate object
     }
 
-    public StudentGradePK(Long studentId, Long taskId) {
+    public StudentGradeId(Long studentId, Long taskId) {
         this.studentId = studentId;
         this.taskId = taskId;
     }
@@ -37,19 +35,19 @@ public class StudentGradePK implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (long) studentId;
-        hash += (long) taskId;
-        return hash;
+        return Objects.hash(studentId, taskId);
     }
 
     @Override
     public boolean equals(Object object) {
         if (object == null) return false;
-        if (!(object instanceof StudentGradePK)) {
+        if (!(object instanceof StudentGrade)) {
             return false;
         }
-        StudentGradePK other = (StudentGradePK) object;
+        StudentGradeId other = (StudentGradeId) object;
+        if (this.studentId == null || this.taskId == null) {
+            return false;
+        }
         return this.studentId.equals(other.studentId) && this.taskId.equals(other.taskId);
     }
 

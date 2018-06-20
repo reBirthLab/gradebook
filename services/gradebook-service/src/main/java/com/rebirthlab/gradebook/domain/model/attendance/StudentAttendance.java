@@ -35,32 +35,31 @@ public class StudentAttendance {
     @Temporal(TemporalType.DATE)
     private Date classDate;
 
-    @NotNull
     private boolean present;
-
-    @NotNull
     private boolean absent;
-
-    @NotNull
     private boolean absentWithReason;
 
     public StudentAttendance() {
+    }
+
+    public StudentAttendance(Task taskId, Student studentId, Date classDate) {
+        this.taskId = taskId;
+        this.studentId = studentId;
+        this.classDate = classDate;
+    }
+
+    public StudentAttendance(Task taskId, Student studentId, Date classDate,
+                             boolean present, boolean absent, boolean absentWithReason) {
+        this(taskId, studentId, classDate);
+        this.present = present;
+        this.absent = absent;
+        this.absentWithReason = absentWithReason;
     }
 
     public StudentAttendance(Long id, Task taskId, Student studentId, Date classDate,
                              boolean present, boolean absent, boolean absentWithReason) {
         this(taskId, studentId, classDate, present, absent, absentWithReason);
         this.id = id;
-    }
-
-    public StudentAttendance(Task taskId, Student studentId, Date classDate,
-                             boolean present, boolean absent, boolean absentWithReason) {
-        this.taskId = taskId;
-        this.studentId = studentId;
-        this.classDate = classDate;
-        this.present = present;
-        this.absent = absent;
-        this.absentWithReason = absentWithReason;
     }
 
     public Long getId() {

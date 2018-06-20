@@ -2,7 +2,7 @@ package com.rebirthlab.gradebook.application.service.grade;
 
 import com.rebirthlab.gradebook.application.service.attendance.AttendanceServiceImpl;
 import com.rebirthlab.gradebook.domain.model.grade.StudentGrade;
-import com.rebirthlab.gradebook.domain.model.grade.StudentGradePK;
+import com.rebirthlab.gradebook.domain.model.grade.StudentGradeId;
 import com.rebirthlab.gradebook.domain.model.grade.StudentGradeRepository;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -27,13 +27,13 @@ public class GradeServiceImpl implements GradeService {
     @Override
     @Transactional
     public Optional<StudentGrade> updateByStudentIdAndTaskId(Long studentId, Long taskId, GradeDTO gradeDTO) {
-        Optional<StudentGrade> gradeOptional = gradeRepository.findById(new StudentGradePK(studentId, taskId));
+        Optional<StudentGrade> gradeOptional = gradeRepository.findById(new StudentGradeId(studentId, taskId));
         if (!gradeOptional.isPresent()) {
             LOGGER.warn("Cannot update grade. Grade for studentId={} and taskId={} is not found", studentId, taskId);
             return Optional.empty();
         }
         StudentGrade grade = gradeOptional.get();
-        StudentGrade updatedGrade = new StudentGrade(grade.getStudent(), grade.getTask(), gradeDTO.getGrade());
+        StudentGrade updatedGrade = new StudentGrade(grade.getStudentId(), grade.getTaskId(), gradeDTO.getGrade());
         return Optional.of(gradeRepository.save(updatedGrade));
     }
 }

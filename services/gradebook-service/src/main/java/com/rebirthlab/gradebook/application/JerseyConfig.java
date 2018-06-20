@@ -29,6 +29,7 @@ public class JerseyConfig extends ResourceConfig {
         register(AttendanceViewController.class);
         register(AttendanceController.class);
         register(GradeController.class);
+        register(TaskController.class);
     }
 
 }
