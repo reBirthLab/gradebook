@@ -41,6 +41,7 @@ public class AttendanceView {
     private Date classDate;
 
     public AttendanceView() {
+        // Required for Hibernate to instantiate object
     }
 
     public long getGroupId() {

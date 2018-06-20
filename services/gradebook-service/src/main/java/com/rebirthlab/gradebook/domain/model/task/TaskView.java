@@ -1,83 +1,62 @@
 package com.rebirthlab.gradebook.domain.model.task;
 
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
-public class TasksTable implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class TaskView {
 
     @Id
-    @NotNull
-    private int groupId;
+    Long id;
 
-    @Id
-    @NotNull
-    private int semesterId;
+    // Group entity
+    private Long groupId;
+    private Long semesterId;
+    private Long gradebookId;
 
-    @Id
-    @NotNull
-    private int gradebookId;
-
-    @Id
-    @NotNull
-    private int taskId;
-
-    @NotNull
-    @Size(min = 1, max = 150)
+    // Task entity
+    private Long taskId;
     private String title;
-
-    @NotNull
     @Temporal(TemporalType.DATE)
     private Date startDate;
-
-    @NotNull
     private short taskLength;
-
-    @NotNull
     private short maxGrade;
 
-    @Id
-    @NotNull
-    private int studentId;
-
-    @NotNull
-    @Size(min = 1, max = 45)
+    // Student entity
+    private Long studentId;
     private String firstName;
-
-    @NotNull
-    @Size(min = 1, max = 45)
     private String lastName;
 
-    @NotNull
+    //Student Grade
     private short grade;
 
-    public TasksTable() {
+    public TaskView() {
+        // Required for Hibernate to instantiate object
     }
 
-    public int getGroupId() {
+    public Long getId() {
+        return id;
+    }
+
+    public Long getGroupId() {
         return groupId;
     }
 
-    public int getSemesterId() {
+    public Long getSemesterId() {
         return semesterId;
     }
 
-    public int getGradebookId() {
+    public Long getGradebookId() {
         return gradebookId;
     }
 
-    public int getTaskId() {
+    public Long getTaskId() {
         return taskId;
     }
 
@@ -97,7 +76,7 @@ public class TasksTable implements Serializable {
         return maxGrade;
     }
 
-    public int getStudentId() {
+    public Long getStudentId() {
         return studentId;
     }
 
@@ -112,5 +91,4 @@ public class TasksTable implements Serializable {
     public short getGrade() {
         return grade;
     }
-
 }

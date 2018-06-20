@@ -17,19 +17,20 @@ public class JerseyConfig extends ResourceConfig {
         property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
         register(WebApplicationExceptionMapper.class);
         register(AdminRoleRequiredRequestFilter.class);
-        register(UserController.class);
         register(AdminController.class);
-        register(LecturerController.class);
-        register(StudentController.class);
+        register(AttendanceController.class);
+        register(AttendanceViewController.class);
         register(DepartmentController.class);
         register(FacultyController.class);
-        register(GroupController.class);
         register(GradebookController.class);
-        register(SemesterController.class);
-        register(AttendanceViewController.class);
-        register(AttendanceController.class);
         register(GradeController.class);
+        register(GroupController.class);
+        register(LecturerController.class);
+        register(SemesterController.class);
+        register(StudentController.class);
         register(TaskController.class);
+        register(TasksViewController.class);
+        register(UserController.class);
     }
 
 }
