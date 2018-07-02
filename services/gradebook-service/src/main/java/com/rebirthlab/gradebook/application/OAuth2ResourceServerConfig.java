@@ -45,6 +45,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/api/**").access("#oauth2.hasScope('write')");
         //.antMatchers("/api/**").authenticated();
+        http.cors();
     }
 
     @Override
