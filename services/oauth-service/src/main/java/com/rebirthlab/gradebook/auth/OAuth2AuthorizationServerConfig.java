@@ -37,7 +37,8 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(tokenStore())
                 .accessTokenConverter(accessTokenConverter())
-                .authenticationManager(authenticationManager);
+                .authenticationManager(authenticationManager)
+                .addInterceptor(new RedirectResponseHandler());
     }
 
     @Override
