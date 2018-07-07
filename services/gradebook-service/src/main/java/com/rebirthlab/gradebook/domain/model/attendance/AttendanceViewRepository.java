@@ -11,13 +11,13 @@ import org.springframework.data.repository.query.Param;
 public interface AttendanceViewRepository extends ReadOnlyRepository<AttendanceView, Long> {
 
     @Query("SELECT a FROM AttendanceView a WHERE a.groupId = :groupId AND " +
-            "a.semesterId = :semesterId AND a.gradebookId = :gradebookId")
+            "a.semesterId = :semesterId AND a.gradebookId = :gradebookId ORDER BY a.classDate")
     List<AttendanceView> searchBy(@Param("groupId") Long groupId,
                                   @Param("semesterId") Long semesterId,
                                   @Param("gradebookId") Long gradebookId);
 
-    @Query("SELECT a FROM AttendanceView a WHERE a.groupId = :groupId AND " +
-            "a.semesterId = :semesterId AND a.gradebookId = :gradebookId AND a.studentId = :studentId")
+    @Query("SELECT a FROM AttendanceView a WHERE a.groupId = :groupId AND a.semesterId = :semesterId " +
+            "AND a.gradebookId = :gradebookId AND a.studentId = :studentId ORDER BY a.classDate")
     List<AttendanceView> searchBy(@Param("groupId") Long groupId,
                                   @Param("semesterId") Long semesterId,
                                   @Param("gradebookId") Long gradebookId,
