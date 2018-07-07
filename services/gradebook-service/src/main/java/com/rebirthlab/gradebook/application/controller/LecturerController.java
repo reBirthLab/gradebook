@@ -9,7 +9,15 @@ import com.rebirthlab.gradebook.domain.model.user.Lecturer;
 import com.rebirthlab.gradebook.domain.shared.GradebookConstants;
 import java.util.List;
 import java.util.Optional;
-import javax.ws.rs.*;
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.ForbiddenException;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -74,11 +82,14 @@ public class LecturerController {
 
     @GET
     @Path("{id}")
-    @AdminRoleRequired
-    public Response findLecturer(@PathParam("id") Long id) {
-        Lecturer lecturer = lecturerService.findById(id)
-                .orElseThrow(() -> new BadRequestException("No lecturer account found matching id=" + id));
-        return Response.ok(lecturer).build();
+    public Response findLecturer(@Context SecurityContext securityContext, @PathParam("id") Long id) {
+        String currentUserEmail = SecurityCheck.getCurrentUserEmail(securityContext);
+        if (userService.isUserRole(currentUserEmail, GradebookConstants.ROLE_ADMIN, GradebookConstants.ROLE_LECTURER)) {
+            Lecturer lecturer = lecturerService.findById(id)
+                    .orElseThrow(() -> new BadRequestException("No lecturer account found matching id=" + id));
+            return Response.ok(lecturer).build();
+        }
+        throw new ForbiddenException("Insufficient access rights to perform the requested operation");
     }
 
     @GET
