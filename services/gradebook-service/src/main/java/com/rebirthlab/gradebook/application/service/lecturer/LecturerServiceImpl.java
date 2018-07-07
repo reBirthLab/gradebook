@@ -149,6 +149,7 @@ public class LecturerServiceImpl extends AbstractUserServiceImpl implements Lect
         }
     }
 
+    // TODO: DRY. Eliminate code duplication of mapNewEntity method. Take Gradebook entity as example
     private Optional<Lecturer> mapUpdatedEntity(LecturerDTO lecturerDTO) {
         Optional<Department> department = departmentRepository.findById(lecturerDTO.getDepartmentId());
         if (!department.isPresent()) {

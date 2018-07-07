@@ -195,6 +195,7 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
+    // TODO: DRY. Eliminate code duplication of mapNewEntity method. Take Gradebook entity as example
     private Optional<Task> mapUpdatedEntity(TaskDTO taskDTO) {
         Optional<Gradebook> gradebook = gradebookRepository.findById(taskDTO.getGradebookId());
         if (!gradebook.isPresent()) {

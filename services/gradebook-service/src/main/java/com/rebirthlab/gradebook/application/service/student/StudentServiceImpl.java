@@ -137,6 +137,7 @@ public class StudentServiceImpl extends AbstractUserServiceImpl implements Stude
         }
     }
 
+    // TODO: DRY. Eliminate code duplication of mapNewEntity method. Take Gradebook entity as example
     private Optional<Student> mapUpdatedEntity(StudentDTO studentDTO) {
         Optional<Group> group = groupRepository.findById(studentDTO.getGroupId());
         if (!group.isPresent()) {

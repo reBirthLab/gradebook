@@ -98,6 +98,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
     }
 
+    // TODO: DRY. Eliminate code duplication of mapNewEntity method. Take Gradebook entity as example
     private Optional<Department> mapUpdatedEntity(DepartmentDTO departmentDTO) {
         Optional<Faculty> faculty = facultyRepository.findById(departmentDTO.getFacultyId());
         if (!faculty.isPresent()) {

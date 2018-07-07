@@ -1,14 +1,19 @@
 package com.rebirthlab.gradebook.application.service.gradebook;
 
+import com.rebirthlab.gradebook.application.util.Actions;
 import com.rebirthlab.gradebook.domain.model.gradebook.Gradebook;
 import com.rebirthlab.gradebook.domain.model.gradebook.GradebookRepository;
 import com.rebirthlab.gradebook.domain.model.group.Group;
 import com.rebirthlab.gradebook.domain.model.group.GroupRepository;
 import com.rebirthlab.gradebook.domain.model.semester.Semester;
 import com.rebirthlab.gradebook.domain.model.semester.SemesterRepository;
+import com.rebirthlab.gradebook.domain.model.user.Lecturer;
+import com.rebirthlab.gradebook.domain.model.user.LecturerRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +27,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class GradebookServiceImpl implements GradebookService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GradebookServiceImpl.class);
-
     private GradebookRepository gradebookRepository;
     private GroupRepository groupRepository;
     private SemesterRepository semesterRepository;
+    private LecturerRepository lecturerRepository;
 
     @Autowired
     public GradebookServiceImpl(GradebookRepository gradebookRepository, GroupRepository groupRepository,
-                                SemesterRepository semesterRepository) {
+                                SemesterRepository semesterRepository, LecturerRepository lecturerRepository) {
         this.gradebookRepository = gradebookRepository;
         this.groupRepository = groupRepository;
         this.semesterRepository = semesterRepository;
+        this.lecturerRepository = lecturerRepository;
     }
 
     @Override
@@ -80,19 +86,29 @@ public class GradebookServiceImpl implements GradebookService {
     }
 
     private Optional<Gradebook> mapNewEntity(GradebookDTO gradebookDTO) {
-        Optional<Group> group = groupRepository.findById(gradebookDTO.getGroupId());
-        if (!group.isPresent()) {
-            LOGGER.warn("Cannot create gradebook. Group id '{}' doesn't exist", gradebookDTO.getGroupId());
-            return Optional.empty();
-        }
-        Optional<Semester> semester = semesterRepository.findById(gradebookDTO.getSemesterId());
-        if (!semester.isPresent()) {
-            LOGGER.warn("Cannot create gradebook. Semester id '{}' doesn't exist", gradebookDTO.getSemesterId());
+        Actions action = Actions.CREATE;
+        Optional<Group> group = getGroup(gradebookDTO, action);
+        Optional<Semester> semester = getSemester(gradebookDTO, action);
+        Optional<Set<Lecturer>> lecturers = getLecturers(gradebookDTO, action);
+        if (!group.isPresent() || !semester.isPresent() || !lecturers.isPresent()) {
             return Optional.empty();
         }
         Gradebook gradebook = new Gradebook(group.get(), semester.get(), gradebookDTO.getSubject(),
-                gradebookDTO.getDescription());
+                gradebookDTO.getDescription(), lecturers.get());
         return Optional.of(gradebook);
+    }
+
+    private Optional<Gradebook> mapUpdatedEntity(GradebookDTO gradebookDTO) {
+        Actions action = Actions.UPDATE;
+        Optional<Group> group = getGroup(gradebookDTO, action);
+        Optional<Semester> semester = getSemester(gradebookDTO, action);
+        Optional<Set<Lecturer>> lecturers = getLecturers(gradebookDTO, action);
+        if (!group.isPresent() || !semester.isPresent() || !lecturers.isPresent()) {
+            return Optional.empty();
+        }
+        Gradebook updatedGradebook = new Gradebook(gradebookDTO.getId(), group.get(), semester.get(),
+                gradebookDTO.getSubject(), gradebookDTO.getDescription(), lecturers.get());
+        return Optional.of(updatedGradebook);
     }
 
     private Optional<Gradebook> updateGradebook(GradebookDTO gradebookDTO, Gradebook gradebook) {
@@ -117,19 +133,32 @@ public class GradebookServiceImpl implements GradebookService {
         }
     }
 
-    private Optional<Gradebook> mapUpdatedEntity(GradebookDTO gradebookDTO) {
-        Optional<Group> group = groupRepository.findById(gradebookDTO.getGroupId());
-        if (!group.isPresent()) {
-            LOGGER.warn("Cannot update gradebook. Group id '{}' doesn't exist", gradebookDTO.getGroupId());
+    private Optional<Group> getGroup(GradebookDTO gradebookDTO, Actions action) {
+        return groupRepository.findById(gradebookDTO.getGroupId()).or(() -> {
+            LOGGER.warn("Cannot {} gradebook. Group id '{}' doesn't exist", action, gradebookDTO.getGroupId());
             return Optional.empty();
-        }
-        Optional<Semester> semester = semesterRepository.findById(gradebookDTO.getSemesterId());
-        if (!semester.isPresent()) {
-            LOGGER.warn("Cannot update gradebook. Semester id '{}' doesn't exist", gradebookDTO.getSemesterId());
-            return Optional.empty();
-        }
-        Gradebook updatedGradebook = new Gradebook(gradebookDTO.getId(), group.get(), semester.get(),
-                gradebookDTO.getSubject(), gradebookDTO.getDescription());
-        return Optional.of(updatedGradebook);
+        });
     }
+
+    private Optional<Semester> getSemester(GradebookDTO gradebookDTO, Actions action) {
+        return semesterRepository.findById(gradebookDTO.getSemesterId()).or(() -> {
+            LOGGER.warn("Cannot {} gradebook. Semester id '{}' doesn't exist", action, gradebookDTO.getSemesterId());
+            return Optional.empty();
+        });
+    }
+
+    private Optional<Set<Lecturer>> getLecturers(GradebookDTO gradebookDTO, Actions action) {
+        Set<Long> lecturerIds = gradebookDTO.getLecturerCollection();
+        Set<Lecturer> lecturers = lecturerIds.stream()
+                .map(lecturerId -> lecturerRepository.findById(lecturerId))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toSet());
+        if (lecturers.size() != lecturerIds.size()) {
+            LOGGER.warn("Cannot {} gradebook. Cannot find lecturer id(s) {}", action, lecturerIds);
+            return Optional.empty();
+        }
+        return Optional.of(lecturers);
+    }
+
 }

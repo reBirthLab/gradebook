@@ -103,6 +103,7 @@ public class GroupServiceImpl implements GroupService {
         }
     }
 
+    // TODO: DRY. Eliminate code duplication of mapNewEntity method. Take Gradebook entity as example
     private Optional<Group> mapUpdatedEntity(GroupDTO groupDTO) {
         Optional<Faculty> faculty = facultyRepository.findById(groupDTO.getFacultyId());
         if (!faculty.isPresent()) {

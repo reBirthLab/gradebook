@@ -1,5 +1,7 @@
 package com.rebirthlab.gradebook.application.service.gradebook;
 
+import java.util.Set;
+
 /**
  * Created by Anastasiy
  */
@@ -10,6 +12,7 @@ public class GradebookDTO {
     private Long semesterId;
     private String subject;
     private String description;
+    private Set<Long> lecturerCollection;
 
     public GradebookDTO() {
     }
@@ -52,5 +55,13 @@ public class GradebookDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Long> getLecturerCollection() {
+        return lecturerCollection;
+    }
+
+    public void setLecturerCollection(Set<Long> lecturerCollection) {
+        this.lecturerCollection = lecturerCollection;
     }
 }

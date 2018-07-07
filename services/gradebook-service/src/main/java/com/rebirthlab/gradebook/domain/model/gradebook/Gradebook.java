@@ -7,6 +7,7 @@ import com.rebirthlab.gradebook.domain.model.task.Task;
 import com.rebirthlab.gradebook.domain.model.user.Lecturer;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,7 +42,6 @@ public class Gradebook {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradebookId")
     private Collection<Task> taskCollection;
 
-    @JsonIgnore
     @JoinTable(name = "lecturer_has_gradebook", joinColumns = {
             @JoinColumn(name = "gradebook_id")}, inverseJoinColumns = {
             @JoinColumn(name = "lecturer_id")})
@@ -51,16 +51,19 @@ public class Gradebook {
     public Gradebook() {
     }
 
-    public Gradebook(Long id, Group groupId, Semester semesterId, String subject, String description) {
-        this(groupId, semesterId, subject, description);
+    public Gradebook(Long id, Group groupId, Semester semesterId, String subject, String description,
+                     Set<Lecturer> lecturerCollection) {
+        this(groupId, semesterId, subject, description, lecturerCollection);
         this.id = id;
     }
 
-    public Gradebook(Group groupId, Semester semesterId, String subject, String description) {
+    public Gradebook(Group groupId, Semester semesterId, String subject, String description,
+                     Set<Lecturer> lecturerCollection) {
         this.groupId = groupId;
         this.semesterId = semesterId;
         this.subject = subject;
         this.description = description;
+        this.lecturerCollection = lecturerCollection;
     }
 
     public Long getId() {
@@ -100,15 +103,12 @@ public class Gradebook {
 
     @Override
     public boolean equals(Object object) {
+        if (object == null) return false;
         if (!(object instanceof Gradebook)) {
             return false;
         }
         Gradebook other = (Gradebook) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id
-                .equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null && other.id != null) && this.id.equals(other.id);
     }
 
 }
