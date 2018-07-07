@@ -62,7 +62,7 @@ public class SemesterServiceImpl implements SemesterService {
 
     @Override
     public List<Semester> findActual() {
-        int currentYear = LocalDate.now().getYear();
+        short currentYear = (short) LocalDate.now().getYear();
         return semesterRepository.findActual(currentYear);
     }
 
