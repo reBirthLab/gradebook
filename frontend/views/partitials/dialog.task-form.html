@@ -17,7 +17,7 @@
                         with the task grades and attendances will be lost!</p>
                 </div>               
                 <md-input-container ng-show="{{mode ===  'Add' && userRole === 'admin'}}">
-                    <md-select name="gradebook" ng-model="task.gradebookId" placeholder="Gradebook" required>
+                    <md-select name="gradebook" ng-model="task.gradebookId" placeholder="Gradebook" ng-requiered="{{mode ===  'Add' && userRole === 'admin'}}">
                         <md-option ng-value="gradebook" ng-repeat="gradebook in gradebooks" >
                             {{gradebook.subject}}
                         </md-option>

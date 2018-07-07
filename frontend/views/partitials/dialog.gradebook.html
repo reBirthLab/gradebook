@@ -21,10 +21,10 @@
                 </md-input-container>
                 <div layout="row">
                     <md-input-container flex>
-                        <md-select name="group" ng-model="gradebook.academicGroupId" placeholder="Group" md-on-open="loadGroups()" required>  
-                            <md-option ng-value="group" 
+                        <md-select name="group" ng-model="gradebook.groupId" placeholder="Group" md-on-open="loadGroups()" required>
+                            <md-option ng-value="group.id"
                                        ng-repeat="group in groups"
-                                       selected="{{ group.number === gradebook.academicGroupId.number ? 'selected' : '' }}">
+                                       selected="{{ group.number === gradebook.groupId.number ? 'selected' : '' }}">
                                 {{group.number}}
                             </md-option>
                         </md-select>
@@ -34,7 +34,7 @@
                     </md-input-container>
                     <md-input-container flex>
                         <md-select name="semester" ng-model="gradebook.semesterId" placeholder="Semester"  md-on-open="loadSemesters()" required>                   
-                            <md-option ng-value="semester" 
+                            <md-option ng-value="semester.id"
                                        ng-repeat="semester in semesters"
                                        selected="{{ semester.academicYear === gradebook.semesterId.academicYear 
                                                    && semester.name === gradebook.semesterId.name ? 'selected' : '' }}">

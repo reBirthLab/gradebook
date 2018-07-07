@@ -56,7 +56,7 @@
 
         <tbody>
             <tr ng-repeat="task in tasks | filter: search">
-                <td class="table-num-col">{{task.taskId}}</td>
+                <td class="table-num-col">{{task.id}}</td>
                 <td>{{task.gradebookId.academicGroupId.number}}</td>
                 <td>{{task.gradebookId.semesterId.academicYear}} {{task.gradebookId.semesterId.name}}</td>
                 <td>{{task.gradebookId.subject}}</td>

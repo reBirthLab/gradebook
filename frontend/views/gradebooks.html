@@ -56,11 +56,11 @@
 
         <tbody>
             <tr ng-repeat="gradebook in gradebooks | filter: search">
-                <td class="table-num-col">{{gradebook.gradebookId}}</td>
+                <td class="table-num-col">{{gradebook.id}}</td>
                 <td>{{gradebook.subject}}</td>
                 <td>{{gradebook.semesterId.academicYear}} {{gradebook.semesterId.name}}</td>
-                <td>{{gradebook.academicGroupId.number}}</td>
-                <td>{{gradebook.academicGroupId.facultyId.name}}</td>           
+                <td>{{gradebook.groupId.number}}</td>
+                <td>{{gradebook.groupId.facultyId.name}}</td>
                 <td class="controls-col">
                     <md-button class="control" ng-click="showEditGradebookForm($event, gradebook)">
                         <md-icon>edit</md-icon>

@@ -1,19 +1,3 @@
-/* 
- * Copyright (C) 2015 Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 'use strict';
 
 var controllers = angular.module('GradebookControllers', []);
@@ -24,7 +8,6 @@ function pad(num, size) {
         s = "0" + s;
     return s;
 }
-;
 
 var serverTimeZoneOffset = 4;
 
@@ -42,7 +25,7 @@ controllers.controller('MainCtrl', function ($scope, $http, $rootScope, $window,
     };
 
     $scope.logout = function () {
-        AuthenticationService.ClearCredentials();
+        AuthenticationService.Logout();
         $location.path('/login');
     };
 
@@ -95,7 +78,7 @@ controllers.controller('MainCtrl', function ($scope, $http, $rootScope, $window,
             $scope.userGradebooks = Gradebook.query();
         }
     } catch (error) {
-        console.log(error);
+
     }
 
     function getByGradebookId(arr, id) {
@@ -154,7 +137,7 @@ controllers.controller('GradebookDetailsDialogController', function ($scope, $md
     $scope.gradebook = Gradebook.get({
         gradebookId: gradebookId
     }, function (gradebook) {
-        $scope.group = gradebook.academicGroupId;
+        $scope.group = gradebook.groupId;
         $scope.semester = gradebook.semesterId;
         $scope.lecturers = gradebook.lecturerCollection;
     });
@@ -198,13 +181,13 @@ controllers.controller('AddGradebookDialogController', function ($scope, $rootSc
     $scope.searchText = null;
     $scope.selectedLecturers = [];
 
-    var lecturers = Lecturer.query(function (lecturers) {
+    Lecturer.query(function (lecturers) {
 
         if ($rootScope.globals.currentUser.userRole === 'lecturer') {
             
             var currentLecturer = {};
             for (var i = 0; i < lecturers.length; i++) {
-                if (lecturers[i].lecturerId === lecturerId)
+                if (lecturers[i].id === lecturerId)
                     currentLecturer = lecturers[i];
             }
             $scope.selectedLecturers.push(currentLecturer);
@@ -243,7 +226,7 @@ controllers.controller('AddGradebookDialogController', function ($scope, $rootSc
 
             if ($scope.selectedLecturers.length !== 0) {
                 for (var i = 0; i < $scope.selectedLecturers.length; i++) {
-                    if ($scope.selectedLecturers[i].lecturerId === $scope.lecturer.lecturerId) {
+                    if ($scope.selectedLecturers[i].id === $scope.lecturer.id) {
                         lecturer = undefined;
                     }
                 }
@@ -272,7 +255,7 @@ controllers.controller('AddGradebookDialogController', function ($scope, $rootSc
             var selectedLecturerIds = [];
 
             for (var i = 0; i < $scope.selectedLecturers.length; i++) {
-                selectedLecturerIds.push({lecturerId: $scope.selectedLecturers[i].lecturerId});
+                selectedLecturerIds.push($scope.selectedLecturers[i].id);
             }
 
             var gradebook = $scope.gradebook;
@@ -297,14 +280,13 @@ controllers.controller('AddGradebookDialogController', function ($scope, $rootSc
 
 controllers.controller('LoginCtrl', function ($scope, $rootScope, $mdToast, $location, AuthenticationService) {
     // reset login status
-    AuthenticationService.ClearCredentials();
+    AuthenticationService.Logout();
 
     $scope.login = function () {
         if ($scope.loginForm.$valid) {
             $scope.dataLoading = true;
             AuthenticationService.Login($scope.username, $scope.password, function (response) {
                 if (response.status === 200) {
-                    AuthenticationService.SetCredentials($scope.username, $scope.password, response.data.id, response.data.role);
                     $location.path('/');
                 } else {
                     showErrorToast();
@@ -665,7 +647,6 @@ controllers.controller('EditAttendanceDialogController', function ($scope, $mdDi
     } else if (attendance.absentWithReason) {
         $scope.status = 'absent-with-reason';
     }
-    ;
 
     $scope.update = function () {
         $scope.dataLoading = true;
@@ -802,7 +783,7 @@ controllers.controller('EditFacultyDialogController', function ($scope, $mdDialo
             $scope.dataLoading = true;
 
             Faculty.update({
-                facultyId: faculty.facultyId
+                facultyId: faculty.id
             }, $scope.faculty,
                     function () {
                         $mdDialog.hide();
@@ -826,7 +807,7 @@ controllers.controller('DeleteFacultyDialogController', function ($scope, $mdDia
         $scope.dataLoading = true;
 
         faculty.$delete({
-            facultyId: faculty.facultyId
+            facultyId: faculty.id
         },
         function () {
             $mdDialog.hide();
@@ -961,7 +942,7 @@ controllers.controller('EditDepartmentDialogController', function ($scope, $mdDi
             $scope.dataLoading = true;
 
             Department.update({
-                departmentId: department.departmentId
+                departmentId: department.id
             }, $scope.department,
                     function () {
                         $mdDialog.hide();
@@ -985,7 +966,7 @@ controllers.controller('DeleteDepartmentDialogController', function ($scope, $md
         $scope.dataLoading = true;
 
         department.$delete({
-            departmentId: department.departmentId
+            departmentId: department.id
         },
         function () {
             $mdDialog.hide();
@@ -1110,7 +1091,7 @@ controllers.controller('EditSemesterDialogController', function ($scope, $mdDial
             $scope.dataLoading = true;
 
             Semester.update({
-                semesterId: semester.semesterId
+                semesterId: semester.id
             }, $scope.semester,
                     function () {
                         $mdDialog.hide();
@@ -1134,7 +1115,7 @@ controllers.controller('DeleteSemesterDialogController', function ($scope, $mdDi
         $scope.dataLoading = true;
 
         semester.$delete({
-            semesterId: semester.semesterId
+            semesterId: semester.id
         },
         function () {
             $mdDialog.hide();
@@ -1276,7 +1257,7 @@ controllers.controller('EditLecturerDialogController', function ($scope, $mdDial
             $scope.dataLoading = true;
 
             Lecturer.update({
-                lecturerId: lecturer.lecturerId
+                lecturerId: lecturer.id
             }, $scope.lecturer,
                     function () {
                         $mdDialog.hide();
@@ -1300,7 +1281,7 @@ controllers.controller('DeleteLecturerDialogController', function ($scope, $mdDi
         $scope.dataLoading = true;
 
         lecturer.$delete({
-            lecturerId: lecturer.lecturerId
+            lecturerId: lecturer.id
         },
         function () {
             $mdDialog.hide();
@@ -1439,7 +1420,7 @@ controllers.controller('EditStudentDialogController', function ($scope, $mdDialo
             $scope.dataLoading = true;
 
             Student.update({
-                studentId: student.studentId
+                studentId: student.id
             }, $scope.student,
                     function () {
                         $mdDialog.hide();
@@ -1463,7 +1444,7 @@ controllers.controller('DeleteStudentDialogController', function ($scope, $mdDia
         $scope.dataLoading = true;
 
         student.$delete({
-            studentId: student.studentId
+            studentId: student.id
         },
         function () {
             $mdDialog.hide();
@@ -1582,7 +1563,7 @@ controllers.controller('EditAdministratorDialogController', function ($scope, $m
             $scope.dataLoading = true;
 
             Administrator.update({
-                administratorId: administrator.adminId
+                administratorId: administrator.id
             }, $scope.administrator,
                     function () {
                         $mdDialog.hide();
@@ -1606,7 +1587,7 @@ controllers.controller('DeleteAdministratorDialogController', function ($scope, 
         $scope.dataLoading = true;
 
         administrator.$delete({
-            administratorId: administrator.adminId
+            administratorId: administrator.id
         },
         function () {
             $mdDialog.hide();
@@ -1746,7 +1727,7 @@ controllers.controller('EditGroupDialogController', function ($scope, $mdDialog,
             $scope.dataLoading = true;
 
             Group.update({
-                groupId: group.academicGroupId
+                groupId: group.id
             }, $scope.group,
                     function () {
                         $mdDialog.hide();
@@ -1770,7 +1751,7 @@ controllers.controller('DeleteGroupDialogController', function ($scope, $mdDialo
         $scope.dataLoading = true;
 
         group.$delete({
-            groupId: group.academicGroupId
+            groupId: group.id
         },
         function () {
             $mdDialog.hide();
@@ -1887,11 +1868,11 @@ controllers.controller('EditGradebookDialogController', function ($scope, $mdDia
     $scope.searchText = null;
     $scope.selectedLecturers = [];
 
-    var lecturers = Lecturer.query(function (lecturers) {
+    Lecturer.query(function (lecturers) {
 
         for (var i = 0; i < gradebook.lecturerCollection.length; i++) {
             for (var j = 0; j < lecturers.length; j++) {
-                if (gradebook.lecturerCollection[i].lecturerId === lecturers[j].lecturerId)
+                if (gradebook.lecturerCollection[i].id === lecturers[j].id)
                     $scope.selectedLecturers.push(lecturers[j]);
             }
         }
@@ -1929,7 +1910,7 @@ controllers.controller('EditGradebookDialogController', function ($scope, $mdDia
 
             if ($scope.selectedLecturers.length !== 0) {
                 for (var i = 0; i < $scope.selectedLecturers.length; i++) {
-                    if ($scope.selectedLecturers[i].lecturerId === $scope.lecturer.lecturerId) {
+                    if ($scope.selectedLecturers[i].id === $scope.lecturer.id) {
                         lecturer = undefined;
                     }
                 }
@@ -1957,14 +1938,14 @@ controllers.controller('EditGradebookDialogController', function ($scope, $mdDia
             var selectedLecturerIds = [];
 
             for (var i = 0; i < $scope.selectedLecturers.length; i++) {
-                selectedLecturerIds.push({lecturerId: $scope.selectedLecturers[i].lecturerId});
+                selectedLecturerIds.push({lecturerId: $scope.selectedLecturers[i].id});
             }
 
             var gradebook = $scope.gradebook;
             gradebook.lecturerCollection = selectedLecturerIds;
 
             Gradebook.update({
-                gradebookId: gradebook.gradebookId
+                gradebookId: gradebook.id
             }, gradebook,
                     function () {
                         $mdDialog.hide();
@@ -1988,7 +1969,7 @@ controllers.controller('DeleteGradebookDialogController', function ($scope, $mdD
         $scope.dataLoading = true;
 
         gradebook.$delete({
-            gradebookId: gradebook.gradebookId
+            gradebookId: gradebook.id
         },
         function () {
             $mdDialog.hide();
@@ -2082,7 +2063,7 @@ controllers.controller('DeleteTaskDialogController', function ($scope, $mdDialog
         $scope.dataLoading = true;
 
         task.$delete({
-            taskId: task.taskId
+            taskId: task.id
         },
         function () {
             $mdDialog.hide();

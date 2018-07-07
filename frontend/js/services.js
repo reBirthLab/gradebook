@@ -1,96 +1,80 @@
-/* 
- * Copyright (C) 2015 Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 'use strict';
 
 var services = angular.module('GradebookServices', []);
 
-var domainName = 'http://gradebook-anastasius.rhcloud.com';
-//var domainName = 'https://gradebook.ga';
+var oauthServiceHostname = 'http://localhost:8080';
+var gradebookServiceHostname = 'http://localhost:8081';
 
 services.factory('Gradebook', function ($resource) {
-    return $resource(domainName + '/api/v1/gradebooks/:gradebookId', null, {
+    return $resource(gradebookServiceHostname + '/api/v1/gradebooks/:gradebookId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Group', function ($resource) {
-    return $resource(domainName + '/api/v1/groups/:groupId', null, {
+    return $resource(gradebookServiceHostname + '/api/v1/groups/:groupId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Semester', function ($resource) {
-    return $resource(domainName + '/api/v1/semesters/:semesterId', null, {
+    return $resource(gradebookServiceHostname + '/api/v1/semesters/:semesterId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Administrator', function ($resource) {
-    return $resource(domainName + '/api/v1/administrators/:administratorId', null, {
+    return $resource(gradebookServiceHostname + '/api/v1/administrators/:administratorId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Lecturer', function ($resource) {
-    return $resource(domainName +  '/api/v1/lecturers/:lecturerId', null, {
+    return $resource(gradebookServiceHostname +  '/api/v1/lecturers/:lecturerId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Student', function ($resource) {
-    return $resource(domainName + '/api/v1/students/:studentId', null, {
+    return $resource(gradebookServiceHostname + '/api/v1/students/:studentId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('GradebookTasks', function ($resource) {
-    return $resource(domainName + '/api/v1/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks');
+    return $resource(gradebookServiceHostname + '/api/v1/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/tasks');
 });
 
 services.factory('GradebookAttendance', function ($resource) {
-    return $resource(domainName + '/api/v1/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/attendance');
+    return $resource(gradebookServiceHostname + '/api/v1/groups/:groupId/semesters/:semesterId/gradebooks/:gradebookId/attendance');
 });
 
 services.factory('Task', function ($resource) {
-    return $resource(domainName + '/api/v1/tasks/:taskId', null, {
+    return $resource(gradebookServiceHostname + '/api/v1/tasks/:taskId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Grade', function ($resource) {
-    return $resource(domainName + '/api/v1/students/:studentId/tasks/:taskId/grade', null, {
+    return $resource(gradebookServiceHostname + '/api/v1/students/:studentId/tasks/:taskId/grade', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Attendance', function ($resource) {
-    return $resource(domainName + '/api/v1/attendances/:attendanceId', null, {
+    return $resource(gradebookServiceHostname + '/api/v1/attendances/:attendanceId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Faculty', function ($resource) {
-    return $resource(domainName + '/api/v1/faculties/:facultyId', null, {
+    return $resource(gradebookServiceHostname + '/api/v1/faculties/:facultyId', null, {
         update: {method: 'PUT'}
     });
 });
 
 services.factory('Department', function ($resource) {
-    return $resource(domainName + '/api/v1/departments/:departmentId', null, {
+    return $resource(gradebookServiceHostname + '/api/v1/departments/:departmentId', null, {
         update: {method: 'PUT'}
     });
 });
@@ -119,39 +103,51 @@ services.factory('MessageService', function ($mdToast) {
 services.factory('AuthenticationService', function (Base64, $http, $cookieStore, $rootScope, $timeout) {
     var service = {};
 
+
     service.Login = function (username, password, callback) {
-
         var authdata = Base64.encode(username + ':' + password);
+        var token;
 
-        $http.get(domainName + '/api/v1/users/check', {
+        var callUserCheck = function(response) {
+            $http.get(gradebookServiceHostname + '/api/v1/users/check', {
+                    headers: {'Authorization': 'Bearer ' + token}
+                }).then(function (response) {
+                    setCurrentUserDetails(response);
+                    callback(response);
+                }, function (response) {
+                    callback(response);
+                });
+        }
+
+        var setCurrentUserDetails = function(response) {
+            $rootScope.globals = {
+                currentUser: {
+                    userId: response.data.id,
+                    username: username,
+                    token: token,
+                    userRole: response.data.role
+                }
+            };
+            $http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+            $cookieStore.put('globals', $rootScope.globals);
+        }
+
+        $http.get(oauthServiceHostname + '/oauth/authorize?client_id=gradebook-web&response_type=token&redirect_uri=http://localhost', {
             headers: {'Authorization': 'Basic ' + authdata}
         }).then(function (response) {
-            callback(response);
+            var location = response.headers('X-Location');
+            var fragment = location.split('#')[1];
+            token = fragment.split('&')[0].split('=')[1];
+            callUserCheck(response);
         }, function (response) {
             callback(response);
         });
     };
 
-    service.SetCredentials = function (username, password, id, role) {
-        var authdata = Base64.encode(username + ':' + password);
-
-        $rootScope.globals = {
-            currentUser: {
-                userId: id,
-                username: username,
-                authdata: authdata,
-                userRole: role
-            }
-        };
-
-        $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-        $cookieStore.put('globals', $rootScope.globals);
-    };
-
-    service.ClearCredentials = function () {
+    service.Logout = function () {
         $rootScope.globals = {};
         $cookieStore.remove('globals');
-        $http.defaults.headers.common.Authorization = 'Basic ';
+        $http.defaults.headers.common.Authorization = 'Bearer ';
     };
 
     return service;
@@ -189,8 +185,6 @@ services.factory('Base64', function () {
                         keyStr.charAt(enc2) +
                         keyStr.charAt(enc3) +
                         keyStr.charAt(enc4);
-                chr1 = chr2 = chr3 = "";
-                enc1 = enc2 = enc3 = enc4 = "";
             } while (i < input.length);
 
             return output;
@@ -228,9 +222,6 @@ services.factory('Base64', function () {
                 if (enc4 != 64) {
                     output = output + String.fromCharCode(chr3);
                 }
-
-                chr1 = chr2 = chr3 = "";
-                enc1 = enc2 = enc3 = enc4 = "";
 
             } while (i < input.length);
 
