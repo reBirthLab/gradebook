@@ -1,0 +1,181 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: oauth-service
+  annotations:
+    description: OAuth Service
+
+objects:
+  -
+    kind: ImageStream
+    apiVersion: v1
+    metadata:
+      name: "${SERVICE_NAME}"
+      labels:
+        app: "${SERVICE_NAME}"
+
+  -
+    kind: BuildConfig
+    apiVersion: v1
+    metadata:
+      name: "${SERVICE_NAME}-build"
+      labels:
+        app: "${SERVICE_NAME}"
+    spec:
+      triggers:
+        - type: ConfigChange
+        - type: ImageChange
+      source:
+        type: Git
+        git:
+          uri: "${GIT_REPOSITORY_URL}"
+          ref: "${GIT_REF}"
+        sourceSecret:
+          name: openshift-key
+        secrets:
+          - secret:
+              name: gradebook-db
+        contextDir: services
+      strategy:
+        type: Docker
+        dockerStrategy:
+          dockerfilePath: "${SERVICE_NAME}/Dockerfile"
+      output:
+        to:
+          kind: ImageStreamTag
+          name: "${SERVICE_NAME}:latest"
+
+  -
+    kind: DeploymentConfig
+    apiVersion: v1
+    metadata:
+      name: "${SERVICE_NAME}-deploy"
+      labels:
+        app: "${SERVICE_NAME}"
+    spec:
+      selector:
+        deploymentConfig: "${SERVICE_NAME}-deploy"
+      template:
+        metadata:
+          labels:
+            app: "${SERVICE_NAME}"
+            deploymentConfig: "${SERVICE_NAME}-deploy"
+        spec:
+          containers:
+            -
+              name: "${SERVICE_NAME}"
+              image: "${SERVICE_NAME}"
+              ports:
+                -
+                  containerPort: 8080
+              env:
+                -
+                  name: _JAVA_OPTIONS
+                  value: "${JVM_OPTIONS}"
+                -
+                  name: ACTIVE_PROFILE
+                  value: "${ACTIVE_PROFILE}"
+                -
+                  name: DATABASE_URL
+                  value: "${DATABASE_URL}"
+              resources:
+                limits:
+                  cpu: 400m
+      replicas: 2
+      triggers:
+        -
+          type: ConfigChange
+        -
+          type: ImageChange
+          imageChangeParams:
+            automatic: true
+            containerNames:
+              -
+                "${SERVICE_NAME}"
+            from:
+              kind: ImageStreamTag
+              name: "${SERVICE_NAME}:latest"
+      strategy:
+        type: Rolling
+
+  -
+    kind: HorizontalPodAutoscaler
+    apiVersion: autoscaling/v1
+    metadata:
+      name: "${SERVICE_NAME}-autoscaler"
+      labels:
+        app: "${SERVICE_NAME}"
+    spec:
+      maxReplicas: 2
+      minReplicas: 1
+      scaleTargetRef:
+        apiVersion: extensions/v1beta1
+        kind: DeploymentConfig
+        name: "${SERVICE_NAME}-deployment"
+      targetCPUUtilizationPercentage: 90
+
+  -
+    kind: Service
+    apiVersion: v1
+    metadata:
+      name: "${SERVICE_NAME}"
+      labels:
+        app: "${SERVICE_NAME}"
+    spec:
+      selector:
+        deploymentConfig: "${SERVICE_NAME}-deploy"
+      ports:
+        -
+          name: 8080-tcp
+          port: 8080
+          protocol: TCP
+          targetPort: 8080
+      sessionAffinity: ClientIP
+
+  -
+    kind: Route
+    apiVersion: v1
+    metadata:
+      name: "${SERVICE_NAME}-route"
+      labels:
+        app: "${SERVICE_NAME}"
+    spec:
+      to:
+        kind: Service
+        name: "${SERVICE_NAME}"
+      port:
+        targetPort: 8080-tcp
+
+parameters:
+  -
+    name: SERVICE_NAME
+    required: true
+    displayName: Service name
+    description: A base name that identifies the resources created for given service
+    value: oauth-service
+  -
+    name: DATABASE_URL
+    required: true
+    displayName: Database URL
+    value: "http://gradebook-db.gradebook.svc.cluster.local:3306"
+  -
+    name: GIT_REPOSITORY_URL
+    required: true
+    displayName: Git SSH Repository URL
+    despription: Git repository URL to project source code
+    value: "git@github.com:reBirthLab/gradebook.git"
+  -
+    name: GIT_REF
+    displayName: Git Reference
+    description: Git branch/tag reference
+    value: release/2.0.0
+  -
+    name: ACTIVE_PROFILE
+    displayName: Active Profile
+    description: Service configuration profile
+    value: default
+  -
+    name: JVM_OPTIONS
+    displayName: JVM Options
+    value: -Xmx256m
