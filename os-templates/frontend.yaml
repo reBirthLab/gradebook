@@ -2,9 +2,9 @@
 kind: Template
 apiVersion: v1
 metadata:
-  name: oauth-service
+  name: frontend
   annotations:
-    description: OAuth Service
+    description: Web Application
 
 objects:
   -
@@ -33,11 +33,11 @@ objects:
           ref: "${GIT_REF}"
         sourceSecret:
           name: openshift-key
-        contextDir: services
+        contextDir: frontend
       strategy:
         type: Docker
         dockerStrategy:
-          dockerfilePath: "${SERVICE_NAME}/Dockerfile"
+          dockerfilePath: "Dockerfile"
       output:
         to:
           kind: ImageStreamTag
@@ -65,40 +65,12 @@ objects:
               image: "${SERVICE_NAME}"
               ports:
                 -
-                  containerPort: 8080
-              env:
-                -
-                  name: JAVA_TOOL_OPTIONS
-                  value: "${JVM_OPTIONS}"
-                -
-                  name: ACTIVE_PROFILE
-                  value: "${ACTIVE_PROFILE}"
-                -
-                  name: DATABASE_URL
-                  value: "${DATABASE_URL}"
-                -
-                  name: DATABASE_NAME
-                  valueFrom:
-                    secretKeyRef:
-                      name: gradebook-db
-                      key: database-name
-                -
-                  name: DATABASE_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: gradebook-db
-                      key: database-user
-                -
-                  name: DATABASE_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: gradebook-db
-                      key: database-password
+                  containerPort: 80
               resources:
                 limits:
                   cpu: 400m
-                  memory: 512M
-      replicas: 2
+                  memory: 128M
+      replicas: 1
       triggers:
         -
           type: ConfigChange
@@ -116,22 +88,6 @@ objects:
         type: Rolling
 
   -
-    kind: HorizontalPodAutoscaler
-    apiVersion: autoscaling/v1
-    metadata:
-      name: "${SERVICE_NAME}-autoscaler"
-      labels:
-        app: "${SERVICE_NAME}"
-    spec:
-      maxReplicas: 2
-      minReplicas: 1
-      scaleTargetRef:
-        apiVersion: v1
-        kind: DeploymentConfig
-        name: "${SERVICE_NAME}-deploy"
-      targetCPUUtilizationPercentage: 90
-
-  -
     kind: Service
     apiVersion: v1
     metadata:
@@ -143,10 +99,10 @@ objects:
         deploymentConfig: "${SERVICE_NAME}-deploy"
       ports:
         -
-          name: 8080-tcp
-          port: 8080
+          name: 80-tcp
+          port: 80
           protocol: TCP
-          targetPort: 8080
+          targetPort: 80
       sessionAffinity: ClientIP
 
   -
@@ -161,7 +117,7 @@ objects:
         kind: Service
         name: "${SERVICE_NAME}"
       port:
-        targetPort: 8080-tcp
+        targetPort: 80-tcp
 
 parameters:
   -
@@ -169,12 +125,7 @@ parameters:
     required: true
     displayName: Service name
     description: A base name that identifies the resources created for given service
-    value: oauth-service
-  -
-    name: DATABASE_URL
-    required: true
-    displayName: Database URL
-    value: "jdbc:mysql://gradebook-db.gradebook.svc.cluster.local:3306"
+    value: frontend
   -
     name: GIT_REPOSITORY_URL
     required: true
@@ -186,11 +137,3 @@ parameters:
     displayName: Git Reference
     description: Git branch/tag reference
     value: release/2.0.0
-  -
-    name: ACTIVE_PROFILE
-    displayName: Active Profile
-    description: Service configuration profile
-    value: default
-  -
-    name: JVM_OPTIONS
-    displayName: JVM Options

@@ -2,9 +2,9 @@
 kind: Template
 apiVersion: v1
 metadata:
-  name: oauth-service
+  name: gradebook-service
   annotations:
-    description: OAuth Service
+    description: Gradebook Service
 
 objects:
   -
@@ -65,7 +65,7 @@ objects:
               image: "${SERVICE_NAME}"
               ports:
                 -
-                  containerPort: 8080
+                  containerPort: 8081
               env:
                 -
                   name: JAVA_TOOL_OPTIONS
@@ -143,10 +143,10 @@ objects:
         deploymentConfig: "${SERVICE_NAME}-deploy"
       ports:
         -
-          name: 8080-tcp
-          port: 8080
+          name: 8081-tcp
+          port: 8081
           protocol: TCP
-          targetPort: 8080
+          targetPort: 8081
       sessionAffinity: ClientIP
 
   -
@@ -161,7 +161,7 @@ objects:
         kind: Service
         name: "${SERVICE_NAME}"
       port:
-        targetPort: 8080-tcp
+        targetPort: 8081-tcp
 
 parameters:
   -
@@ -169,7 +169,7 @@ parameters:
     required: true
     displayName: Service name
     description: A base name that identifies the resources created for given service
-    value: oauth-service
+    value: gradebook-service
   -
     name: DATABASE_URL
     required: true
