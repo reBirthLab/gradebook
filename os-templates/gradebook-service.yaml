@@ -74,6 +74,9 @@ objects:
                   name: ACTIVE_PROFILE
                   value: "${ACTIVE_PROFILE}"
                 -
+                  name: OAUTH_SERVICE_JWT_KEY_URI
+                  value: "${OAUTH_SERVICE_JWT_KEY_URI}"
+                -
                   name: DATABASE_URL
                   value: "${DATABASE_URL}"
                 -
@@ -170,6 +173,11 @@ parameters:
     displayName: Service name
     description: A base name that identifies the resources created for given service
     value: gradebook-service
+  -
+    name: OAUTH_SERVICE_JWT_KEY_URI
+    required: true
+    displayName: OAuth Service JWT token key URL
+    value: "http://oauth.gradebook.svc.cluster.local:8080/oauth/token_key"
   -
     name: DATABASE_URL
     required: true
