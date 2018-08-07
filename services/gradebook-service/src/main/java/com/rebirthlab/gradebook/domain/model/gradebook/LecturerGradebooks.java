@@ -1,5 +1,6 @@
 package com.rebirthlab.gradebook.domain.model.gradebook;
 
+import java.math.BigInteger;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -10,7 +11,7 @@ import javax.persistence.Id;
 public class LecturerGradebooks {
 
     @Id
-    Long id;
+    private BigInteger id;
 
     // Lecturer entity
     private long lecturerId;
