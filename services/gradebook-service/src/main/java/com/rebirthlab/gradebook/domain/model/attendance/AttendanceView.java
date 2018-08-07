@@ -1,5 +1,6 @@
 package com.rebirthlab.gradebook.domain.model.attendance;
 
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +14,7 @@ import javax.persistence.TemporalType;
 public class AttendanceView {
 
     @Id
-    Long id;
+    private BigInteger id;
 
     // Group entity
     private long groupId;

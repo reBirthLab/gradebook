@@ -1,5 +1,6 @@
 package com.rebirthlab.gradebook.domain.model.task;
 
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +14,7 @@ import javax.persistence.TemporalType;
 public class TaskView {
 
     @Id
-    Long id;
+    private BigInteger id;
 
     // Group entity
     private Long groupId;
@@ -38,10 +39,6 @@ public class TaskView {
 
     public TaskView() {
         // Required for Hibernate to instantiate object
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Long getGroupId() {
