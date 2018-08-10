@@ -16,6 +16,6 @@ spring:
     hibernate:
       ddl-auto: none
   datasource:
-    url: jdbc:mysql://localhost:3306/gradebook
+    url: jdbc:mysql://localhost:3306/gradebook?useSSL=false
     username: user
     password: password
