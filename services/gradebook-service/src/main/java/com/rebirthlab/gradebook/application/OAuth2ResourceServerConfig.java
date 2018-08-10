@@ -31,7 +31,6 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    DefaultAccessTokenConverter tokenConverter = new DefaultAccessTokenConverter();
     @Value("${resource.id}")
     private String resourceId;
     @Autowired
@@ -43,7 +42,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/api/**").access("#oauth2.hasScope('write')");
+                .antMatchers("/api/**").access("#oauth2.hasScope('write') and hasRole('ROLE_USER')");
         //.antMatchers("/api/**").authenticated();
         http.cors();
     }

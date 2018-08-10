@@ -94,14 +94,14 @@ public class LecturerController {
 
     @GET
     public Response findAllLecturers(@Context SecurityContext securityContext) {
-        if (securityContext.isUserInRole("ROLE_ADMIN")) {
+        String currentUserEmail = SecurityCheck.getCurrentUserEmail(securityContext);
+        if (userService.isUserRole(currentUserEmail, GradebookConstants.ROLE_ADMIN)) {
             Optional<List<Lecturer>> lecturers = lecturerService.findAll();
             if (lecturers.isPresent()) {
                 return Response.ok(lecturers.get()).build();
             }
             return Response.noContent().build();
         }
-        String currentUserEmail = SecurityCheck.getCurrentUserEmail(securityContext);
         if (userService.isUserRole(currentUserEmail, GradebookConstants.ROLE_LECTURER)) {
             Lecturer lecturer = lecturerService.findByEmail(currentUserEmail)
                     .orElseThrow();

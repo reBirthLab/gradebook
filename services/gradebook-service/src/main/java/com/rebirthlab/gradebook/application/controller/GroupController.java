@@ -88,14 +88,14 @@ public class GroupController {
 
     @GET
     public Response findGroups(@Context SecurityContext securityContext) {
-        if (securityContext.isUserInRole("ROLE_ADMIN")) {
+        String currentUserEmail = SecurityCheck.getCurrentUserEmail(securityContext);
+        if (userService.isUserRole(currentUserEmail, GradebookConstants.ROLE_ADMIN)) {
             List<Group> groups = groupService.findAll();
             if (groups.isEmpty()) {
                 return Response.noContent().build();
             }
             return Response.ok(groups).build();
         }
-        String currentUserEmail = SecurityCheck.getCurrentUserEmail(securityContext);
         if (userService.isUserRole(currentUserEmail, GradebookConstants.ROLE_LECTURER)) {
             Lecturer lecturer = lecturerService.findByEmail(currentUserEmail)
                     .orElseThrow();

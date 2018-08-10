@@ -9,6 +9,6 @@ public enum Actions {
 
     @Override
     public String toString() {
-        return this.toString().toLowerCase();
+        return this.name().toLowerCase();
     }
 }
