@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.3.RELEASE'
+        springBootVersion = '2.0.4.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -24,7 +24,7 @@ repositories {
 }
 
 ext {
-    springCloudVersion = 'Finchley.RC2'
+    springCloudVersion = 'Finchley.SR1'
 }
 
 dependencies {
@@ -32,6 +32,8 @@ dependencies {
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-oauth2'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-cache'
+    compile group: 'com.hazelcast', name: 'hazelcast-spring', version: '3.10.4'
     compile group: 'mysql', name: 'mysql-connector-java'
     // JDK9 support >>>
     compile group: 'javax.xml.bind', name: 'jaxb-api'
