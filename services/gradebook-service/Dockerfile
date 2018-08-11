@@ -21,6 +21,7 @@ ENTRYPOINT java "-Dspring.profiles.active=${ACTIVE_PROFILE}" \
     "-Dspring.datasource.url=${DATABASE_URL}/${DATABASE_NAME}" \
     "-Dspring.datasource.username=${DATABASE_USER}" \
     "-Dspring.datasource.password=${DATABASE_PASSWORD}" \
+    "-Dhazelcast.k8s-discovery.service-dns=${KUBERNETES_SERVICE_DNS}" \
     -jar "/deployments/${APP_NAME}.jar"
 
 EXPOSE 8081
