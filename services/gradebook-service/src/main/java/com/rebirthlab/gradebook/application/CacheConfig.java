@@ -60,6 +60,7 @@ public class CacheConfig extends CachingConfigurerSupport {
     public Config hazelcastCacheKubernetesConfig() {
         Config config = new Config();
         config.setInstanceName("hazelcast-cache");
+        config.getProperties().put("hazelcast.discovery.enabled", true);
 
         NetworkConfig networkConfig = config.getNetworkConfig();
 
