@@ -1,5 +1,6 @@
 package com.rebirthlab.gradebook.domain.model.attendance;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -11,7 +12,9 @@ import javax.persistence.TemporalType;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
-public class AttendanceView {
+public class AttendanceView implements Serializable {
+
+    public static final long serialVersionUID = 1L;
 
     @Id
     private BigInteger id;

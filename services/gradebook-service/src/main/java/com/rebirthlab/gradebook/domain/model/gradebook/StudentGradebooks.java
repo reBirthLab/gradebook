@@ -1,5 +1,6 @@
 package com.rebirthlab.gradebook.domain.model.gradebook;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,7 +9,9 @@ import javax.persistence.Id;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
-public class StudentGradebooks {
+public class StudentGradebooks implements Serializable {
+
+    public static final long serialVersionUID = 1L;
 
     @Id
     private BigInteger id;

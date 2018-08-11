@@ -3,6 +3,7 @@ package com.rebirthlab.gradebook.domain.model.faculty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rebirthlab.gradebook.domain.model.department.Department;
 import com.rebirthlab.gradebook.domain.model.group.Group;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import javax.persistence.CascadeType;
@@ -18,7 +19,9 @@ import javax.validation.constraints.Size;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
-public class Faculty {
+public class Faculty implements Serializable {
+
+    public static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,11 +80,7 @@ public class Faculty {
             return false;
         }
         Faculty other = (Faculty) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id
-                .equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null && other.id != null) && this.id.equals(other.id);
     }
 
 }

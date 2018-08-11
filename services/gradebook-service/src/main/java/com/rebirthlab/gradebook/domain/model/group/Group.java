@@ -4,9 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rebirthlab.gradebook.domain.model.faculty.Faculty;
 import com.rebirthlab.gradebook.domain.model.gradebook.Gradebook;
 import com.rebirthlab.gradebook.domain.model.user.Student;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -14,7 +23,9 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "\"group\"")
-public class Group {
+public class Group implements Serializable {
+
+    public static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,11 +92,7 @@ public class Group {
             return false;
         }
         Group other = (Group) object;
-        if ((this.id == null && other.id != null)
-                || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null && other.id != null) && this.id.equals(other.id);
     }
 
 }

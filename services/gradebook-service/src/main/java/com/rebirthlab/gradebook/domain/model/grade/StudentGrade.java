@@ -2,6 +2,7 @@ package com.rebirthlab.gradebook.domain.model.grade;
 
 import com.rebirthlab.gradebook.domain.model.task.Task;
 import com.rebirthlab.gradebook.domain.model.user.Student;
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,7 +16,9 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @IdClass(StudentGradeId.class)
-public class StudentGrade {
+public class StudentGrade implements Serializable {
+
+    public static final long serialVersionUID = 1L;
 
     @Id
     @ManyToOne

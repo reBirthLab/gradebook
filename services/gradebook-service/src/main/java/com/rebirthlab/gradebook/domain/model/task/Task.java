@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rebirthlab.gradebook.domain.model.attendance.StudentAttendance;
 import com.rebirthlab.gradebook.domain.model.grade.StudentGrade;
 import com.rebirthlab.gradebook.domain.model.gradebook.Gradebook;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.CascadeType;
@@ -24,7 +25,9 @@ import javax.validation.constraints.Size;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
-public class Task {
+public class Task implements Serializable {
+
+    public static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

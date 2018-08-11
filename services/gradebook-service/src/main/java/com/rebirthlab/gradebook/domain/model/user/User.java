@@ -1,5 +1,6 @@
 package com.rebirthlab.gradebook.domain.model.user;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,9 @@ import javax.validation.constraints.NotNull;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @MappedSuperclass
-public abstract class User {
+public abstract class User implements Serializable {
+
+    public static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,10 +84,6 @@ public abstract class User {
             return false;
         }
         User other = (User) object;
-        if ((this.email == null && other.email != null)
-                || (this.email != null && !this.email.equals(other.email))) {
-            return false;
-        }
-        return true;
+        return (this.id != null && other.id != null) && this.id.equals(other.id);
     }
 }

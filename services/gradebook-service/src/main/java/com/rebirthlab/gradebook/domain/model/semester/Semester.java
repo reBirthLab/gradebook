@@ -2,6 +2,7 @@ package com.rebirthlab.gradebook.domain.model.semester;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rebirthlab.gradebook.domain.model.gradebook.Gradebook;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import javax.persistence.CascadeType;
@@ -17,7 +18,9 @@ import javax.validation.constraints.Size;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
-public class Semester {
+public class Semester implements Serializable {
+
+    public static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,11 +79,7 @@ public class Semester {
             return false;
         }
         Semester other = (Semester) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id
-                .equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null && other.id != null) && this.id.equals(other.id);
     }
 
 }

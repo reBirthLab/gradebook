@@ -2,6 +2,7 @@ package com.rebirthlab.gradebook.domain.model.attendance;
 
 import com.rebirthlab.gradebook.domain.model.task.Task;
 import com.rebirthlab.gradebook.domain.model.user.Student;
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,9 @@ import javax.validation.constraints.NotNull;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
-public class StudentAttendance {
+public class StudentAttendance implements Serializable {
+
+    public static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

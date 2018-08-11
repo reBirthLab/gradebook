@@ -5,6 +5,7 @@ import com.rebirthlab.gradebook.domain.model.group.Group;
 import com.rebirthlab.gradebook.domain.model.semester.Semester;
 import com.rebirthlab.gradebook.domain.model.task.Task;
 import com.rebirthlab.gradebook.domain.model.user.Lecturer;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +17,9 @@ import javax.validation.constraints.Size;
  * @author Anastasiy Tovstik <anastasiy.tovstik@gmail.com>
  */
 @Entity
-public class Gradebook {
+public class Gradebook implements Serializable {
+
+    public static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
