@@ -25,11 +25,11 @@ public class CacheConfig extends CachingConfigurerSupport {
     @Value("${hazelcast.evict-time.user}")
     private Integer userEvictTime;
 
-    @Value("${hazelcast.k8s-discovery.service-dns:}")
-    private String serviceDns;
+    @Value("${hazelcast.k8s-discovery.namespace:}")
+    private String namespace;
 
-    @Value("${hazelcast.k8s-discovery.service-dns-timeout:}")
-    private String serviceDnsTimeout;
+    @Value("${hazelcast.k8s-discovery.service-name:}")
+    private String spaceName;
 
     @Bean
     @Profile("dev")
@@ -72,8 +72,8 @@ public class CacheConfig extends CachingConfigurerSupport {
 
         HazelcastKubernetesDiscoveryStrategyFactory factory = new HazelcastKubernetesDiscoveryStrategyFactory();
         DiscoveryStrategyConfig k8sDiscoveryStrategy = new DiscoveryStrategyConfig(factory);
-        k8sDiscoveryStrategy.addProperty("service-dns", serviceDns);
-        k8sDiscoveryStrategy.addProperty("service-dns-timeout", serviceDnsTimeout);
+        k8sDiscoveryStrategy.addProperty("namespace", namespace);
+        k8sDiscoveryStrategy.addProperty("service-name", spaceName);
 
         discoveryConfig.addDiscoveryStrategyConfig(k8sDiscoveryStrategy);
 
