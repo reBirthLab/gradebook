@@ -17,7 +17,7 @@ RUN useradd user -g root && chmod -R 755 /deployments && chown -R user:root /dep
 USER user:root
 
 ENTRYPOINT java "-Dspring.profiles.active=${ACTIVE_PROFILE}" \
-    "-Dspring.datasource.url=${DATABASE_URL}/${DATABASE_NAME}" \
+    "-Dspring.datasource.url=${DATABASE_URL}" \
     "-Dspring.datasource.username=${DATABASE_USER}" \
     "-Dspring.datasource.password=${DATABASE_PASSWORD}" \
     -jar "/deployments/${APP_NAME}.jar"

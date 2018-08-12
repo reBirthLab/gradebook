@@ -18,7 +18,7 @@ USER user:root
 
 ENTRYPOINT java "-Dspring.profiles.active=${ACTIVE_PROFILE}" \
     "-Dsecurity.oauth2.resource.jwt.key-uri=${OAUTH_SERVICE_JWT_KEY_URI}" \
-    "-Dspring.datasource.url=${DATABASE_URL}/${DATABASE_NAME}" \
+    "-Dspring.datasource.url=${DATABASE_URL}" \
     "-Dspring.datasource.username=${DATABASE_USER}" \
     "-Dspring.datasource.password=${DATABASE_PASSWORD}" \
     -jar "/deployments/${APP_NAME}.jar"
