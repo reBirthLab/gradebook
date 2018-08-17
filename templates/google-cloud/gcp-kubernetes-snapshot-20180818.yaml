@@ -1,0 +1,3138 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: 2018-08-15T20:33:22Z
+    generateName: frontend-b657c8967-
+    labels:
+      app: frontend
+      pod-template-hash: "621374523"
+    name: frontend-b657c8967-ftkx5
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: frontend-b657c8967
+      uid: e09b81e7-a0c8-11e8-a195-42010a8400cd
+    resourceVersion: "2547946"
+    selfLink: /api/v1/namespaces/gradebook/pods/frontend-b657c8967-ftkx5
+    uid: 7439185a-a0ca-11e8-a195-42010a8400cd
+  spec:
+    containers:
+    - env:
+      - name: OAUTH_SERVICE_URL
+        value: http://35.240.59.116:8080
+      - name: GRADEBOOK_SERVICE_URL
+        value: http://104.199.15.248:8081
+      image: gcr.io/gradebook-211919/frontend:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+      imagePullPolicy: IfNotPresent
+      name: frontend
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-rkz4z
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    nodeName: gke-cluster-1-default-pool-d54aa253-qzmd
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: default-token-rkz4z
+      secret:
+        defaultMode: 420
+        secretName: default-token-rkz4z
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:33:22Z
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:33:26Z
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:33:22Z
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://04e28d0f7885b02fa7714393af28807f34836b6ea1d1f20ba499e6945362cb7d
+      image: gcr.io/gradebook-211919/frontend:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+      imageID: docker-pullable://gcr.io/gradebook-211919/frontend@sha256:35c0a9ee97ab80471e55db316b76d0bacd13678577dce42dfdce77407141b944
+      lastState: {}
+      name: frontend
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-08-15T20:33:25Z
+    hostIP: 10.132.0.2
+    phase: Running
+    podIP: 10.60.3.40
+    qosClass: BestEffort
+    startTime: 2018-08-15T20:33:22Z
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: 2018-08-15T20:22:05Z
+    generateName: frontend-b657c8967-
+    labels:
+      app: frontend
+      pod-template-hash: "621374523"
+    name: frontend-b657c8967-m48ql
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: frontend-b657c8967
+      uid: e09b81e7-a0c8-11e8-a195-42010a8400cd
+    resourceVersion: "2546224"
+    selfLink: /api/v1/namespaces/gradebook/pods/frontend-b657c8967-m48ql
+    uid: e0a2c562-a0c8-11e8-a195-42010a8400cd
+  spec:
+    containers:
+    - env:
+      - name: OAUTH_SERVICE_URL
+        value: http://35.240.59.116:8080
+      - name: GRADEBOOK_SERVICE_URL
+        value: http://104.199.15.248:8081
+      image: gcr.io/gradebook-211919/frontend:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+      imagePullPolicy: IfNotPresent
+      name: frontend
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-rkz4z
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    nodeName: gke-cluster-1-default-pool-d54aa253-qzmd
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: default-token-rkz4z
+      secret:
+        defaultMode: 420
+        secretName: default-token-rkz4z
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:22:05Z
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:22:09Z
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:22:05Z
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://272f1e460265274af8e0e87fb695ad6690ff38590679cd3b381bfdb3dc782f4e
+      image: gcr.io/gradebook-211919/frontend:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+      imageID: docker-pullable://gcr.io/gradebook-211919/frontend@sha256:35c0a9ee97ab80471e55db316b76d0bacd13678577dce42dfdce77407141b944
+      lastState: {}
+      name: frontend
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-08-15T20:22:08Z
+    hostIP: 10.132.0.2
+    phase: Running
+    podIP: 10.60.3.34
+    qosClass: BestEffort
+    startTime: 2018-08-15T20:22:05Z
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: 2018-08-15T20:22:41Z
+    generateName: gradebook-service-789d7858cb-
+    labels:
+      app: gradebook-service
+      pod-template-hash: "3458341476"
+    name: gradebook-service-789d7858cb-b98x5
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: gradebook-service-789d7858cb
+      uid: f5ee9a55-a0c8-11e8-a195-42010a8400cd
+    resourceVersion: "2546484"
+    selfLink: /api/v1/namespaces/gradebook/pods/gradebook-service-789d7858cb-b98x5
+    uid: f605d63f-a0c8-11e8-a195-42010a8400cd
+  spec:
+    containers:
+    - env:
+      - name: OAUTH_SERVICE_JWT_KEY_URI
+        value: http://35.240.59.116:8080/oauth/token_key
+      - name: DATABASE_URL
+        value: jdbc:mysql://127.0.0.1:3306/gradebook?useSSL=false
+      - name: DATABASE_USER
+        valueFrom:
+          secretKeyRef:
+            key: username
+            name: cloudsql-gradebook-db
+      - name: DATABASE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: cloudsql-gradebook-db
+      image: gcr.io/gradebook-211919/gradebook-service:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+      imagePullPolicy: IfNotPresent
+      name: gradebook-service
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-rkz4z
+        readOnly: true
+    - command:
+      - /cloud_sql_proxy
+      - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+      - -credential_file=/secrets/cloudsql/credentials.json
+      image: gcr.io/cloudsql-docker/gce-proxy:1.11
+      imagePullPolicy: IfNotPresent
+      name: cloudsql-proxy
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /secrets/cloudsql
+        name: cloudsql-gradebook-instance
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-rkz4z
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    nodeName: gke-cluster-1-default-pool-d54aa253-qzmd
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: cloudsql-gradebook-instance
+      secret:
+        defaultMode: 420
+        secretName: cloudsql-gradebook-instance
+    - name: default-token-rkz4z
+      secret:
+        defaultMode: 420
+        secretName: default-token-rkz4z
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:22:41Z
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:23:29Z
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:22:41Z
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://1db769d9ad56db64cb9637ee1138ae3cccf20f5e03705848161a4a9ea74d3c1e
+      image: gcr.io/cloudsql-docker/gce-proxy:1.11
+      imageID: docker-pullable://gcr.io/cloudsql-docker/gce-proxy@sha256:5c690349ad8041e8b21eaa63cb078cf13188568e0bfac3b5a914da3483079e2b
+      lastState: {}
+      name: cloudsql-proxy
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-08-15T20:23:28Z
+    - containerID: docker://60a53934e9f5f241cb0036e6bd685258f20f003ee31df9274ac277663363a27e
+      image: gcr.io/gradebook-211919/gradebook-service:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+      imageID: docker-pullable://gcr.io/gradebook-211919/gradebook-service@sha256:e8829fcd2110646a904234a5eb2de4564a92841ece7ad059d2659e6b3739597f
+      lastState: {}
+      name: gradebook-service
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-08-15T20:23:27Z
+    hostIP: 10.132.0.2
+    phase: Running
+    podIP: 10.60.3.36
+    qosClass: BestEffort
+    startTime: 2018-08-15T20:22:41Z
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: 2018-08-15T20:33:22Z
+    generateName: gradebook-service-789d7858cb-
+    labels:
+      app: gradebook-service
+      pod-template-hash: "3458341476"
+    name: gradebook-service-789d7858cb-k57xd
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: gradebook-service-789d7858cb
+      uid: f5ee9a55-a0c8-11e8-a195-42010a8400cd
+    resourceVersion: "2547941"
+    selfLink: /api/v1/namespaces/gradebook/pods/gradebook-service-789d7858cb-k57xd
+    uid: 743d30a0-a0ca-11e8-a195-42010a8400cd
+  spec:
+    containers:
+    - env:
+      - name: OAUTH_SERVICE_JWT_KEY_URI
+        value: http://35.240.59.116:8080/oauth/token_key
+      - name: DATABASE_URL
+        value: jdbc:mysql://127.0.0.1:3306/gradebook?useSSL=false
+      - name: DATABASE_USER
+        valueFrom:
+          secretKeyRef:
+            key: username
+            name: cloudsql-gradebook-db
+      - name: DATABASE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: cloudsql-gradebook-db
+      image: gcr.io/gradebook-211919/gradebook-service:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+      imagePullPolicy: IfNotPresent
+      name: gradebook-service
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-rkz4z
+        readOnly: true
+    - command:
+      - /cloud_sql_proxy
+      - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+      - -credential_file=/secrets/cloudsql/credentials.json
+      image: gcr.io/cloudsql-docker/gce-proxy:1.11
+      imagePullPolicy: IfNotPresent
+      name: cloudsql-proxy
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /secrets/cloudsql
+        name: cloudsql-gradebook-instance
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-rkz4z
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    nodeName: gke-cluster-1-default-pool-d54aa253-qzmd
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: cloudsql-gradebook-instance
+      secret:
+        defaultMode: 420
+        secretName: cloudsql-gradebook-instance
+    - name: default-token-rkz4z
+      secret:
+        defaultMode: 420
+        secretName: default-token-rkz4z
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:33:22Z
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:33:26Z
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:33:22Z
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://42a2ee30b5098f07c1c0580ec736710feea4454090535515c0771c2109ef2f7e
+      image: gcr.io/cloudsql-docker/gce-proxy:1.11
+      imageID: docker-pullable://gcr.io/cloudsql-docker/gce-proxy@sha256:5c690349ad8041e8b21eaa63cb078cf13188568e0bfac3b5a914da3483079e2b
+      lastState: {}
+      name: cloudsql-proxy
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-08-15T20:33:25Z
+    - containerID: docker://d486171733bc5c7e7293668f4015925ca4d51583d150021a7abb4bf52c7f8a2a
+      image: gcr.io/gradebook-211919/gradebook-service:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+      imageID: docker-pullable://gcr.io/gradebook-211919/gradebook-service@sha256:e8829fcd2110646a904234a5eb2de4564a92841ece7ad059d2659e6b3739597f
+      lastState: {}
+      name: gradebook-service
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-08-15T20:33:24Z
+    hostIP: 10.132.0.2
+    phase: Running
+    podIP: 10.60.3.37
+    qosClass: BestEffort
+    startTime: 2018-08-15T20:33:22Z
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: 2018-08-15T20:22:23Z
+    generateName: oauth-service-5dbbc4b998-
+    labels:
+      app: oauth-service
+      pod-template-hash: "1866706554"
+    name: oauth-service-5dbbc4b998-s46jn
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: oauth-service-5dbbc4b998
+      uid: eb04d42f-a0c8-11e8-a195-42010a8400cd
+    resourceVersion: "2546378"
+    selfLink: /api/v1/namespaces/gradebook/pods/oauth-service-5dbbc4b998-s46jn
+    uid: eb0895bc-a0c8-11e8-a195-42010a8400cd
+  spec:
+    containers:
+    - env:
+      - name: DATABASE_URL
+        value: jdbc:mysql://127.0.0.1:3306/gradebook?useSSL=false
+      - name: DATABASE_USER
+        valueFrom:
+          secretKeyRef:
+            key: username
+            name: cloudsql-gradebook-db
+      - name: DATABASE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: cloudsql-gradebook-db
+      image: gcr.io/gradebook-211919/oauth-service:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+      imagePullPolicy: IfNotPresent
+      name: oauth-service
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-rkz4z
+        readOnly: true
+    - command:
+      - /cloud_sql_proxy
+      - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+      - -credential_file=/secrets/cloudsql/credentials.json
+      image: gcr.io/cloudsql-docker/gce-proxy:1.11
+      imagePullPolicy: IfNotPresent
+      name: cloudsql-proxy
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /secrets/cloudsql
+        name: cloudsql-gradebook-instance
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-rkz4z
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    nodeName: gke-cluster-1-default-pool-d54aa253-qzmd
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: cloudsql-gradebook-instance
+      secret:
+        defaultMode: 420
+        secretName: cloudsql-gradebook-instance
+    - name: default-token-rkz4z
+      secret:
+        defaultMode: 420
+        secretName: default-token-rkz4z
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:22:23Z
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:22:53Z
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: 2018-08-15T20:22:23Z
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://79386e290895707ce482f6d46ba32828390dbc081ad88f2f753f92f125ba5f4d
+      image: gcr.io/cloudsql-docker/gce-proxy:1.11
+      imageID: docker-pullable://gcr.io/cloudsql-docker/gce-proxy@sha256:5c690349ad8041e8b21eaa63cb078cf13188568e0bfac3b5a914da3483079e2b
+      lastState: {}
+      name: cloudsql-proxy
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-08-15T20:22:52Z
+    - containerID: docker://2f1b2b4c7d77df22cdca52d48f85c854c0d3c4509e852a295fdd12ba4636005c
+      image: gcr.io/gradebook-211919/oauth-service:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+      imageID: docker-pullable://gcr.io/gradebook-211919/oauth-service@sha256:39ce4faebd1b8822b38c1275879aedd758cfae03df5474df38329e61c157e9ed
+      lastState: {}
+      name: oauth-service
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-08-15T20:22:52Z
+    hostIP: 10.132.0.2
+    phase: Running
+    podIP: 10.60.3.35
+    qosClass: BestEffort
+    startTime: 2018-08-15T20:22:23Z
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: 2018-08-05T21:52:45Z
+    labels:
+      app: frontend
+    name: frontend-service
+    namespace: gradebook
+    resourceVersion: "595570"
+    selfLink: /api/v1/namespaces/gradebook/services/frontend-service
+    uid: e2c8e82b-98f9-11e8-8d4b-42010a840140
+  spec:
+    clusterIP: 10.63.245.147
+    externalTrafficPolicy: Cluster
+    ports:
+    - nodePort: 30047
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: frontend
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 35.205.228.95
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: 2018-08-11T23:54:01Z
+    labels:
+      app: gradebook-service
+    name: gradebook-service
+    namespace: gradebook
+    resourceVersion: "1774084"
+    selfLink: /api/v1/namespaces/gradebook/services/gradebook-service
+    uid: d260e770-9dc1-11e8-a195-42010a8400cd
+  spec:
+    clusterIP: 10.63.254.30
+    externalTrafficPolicy: Cluster
+    ports:
+    - nodePort: 32200
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+    selector:
+      app: gradebook-service
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 104.199.15.248
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: 2018-08-06T21:23:37Z
+    labels:
+      app: oauth-service
+    name: oauth-service
+    namespace: gradebook
+    resourceVersion: "752016"
+    selfLink: /api/v1/namespaces/gradebook/services/oauth-service
+    uid: fb804a1d-99be-11e8-8d4b-42010a840140
+  spec:
+    clusterIP: 10.63.245.2
+    externalTrafficPolicy: Cluster
+    ports:
+    - nodePort: 31638
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: oauth-service
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 35.240.59.116
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "9"
+    creationTimestamp: 2018-08-05T21:51:30Z
+    generation: 10
+    labels:
+      app: frontend
+    name: frontend
+    namespace: gradebook
+    resourceVersion: "2547949"
+    selfLink: /apis/apps/v1/namespaces/gradebook/deployments/frontend
+    uid: b5e25845-98f9-11e8-8d4b-42010a840140
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: frontend
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: frontend
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_URL
+            value: http://35.240.59.116:8080
+          - name: GRADEBOOK_SERVICE_URL
+            value: http://104.199.15.248:8081
+          image: gcr.io/gradebook-211919/frontend:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+          imagePullPolicy: IfNotPresent
+          name: frontend
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: 2018-08-07T20:44:11Z
+      lastUpdateTime: 2018-08-07T20:44:11Z
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: 2018-08-05T21:51:30Z
+      lastUpdateTime: 2018-08-15T20:22:09Z
+      message: ReplicaSet "frontend-b657c8967" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 10
+    readyReplicas: 2
+    replicas: 2
+    updatedReplicas: 2
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "10"
+    creationTimestamp: 2018-08-07T19:45:00Z
+    generation: 12
+    labels:
+      app: gradebook-service
+    name: gradebook-service
+    namespace: gradebook
+    resourceVersion: "2547944"
+    selfLink: /apis/apps/v1/namespaces/gradebook/deployments/gradebook-service
+    uid: 5f208575-9a7a-11e8-8ecf-42010a84012f
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: gradebook-service
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: gradebook-service
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_JWT_KEY_URI
+            value: http://35.240.59.116:8080/oauth/token_key
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306/gradebook?useSSL=false
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/gradebook-service:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+          imagePullPolicy: IfNotPresent
+          name: gradebook-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: 2018-08-07T21:26:25Z
+      lastUpdateTime: 2018-08-07T21:26:25Z
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: 2018-08-07T19:45:00Z
+      lastUpdateTime: 2018-08-15T20:23:29Z
+      message: ReplicaSet "gradebook-service-789d7858cb" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 12
+    readyReplicas: 2
+    replicas: 2
+    updatedReplicas: 2
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "10"
+    creationTimestamp: 2018-08-06T21:09:53Z
+    generation: 13
+    labels:
+      app: oauth-service
+    name: oauth-service
+    namespace: gradebook
+    resourceVersion: "2546381"
+    selfLink: /apis/apps/v1/namespaces/gradebook/deployments/oauth-service
+    uid: 102c6c37-99bd-11e8-8d4b-42010a840140
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: oauth-service
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: oauth-service
+      spec:
+        containers:
+        - env:
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306/gradebook?useSSL=false
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/oauth-service:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+          imagePullPolicy: IfNotPresent
+          name: oauth-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: 2018-08-06T21:56:41Z
+      lastUpdateTime: 2018-08-06T21:56:41Z
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: 2018-08-06T21:52:58Z
+      lastUpdateTime: 2018-08-15T20:22:53Z
+      message: ReplicaSet "oauth-service-5dbbc4b998" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 13
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: 2018-08-07T21:05:40Z
+    generation: 4
+    labels:
+      app: frontend
+      pod-template-hash: "1198343391"
+    name: frontend-55fd7877f5
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b5e25845-98f9-11e8-8d4b-42010a840140
+    resourceVersion: "1774532"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/frontend-55fd7877f5
+    uid: a3ff0332-9a85-11e8-8ecf-42010a84012f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: "1198343391"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: frontend
+          pod-template-hash: "1198343391"
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_URL
+            value: http://35.240.59.116:8080
+          - name: GRADEBOOK_SERVICE_URL
+            value: http://35.240.123.127:8081
+          image: gcr.io/gradebook-211919/frontend:6eb93be071ff5bde5d8cdd3f7c9297f2148bb9fa
+          imagePullPolicy: IfNotPresent
+          name: frontend
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: 2018-08-07T20:44:09Z
+    generation: 4
+    labels:
+      app: frontend
+      pod-template-hash: "1274077872"
+    name: frontend-56c84ccdc6
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b5e25845-98f9-11e8-8d4b-42010a840140
+    resourceVersion: "947247"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/frontend-56c84ccdc6
+    uid: a26d956d-9a82-11e8-8ecf-42010a84012f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: "1274077872"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: frontend
+          pod-template-hash: "1274077872"
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_URL
+            value: http://10.63.245.2:8080
+          - name: GRADEBOOK_SERVICE_URL
+            value: http://10.63.253.107:8081
+          image: gcr.io/gradebook-211919/frontend:32b19df573a9b0b5fa42024decec262cd91467f5
+          imagePullPolicy: IfNotPresent
+          name: frontend
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "5"
+    creationTimestamp: 2018-08-07T20:53:27Z
+    generation: 4
+    labels:
+      app: frontend
+      pod-template-hash: "2544942"
+    name: frontend-6988f86
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b5e25845-98f9-11e8-8d4b-42010a840140
+    resourceVersion: "948326"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/frontend-6988f86
+    uid: eef29d71-9a83-11e8-8ecf-42010a84012f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: "2544942"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: frontend
+          pod-template-hash: "2544942"
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_URL
+            value: http://10.63.245.2:8080
+          - name: GRADEBOOK_SERVICE_URL
+            value: http://10.63.253.107:8081
+          image: gcr.io/gradebook-211919/frontend:6eb93be071ff5bde5d8cdd3f7c9297f2148bb9fa
+          imagePullPolicy: IfNotPresent
+          name: frontend
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "8"
+    creationTimestamp: 2018-08-11T23:57:32Z
+    generation: 4
+    labels:
+      app: frontend
+      pod-template-hash: "3344403375"
+    name: frontend-77888477c9
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b5e25845-98f9-11e8-8d4b-42010a840140
+    resourceVersion: "2546221"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/frontend-77888477c9
+    uid: 4fc1602a-9dc2-11e8-a195-42010a8400cd
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: "3344403375"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: frontend
+          pod-template-hash: "3344403375"
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_URL
+            value: http://35.240.59.116:8080
+          - name: GRADEBOOK_SERVICE_URL
+            value: http://104.199.15.248:8081
+          image: gcr.io/gradebook-211919/frontend:6eb93be071ff5bde5d8cdd3f7c9297f2148bb9fa
+          imagePullPolicy: IfNotPresent
+          name: frontend
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: 2018-08-07T20:36:22Z
+    generation: 4
+    labels:
+      app: frontend
+      pod-template-hash: "3528327726"
+    name: frontend-796d76cc6b
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b5e25845-98f9-11e8-8d4b-42010a840140
+    resourceVersion: "945552"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/frontend-796d76cc6b
+    uid: 8c418056-9a81-11e8-8ecf-42010a84012f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: "3528327726"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: frontend
+          pod-template-hash: "3528327726"
+      spec:
+        containers:
+        - image: gcr.io/gradebook-211919/frontend:f3309ce852afe80e2ec1dee592a398a3686d1d89
+          imagePullPolicy: IfNotPresent
+          name: frontend
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: 2018-08-07T20:41:41Z
+    generation: 4
+    labels:
+      app: frontend
+      pod-template-hash: "3738646990"
+    name: frontend-7c7db8bff4
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b5e25845-98f9-11e8-8d4b-42010a840140
+    resourceVersion: "945908"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/frontend-7c7db8bff4
+    uid: 4a11711b-9a82-11e8-8ecf-42010a84012f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: "3738646990"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: frontend
+          pod-template-hash: "3738646990"
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_URL
+            value: http://10.63.245.2:8080
+          - name: GRADEBOOK_SERVICE_URL
+            value: http://10.63.253.107:8081
+          image: gcr.io/gradebook-211919/frontend:f3309ce852afe80e2ec1dee592a398a3686d1d89
+          imagePullPolicy: IfNotPresent
+          name: frontend
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "6"
+    creationTimestamp: 2018-08-07T21:00:55Z
+    generation: 4
+    labels:
+      app: frontend
+      pod-template-hash: "4215960149"
+    name: frontend-8659fb458f
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b5e25845-98f9-11e8-8d4b-42010a840140
+    resourceVersion: "949050"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/frontend-8659fb458f
+    uid: fa36e1d6-9a84-11e8-8ecf-42010a84012f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: "4215960149"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: frontend
+          pod-template-hash: "4215960149"
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_URL
+            value: http://35.240.59.116:8080
+          - name: GRADEBOOK_SERVICE_URL
+            value: http://10.63.253.107:8081
+          image: gcr.io/gradebook-211919/frontend:6eb93be071ff5bde5d8cdd3f7c9297f2148bb9fa
+          imagePullPolicy: IfNotPresent
+          name: frontend
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: 2018-08-05T21:51:30Z
+    generation: 4
+    labels:
+      app: frontend
+      pod-template-hash: "4250175365"
+    name: frontend-86945c97b9
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b5e25845-98f9-11e8-8d4b-42010a840140
+    resourceVersion: "944675"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/frontend-86945c97b9
+    uid: b5e4c851-98f9-11e8-8d4b-42010a840140
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: "4250175365"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: frontend
+          pod-template-hash: "4250175365"
+      spec:
+        containers:
+        - image: gcr.io/gradebook-211919/frontend:4bba63d5d822e9552623e272d388a26f302596e4
+          imagePullPolicy: IfNotPresent
+          name: frontend
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "9"
+    creationTimestamp: 2018-08-15T20:22:05Z
+    generation: 2
+    labels:
+      app: frontend
+      pod-template-hash: "621374523"
+    name: frontend-b657c8967
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: frontend
+      uid: b5e25845-98f9-11e8-8d4b-42010a840140
+    resourceVersion: "2547948"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/frontend-b657c8967
+    uid: e09b81e7-a0c8-11e8-a195-42010a8400cd
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: frontend
+        pod-template-hash: "621374523"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: frontend
+          pod-template-hash: "621374523"
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_URL
+            value: http://35.240.59.116:8080
+          - name: GRADEBOOK_SERVICE_URL
+            value: http://104.199.15.248:8081
+          image: gcr.io/gradebook-211919/frontend:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+          imagePullPolicy: IfNotPresent
+          name: frontend
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 2
+    fullyLabeledReplicas: 2
+    observedGeneration: 2
+    readyReplicas: 2
+    replicas: 2
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "6"
+    creationTimestamp: 2018-08-11T23:11:04Z
+    generation: 4
+    labels:
+      app: gradebook-service
+      pod-template-hash: "1110577498"
+    name: gradebook-service-55549cc8fd
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: gradebook-service
+      uid: 5f208575-9a7a-11e8-8ecf-42010a84012f
+    resourceVersion: "1770796"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/gradebook-service-55549cc8fd
+    uid: d251bc5a-9dbb-11e8-a195-42010a8400cd
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: gradebook-service
+        pod-template-hash: "1110577498"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: gradebook-service
+          pod-template-hash: "1110577498"
+      spec:
+        containers:
+        - env:
+          - name: ACTIVE_PROFILE
+            value: kubernetes
+          - name: KUBERNETES_SERVICE_DNS
+            value: gradebook-service.gradebook.svc.cluster.local
+          - name: OAUTH_SERVICE_JWT_KEY_URI
+            value: http://35.240.59.116:8080/oauth/token_key
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/gradebook-service:5697712b5642984ae4f94119b374e62e67ffcf37
+          imagePullPolicy: IfNotPresent
+          name: gradebook-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "8"
+    creationTimestamp: 2018-08-12T00:16:26Z
+    generation: 4
+    labels:
+      app: gradebook-service
+      pod-template-hash: "1135493309"
+    name: gradebook-service-55798f774f
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: gradebook-service
+      uid: 5f208575-9a7a-11e8-8ecf-42010a84012f
+    resourceVersion: "1782171"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/gradebook-service-55798f774f
+    uid: f3d1774e-9dc4-11e8-a195-42010a8400cd
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: gradebook-service
+        pod-template-hash: "1135493309"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: gradebook-service
+          pod-template-hash: "1135493309"
+      spec:
+        containers:
+        - env:
+          - name: ACTIVE_PROFILE
+            value: kubernetes
+          - name: KUBERNETES_namespace
+            value: gradebook
+          - name: KUBERNETES_SERVICE_NAME
+            value: gradebook-service
+          - name: OAUTH_SERVICE_JWT_KEY_URI
+            value: http://35.240.59.116:8080/oauth/token_key
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/gradebook-service:56cac3f93fe94dad9f385866ef7e6686658e1d8a
+          imagePullPolicy: IfNotPresent
+          name: gradebook-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: 2018-08-07T21:23:05Z
+    generation: 4
+    labels:
+      app: gradebook-service
+      pod-template-hash: "1632773632"
+    name: gradebook-service-5b76cc7b76
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: gradebook-service
+      uid: 5f208575-9a7a-11e8-8ecf-42010a84012f
+    resourceVersion: "953523"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/gradebook-service-5b76cc7b76
+    uid: 12bcd986-9a88-11e8-8ecf-42010a84012f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: gradebook-service
+        pod-template-hash: "1632773632"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: gradebook-service
+          pod-template-hash: "1632773632"
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_JWT_KEY_URI
+            value: http://35.240.59.116:8080/oauth/token_key
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/gradebook-service:79e1d78ebef7d77dae4c6edd515a8fb33a5037f0
+          imagePullPolicy: IfNotPresent
+          name: gradebook-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: 2018-08-07T20:02:05Z
+    generation: 4
+    labels:
+      app: gradebook-service
+      pod-template-hash: "3070556310"
+    name: gradebook-service-74c499b754
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: gradebook-service
+      uid: 5f208575-9a7a-11e8-8ecf-42010a84012f
+    resourceVersion: "951832"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/gradebook-service-74c499b754
+    uid: c2068f33-9a7c-11e8-8ecf-42010a84012f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: gradebook-service
+        pod-template-hash: "3070556310"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: gradebook-service
+          pod-template-hash: "3070556310"
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_JWT_KEY_URI
+            value: http://35.240.59.116:8080/oauth/token_key
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/gradebook-service:4bba63d5d822e9552623e272d388a26f302596e4
+          imagePullPolicy: IfNotPresent
+          name: gradebook-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "5"
+    creationTimestamp: 2018-08-07T21:35:28Z
+    generation: 4
+    labels:
+      app: gradebook-service
+      pod-template-hash: "3384596326"
+    name: gradebook-service-77d89fb76b
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: gradebook-service
+      uid: 5f208575-9a7a-11e8-8ecf-42010a84012f
+    resourceVersion: "1768029"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/gradebook-service-77d89fb76b
+    uid: cd58bdfa-9a89-11e8-8ecf-42010a84012f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: gradebook-service
+        pod-template-hash: "3384596326"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: gradebook-service
+          pod-template-hash: "3384596326"
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_JWT_KEY_URI
+            value: http://35.240.59.116:8080/oauth/token_key
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/gradebook-service:7e04bda0962c93ab8f54729a8d967e49c9c258e7
+          imagePullPolicy: IfNotPresent
+          name: gradebook-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "10"
+    creationTimestamp: 2018-08-15T20:22:41Z
+    generation: 2
+    labels:
+      app: gradebook-service
+      pod-template-hash: "3458341476"
+    name: gradebook-service-789d7858cb
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: gradebook-service
+      uid: 5f208575-9a7a-11e8-8ecf-42010a84012f
+    resourceVersion: "2547943"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/gradebook-service-789d7858cb
+    uid: f5ee9a55-a0c8-11e8-a195-42010a8400cd
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: gradebook-service
+        pod-template-hash: "3458341476"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: gradebook-service
+          pod-template-hash: "3458341476"
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_JWT_KEY_URI
+            value: http://35.240.59.116:8080/oauth/token_key
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306/gradebook?useSSL=false
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/gradebook-service:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+          imagePullPolicy: IfNotPresent
+          name: gradebook-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    availableReplicas: 2
+    fullyLabeledReplicas: 2
+    observedGeneration: 2
+    readyReplicas: 2
+    replicas: 2
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: 2018-08-11T23:30:31Z
+    generation: 4
+    labels:
+      app: gradebook-service
+      pod-template-hash: "3475361150"
+    name: gradebook-service-78c97b5594
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: gradebook-service
+      uid: 5f208575-9a7a-11e8-8ecf-42010a84012f
+    resourceVersion: "1777273"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/gradebook-service-78c97b5594
+    uid: 89bb3e04-9dbe-11e8-a195-42010a8400cd
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: gradebook-service
+        pod-template-hash: "3475361150"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: gradebook-service
+          pod-template-hash: "3475361150"
+      spec:
+        containers:
+        - env:
+          - name: ACTIVE_PROFILE
+            value: kubernetes
+          - name: KUBERNETES_SERVICE_DNS
+            value: gradebook-service.gradebook.svc.cluster.local
+          - name: OAUTH_SERVICE_JWT_KEY_URI
+            value: http://35.240.59.116:8080/oauth/token_key
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/gradebook-service:a5cbe463a4bb50f18bf6862ed237954af8c47b56
+          imagePullPolicy: IfNotPresent
+          name: gradebook-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: 2018-08-07T19:45:00Z
+    generation: 4
+    labels:
+      app: gradebook-service
+      pod-template-hash: "686228801"
+    name: gradebook-service-bdb66dd45
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: gradebook-service
+      uid: 5f208575-9a7a-11e8-8ecf-42010a84012f
+    resourceVersion: "938433"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/gradebook-service-bdb66dd45
+    uid: 5f22e948-9a7a-11e8-8ecf-42010a84012f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: gradebook-service
+        pod-template-hash: "686228801"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: gradebook-service
+          pod-template-hash: "686228801"
+      spec:
+        containers:
+        - image: gcr.io/gradebook-211919/gradebook-service:4bba63d5d822e9552623e272d388a26f302596e4
+          imagePullPolicy: IfNotPresent
+          name: gradebook-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: gce-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "9"
+    creationTimestamp: 2018-08-12T00:50:46Z
+    generation: 4
+    labels:
+      app: gradebook-service
+      pod-template-hash: "789484631"
+    name: gradebook-service-cdf8d8b75
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: gradebook-service
+      uid: 5f208575-9a7a-11e8-8ecf-42010a84012f
+    resourceVersion: "2546433"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/gradebook-service-cdf8d8b75
+    uid: bf7ca135-9dc9-11e8-a195-42010a8400cd
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: gradebook-service
+        pod-template-hash: "789484631"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: gradebook-service
+          pod-template-hash: "789484631"
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_JWT_KEY_URI
+            value: http://35.240.59.116:8080/oauth/token_key
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306/gradebook?useSSL=false
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/gradebook-service:b8329aa930a4ab653f6ae51d1c97d6a5033e8944
+          imagePullPolicy: IfNotPresent
+          name: gradebook-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: 2018-08-07T19:52:25Z
+    generation: 7
+    labels:
+      app: gradebook-service
+      pod-template-hash: "881394609"
+    name: gradebook-service-dd57f8b4f
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: gradebook-service
+      uid: 5f208575-9a7a-11e8-8ecf-42010a84012f
+    resourceVersion: "939849"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/gradebook-service-dd57f8b4f
+    uid: 67fd8303-9a7b-11e8-8ecf-42010a84012f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: gradebook-service
+        pod-template-hash: "881394609"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: gradebook-service
+          pod-template-hash: "881394609"
+      spec:
+        containers:
+        - env:
+          - name: OAUTH_SERVICE_JWT_KEY_URI
+            value: http://35.240.59.116:8080/oauth/token_key
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/gradebook-service:4bba63d5d822e9552623e272d388a26f302596e4
+          imagePullPolicy: IfNotPresent
+          name: gradebook-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=<INSTANCE_CONNECTION_NAME>=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 7
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "8"
+    creationTimestamp: 2018-08-12T00:39:08Z
+    generation: 2
+    labels:
+      app: oauth-service
+      pod-template-hash: "1288669538"
+    name: oauth-service-56ddbbf97d
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: oauth-service
+      uid: 102c6c37-99bd-11e8-8d4b-42010a840140
+    resourceVersion: "1781757"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/oauth-service-56ddbbf97d
+    uid: 1fb1180c-9dc8-11e8-a195-42010a8400cd
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: oauth-service
+        pod-template-hash: "1288669538"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: oauth-service
+          pod-template-hash: "1288669538"
+      spec:
+        containers:
+        - env:
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306?useSSL=false
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/oauth-service:087a67828a4f951fee0ea8c9cfede78f4bbd33dc
+          imagePullPolicy: IfNotPresent
+          name: oauth-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "10"
+    creationTimestamp: 2018-08-15T20:22:23Z
+    generation: 1
+    labels:
+      app: oauth-service
+      pod-template-hash: "1866706554"
+    name: oauth-service-5dbbc4b998
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: oauth-service
+      uid: 102c6c37-99bd-11e8-8d4b-42010a840140
+    resourceVersion: "2546380"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/oauth-service-5dbbc4b998
+    uid: eb04d42f-a0c8-11e8-a195-42010a8400cd
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: oauth-service
+        pod-template-hash: "1866706554"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: oauth-service
+          pod-template-hash: "1866706554"
+      spec:
+        containers:
+        - env:
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306/gradebook?useSSL=false
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/oauth-service:b7b310371b97b2e309eba51b11e9ebe5a7ae55c8
+          imagePullPolicy: IfNotPresent
+          name: oauth-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "9"
+    creationTimestamp: 2018-08-12T00:48:35Z
+    generation: 2
+    labels:
+      app: oauth-service
+      pod-template-hash: "225547583"
+    name: oauth-service-66998c9d7
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: oauth-service
+      uid: 102c6c37-99bd-11e8-8d4b-42010a840140
+    resourceVersion: "2546274"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/oauth-service-66998c9d7
+    uid: 71765433-9dc9-11e8-a195-42010a8400cd
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: oauth-service
+        pod-template-hash: "225547583"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: oauth-service
+          pod-template-hash: "225547583"
+      spec:
+        containers:
+        - env:
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306/gradebook?useSSL=false
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/oauth-service:b8329aa930a4ab653f6ae51d1c97d6a5033e8944
+          imagePullPolicy: IfNotPresent
+          name: oauth-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "5"
+    creationTimestamp: 2018-08-07T21:23:24Z
+    generation: 2
+    labels:
+      app: oauth-service
+      pod-template-hash: "2349866224"
+    name: oauth-service-678fdbb668
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: oauth-service
+      uid: 102c6c37-99bd-11e8-8d4b-42010a840140
+    resourceVersion: "953335"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/oauth-service-678fdbb668
+    uid: 1e54420a-9a88-11e8-8ecf-42010a84012f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: oauth-service
+        pod-template-hash: "2349866224"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: oauth-service
+          pod-template-hash: "2349866224"
+      spec:
+        containers:
+        - env:
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/oauth-service:79e1d78ebef7d77dae4c6edd515a8fb33a5037f0
+          imagePullPolicy: IfNotPresent
+          name: oauth-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: 2018-08-06T21:22:02Z
+    generation: 6
+    labels:
+      app: oauth-service
+      pod-template-hash: "2806662803"
+    name: oauth-service-6d4bbb6d47
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: oauth-service
+      uid: 102c6c37-99bd-11e8-8d4b-42010a840140
+    resourceVersion: "755327"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/oauth-service-6d4bbb6d47
+    uid: c28e29cf-99be-11e8-8d4b-42010a840140
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: oauth-service
+        pod-template-hash: "2806662803"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: oauth-service
+          pod-template-hash: "2806662803"
+      spec:
+        containers:
+        - env:
+          - name: DATABASE_URL
+            value: 127.0.0.1:3306
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/oauth-service:4bba63d5d822e9552623e272d388a26f302596e4
+          imagePullPolicy: IfNotPresent
+          name: oauth-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook
+  status:
+    observedGeneration: 6
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: 2018-08-12T00:35:03Z
+    generation: 2
+    labels:
+      app: oauth-service
+      pod-template-hash: "3160832986"
+    name: oauth-service-75b4d76fdb
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: oauth-service
+      uid: 102c6c37-99bd-11e8-8d4b-42010a840140
+    resourceVersion: "1780412"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/oauth-service-75b4d76fdb
+    uid: 8d8c4da0-9dc7-11e8-a195-42010a8400cd
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: oauth-service
+        pod-template-hash: "3160832986"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: oauth-service
+          pod-template-hash: "3160832986"
+      spec:
+        containers:
+        - env:
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/oauth-service:087a67828a4f951fee0ea8c9cfede78f4bbd33dc
+          imagePullPolicy: IfNotPresent
+          name: oauth-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: 2018-08-06T21:56:39Z
+    generation: 5
+    labels:
+      app: oauth-service
+      pod-template-hash: "3543541318"
+    name: oauth-service-798798575d
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: oauth-service
+      uid: 102c6c37-99bd-11e8-8d4b-42010a840140
+    resourceVersion: "951567"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/oauth-service-798798575d
+    uid: 987b8988-99c3-11e8-8d4b-42010a840140
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: oauth-service
+        pod-template-hash: "3543541318"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: oauth-service
+          pod-template-hash: "3543541318"
+      spec:
+        containers:
+        - env:
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/oauth-service:4bba63d5d822e9552623e272d388a26f302596e4
+          imagePullPolicy: IfNotPresent
+          name: oauth-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 5
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "6"
+    creationTimestamp: 2018-08-07T21:35:16Z
+    generation: 2
+    labels:
+      app: oauth-service
+      pod-template-hash: "812294966"
+    name: oauth-service-d566f8fbb
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: oauth-service
+      uid: 102c6c37-99bd-11e8-8d4b-42010a840140
+    resourceVersion: "1779824"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/oauth-service-d566f8fbb
+    uid: c65d5fe6-9a89-11e8-8ecf-42010a84012f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: oauth-service
+        pod-template-hash: "812294966"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: oauth-service
+          pod-template-hash: "812294966"
+      spec:
+        containers:
+        - env:
+          - name: DATABASE_URL
+            value: jdbc:mysql://127.0.0.1:3306
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/oauth-service:7e04bda0962c93ab8f54729a8d967e49c9c258e7
+          imagePullPolicy: IfNotPresent
+          name: oauth-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: 2018-08-06T21:52:58Z
+    generation: 6
+    labels:
+      app: oauth-service
+      pod-template-hash: "986761345"
+    name: oauth-service-fdbcb5789
+    namespace: gradebook
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: oauth-service
+      uid: 102c6c37-99bd-11e8-8d4b-42010a840140
+    resourceVersion: "755919"
+    selfLink: /apis/apps/v1/namespaces/gradebook/replicasets/oauth-service-fdbcb5789
+    uid: 15314602-99c3-11e8-8d4b-42010a840140
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: oauth-service
+        pod-template-hash: "986761345"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: oauth-service
+          pod-template-hash: "986761345"
+      spec:
+        containers:
+        - env:
+          - name: DATABASE_URL
+            value: 127.0.0.1:3306
+          - name: DATABASE_NAME
+            value: gradebook
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: cloudsql-gradebook-db
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: cloudsql-gradebook-db
+          image: gcr.io/gradebook-211919/oauth-service:4bba63d5d822e9552623e272d388a26f302596e4
+          imagePullPolicy: IfNotPresent
+          name: oauth-service
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - command:
+          - /cloud_sql_proxy
+          - -instances=gradebook-211919:europe-west1:gradebook=tcp:3306
+          - -credential_file=/secrets/cloudsql/credentials.json
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          imagePullPolicy: IfNotPresent
+          name: cloudsql-proxy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /secrets/cloudsql
+            name: cloudsql-gradebook-instance
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: cloudsql-gradebook-instance
+          secret:
+            defaultMode: 420
+            secretName: cloudsql-gradebook-instance
+  status:
+    observedGeneration: 6
+    replicas: 0
+- apiVersion: autoscaling/v1
+  kind: HorizontalPodAutoscaler
+  metadata:
+    annotations:
+      autoscaling.alpha.kubernetes.io/conditions: '[{"type":"AbleToScale","status":"True","lastTransitionTime":"2018-08-05T21:52:00Z","reason":"SucceededGetScale","message":"the
+        HPA controller was able to get the target''s current scale"},{"type":"ScalingActive","status":"False","lastTransitionTime":"2018-08-05T21:52:00Z","reason":"FailedGetResourceMetric","message":"the
+        HPA was unable to compute the replica count: missing request for cpu on container
+        frontend in pod gradebook/frontend-b657c8967-ftkx5"}]'
+    creationTimestamp: 2018-08-05T21:51:30Z
+    labels:
+      app: frontend
+    name: frontend-hpa
+    namespace: gradebook
+    resourceVersion: "2548080"
+    selfLink: /apis/autoscaling/v1/namespaces/gradebook/horizontalpodautoscalers/frontend-hpa
+    uid: b5eee191-98f9-11e8-8d4b-42010a840140
+  spec:
+    maxReplicas: 3
+    minReplicas: 2
+    scaleTargetRef:
+      apiVersion: apps/v1beta1
+      kind: Deployment
+      name: frontend
+    targetCPUUtilizationPercentage: 80
+  status:
+    currentReplicas: 2
+    desiredReplicas: 0
+- apiVersion: autoscaling/v1
+  kind: HorizontalPodAutoscaler
+  metadata:
+    annotations:
+      autoscaling.alpha.kubernetes.io/conditions: '[{"type":"AbleToScale","status":"True","lastTransitionTime":"2018-08-07T19:45:30Z","reason":"SucceededGetScale","message":"the
+        HPA controller was able to get the target''s current scale"},{"type":"ScalingActive","status":"False","lastTransitionTime":"2018-08-07T19:45:31Z","reason":"FailedGetResourceMetric","message":"the
+        HPA was unable to compute the replica count: missing request for cpu on container
+        gradebook-service in pod gradebook/gradebook-service-789d7858cb-b98x5"}]'
+    creationTimestamp: 2018-08-07T19:45:00Z
+    labels:
+      app: gradebook-service
+    name: gradebook-service-hpa
+    namespace: gradebook
+    resourceVersion: "2673203"
+    selfLink: /apis/autoscaling/v1/namespaces/gradebook/horizontalpodautoscalers/gradebook-service-hpa
+    uid: 5f2e1328-9a7a-11e8-8ecf-42010a84012f
+  spec:
+    maxReplicas: 5
+    minReplicas: 2
+    scaleTargetRef:
+      apiVersion: apps/v1beta1
+      kind: Deployment
+      name: gradebook-service
+    targetCPUUtilizationPercentage: 80
+  status:
+    currentReplicas: 2
+    desiredReplicas: 2
+    lastScaleTime: 2018-08-07T19:53:01Z
+- apiVersion: autoscaling/v1
+  kind: HorizontalPodAutoscaler
+  metadata:
+    annotations:
+      autoscaling.alpha.kubernetes.io/conditions: '[{"type":"AbleToScale","status":"True","lastTransitionTime":"2018-08-06T21:10:23Z","reason":"SucceededGetScale","message":"the
+        HPA controller was able to get the target''s current scale"},{"type":"ScalingActive","status":"False","lastTransitionTime":"2018-08-06T21:10:23Z","reason":"FailedGetResourceMetric","message":"the
+        HPA was unable to compute the replica count: missing request for cpu on container
+        oauth-service in pod gradebook/oauth-service-5dbbc4b998-s46jn"}]'
+    creationTimestamp: 2018-08-06T21:09:53Z
+    labels:
+      app: oauth-service
+    name: oauth-service-hpa
+    namespace: gradebook
+    resourceVersion: "2673204"
+    selfLink: /apis/autoscaling/v1/namespaces/gradebook/horizontalpodautoscalers/oauth-service-hpa
+    uid: 1034dd67-99bd-11e8-8d4b-42010a840140
+  spec:
+    maxReplicas: 3
+    minReplicas: 1
+    scaleTargetRef:
+      apiVersion: apps/v1beta1
+      kind: Deployment
+      name: oauth-service
+    targetCPUUtilizationPercentage: 80
+  status:
+    currentReplicas: 1
+    desiredReplicas: 3
+    lastScaleTime: 2018-08-06T21:27:23Z
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
